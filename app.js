@@ -1,12 +1,12 @@
+import { waitForMediaReady } from './media-utils.js';
+
 /**
  * DAREMON Radio ETS - Hoofdlogica van de applicatie v8
  *
  * Dit bestand bevat de volledige functionaliteit voor de webradioapplicatie.
  * Belangrijkste verbeteringen in v8:
  * - Internationalisatie (i18n): Ondersteuning voor Pools en Nederlands, met automatische detectie.
- * - Nieuwe functie: Machine-evacuatiekalender voor planning en persistentie.
- * - Weergave wisselen tussen de radiospeler en de kalender.
- * - Alle eerdere functies (recensies, likes, etc.) zijn behouden en vertaald.
+ * - Focus op de radiospeler met uitgebreide sociale functies (recensies, likes, dedykacje).
  */
 document.addEventListener('DOMContentLoaded', () => {
     // --- DOM Element Referenties ---
@@ -57,29 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
         header: {
             listenerCount: document.getElementById('listener-count'),
         },
-        views: {
-            radio: document.getElementById('radio-view'),
-            calendar: document.getElementById('calendar-view'),
-        },
-        navigation: {
-            toCalendarBtn: document.getElementById('calendar-view-btn'),
-            toRadioBtn: document.getElementById('radio-view-btn'),
-        },
-        calendar: {
-            header: document.getElementById('month-year-display'),
-            grid: document.getElementById('calendar-grid'),
-            prevMonthBtn: document.getElementById('prev-month-btn'),
-            nextMonthBtn: document.getElementById('next-month-btn'),
-            modal: document.getElementById('event-modal'),
-            modalDateDisplay: document.getElementById('modal-date-display'),
-            eventForm: document.getElementById('modal-note-form'),
-            machineSelect: document.getElementById('modal-name-input'),
-            eventTypeSelect: document.getElementById('modal-note-input'),
-            modalCancelBtn: document.getElementById('modal-cancel-btn'),
-            modalFeedback: document.getElementById('modal-feedback'),
-        },
         autoplayOverlay: document.getElementById('autoplay-overlay'),
-        startBtn: document.getElementById('start-btn'),
+        introVideo: document.getElementById('intro-video'),
         welcomeGreeting: document.getElementById('welcome-greeting'),
         visualizerCanvas: document.getElementById('visualizer-canvas'),
         offlineIndicator: document.getElementById('offline-indicator'),
@@ -106,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         reviews: {},
         currentTrack: null,
         nextTrack: null,
+        nextTrackReady: false,
         isPlaying: false,
         isInitialized: false,
         lastMessageTimestamp: 0,
@@ -113,15 +93,11 @@ document.addEventListener('DOMContentLoaded', () => {
         songsSinceJingle: 0,
         likes: {},
         tempBoosts: {},
-        // Kalender State
-        currentDate: new Date(),
-        events: {}, // { 'JJJJ-MM-DD': [{ machine, eventType }] }
+        failedTracks: [],
+        introSequenceFinished: false,
         // App State
         language: 'nl',
         translations: {},
-        machines: [
-            "CNC Alpha", "Laser Cutter Pro", "Assembly Line 3", "Packaging Bot X", "Welding Station Omega"
-        ]
     };
 
     // --- INTERNATIONALISATIE (i18n) ---
@@ -217,11 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initialisatie ---
     async function initialize() {
         await i18n_init();
-        if (dom.startBtn) {
-            dom.startBtn.disabled = true;
-            dom.startBtn.textContent = t('loading');
-        }
-        
+
         try {
             await loadPlaylist();
             loadStateFromLocalStorage();
@@ -237,11 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setInterval(updateListenerCount, 15000);
             updateListenerCount();
 
-            if (dom.autoplayOverlay) dom.autoplayOverlay.style.display = 'flex';
-            if (dom.startBtn) {
-                dom.startBtn.disabled = false;
-                dom.startBtn.textContent = t('startBtn');
-            }
+            prepareIntroSequence();
         } catch (error) {
             console.error("Initialisatie mislukt:", error);
             displayError(t('errorPlaylistLoad', { message: error.message }), true);
@@ -300,15 +268,54 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function prepareIntroSequence() {
+        if (!dom.autoplayOverlay) {
+            startRadio();
+            return;
+        }
+
+        dom.autoplayOverlay.style.display = 'flex';
+        dom.autoplayOverlay.classList.remove('is-hidden');
+
+        const introVideo = dom.introVideo;
+        let fallbackTimer;
+
+        const finalizeIntro = () => {
+            if (state.introSequenceFinished) return;
+            state.introSequenceFinished = true;
+            if (fallbackTimer) clearTimeout(fallbackTimer);
+            startRadio();
+        };
+
+        fallbackTimer = setTimeout(finalizeIntro, 6500);
+
+        if (!introVideo) {
+            finalizeIntro();
+            return;
+        }
+
+        const flagReady = () => dom.autoplayOverlay.classList.add('is-ready');
+        introVideo.addEventListener('canplaythrough', flagReady, { once: true });
+        introVideo.addEventListener('loadeddata', flagReady, { once: true });
+        introVideo.addEventListener('ended', finalizeIntro, { once: true });
+        introVideo.addEventListener('error', finalizeIntro, { once: true });
+        introVideo.addEventListener('abort', finalizeIntro, { once: true });
+
+        const playPromise = introVideo.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+            playPromise.catch(() => finalizeIntro());
+        }
+    }
+
     function startRadio() {
         if (state.isInitialized) return;
         state.isInitialized = true;
-        
+
         setupAudioContext();
-        
+
         if (dom.autoplayOverlay) {
-            dom.autoplayOverlay.style.opacity = 0;
-            setTimeout(() => dom.autoplayOverlay.style.display = 'none', 500);
+            dom.autoplayOverlay.classList.add('is-hidden');
+            setTimeout(() => dom.autoplayOverlay.style.display = 'none', 600);
         }
 
         playNextTrack();
@@ -339,17 +346,29 @@ document.addEventListener('DOMContentLoaded', () => {
             return null;
         }
 
+        const isTrackPlayable = (track) => !state.failedTracks.includes(track.id);
+
         const jingleConfig = state.config.jingle || {};
         if (!isPreload && jingleConfig.enabled && state.songsSinceJingle >= (jingleConfig.everySongs || 4)) {
-            const jingles = state.playlist.filter(t => t.type === 'jingle');
+            const jingles = state.playlist.filter(t => t.type === 'jingle' && isTrackPlayable(t));
             if (jingles.length > 0) {
                 state.songsSinceJingle = 0;
                 return jingles[Math.floor(Math.random() * jingles.length)];
             }
         }
 
-        const availableTracks = state.playlist.filter(track => !state.history.includes(track.id) && track.type === 'song');
-        let trackPool = availableTracks.length > 0 ? availableTracks : state.playlist.filter(t => t.type === 'song');
+        const availableTracks = state.playlist.filter(track =>
+            !state.history.includes(track.id) &&
+            track.type === 'song' &&
+            isTrackPlayable(track)
+        );
+        let trackPool = availableTracks.length > 0
+            ? availableTracks
+            : state.playlist.filter(t => t.type === 'song' && isTrackPlayable(t));
+
+        if (trackPool.length === 0) {
+            trackPool = state.playlist.filter(t => t.type === 'song');
+        }
 
         if (availableTracks.length === 0) {
             state.history = state.currentTrack ? [state.currentTrack.id] : [];
@@ -383,21 +402,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function normalizeTrackSrc(src = '') {
+        if (!src) return src;
+        if (src.startsWith('/music/')) {
+            return `.${src}`;
+        }
+        return src;
+    }
+
     function playNextTrack() {
         const nextTrack = state.nextTrack || selectNextTrack();
         if (!nextTrack) {
             console.error("No track to play");
             return;
         }
-        
+
         state.currentTrack = nextTrack;
         state.nextTrack = null;
-        
+        state.nextTrackReady = false;
+
         const activePlayer = players[activePlayerIndex];
-        activePlayer.src = state.currentTrack.src;
+        activePlayer.src = normalizeTrackSrc(state.currentTrack.src);
         const baseVolume = dom.player.volumeSlider ? parseFloat(dom.player.volumeSlider.value) : 0.5;
         activePlayer.volume = isQuietHour() ? baseVolume * 0.5 : baseVolume;
-        
+
         const playPromise = activePlayer.play();
         if (playPromise !== undefined) {
             playPromise.then(() => {
@@ -411,60 +439,122 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function preloadNextTrack() {
         state.nextTrack = selectNextTrack(true);
+        state.nextTrackReady = false;
+
         if (state.nextTrack) {
             const inactivePlayerIndex = 1 - activePlayerIndex;
-            players[inactivePlayerIndex].src = state.nextTrack.src;
+            const inactivePlayer = players[inactivePlayerIndex];
+
+            const markReady = () => {
+                state.nextTrackReady = true;
+            };
+
+            inactivePlayer.addEventListener('canplaythrough', markReady, { once: true });
+            inactivePlayer.src = normalizeTrackSrc(state.nextTrack.src);
         }
     }
 
-    function crossfade() {
-        if (!state.nextTrack) { playNextTrack(); return; }
-        const inactivePlayerIndex = 1 - activePlayerIndex;
-        const activePlayer = players[activePlayerIndex];
-        const nextPlayer = players[inactivePlayerIndex];
+    async function crossfade() {
+        try {
+            if (!state.nextTrack) {
+                playNextTrack();
+                return;
+            }
 
-        activePlayerIndex = inactivePlayerIndex;
+            const inactivePlayerIndex = 1 - activePlayerIndex;
+            const activePlayer = players[activePlayerIndex];
+            const nextPlayer = players[inactivePlayerIndex];
 
-        nextPlayer.volume = 0;
-        const playPromise = nextPlayer.play();
-        if (playPromise !== undefined) {
-            playPromise.then(() => {
-                 state.currentTrack = state.nextTrack;
-                 state.nextTrack = null;
-                 updateUIForNewTrack();
-                 updateHistory();
-                 
-                 const fadeDuration = (state.config.crossfadeSeconds || 2) * 1000;
-                 const intervalTime = 50;
-                 const steps = fadeDuration / intervalTime;
-                 const baseVolume = dom.player.volumeSlider ? parseFloat(dom.player.volumeSlider.value) : 0.5;
-                 const finalVolume = isQuietHour() ? baseVolume * 0.5 : baseVolume;
-                 const volumeStep = finalVolume / steps;
+            if (!nextPlayer.src) {
+                throw new Error('Next player source missing');
+            }
 
-                 let currentStep = 0;
-                 const fadeInterval = setInterval(() => {
-                     currentStep++;
-                     activePlayer.volume = Math.max(0, activePlayer.volume - volumeStep);
-                     nextPlayer.volume = Math.min(finalVolume, nextPlayer.volume + volumeStep);
+            if (nextPlayer.readyState < 2) {
+                await waitForMediaReady(nextPlayer, { timeout: 5000 });
+            }
 
-                     if (currentStep >= steps) {
-                         activePlayer.pause();
-                         activePlayer.volume = finalVolume;
-                         clearInterval(fadeInterval);
-                         preloadNextTrack();
-                     }
-                 }, intervalTime);
+            activePlayerIndex = inactivePlayerIndex;
 
-            }).catch(handleAudioError);
+            nextPlayer.volume = 0;
+            await nextPlayer.play();
+
+            state.currentTrack = state.nextTrack;
+            state.nextTrack = null;
+            state.nextTrackReady = false;
+            updateUIForNewTrack();
+            updateHistory();
+
+            const fadeDuration = (state.config.crossfadeSeconds || 2) * 1000;
+            const intervalTime = 50;
+            const steps = Math.max(1, Math.floor(fadeDuration / intervalTime));
+            const baseVolume = dom.player.volumeSlider ? parseFloat(dom.player.volumeSlider.value) : 0.5;
+            const finalVolume = isQuietHour() ? baseVolume * 0.5 : baseVolume;
+            const volumeStep = finalVolume / steps;
+
+            let currentStep = 0;
+            const fadeInterval = setInterval(() => {
+                currentStep++;
+                activePlayer.volume = Math.max(0, activePlayer.volume - volumeStep);
+                nextPlayer.volume = Math.min(finalVolume, nextPlayer.volume + volumeStep);
+
+                if (currentStep >= steps) {
+                    activePlayer.pause();
+                    activePlayer.volume = finalVolume;
+                    clearInterval(fadeInterval);
+                    preloadNextTrack();
+                }
+            }, intervalTime);
+        } catch (error) {
+            console.error('Crossfade error:', error);
+            setTimeout(playNextTrack, 0);
         }
     }
     
-    function handleAudioError(e) {
-        console.error('Audio afspeelfout:', e.target?.src, e);
-        if (state.currentTrack) {
-            displayError(`Fout bij afspelen: ${state.currentTrack.title}`);
+    async function handleAudioError(error) {
+        console.error('Audio afspeelfout:', error);
+
+        const isHtmlMediaElement = typeof HTMLMediaElement !== 'undefined';
+        const mediaTarget = isHtmlMediaElement && error?.target instanceof HTMLMediaElement ? error.target : null;
+        const activePlayer = players[activePlayerIndex];
+        const player = mediaTarget || activePlayer;
+        const failingTrack = mediaTarget === activePlayer ? state.currentTrack : state.nextTrack || state.currentTrack;
+
+        let source = player?.currentSrc || player?.src || failingTrack?.src;
+        if (source) {
+            source = normalizeTrackSrc(source);
         }
-        setTimeout(playNextTrack, 2000);
+
+        let isNotFound = false;
+        if (source) {
+            try {
+                const response = await fetch(source, { method: 'HEAD' });
+                isNotFound = response.status === 404;
+            } catch (fetchError) {
+                console.warn('Kon audiobron niet verifiëren:', fetchError);
+            }
+        }
+
+        if (failingTrack) {
+            if (isNotFound) {
+                if (!state.failedTracks.includes(failingTrack.id)) {
+                    state.failedTracks.push(failingTrack.id);
+                }
+                displayError(`Bestand niet gevonden: ${failingTrack.title || failingTrack.id}`);
+            } else {
+                displayError(`Fout bij afspelen: ${failingTrack.title || failingTrack.id}`);
+            }
+        }
+
+        if (isNotFound && state.nextTrack && failingTrack && state.nextTrack.id === failingTrack.id) {
+            state.nextTrack = null;
+            state.nextTrackReady = false;
+        }
+
+        if (player && typeof player.pause === 'function') {
+            try { player.pause(); } catch (_) { /* noop */ }
+        }
+
+        setTimeout(playNextTrack, isNotFound ? 0 : 2000);
     }
 
     function togglePlayPause() {
@@ -501,16 +591,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) {
             console.error("Fout bij parsen van quietHours:", e);
             return false;
-        }
-    }
-
-    // --- Weergavebeheer ---
-    function switchView(viewName) {
-        Object.values(dom.views).forEach(view => {
-            if (view) view.classList.add('hidden');
-        });
-        if (dom.views[viewName]) {
-            dom.views[viewName].classList.remove('hidden');
         }
     }
 
@@ -629,7 +709,6 @@ document.addEventListener('DOMContentLoaded', () => {
         state.songDedications = safeLocalStorage('songDedications') || [];
         state.history = safeLocalStorage('history') || [];
         state.reviews = safeLocalStorage('reviews') || {};
-        state.events = safeLocalStorage('events') || {};
         applyTheme(safeLocalStorage('theme') || 'arburg');
     }
 
@@ -639,7 +718,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function saveMessages() { safeLocalStorage('messages', state.messages); }
     function saveSongDedications() { safeLocalStorage('songDedications', state.songDedications); }
     function saveReviews() { safeLocalStorage('reviews', state.reviews); }
-    function saveEvents() { safeLocalStorage('events', state.events); }
 
     // --- Beoordelings- en Recensiesysteem ---
     function renderRatingUI(trackId) {
@@ -922,143 +1000,54 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Kalender Logica ---
-    function renderCalendar() {
-        if (!dom.calendar.grid || !dom.calendar.header) return;
-        
-        dom.calendar.grid.innerHTML = '';
-        const date = state.currentDate;
-        const year = date.getFullYear();
-        const month = date.getMonth();
-
-        const monthNames = ["Januari", "Februari", "Maart", "April", "Mei", "Juni", 
-                           "Juli", "Augustus", "September", "Oktober", "November", "December"];
-        dom.calendar.header.textContent = `${monthNames[month]} ${year}`;
-        
-        // Dagkoppen toevoegen
-        const dayHeaders = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'];
-        dayHeaders.forEach(header => {
-            const headerEl = document.createElement('div');
-            headerEl.classList.add('calendar-day-header');
-            headerEl.textContent = header;
-            dom.calendar.grid.appendChild(headerEl);
-        });
-
-        const firstDay = new Date(year, month, 1).getDay();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-        const dayOffset = (firstDay === 0) ? 6 : firstDay - 1;
-
-        for (let i = 0; i < dayOffset; i++) {
-            const emptyCell = document.createElement('div');
-            emptyCell.classList.add('calendar-day', 'other-month');
-            dom.calendar.grid.appendChild(emptyCell);
-        }
-
-        for (let day = 1; day <= daysInMonth; day++) {
-            const dayCell = document.createElement('div');
-            dayCell.classList.add('calendar-day');
-            dayCell.innerHTML = `<div class="day-number">${day}</div><div class="day-events"></div>`;
-            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-            dayCell.dataset.date = dateStr;
-
-            if (state.events[dateStr]) {
-                const eventsContainer = dayCell.querySelector('.day-events');
-                state.events[dateStr].forEach(event => {
-                    const eventEl = document.createElement('div');
-                    eventEl.classList.add('day-event', event.eventType);
-                    eventEl.textContent = event.machine;
-                    eventsContainer.appendChild(eventEl);
-                });
-            }
-
-            dayCell.addEventListener('click', () => openEventModal(dateStr));
-            dom.calendar.grid.appendChild(dayCell);
-        }
-    }
-
-    function populateMachineSelect() {
-        if (!dom.calendar.machineSelect) return;
-        dom.calendar.machineSelect.innerHTML = '';
-        state.machines.forEach(machine => {
-            const option = document.createElement('option');
-            option.value = machine;
-            option.textContent = machine;
-            dom.calendar.machineSelect.appendChild(option);
-        });
-    }
-
-    function openEventModal(dateStr) {
-        if (!dom.calendar.modal || !dom.calendar.modalDateDisplay || !dom.calendar.eventForm) return;
-        dom.calendar.modal.classList.remove('hidden');
-        dom.calendar.modalDateDisplay.textContent = dateStr;
-        dom.calendar.eventForm.dataset.date = dateStr;
-    }
-
-    function handleEventSubmit(e) {
-        e.preventDefault();
-        if (!dom.calendar.machineSelect || !dom.calendar.eventTypeSelect) return;
-        
-        const date = e.target.dataset.date;
-        const machine = dom.calendar.machineSelect.value;
-        const eventType = dom.calendar.eventTypeSelect.value;
-        
-        if (!state.events[date]) {
-            state.events[date] = [];
-        }
-        state.events[date].push({ machine, eventType });
-        saveEvents();
-        renderCalendar();
-        if (dom.calendar.modal) dom.calendar.modal.classList.add('hidden');
-        
-        // Show feedback
-        if (dom.calendar.modalFeedback) {
-            dom.calendar.modalFeedback.textContent = `Event toegevoegd voor ${machine} op ${date}`;
-            setTimeout(() => {
-                if (dom.calendar.modalFeedback) dom.calendar.modalFeedback.textContent = '';
-            }, 3000);
-        }
-    }
-
     // --- Visualizer & Hulpprogramma's ---
-    function drawVisualizer() { 
-    requestAnimationFrame(drawVisualizer); 
-    if (!analyser || !state.isPlaying || !dom.visualizerCanvas) return; 
-    
-    if (!dom.visualizerCanvas || typeof dom.visualizerCanvas.getContext !== 'function') {
-        return;
+    function drawVisualizer() {
+        requestAnimationFrame(drawVisualizer);
+        if (!analyser || !state.isPlaying || !dom.visualizerCanvas) return;
+
+        if (!dom.visualizerCanvas || typeof dom.visualizerCanvas.getContext !== 'function') {
+            return;
+        }
+
+        const bufferLength = analyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+        analyser.getByteFrequencyData(dataArray);
+
+        const canvas = dom.visualizerCanvas;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = 'rgba(4, 19, 43, 0.14)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const baseRadius = Math.min(centerX, centerY) * 0.28;
+
+        ctx.lineCap = 'round';
+        ctx.shadowBlur = 24;
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.45)';
+
+        for (let i = 0; i < bufferLength; i++) {
+            const value = dataArray[i];
+            const amplitude = value / 255;
+            const angle = (i / bufferLength) * Math.PI * 2;
+            const radius = baseRadius + amplitude * Math.min(centerX, centerY) * 0.75;
+            const targetX = centerX + Math.cos(angle) * radius;
+            const targetY = centerY + Math.sin(angle) * radius;
+
+            ctx.lineWidth = 1.2 + amplitude * 3.4;
+            ctx.strokeStyle = `rgba(0, 0, 0, ${0.35 + amplitude * 0.55})`;
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(targetX, targetY);
+            ctx.stroke();
+        }
     }
-    
-    const bufferLength = analyser.frequencyBinCount; 
-    const dataArray = new Uint8Array(bufferLength); 
-    analyser.getByteFrequencyData(dataArray); 
-    
-    const canvas = dom.visualizerCanvas; 
-    const ctx = canvas.getContext('2d'); 
-    if (!ctx) return;
-    
-    // ZMIANA: Ustaw stałą wysokość canvas zamiast pełnego ekranu
-    canvas.width = window.innerWidth; 
-    canvas.height = 150;  // Stała wysokość zamiast window.innerHeight
-    
-    ctx.clearRect(0, 0, canvas.width, canvas.height); 
-    
-    const barWidth = (canvas.width / bufferLength) * 2.5; 
-    let x = 0; 
-    
-    for (let i = 0; i < bufferLength; i++) { 
-        // ZMIANA: Zmniejsz wysokość słupków
-        const barHeight = (dataArray[i] * 0.6);  // Zmniejszono z 1.5 na 0.6
-        
-        const gradient = ctx.createLinearGradient(0, canvas.height, 0, canvas.height - barHeight); 
-        gradient.addColorStop(0, '#008878'); 
-        gradient.addColorStop(1, '#D4FF3D'); 
-        ctx.fillStyle = gradient; 
-        
-        // Słupki rosną od dołu canvas
-        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight); 
-        x += barWidth + 1; 
-    } 
-}
     
     function formatTime(seconds) { 
         if (isNaN(seconds)) return "0:00"; 
@@ -1111,7 +1100,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Sticky Speler & Algemene UI
         if (dom.stickyPlayer.playPauseBtn) dom.stickyPlayer.playPauseBtn.addEventListener('click', togglePlayPause);
         if (dom.stickyPlayer.nextBtn) dom.stickyPlayer.nextBtn.addEventListener('click', playNextTrack);
-        if (dom.startBtn) dom.startBtn.addEventListener('click', startRadio);
         if (dom.themeSwitcher) {
             dom.themeSwitcher.addEventListener('click', (e) => { 
                 if (e.target.tagName === 'BUTTON') { 
@@ -1128,30 +1116,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         if (dom.errorRetryBtn) dom.errorRetryBtn.addEventListener('click', retryLoad);
 
-        // Weergave Navigatie
-        if (dom.navigation.toCalendarBtn) dom.navigation.toCalendarBtn.addEventListener('click', () => switchView('calendar'));
-        if (dom.navigation.toRadioBtn) dom.navigation.toRadioBtn.addEventListener('click', () => switchView('radio'));
-
-        // Kalender Listeners
-        if (dom.calendar.prevMonthBtn) {
-            dom.calendar.prevMonthBtn.addEventListener('click', () => { 
-                state.currentDate.setMonth(state.currentDate.getMonth() - 1); 
-                renderCalendar(); 
-            });
-        }
-        if (dom.calendar.nextMonthBtn) {
-            dom.calendar.nextMonthBtn.addEventListener('click', () => { 
-                state.currentDate.setMonth(state.currentDate.getMonth() + 1); 
-                renderCalendar(); 
-            });
-        }
-        if (dom.calendar.eventForm) dom.calendar.eventForm.addEventListener('submit', handleEventSubmit);
-        if (dom.calendar.modalCancelBtn) {
-            dom.calendar.modalCancelBtn.addEventListener('click', () => {
-                if (dom.calendar.modal) dom.calendar.modal.classList.add('hidden');
-            });
-        }
-
         // Systeem Events
         window.addEventListener('online', updateOfflineStatus);
         window.addEventListener('offline', updateOfflineStatus);
@@ -1166,9 +1130,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Toetsenbord & Touch
         window.addEventListener('keydown', (e) => { 
-            if (document.activeElement.tagName === 'TEXTAREA' || 
-                (dom.errorOverlay && !dom.errorOverlay.classList.contains('hidden')) || 
-                (dom.views.radio && dom.views.radio.classList.contains('hidden'))) return; 
+            if (document.activeElement.tagName === 'TEXTAREA' ||
+                (dom.errorOverlay && !dom.errorOverlay.classList.contains('hidden'))) return;
             
             if (e.code === 'Space') { 
                 e.preventDefault(); 
