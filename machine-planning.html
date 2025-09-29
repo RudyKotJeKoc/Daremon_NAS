@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Wywozu Maszyn - DAREMON ETS</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .planning-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .password-form {
+            background: var(--box-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 2px solid var(--primary-accent);
+            text-align: center;
+        }
+        .password-input {
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid var(--primary-accent);
+            border-radius: 5px;
+            background: #222;
+            color: #fff;
+            font-size: 16px;
+        }
+        .machine-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .machine-card {
+            background: var(--box-bg);
+            border: 1px solid var(--primary-accent);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+        .machine-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .machine-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-accent);
+        }
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .status-production { background: #ff6b6b; color: white; }
+        .status-ready { background: #51cf66; color: white; }
+        .status-transport { background: #339af0; color: white; }
+        .status-completed { background: #868e96; color: white; }
+        .form-group {
+            margin: 10px 0;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--tertiary-accent);
+            border-radius: 5px;
+            background: #222;
+            color: #fff;
+            box-sizing: border-box;
+        }
+        .deadline-info {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid #ff6b6b;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .deadline-info h3 {
+            color: #ff6b6b;
+            margin: 0 0 10px 0;
+        }
+        .save-btn {
+            background: var(--primary-accent);
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .save-btn:hover {
+            box-shadow: 0 0 15px var(--primary-accent);
+        }
+        .add-machine-btn {
+            background: var(--secondary-accent);
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin: 20px 0;
+        }
+        .export-btn {
+            background: var(--tertiary-accent);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        .days-remaining {
+            font-size: 0.8rem;
+            color: #ffd43b;
+            margin-top: 5px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #333;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-accent), var(--secondary-accent));
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body data-theme="arburg">
+    <div id="password-overlay" class="password-overlay">
+        <div class="password-form">
+            <h2>Dostęp do Planu Wywozu Maszyn</h2>
+            <p>Wprowadź hasło dostępu:</p>
+            <input type="password" id="password-input" class="password-input" placeholder="Hasło">
+            <br>
+            <button onclick="checkPassword()" class="save-btn">Zaloguj</button>
+            <div id="password-error" style="color: #ff6b6b; margin-top: 10px;"></div>
+        </div>
+    </div>
+
+    <div id="main-content" class="planning-container" style="display: none;">
+        <header style="text-align: center; margin-bottom: 30px;">
+            <h1>Plan Wywozu Maszyn - DAREMON ETS</h1>
+            <p>System planowania transportu i demontażu maszyn produkcyjnych</p>
+        </header>
+
+        <div class="deadline-info">
+            <h3>⚠️ Ważne Terminy</h3>
+            <p><strong>Koniec roku 2025:</strong> Pierwszy deadline - <span id="deadline1-days"></span></p>
+            <p><strong>Koniec marca 2026:</strong> Ostateczny deadline - <span id="deadline2-days"></span></p>
+        </div>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <button class="add-machine-btn" onclick="addNewMachine()">+ Dodaj Nową Maszynę</button>
+            <button class="export-btn" onclick="exportToExcel()">📊 Eksport do Excel</button>
+            <button class="export-btn" onclick="importFromExcel()">📁 Import z Excel</button>
+            <input type="file" id="file-input" accept=".xlsx,.xls" style="display: none;" onchange="handleFileImport(event)">
+        </div>
+
+        <div id="machines-grid" class="machine-grid">
+            <!-- Maszyny będą dodawane dynamicznie -->
+        </div>
+    </div>
+
+    <script>
+        // Dane maszyn
+        let machines = [];
+        const correctPassword = "Rampa";
+
+        // Sprawdzenie hasła
+        function checkPassword() {
+            const input = document.getElementById('password-input').value;
+            const errorDiv = document.getElementById('password-error');
+            
+            if (input === correctPassword) {
+                document.getElementById('password-overlay').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                loadMachines();
+                updateDeadlines();
+            } else {
+                errorDiv.textContent = 'Nieprawidłowe hasło!';
+                document.getElementById('password-input').value = '';
+            }
+        }
+
+        // Obsługa Enter w polu hasła
+        document.getElementById('password-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // Aktualizacja informacji o terminach
+        function updateDeadlines() {
+            const now = new Date();
+            const deadline1 = new Date('2025-12-31');
+            const deadline2 = new Date('2026-03-31');
+            
+            const days1 = Math.ceil((deadline1 - now) / (1000 * 60 * 60 * 24));
+            const days2 = Math.ceil((deadline2 - now) / (1000 * 60 * 60 * 24));
+            
+            document.getElementById('deadline1-days').textContent = `${days1} dni pozostało`;
+            document.getElementById('deadline2-days').textContent = `${days2} dni pozostało`;
+        }
+
+        // Ładowanie maszyn z localStorage
+        function loadMachines() {
+            const saved = localStorage.getItem('daremon_machines');
+            if (saved) {
+                machines = JSON.parse(saved);
+            } else {
+                // Domyślne maszyny
+                machines = [
+                    {
+                        id: 1,
+                        name: "CNC Alpha 001",
+                        productionEnd: "2025-11-15",
+                        disconnectDate: "2025-11-20",
+                        destination: "czech",
+                        status: "production",
+                        notes: "Główna linia produkcyjna"
+                    },
+                    {
+                        id: 2,
+                        name: "Laser Cutter Pro 002",
+                        productionEnd: "2025-12-10",
+                        disconnectDate: "2025-12-15",
+                        destination: "mexico",
+                        status: "production",
+                        notes: "Wymaga specjalnego transportu"
+                    },
+                    {
+                        id: 3,
+                        name: "Assembly Line 003",
+                        productionEnd: "2026-02-28",
+                        disconnectDate: "2026-03-05",
+                        destination: "scrap",
+                        status: "production",
+                        notes: "Do złomowania"
+                    }
+                ];
+            }
+            renderMachines();
+        }
+
+        // Zapisywanie maszyn do localStorage
+        function saveMachines() {
+            localStorage.setItem('daremon_machines', JSON.stringify(machines));
+        }
+
+        // Renderowanie maszyn
+        function renderMachines() {
+            const grid = document.getElementById('machines-grid');
+            grid.innerHTML = '';
+            
+            machines.forEach(machine => {
+                const card = createMachineCard(machine);
+                grid.appendChild(card);
+            });
+        }
+
+        // Tworzenie karty maszyny
+        function createMachineCard(machine) {
+            const card = document.createElement('div');
+            card.className = 'machine-card';
+            
+            const statusText = {
+                'production': 'W produkcji',
+                'ready': 'Gotowa do odłączenia',
+                'transport': 'W transporcie',
+                'completed': 'Zakończona'
+            };
+            
+            const destinationText = {
+                'czech': 'Czechy',
+                'mexico': 'Meksyk',
+                'scrap': 'Złom'
+            };
+
+            // Obliczanie dni do zakończenia produkcji
+            const now = new Date();
+            const endDate = new Date(machine.productionEnd);
+            const daysRemaining = Math.ceil((endDate - now) / (1000 * 60 * 60 * 24));
+            
+            // Obliczanie postępu (przykładowo na podstawie czasu)
+            const startDate = new Date('2025-08-22'); // Data rozpoczęcia planowania
+            const totalDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+            const elapsedDays = Math.ceil((now - startDate) / (1000 * 60 * 60 * 24));
+            const progress = Math.min(100, Math.max(0, (elapsedDays / totalDays) * 100));
+
+            card.innerHTML = `
+                <div class="machine-header">
+                    <div class="machine-name">${machine.name}</div>
+                    <div class="status-badge status-${machine.status}">${statusText[machine.status]}</div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Koniec produkcji:</label>
+                    <input type="date" value="${machine.productionEnd}" onchange="updateMachine(${machine.id}, 'productionEnd', this.value)">
+                    <div class="days-remaining">⏰ ${daysRemaining > 0 ? daysRemaining + ' dni pozostało' : 'Termin minął!'}</div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Data odłączenia:</label>
+                    <input type="date" value="${machine.disconnectDate}" onchange="updateMachine(${machine.id}, 'disconnectDate', this.value)">
+                </div>
+                
+                <div class="form-group">
+                    <label>Miejsce przeznaczenia:</label>
+                    <select onchange="updateMachine(${machine.id}, 'destination', this.value)">
+                        <option value="czech" ${machine.destination === 'czech' ? 'selected' : ''}>🇨🇿 Czechy</option>
+                        <option value="mexico" ${machine.destination === 'mexico' ? 'selected' : ''}>🇲🇽 Meksyk</option>
+                        <option value="scrap" ${machine.destination === 'scrap' ? 'selected' : ''}>♻️ Złom</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Status:</label>
+                    <select onchange="updateMachine(${machine.id}, 'status', this.value)">
+                        <option value="production" ${machine.status === 'production' ? 'selected' : ''}>W produkcji</option>
+                        <option value="ready" ${machine.status === 'ready' ? 'selected' : ''}>Gotowa do odłączenia</option>
+                        <option value="transport" ${machine.status === 'transport' ? 'selected' : ''}>W transporcie</option>
+                        <option value="completed" ${machine.status === 'completed' ? 'selected' : ''}>Zakończona</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Notatki:</label>
+                    <input type="text" value="${machine.notes}" onchange="updateMachine(${machine.id}, 'notes', this.value)" placeholder="Dodatkowe informacje...">
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${progress}%"></div>
+                </div>
+                <div style="font-size: 0.8rem; color: #aaa;">Postęp: ${progress.toFixed(1)}%</div>
+                
+                <button class="save-btn" onclick="deleteMachine(${machine.id})" style="background: #ff6b6b;">🗑️ Usuń</button>
+            `;
+            
+            return card;
+        }
+
+        // Aktualizacja maszyny
+        function updateMachine(id, field, value) {
+            const machine = machines.find(m => m.id === id);
+            if (machine) {
+                machine[field] = value;
+                saveMachines();
+                renderMachines();
+            }
+        }
+
+        // Dodawanie nowej maszyny
+        function addNewMachine() {
+            const name = prompt('Nazwa maszyny:');
+            if (name) {
+                const newId = Math.max(...machines.map(m => m.id), 0) + 1;
+                const newMachine = {
+                    id: newId,
+                    name: name,
+                    productionEnd: new Date().toISOString().split('T')[0],
+                    disconnectDate: new Date().toISOString().split('T')[0],
+                    destination: 'czech',
+                    status: 'production',
+                    notes: ''
+                };
+                machines.push(newMachine);
+                saveMachines();
+                renderMachines();
+            }
+        }
+
+        // Usuwanie maszyny
+        function deleteMachine(id) {
+            if (confirm('Czy na pewno chcesz usunąć tę maszynę?')) {
+                machines = machines.filter(m => m.id !== id);
+                saveMachines();
+                renderMachines();
+            }
+        }
+
+        // Eksport do Excel (symulacja)
+        function exportToExcel() {
+            const csvContent = "data:text/csv;charset=utf-8," 
+                + "Nazwa,Koniec produkcji,Data odłączenia,Przeznaczenie,Status,Notatki\n"
+                + machines.map(m => `"${m.name}","${m.productionEnd}","${m.disconnectDate}","${m.destination}","${m.status}","${m.notes}"`).join("\n");
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "plan_wywozu_maszyn.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Import z Excel
+        function importFromExcel() {
+            document.getElementById('file-input').click();
+        }
+
+        function handleFileImport(event) {
+            const file = event.target.files[0];
+            if (file) {
+                alert('Funkcja importu będzie dostępna w pełnej wersji. Aktualnie można dodawać maszyny ręcznie.');
+            }
+        }
+
+        // Inicjalizacja
+        updateDeadlines();
+        setInterval(updateDeadlines, 60000); // Aktualizacja co minutę
+    </script>
+</body>
+</html>

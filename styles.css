@@ -1,0 +1,450 @@
+/* --- Globalne Style i Nowa Paleta (Arburg + DJ Bóbr) --- */
+:root {
+    /* Główna paleta industrialno-leśna */
+    --bg-dark: #1A1A1A;
+    --bg-forest: #004225;
+    --primary-green: #008878; /* Główny zielony, inspirowany Arburg */
+    --accent-brown: #5C3A21; /* Akcent brązowy, "bobrowy" */
+    
+    /* Paleta Rave dla akcentów i motywu specjalnego */
+    --rave-lime: #D4FF3D;
+    --rave-magenta: #FF00FF;
+
+    --text-color: #f0f0f0;
+    --box-bg: rgba(20, 20, 20, 0.85);
+    --font-family: 'Orbitron', sans-serif;
+
+    /* Domyślne wartości, które będą nadpisywane przez motywy */
+    --primary-accent: var(--primary-green);
+    --secondary-accent: var(--rave-lime);
+    --tertiary-accent: var(--accent-brown);
+}
+
+/* --- Nowe Motywy --- */
+[data-theme="arburg"] {
+    --primary-accent: var(--primary-green);
+    --secondary-accent: var(--rave-lime);
+    --tertiary-accent: var(--accent-brown);
+}
+
+[data-theme="rave"] {
+    --primary-accent: var(--rave-lime);
+    --secondary-accent: var(--rave-magenta);
+    --tertiary-accent: var(--primary-green);
+}
+
+
+body {
+    font-family: var(--font-family);
+    color: var(--text-color);
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* ZMIANA: Zapewnia pionowy układ elementów body */
+    align-items: center;    /* ZMIANA: Centruje zawartość w poziomie */
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: background-color 0.5s, color 0.5s;
+
+    /* Nowe tło z gradientem i subtelną teksturą */
+    background-color: var(--bg-dark);
+    background-image: 
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        radial-gradient(circle at center, var(--bg-forest) 0%, var(--bg-dark) 80%);
+    background-size: 20px 20px, 100% 100%;
+    background-attachment: fixed;
+}
+
+
+#visualizer-canvas {
+    position: fixed;
+    bottom: 0;  /* Zmiana z top: 0 na bottom: 0 */
+    left: 0;
+    width: 100%;
+    height: 150px;  /* Zmiana z 100% na konkretną wysokość */
+    z-index: 0;  /* Może być 0 lub -1 */
+    opacity: 0.8;  /* Możesz zwiększyć widoczność */
+    pointer-events: none;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+}
+
+/* --- Animaties --- */
+@keyframes neon-flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        text-shadow:
+            0 0 4px #fff, 0 0 10px var(--primary-accent), 0 0 18px var(--primary-accent);
+        color: var(--primary-accent);
+    }
+    20%, 24%, 55% { 
+        text-shadow: none;
+        color: var(--text-color);
+    }
+}
+
+@keyframes pulse-glow {
+    0% { box-shadow: 0 0 8px var(--primary-accent), inset 0 0 8px rgba(0,0,0,0.5); border-color: var(--primary-accent); }
+    50% { box-shadow: 0 0 16px var(--secondary-accent), inset 0 0 8px rgba(0,0,0,0.5); border-color: var(--secondary-accent); }
+    100% { box-shadow: 0 0 8px var(--primary-accent), inset 0 0 8px rgba(0,0,0,0.5); border-color: var(--primary-accent); }
+}
+
+@keyframes liked-pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); box-shadow: 0 0 20px var(--primary-accent); }
+    100% { transform: scale(1); }
+}
+
+/* --- Toegankelijkheid (Accessibility) --- */
+:focus-visible {
+    outline: 2px solid var(--secondary-accent);
+    box-shadow: 0 0 15px var(--secondary-accent);
+}
+
+/* --- Hoofdlayout --- */
+#app-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    gap: 20px;
+}
+
+#radio-view {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+#main-content {
+    flex-grow: 1;
+    z-index: 2;
+}
+
+.content-box {
+    background: var(--box-bg);
+    border: 1px solid var(--primary-accent);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    animation: pulse-glow 5s infinite alternate;
+}
+
+/* --- Header --- */
+header h1 {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--text-color);
+    text-shadow: 0 0 8px var(--primary-accent);
+}
+
+header p {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    color: var(--text-color);
+    letter-spacing: 2px;
+    text-shadow: 0 0 5px var(--tertiary-accent);
+}
+
+/* --- Speler --- */
+#player-ui { display: flex; gap: 1.5rem; align-items: center; }
+#track-cover { 
+    width: 120px; 
+    height: 120px; 
+    border-radius: 0.5rem; 
+    object-fit: cover; 
+    border: 2px solid var(--secondary-accent); 
+    transition: all 0.3s; 
+}
+#track-info { flex-grow: 1; text-align: left; }
+#track-title { margin: 0; font-size: 1.5rem; color: var(--primary-accent); transition: color 0.3s; }
+#track-artist { margin: 0.25rem 0 1rem; }
+.fade-out { opacity: 0; transform: scale(0.95); }
+
+#progress-container { background: #333; border-radius: 5px; height: 8px; width: 100%; overflow: hidden; cursor: pointer; }
+#progress-bar { background: var(--primary-accent); width: 0%; height: 100%; border-radius: 5px; transition: width 0.25s linear; }
+#time-container { display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 0.25rem; }
+
+#player-controls { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+.control-btn { background: none; border: 2px solid var(--secondary-accent); color: var(--text-color); border-radius: 50%; width: 50px; height: 50px; font-size: 1.5rem; cursor: pointer; transition: all 0.2s ease; }
+.control-btn:hover { background: var(--secondary-accent); color: #000; box-shadow: 0 0 15px var(--secondary-accent); transform: scale(1.1); }
+#like-btn { border-color: var(--primary-accent); width: auto; border-radius: 25px; padding: 0 1rem; font-size: 1rem; }
+#like-btn:hover { background: var(--primary-accent); color: #000; }
+#like-btn.liked-animation { animation: liked-pulse 0.4s ease-in-out; }
+
+#volume-slider::-webkit-slider-thumb { background: var(--primary-accent); }
+
+/* --- Beoordelingssectie --- */
+.star-rating:hover svg { color: var(--secondary-accent); }
+.star-rating svg.active { color: var(--primary-accent); }
+#comment-form textarea { border: 1px solid var(--tertiary-accent); }
+#comment-form button { background: var(--tertiary-accent); }
+
+/* --- Zijpaneel (Drawer) --- */
+#side-panel { 
+    width: 300px; 
+    position: relative; 
+    flex-shrink: 0; 
+}
+#menu-toggle { display: none; }
+.side-panel-list { list-style: none; padding: 0; margin: 0; max-height: 150px; overflow-y: auto; }
+.side-panel-list li { padding: 8px; border-bottom: 1px solid #333; font-size: 0.9em; transition: background-color 0.2s; }
+.interactive-list li { cursor: pointer; }
+.interactive-list li:hover { background-color: rgba(0, 136, 120, 0.2); }
+#golden-records-list li, #top-rated-list li {
+    color: #ffd700;
+    text-shadow: 0 0 5px #ffd700;
+}
+#golden-records-list li::before, #top-rated-list li::before {
+    content: '⭐';
+    margin-right: 8px;
+}
+#top-rated-list li {
+    color: var(--primary-accent);
+    text-shadow: 0 0 5px var(--primary-accent);
+}
+
+/* --- Berichtenmodule --- */
+#dj-message-form textarea { border: 1px solid var(--tertiary-accent); }
+#dj-message-form button { background: var(--primary-accent); }
+#messages-list b { color: var(--primary-accent); }
+#messages-list .ai-response { border-left: 2px solid var(--primary-accent); }
+
+/* --- Thema's --- */
+.theme-switcher { display: flex; gap: 10px; justify-content: center; }
+.theme-switcher button { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--text-color); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+.theme-switcher button:hover { transform: scale(1.1); box-shadow: 0 0 10px #fff; }
+#theme-arburg { background: linear-gradient(45deg, var(--primary-green), var(--accent-brown)); }
+#theme-rave { background: linear-gradient(45deg, var(--rave-lime), var(--rave-magenta)); }
+
+/* --- Autoplay & Fout Overlay --- */
+#start-btn { border: 3px solid var(--primary-accent); color: var(--primary-accent); }
+#start-btn:hover, #start-btn:disabled { background: var(--primary-accent); color: var(--bg-dark); box-shadow: 0 0 25px var(--primary-accent); }
+#offline-indicator { background-color: var(--secondary-accent); color: #000; }
+#error-message-box { border: 2px solid var(--secondary-accent); }
+#error-message-box button { border: 2px solid var(--primary-accent); color: var(--primary-accent); }
+#error-message-box button:hover { background: var(--primary-accent); color: var(--bg-dark); }
+
+/* --- POPRAWKA: Dodano brakujące style dla Sticky Player --- */
+#sticky-player {
+    position: fixed;
+    bottom: -100px; /* Ukryty na starcie */
+    left: 0;
+    width: 100%;
+    background: var(--box-bg);
+    border-top: 2px solid var(--primary-accent);
+    padding: 10px 20px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 999;
+    transition: bottom 0.3s ease-in-out, visibility 0.3s;
+    visibility: hidden;
+}
+#sticky-player.visible {
+    bottom: 0; /* Widoczny na dole */
+    visibility: visible;
+}
+#sticky-progress-bar { 
+    background: var(--primary-accent); 
+}
+
+/* --- Kalender & Navigatie --- */
+.nav-btn { background: var(--tertiary-accent); }
+.nav-btn:hover { box-shadow: 0 0 15px var(--tertiary-accent); }
+#calendar-header button { border: 2px solid var(--primary-accent); color: var(--primary-accent); }
+.calendar-day-header { color: var(--secondary-accent); }
+.day-event.disconnect { background-color: var(--secondary-accent); color: #000; }
+.day-event.transport { background-color: var(--tertiary-accent); color: #fff; }
+#event-modal-content { border: 2px solid var(--primary-accent); }
+#event-form select { border: 1px solid var(--tertiary-accent); }
+#modal-buttons button[type="submit"] { background: var(--primary-accent); color: #000; }
+
+/* Pozostałe style bez zmian... */
+.hidden { display: none !important; }
+body, #app-container, #main-content, #player-ui, #player-controls, #side-panel, #calendar-view { transition: all 0.3s ease-in-out; }
+#listener-count-display { color: var(--tertiary-accent); text-shadow: 0 0 4px var(--tertiary-accent); margin: -0.5rem 0 1rem; font-size: 1rem; }
+#volume-control { display: flex; align-items: center; }
+#volume-slider { -webkit-appearance: none; appearance: none; width: 100px; height: 5px; background: #333; outline: none; border-radius: 5px; cursor: pointer; transition: 0.2s; }
+#volume-slider:hover { opacity: 1; }
+#rating-section { margin-top: 1rem; padding-top: 0.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+#average-rating-display { font-size: 0.8em; color: #aaa; margin-bottom: 5px; min-height: 1.2em; }
+.star-rating { display: flex; gap: 4px; cursor: pointer; color: #555; width: fit-content; }
+.star-rating svg { width: 24px; height: 24px; transition: color 0.2s, transform 0.1s; }
+.star-rating svg:hover ~ svg { color: #555; }
+#comment-form { margin-top: 10px; transition: opacity 0.3s; }
+#comment-form.hidden { display: none; }
+#comment-form textarea { width: 100%; background: #222; color: #fff; border-radius: 5px; padding: 8px; box-sizing: border-box; font-family: 'Orbitron', sans-serif; resize: vertical; min-height: 50px; }
+#comment-form button:hover { box-shadow: 0 0 15px var(--tertiary-accent); }
+#messages-list { list-style: none; padding: 0; margin-top: 15px; max-height: 200px; overflow-y: auto; text-align: left; font-size: 0.8em; }
+#messages-list li { padding: 8px; border-bottom: 1px solid #333; opacity: 0; animation: fadeInMessage 0.5s forwards; }
+#messages-list i { color: #888; }
+@keyframes fadeInMessage { to { opacity: 1; } }
+.section-intro {
+    font-size: 0.85em;
+    color: #cccccc;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+}
+#song-dedication-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+#song-dedication-form textarea,
+#song-dedication-form input {
+    width: 100%;
+    background: #222;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    font-family: 'Orbitron', sans-serif;
+    box-sizing: border-box;
+}
+#song-dedication-form textarea:focus,
+#song-dedication-form input:focus {
+    border-color: var(--secondary-accent);
+    outline: none;
+}
+#song-dedication-form button {
+    align-self: flex-start;
+    padding: 0.6rem 1.5rem;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-weight: 700;
+    background: var(--secondary-accent);
+    color: #000;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+#song-dedication-form button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 15px var(--secondary-accent);
+}
+.form-feedback {
+    font-size: 0.75em;
+    min-height: 1.2em;
+    margin-top: 0.5rem;
+    color: var(--secondary-accent);
+}
+.form-feedback.error {
+    color: #ff6b6b;
+}
+#song-dedication-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-height: 220px;
+    overflow-y: auto;
+    font-size: 0.8em;
+}
+#song-dedication-list li {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.04);
+}
+#song-dedication-list li .song-dedication-name {
+    display: block;
+    font-weight: 700;
+    color: var(--secondary-accent);
+    margin-bottom: 0.35rem;
+}
+#song-dedication-list li .song-dedication-words {
+    display: block;
+    line-height: 1.4;
+    color: #e0e0e0;
+}
+#song-dedication-list li .song-dedication-time {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.7em;
+    color: #888;
+}
+#song-dedication-list li.empty-state {
+    text-align: center;
+    font-style: italic;
+    color: #888;
+}
+#autoplay-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 100; text-align: center; transition: opacity 0.5s ease-out; }
+#welcome-greeting { font-size: 1.2rem; margin-bottom: 20px; max-width: 80%; }
+#sticky-player-info { text-align: left; flex-grow: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#sticky-player-info h5 { margin: 0; font-size: 1rem; color: var(--text-color); }
+#sticky-track-cover { width: 40px; height: 40px; border-radius: 4px; }
+#sticky-player-controls .control-btn { width: 40px; height: 40px; font-size: 1rem; }
+#sticky-progress-container { background: #333; border-radius: 5px; height: 4px; width: 100%; margin-top: 5px; overflow: hidden; }
+#error-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 20px; box-sizing: border-box; text-align: center; opacity: 1; transition: opacity 0.3s; }
+#error-overlay.hidden { opacity: 0; pointer-events: none; }
+#calendar-view { width: 100%; max-width: 900px; }
+#calendar-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem; }
+#calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; padding-bottom: 10px; }
+.calendar-day { background: rgba(255, 255, 255, 0.05); border: 1px solid #333; min-height: 120px; padding: 8px; font-size: 0.9em; cursor: pointer; transition: background-color 0.2s; display: flex; flex-direction: column; }
+.calendar-day:hover { background: rgba(255, 255, 255, 0.15); }
+.calendar-day.other-month { opacity: 0.4; cursor: default; }
+.calendar-day .day-number { font-weight: bold; }
+.day-events { margin-top: 5px; font-size: 0.8em; flex-grow: 1; max-height: 80px; overflow-y: auto; }
+.day-event { padding: 3px; border-radius: 3px; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#event-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; justify-content: center; align-items: center; z-index: 2000; }
+#event-modal-content h3, #event-modal-content p { text-align: center; }
+#event-form label { display: block; margin-top: 1rem; margin-bottom: 0.5rem; }
+#modal-buttons { display: flex; justify-content: space-between; margin-top: 1.5rem; }
+#modal-buttons button { padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; font-family: var(--font-family); font-weight: bold; }
+#modal-buttons button[type="button"] { background: #555; color: #fff; }
+#hotkeys-info { text-align: center; font-size: 0.8rem; padding: 0.75rem; color: #777; }
+#main-footer { text-align: center; margin-top: 1rem; color: #555; font-size: 0.8rem; }
+.disclaimer-text { font-size: 0.7em; opacity: 0.6; text-align: center; margin-top: 10px; }
+.disclaimer-highlight { color: var(--secondary-accent); font-weight: bold; }
+
+/* --- Responsiviteit --- */
+@media (max-width: 900px) {
+    body { padding: 10px; padding-bottom: 80px; }
+    #app-container { flex-direction: column; }
+    
+    #radio-view { flex-direction: column; }
+
+    #side-panel { 
+        width: 100%; 
+        order: 3;
+        position: fixed; 
+        top: 0; 
+        left: -100%;
+        height: 100%; 
+        background: #111; 
+        z-index: 1000; 
+        padding: 20px; 
+        box-shadow: 10px 0 20px rgba(0,0,0,0.5); 
+        transition: left 0.3s ease-in-out; 
+        overflow-y: auto; 
+        box-sizing: border-box;
+    }
+    #side-panel.open { left: 0; }
+    #main-content { max-width: 100%; }
+    #player-ui { flex-direction: column; text-align: center; }
+    #track-cover { width: 150px; height: 150px; }
+    
+    #menu-toggle { 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        position: fixed; 
+        top: 15px; 
+        right: 15px; 
+        z-index: 1001; 
+        background: var(--box-bg); 
+        border: 1px solid var(--primary-accent); 
+        color: var(--primary-accent); 
+        width: 50px; 
+        height: 50px; 
+        border-radius: 50%; 
+        font-size: 24px; 
+        cursor: pointer; 
+    }
+    .calendar-day { min-height: 80px; }
+}

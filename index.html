@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAREMON Radio ETS</title>
+    
+    <meta name="description" content="Het officiële bedrijfsradiostation DAREMON ETS. Een energieke dosis humor, technologie en de beste muziek. Luister live!">
+    <meta name="theme-color" content="#1A1A1A">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- SEO & Social Media -->
+    <meta property="og:title" content="DAREMON Radio ETS">
+    <meta property="og:description" content="De beste bedrijfsradio vol humor en zorgvuldig geselecteerde energie.">
+    <meta property="og:image" content="https://placehold.co/1200x1200/1A1A1A/008878?text=DAREMON+Radio">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+    
+    <!-- Fonts and Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- GSAP Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
+</head>
+<body data-theme="arburg">
+    
+    <canvas id="visualizer-canvas"></canvas>
+    <div id="offline-indicator" class="hidden" aria-live="assertive" data-i18n-key="offlineMessage"></div>
+
+    <div id="app-container">
+        <!-- Main Radio Player View -->
+        <div id="radio-view">
+            
+            <!-- ZMIANA: Panel boczny przeniesiony na lewą stronę -->
+            <aside id="side-panel">
+                <button id="menu-toggle" data-i18n-aria-label="menuToggleLabel">☰</button>
+                <div id="drawer-menu">
+                    <section class="content-box">
+                        <h3 data-i18n-key="recentlyPlayed"></h3>
+                        <ul id="history-list" class="side-panel-list" aria-live="polite"></ul>
+                    </section>
+
+                    <section class="content-box">
+                        <h3 data-i18n-key="topRated"></h3>
+                        <ul id="top-rated-list" class="side-panel-list interactive-list"></ul>
+                    </section>
+                    
+                    <section class="content-box">
+                        <h3 data-i18n-key="goldenRecords"></h3>
+                        <ul id="golden-records-list" class="side-panel-list interactive-list"></ul>
+                    </section>
+
+                    <section class="content-box">
+                        <h3 data-i18n-key="messageToDJ"></h3>
+                        <form id="dj-message-form">
+                            <textarea id="dj-message-input" name="message" rows="3" data-i18n-placeholder="djMessagePlaceholder" maxlength="200" required aria-required="true"></textarea>
+                            <button type="submit" data-i18n-key="sendMessage"></button>
+                        </form>
+                        <ul id="messages-list" aria-live="polite"></ul>
+                        <p class="disclaimer-text">
+                            <span class="disclaimer-highlight" data-i18n-key="disclaimerHighlight"></span> <span data-i18n-key="disclaimerText"></span>
+                        </p>
+                    </section>
+
+                    <section class="content-box">
+                        <h3 data-i18n-key="songDedicationTitle"></h3>
+                        <p class="section-intro" data-i18n-key="songDedicationIntro"></p>
+                        <form id="song-dedication-form">
+                            <label for="song-words-input" data-i18n-key="songWordsLabel"></label>
+                            <textarea id="song-words-input" name="songWords" rows="3" maxlength="250" data-i18n-placeholder="songWordsPlaceholder" required aria-required="true"></textarea>
+                            <label for="song-name-input" data-i18n-key="songNameLabel"></label>
+                            <input id="song-name-input" name="songName" type="text" maxlength="60" data-i18n-placeholder="songNamePlaceholder" required aria-required="true" />
+                            <button type="submit" data-i18n-key="songDedicationSubmit"></button>
+                        </form>
+                        <p id="song-dedication-feedback" class="form-feedback" aria-live="polite"></p>
+                        <ul id="song-dedication-list" aria-live="polite"></ul>
+                    </section>
+
+                    <section class="content-box">
+                        <h3 data-i18n-key="changeTheme"></h3>
+                        <div class="theme-switcher">
+                            <button id="theme-arburg" data-i18n-title="themeArburg" data-i18n-aria-label="themeArburgLabel"></button>
+                            <button id="theme-rave" data-i18n-title="themeRave" data-i18n-aria-label="themeRaveLabel"></button>
+                        </div>
+                    </section>
+                    
+                    <section class="content-box">
+                        <h3 data-i18n-key="tools"></h3>
+                        <button id="calendar-view-btn" class="nav-btn" data-i18n-key="evacuationCalendar"></button>
+                    </section>
+                </div>
+            </aside>
+
+            <main id="main-content">
+                <header>
+                    <h1>DAREMON Radio ETS</h1>
+                    <p data-i18n-key="headerSubtitle"></p>
+                    <p id="listener-count-display"><span data-i18n-key="listenersLabel"></span> <span id="listener-count">...</span></p>
+                </header>
+
+                <section id="now-playing-section" class="content-box">
+                    <div id="player-ui">
+                        <img id="track-cover" src="https://placehold.co/120x120/1A1A1A/008878?text=ETS" alt="Okładka aktualnego utworu">
+                        <div id="track-info">
+                            <h2 id="track-title" aria-live="polite" data-i18n-key="trackTitleDefault"></h2>
+                            <h3 id="track-artist" data-i18n-key="trackArtistDefault"></h3>
+                            <div id="progress-container" role="slider" data-i18n-aria-label="progressBarLabel" tabindex="0">
+                                <div id="progress-bar"></div>
+                            </div>
+                            <div id="time-container">
+                                <span id="current-time">0:00</span>
+                                <span id="time-remaining">-0:00</span>
+                            </div>
+                            <div id="rating-section">
+                                <div id="average-rating-display"></div>
+                                <div class="star-rating" data-i18n-aria-label="ratingLabel"></div>
+                                <form id="comment-form" class="hidden">
+                                    <textarea id="comment-input" data-i18n-placeholder="commentPlaceholder" maxlength="200"></textarea>
+                                    <button type="submit" data-i18n-key="submitReview"></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="player-controls">
+                        <button id="play-pause-btn" class="control-btn" data-i18n-title="playPauseTooltip" data-i18n-aria-label="playPauseLabel">▶️</button>
+                        <button id="next-btn" class="control-btn" data-i18n-title="nextTooltip" data-i18n-aria-label="nextLabel">⏭️</button>
+                        <button id="like-btn" class="control-btn" data-i18n-title="likeTooltip" data-i18n-aria-label="likeLabel">👍 <span id="like-count">0</span></button>
+                        <div id="volume-control" data-i18n-title="volumeTooltip">
+                            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" data-i18n-aria-label="volumeLabel">
+                        </div>
+                        <button id="tv-mode-btn" class="control-btn" data-i18n-title="fullscreenTooltip" data-i18n-aria-label="fullscreenLabel" disabled>📺</button>
+                    </div>
+                </section>
+                <div id="hotkeys-info" data-i18n-key="hotkeysInfo"></div>
+            </main>
+
+        </div>
+        
+        <div id="calendar-view" class="hidden">
+            <header>
+                <h1 data-i18n-key="evacuationCalendar"></h1>
+                <button id="radio-view-btn" class="nav-btn" data-i18n-key="backToRadio"></button>
+            </header>
+            <section id="calendar-section" class="content-box">
+                <div id="calendar-header">
+                    <button id="prev-month-btn">‹</button>
+                    <h2 id="month-year-display"></h2>
+                    <button id="next-month-btn">›</button>
+                </div>
+                <div id="calendar-grid"></div>
+            </section>
+        </div>
+
+    </div>
+
+    <div id="sticky-player">
+        <img id="sticky-track-cover" src="https://placehold.co/40x40/1A1A1A/008878?text=ETS" alt="Okładka utworu na przypiętym odtwarzaczu">
+        <div id="sticky-player-info">
+            <h5 id="sticky-track-title" data-i18n-key="trackTitleDefault"></h5>
+             <div id="sticky-progress-container">
+                <div id="sticky-progress-bar"></div>
+            </div>
+        </div>
+        <div id="sticky-player-controls">
+            <button id="sticky-play-pause-btn" class="control-btn" data-i18n-aria-label="playPauseLabel">▶️</button>
+            <button id="sticky-next-btn" class="control-btn" data-i18n-aria-label="nextLabel">⏭️</button>
+        </div>
+    </div>
+    
+    <div id="autoplay-overlay">
+        <div id="welcome-greeting"></div>
+        <button id="start-btn" data-i18n-key="startBtn"></button>
+    </div>
+
+    <div id="error-overlay" class="hidden">
+        <div id="error-message-box">
+             <div id="error-message"></div>
+             <button id="error-retry-btn" class="hidden" data-i18n-key="retryBtn"></button>
+             <button id="error-close-btn">OK</button>
+        </div>
+    </div>
+    
+    <!-- Fixed Modal for Calendar Events -->
+    <div id="event-modal" class="hidden">
+        <div id="event-modal-content">
+            <h3 data-i18n-key="planEvent"></h3>
+            <p id="modal-date-display"></p>
+            <form id="modal-note-form">
+                <label for="modal-name-input" data-i18n-key="machine"></label>
+                <select id="modal-name-input" required></select>
+                
+                <label for="modal-note-input" data-i18n-key="eventType"></label>
+                <select id="modal-note-input" required>
+                    <option value="disconnect" data-i18n-key="eventDisconnect"></option>
+                    <option value="transport" data-i18n-key="eventTransport"></option>
+                </select>
+                
+                <div id="modal-buttons">
+                    <button type="submit" data-i18n-key="saveBtn"></button>
+                    <button type="button" id="modal-cancel-btn" data-i18n-key="cancelBtn"></button>
+                </div>
+                <p id="modal-feedback"></p>
+            </form>
+        </div>
+    </div>
+
+    <noscript>
+        <div style="background-color: #0d0d0d; color: white; text-align: center; padding: 2rem; font-family: sans-serif;">
+            <h1>DAREMON Radio ETS</h1>
+            <p data-i18n-key="noScript"></p>
+        </div>
+    </noscript>
+
+    <footer id="main-footer">
+        <p data-i18n-key="footerDisclaimer"></p>
+        <p class="disclaimer-text" data-i18n-key="footerDisclaimer2"></p>
+    </footer>
+
+    <script src="app.js" defer></script>
+</body>
+</html>

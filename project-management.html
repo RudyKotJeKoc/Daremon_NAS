@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer Boxtel NL - System Zarządzania Projektem</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .dashboard-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            transition: width 0.5s ease;
+        }
+        
+        .tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 15px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: transparent;
+            color: #fff;
+            font-size: 1rem;
+        }
+        
+        .tab.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .kanban-board {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .kanban-column {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 400px;
+        }
+        
+        .kanban-header {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .task-card {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .task-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .task-card.high-priority {
+            border-left-color: #f44336;
+        }
+        
+        .task-card.medium-priority {
+            border-left-color: #ff9800;
+        }
+        
+        .task-card.low-priority {
+            border-left-color: #4CAF50;
+        }
+        
+        .task-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .task-meta {
+            font-size: 0.9rem;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .equipment-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .equipment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .equipment-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .status-planned { background: #2196F3; }
+        .status-dismantling { background: #ff9800; }
+        .status-ready { background: #4CAF50; }
+        .status-shipped { background: #9C27B0; }
+        .status-delivered { background: #607D8B; }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .gantt-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+        
+        .gantt-chart {
+            min-width: 800px;
+            display: grid;
+            grid-template-rows: repeat(auto, 40px);
+            gap: 5px;
+        }
+        
+        .gantt-row {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+            padding: 5px;
+        }
+        
+        .gantt-label {
+            font-size: 0.9rem;
+            padding: 0 10px;
+        }
+        
+        .gantt-bar-container {
+            position: relative;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .gantt-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 10px;
+            position: absolute;
+            top: 0;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            color: #333;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .kanban-board {
+                grid-template-columns: 1fr;
+            }
+            
+            .equipment-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🏭 Transfer Boxtel NL</h1>
+            <p>System Zarządzania Projektem Zamknięcia i Transferu Zakładu</p>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h3>📊 Ogólny Postęp Projektu</h3>
+                <div class="stat-number" id="overall-progress">0%</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="overall-progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <h3>📋 Zadania wg Statusu</h3>
+                <div style="font-size: 0.9rem;">
+                    <div>Do zrobienia: <span id="todo-count">0</span></div>
+                    <div>W toku: <span id="inprogress-count">0</span></div>
+                    <div>Zakończone: <span id="done-count">0</span></div>
+                    <div>Zablokowane: <span id="blocked-count">0</span></div>
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <h3>🏭 Sprzęt wg Kategorii</h3>
+                <div style="font-size: 0.9rem;">
+                    <div>Wtryskarki: <span id="injection-count">0</span></div>
+                    <div>Cleanroom: <span id="cleanroom-count">0</span></div>
+                    <div>Stamping: <span id="stamping-count">0</span></div>
+                    <div>Infrastruktura: <span id="infrastructure-count">0</span></div>
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <h3>👥 Obciążenie Zespołu</h3>
+                <div style="font-size: 0.9rem;">
+                    <div>Roy: <span id="roy-tasks">0</span> zadań</div>
+                    <div>Zespół ETS: <span id="ets-tasks">0</span> zadań</div>
+                    <div>Duif: <span id="duif-tasks">0</span> zadań</div>
+                    <div>Koot: <span id="koot-tasks">0</span> zadań</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button class="btn btn-primary" onclick="addNewTask()">➕ Dodaj Zadanie</button>
+            <button class="btn btn-primary" onclick="addNewEquipment()">🏭 Dodaj Sprzęt</button>
+            <button class="btn btn-secondary" onclick="exportData()">📊 Eksport Danych</button>
+            <button class="btn btn-secondary" onclick="importData()">📁 Import CSV</button>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('kanban')">📋 Tablica Kanban</button>
+            <button class="tab" onclick="switchTab('gantt')">📅 Wykres Gantta</button>
+            <button class="tab" onclick="switchTab('equipment')">🏭 Baza Sprzętu</button>
+        </div>
+
+        <!-- Kanban Board -->
+        <div id="kanban-tab" class="tab-content active">
+            <div class="kanban-board">
+                <div class="kanban-column">
+                    <div class="kanban-header">📝 Do Zrobienia</div>
+                    <div id="todo-column" class="kanban-tasks"></div>
+                </div>
+                <div class="kanban-column">
+                    <div class="kanban-header">🔄 W Toku</div>
+                    <div id="inprogress-column" class="kanban-tasks"></div>
+                </div>
+                <div class="kanban-column">
+                    <div class="kanban-header">🚫 Zablokowane</div>
+                    <div id="blocked-column" class="kanban-tasks"></div>
+                </div>
+                <div class="kanban-column">
+                    <div class="kanban-header">✅ Zakończone</div>
+                    <div id="done-column" class="kanban-tasks"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gantt Chart -->
+        <div id="gantt-tab" class="tab-content">
+            <div class="gantt-container">
+                <h3 style="margin-bottom: 20px;">📅 Harmonogram Projektu</h3>
+                <div id="gantt-chart" class="gantt-chart"></div>
+            </div>
+        </div>
+
+        <!-- Equipment Database -->
+        <div id="equipment-tab" class="tab-content">
+            <div id="equipment-grid" class="equipment-grid"></div>
+        </div>
+    </div>
+
+    <!-- Modal for Task/Equipment Forms -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modal-title">Dodaj Zadanie</h3>
+            <form id="modal-form">
+                <div id="modal-fields"></div>
+                <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Anuluj</button>
+                    <button type="submit" class="btn btn-primary">Zapisz</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hidden file input -->
+    <input type="file" id="file-input" accept=".csv" style="display: none;" onchange="handleFileImport(event)">
+
+    <script>
+        // Data structures
+        let tasks = [];
+        let equipment = [];
+        let currentTab = 'kanban';
+
+        // Sample data initialization
+        function initializeData() {
+            tasks = [
+                {
+                    id: 1,
+                    name: "Przygotowanie wtryskarki MC22 do transportu",
+                    status: "todo",
+                    assignee: "Roy",
+                    category: "Wtryskarki",
+                    priority: "high",
+                    startDate: "2025-01-15",
+                    endDate: "2025-01-30",
+                    equipmentId: 1,
+                    notes: "Wymaga specjalnego demontażu"
+                },
+                {
+                    id: 2,
+                    name: "Demontaż Cleanroom Lijn 1",
+                    status: "inprogress",
+                    assignee: "Zespół ETS",
+                    category: "Cleanroom",
+                    priority: "high",
+                    startDate: "2025-01-10",
+                    endDate: "2025-02-15",
+                    equipmentId: 2,
+                    notes: "Sterylne środowisko - specjalne procedury"
+                },
+                {
+                    id: 3,
+                    name: "Stamping ontmantelen",
+                    status: "todo",
+                    assignee: "Duif",
+                    category: "Stamping",
+                    priority: "medium",
+                    startDate: "2025-02-01",
+                    endDate: "2025-02-28",
+                    equipmentId: 3,
+                    notes: "Ciężki sprzęt - dźwig wymagany"
+                }
+            ];
+
+            equipment = [
+                {
+                    id: 1,
+                    name: "Wtryskarka MC22",
+                    type: "Wtryskarka",
+                    destination: "CZ",
+                    status: "planned",
+                    czWishlist: true,
+                    notes: "Priorytet dla oddziału CZ"
+                },
+                {
+                    id: 2,
+                    name: "Cleanroom Lijn 1",
+                    type: "Linia produkcyjna",
+                    destination: "Mex",
+                    status: "dismantling",
+                    czWishlist: false,
+                    notes: "Transfer do Meksyku"
+                },
+                {
+                    id: 3,
+                    name: "Stamping Press 500T",
+                    type: "Prasa",
+                    destination: "Verschrot",
+                    status: "planned",
+                    czWishlist: false,
+                    notes: "Na złom - stary sprzęt"
+                }
+            ];
+
+            saveData();
+        }
+
+        // Data persistence
+        function saveData() {
+            localStorage.setItem('boxtel_tasks', JSON.stringify(tasks));
+            localStorage.setItem('boxtel_equipment', JSON.stringify(equipment));
+        }
+
+        function loadData() {
+            const savedTasks = localStorage.getItem('boxtel_tasks');
+            const savedEquipment = localStorage.getItem('boxtel_equipment');
+            
+            if (savedTasks) {
+                tasks = JSON.parse(savedTasks);
+            }
+            if (savedEquipment) {
+                equipment = JSON.parse(savedEquipment);
+            }
+            
+            if (tasks.length === 0 && equipment.length === 0) {
+                initializeData();
+            }
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            document.querySelector(`[onclick="switchTab('${tabName}')"]`).classList.add('active');
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            currentTab = tabName;
+            
+            if (tabName === 'gantt') {
+                renderGanttChart();
+            } else if (tabName === 'equipment') {
+                renderEquipmentGrid();
+            } else if (tabName === 'kanban') {
+                renderKanbanBoard();
+            }
+        }
+
+        // Dashboard updates
+        function updateDashboard() {
+            const totalTasks = tasks.length;
+            const completedTasks = tasks.filter(t => t.status === 'done').length;
+            const overallProgress = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+            
+            document.getElementById('overall-progress').textContent = overallProgress + '%';
+            document.getElementById('overall-progress-bar').style.width = overallProgress + '%';
+            
+            // Task counts by status
+            document.getElementById('todo-count').textContent = tasks.filter(t => t.status === 'todo').length;
+            document.getElementById('inprogress-count').textContent = tasks.filter(t => t.status === 'inprogress').length;
+            document.getElementById('done-count').textContent = tasks.filter(t => t.status === 'done').length;
+            document.getElementById('blocked-count').textContent = tasks.filter(t => t.status === 'blocked').length;
+            
+            // Equipment counts by category
+            document.getElementById('injection-count').textContent = equipment.filter(e => e.type === 'Wtryskarka').length;
+            document.getElementById('cleanroom-count').textContent = equipment.filter(e => e.type.includes('Cleanroom') || e.type.includes('Linia')).length;
+            document.getElementById('stamping-count').textContent = equipment.filter(e => e.type.includes('Prasa') || e.type.includes('Stamping')).length;
+            document.getElementById('infrastructure-count').textContent = equipment.filter(e => e.type === 'Infrastruktura').length;
+            
+            // Team workload
+            document.getElementById('roy-tasks').textContent = tasks.filter(t => t.assignee === 'Roy').length;
+            document.getElementById('ets-tasks').textContent = tasks.filter(t => t.assignee === 'Zespół ETS').length;
+            document.getElementById('duif-tasks').textContent = tasks.filter(t => t.assignee === 'Duif').length;
+            document.getElementById('koot-tasks').textContent = tasks.filter(t => t.assignee === 'Koot').length;
+        }
+
+        // Kanban board rendering
+        function renderKanbanBoard() {
+            const columns = ['todo', 'inprogress', 'blocked', 'done'];
+            
+            columns.forEach(status => {
+                const column = document.getElementById(`${status}-column`);
+                column.innerHTML = '';
+                
+                const statusTasks = tasks.filter(task => task.status === status);
+                statusTasks.forEach(task => {
+                    const taskCard = document.createElement('div');
+                    taskCard.className = `task-card ${task.priority}-priority`;
+                    taskCard.onclick = () => editTask(task.id);
+                    
+                    taskCard.innerHTML = `
+                        <div class="task-title">${task.name}</div>
+                        <div class="task-meta">
+                            <span>👤 ${task.assignee}</span>
+                            <span>📅 ${task.endDate}</span>
+                        </div>
+                    `;
+                    
+                    column.appendChild(taskCard);
+                });
+            });
+        }
+
+        // Gantt chart rendering
+        function renderGanttChart() {
+            const ganttChart = document.getElementById('gantt-chart');
+            ganttChart.innerHTML = '';
+            
+            tasks.forEach(task => {
+                const row = document.createElement('div');
+                row.className = 'gantt-row';
+                
+                const startDate = new Date(task.startDate);
+                const endDate = new Date(task.endDate);
+                const projectStart = new Date('2025-01-01');
+                const projectEnd = new Date('2025-12-31');
+                
+                const totalDays = (projectEnd - projectStart) / (1000 * 60 * 60 * 24);
+                const taskStart = (startDate - projectStart) / (1000 * 60 * 60 * 24);
+                const taskDuration = (endDate - startDate) / (1000 * 60 * 60 * 24);
+                
+                const leftPercent = (taskStart / totalDays) * 100;
+                const widthPercent = (taskDuration / totalDays) * 100;
+                
+                row.innerHTML = `
+                    <div class="gantt-label">${task.name}</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-bar" style="left: ${leftPercent}%; width: ${widthPercent}%;"></div>
+                    </div>
+                `;
+                
+                ganttChart.appendChild(row);
+            });
+        }
+
+        // Equipment grid rendering
+        function renderEquipmentGrid() {
+            const grid = document.getElementById('equipment-grid');
+            grid.innerHTML = '';
+            
+            equipment.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'equipment-card';
+                card.onclick = () => editEquipment(item.id);
+                
+                const statusText = {
+                    'planned': 'Zaplanowany',
+                    'dismantling': 'W demontażu',
+                    'ready': 'Gotowy do wysyłki',
+                    'shipped': 'Wysłany',
+                    'delivered': 'Dostarczony'
+                };
+                
+                const relatedTasks = tasks.filter(t => t.equipmentId === item.id);
+                
+                card.innerHTML = `
+                    <div class="equipment-header">
+                        <div class="equipment-name">${item.name}</div>
+                        <div class="status-badge status-${item.status}">${statusText[item.status]}</div>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <strong>Typ:</strong> ${item.type}<br>
+                        <strong>Przeznaczenie:</strong> ${item.destination}<br>
+                        ${item.czWishlist ? '<strong style="color: #4CAF50;">✅ CZ Wishlist</strong><br>' : ''}
+                    </div>
+                    <div style="font-size: 0.9rem; color: #ccc;">
+                        <strong>Powiązane zadania:</strong> ${relatedTasks.length}
+                    </div>
+                    ${item.notes ? `<div style="margin-top: 10px; font-size: 0.9rem; font-style: italic;">${item.notes}</div>` : ''}
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // Modal functions
+        function addNewTask() {
+            document.getElementById('modal-title').textContent = 'Dodaj Nowe Zadanie';
+            document.getElementById('modal-fields').innerHTML = `
+                <div class="form-group">
+                    <label>Nazwa Zadania:</label>
+                    <input type="text" id="task-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Status:</label>
+                    <select id="task-status">
+                        <option value="todo">Do zrobienia</option>
+                        <option value="inprogress">W toku</option>
+                        <option value="blocked">Zablokowane</option>
+                        <option value="done">Zakończone</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Osoba Odpowiedzialna:</label>
+                    <select id="task-assignee">
+                        <option value="Roy">Roy</option>
+                        <option value="Zespół ETS">Zespół ETS</option>
+                        <option value="Duif">Duif</option>
+                        <option value="Koot">Koot</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Kategoria:</label>
+                    <select id="task-category">
+                        <option value="Wtryskarki">Wtryskarki</option>
+                        <option value="Cleanroom">Cleanroom</option>
+                        <option value="Stamping">Stamping</option>
+                        <option value="Infrastruktura">Infrastruktura</option>
+                        <option value="Personel">Personel</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Priorytet:</label>
+                    <select id="task-priority">
+                        <option value="low">Niski</option>
+                        <option value="medium">Średni</option>
+                        <option value="high">Wysoki</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Data Rozpoczęcia:</label>
+                    <input type="date" id="task-start-date" required>
+                </div>
+                <div class="form-group">
+                    <label>Data Zakończenia:</label>
+                    <input type="date" id="task-end-date" required>
+                </div>
+                <div class="form-group">
+                    <label>Powiązany Sprzęt:</label>
+                    <select id="task-equipment">
+                        <option value="">Brak</option>
+                        ${equipment.map(e => `<option value="${e.id}">${e.name}</option>`).join('')}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Notatki:</label>
+                    <textarea id="task-notes"></textarea>
+                </div>
+            `;
+            
+            document.getElementById('modal-form').onsubmit = function(e) {
+                e.preventDefault();
+                const newTask = {
+                    id: Date.now(),
+                    name: document.getElementById('task-name').value,
+                    status: document.getElementById('task-status').value,
+                    assignee: document.getElementById('task-assignee').value,
+                    category: document.getElementById('task-category').value,
+                    priority: document.getElementById('task-priority').value,
+                    startDate: document.getElementById('task-start-date').value,
+                    endDate: document.getElementById('task-end-date').value,
+                    equipmentId: parseInt(document.getElementById('task-equipment').value) || null,
+                    notes: document.getElementById('task-notes').value
+                };
+                
+                tasks.push(newTask);
+                saveData();
+                updateDashboard();
+                renderKanbanBoard();
+                closeModal();
+            };
+            
+            document.getElementById('modal').style.display = 'block';
+        }
+
+        function addNewEquipment() {
+            document.getElementById('modal-title').textContent = 'Dodaj Nowy Sprzęt';
+            document.getElementById('modal-fields').innerHTML = `
+                <div class="form-group">
+                    <label>Nazwa Sprzętu:</label>
+                    <input type="text" id="equipment-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Typ:</label>
+                    <select id="equipment-type">
+                        <option value="Wtryskarka">Wtryskarka</option>
+                        <option value="Linia produkcyjna">Linia produkcyjna</option>
+                        <option value="Prasa">Prasa</option>
+                        <option value="Infrastruktura">Infrastruktura</option>
+                        <option value="Inne">Inne</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Przeznaczenie:</label>
+                    <select id="equipment-destination">
+                        <option value="CZ">CZ</option>
+                        <option value="Mex">Mex</option>
+                        <option value="Verschrot">Verschrot (Złom)</option>
+                        <option value="Na sprzedaż">Na sprzedaż</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Status:</label>
+                    <select id="equipment-status">
+                        <option value="planned">Zaplanowany</option>
+                        <option value="dismantling">W demontażu</option>
+                        <option value="ready">Gotowy do wysyłki</option>
+                        <option value="shipped">Wysłany</option>
+                        <option value="delivered">Dostarczony</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="equipment-cz-wishlist"> 
+                        CZ Wishlist (pożądany przez oddział CZ)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>Notatki:</label>
+                    <textarea id="equipment-notes"></textarea>
+                </div>
+            `;
+            
+            document.getElementById('modal-form').onsubmit = function(e) {
+                e.preventDefault();
+                const newEquipment = {
+                    id: Date.now(),
+                    name: document.getElementById('equipment-name').value,
+                    type: document.getElementById('equipment-type').value,
+                    destination: document.getElementById('equipment-destination').value,
+                    status: document.getElementById('equipment-status').value,
+                    czWishlist: document.getElementById('equipment-cz-wishlist').checked,
+                    notes: document.getElementById('equipment-notes').value
+                };
+                
+                equipment.push(newEquipment);
+                saveData();
+                updateDashboard();
+                renderEquipmentGrid();
+                closeModal();
+            };
+            
+            document.getElementById('modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function editTask(taskId) {
+            const task = tasks.find(t => t.id === taskId);
+            if (!task) return;
+            
+            // Similar to addNewTask but pre-populate with existing data
+            addNewTask();
+            document.getElementById('modal-title').textContent = 'Edytuj Zadanie';
+            
+            // Pre-populate fields
+            document.getElementById('task-name').value = task.name;
+            document.getElementById('task-status').value = task.status;
+            document.getElementById('task-assignee').value = task.assignee;
+            document.getElementById('task-category').value = task.category;
+            document.getElementById('task-priority').value = task.priority;
+            document.getElementById('task-start-date').value = task.startDate;
+            document.getElementById('task-end-date').value = task.endDate;
+            document.getElementById('task-equipment').value = task.equipmentId || '';
+            document.getElementById('task-notes').value = task.notes;
+            
+            document.getElementById('modal-form').onsubmit = function(e) {
+                e.preventDefault();
+                
+                task.name = document.getElementById('task-name').value;
+                task.status = document.getElementById('task-status').value;
+                task.assignee = document.getElementById('task-assignee').value;
+                task.category = document.getElementById('task-category').value;
+                task.priority = document.getElementById('task-priority').value;
+                task.startDate = document.getElementById('task-start-date').value;
+                task.endDate = document.getElementById('task-end-date').value;
+                task.equipmentId = parseInt(document.getElementById('task-equipment').value) || null;
+                task.notes = document.getElementById('task-notes').value;
+                
+                saveData();
+                updateDashboard();
+                renderKanbanBoard();
+                closeModal();
+            };
+        }
+
+        function editEquipment(equipmentId) {
+            const item = equipment.find(e => e.id === equipmentId);
+            if (!item) return;
+            
+            // Similar to addNewEquipment but pre-populate with existing data
+            addNewEquipment();
+            document.getElementById('modal-title').textContent = 'Edytuj Sprzęt';
+            
+            // Pre-populate fields
+            document.getElementById('equipment-name').value = item.name;
+            document.getElementById('equipment-type').value = item.type;
+            document.getElementById('equipment-destination').value = item.destination;
+            document.getElementById('equipment-status').value = item.status;
+            document.getElementById('equipment-cz-wishlist').checked = item.czWishlist;
+            document.getElementById('equipment-notes').value = item.notes;
+            
+            document.getElementById('modal-form').onsubmit = function(e) {
+                e.preventDefault();
+                
+                item.name = document.getElementById('equipment-name').value;
+                item.type = document.getElementById('equipment-type').value;
+                item.destination = document.getElementById('equipment-destination').value;
+                item.status = document.getElementById('equipment-status').value;
+                item.czWishlist = document.getElementById('equipment-cz-wishlist').checked;
+                item.notes = document.getElementById('equipment-notes').value;
+                
+                saveData();
+                updateDashboard();
+                renderEquipmentGrid();
+                closeModal();
+            };
+        }
+
+        // Export/Import functions
+        function exportData() {
+            const data = {
+                tasks: tasks,
+                equipment: equipment,
+                exportDate: new Date().toISOString()
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `boxtel_transfer_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+        }
+
+        function importData() {
+            document.getElementById('file-input').click();
+        }
+
+        function handleFileImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.tasks && data.equipment) {
+                        tasks = data.tasks;
+                        equipment = data.equipment;
+                        saveData();
+                        updateDashboard();
+                        renderKanbanBoard();
+                        alert('✅ Dane zostały pomyślnie zaimportowane!');
+                    } else {
+                        alert('❌ Nieprawidłowy format pliku!');
+                    }
+                } catch (error) {
+                    alert('❌ Błąd podczas importu pliku!');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            updateDashboard();
+            renderKanbanBoard();
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
