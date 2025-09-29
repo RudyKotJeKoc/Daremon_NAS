@@ -69,20 +69,6 @@ body {
     height: 100%;
     z-index: -1;
     opacity: 0.55;
-    pointer-events: none;
-    background: radial-gradient(circle at center, rgba(4, 19, 43, 0.35), transparent 70%);
-}
-
-#daremon-logo {
-    position: relative;
-    width: min(320px, 42vw);
-    max-width: 100%;
-    height: auto;
-    opacity: 1;
-    z-index: 3;
-    pointer-events: none;
-    filter: drop-shadow(0 0 28px rgba(0, 0, 0, 0.35));
-    margin: 0 auto;
 }
 
 /* --- Animaties --- */
@@ -150,15 +136,6 @@ body {
 
 #now-playing-section {
     position: relative;
-    overflow: visible;
-    min-height: clamp(540px, 82vh, 900px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 4rem 2rem 3rem;
-    gap: clamp(2.5rem, 6vh, 4rem);
 }
 
 #player-ui {
@@ -166,16 +143,6 @@ body {
     z-index: 2;
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-    padding: 1.75rem 2.25rem;
-    border-radius: 1.25rem;
-    background: linear-gradient(145deg, rgba(9, 33, 66, 0.65), rgba(9, 33, 66, 0.2));
-    width: min(640px, 90%);
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    gap: 1.5rem;
-    align-items: center;
-    margin: 0 auto;
 }
 
 /* --- Header --- */
@@ -195,6 +162,7 @@ header p {
 }
 
 /* --- Speler --- */
+
 #track-cover {
     width: 120px;
     height: 120px;
@@ -255,12 +223,7 @@ header p {
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    margin-top: clamp(1.5rem, 3vh, 3rem);
-    width: min(520px, 85%);
-    margin-inline: auto;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 2;
+
 }
 
 .control-btn {

@@ -374,6 +374,11 @@ document.addEventListener('DOMContentLoaded', () => {
             state.history = state.currentTrack ? [state.currentTrack.id] : [];
         }
 
+        // FIX: Ensure the current track is not repeated if other options are available.
+        if (trackPool.length > 1 && state.currentTrack) {
+            trackPool = trackPool.filter(track => track.id !== state.currentTrack.id);
+        }
+
         const weightedPool = [];
         trackPool.forEach(track => {
             const boost = state.tempBoosts[track.id] || 0;
@@ -543,16 +548,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 displayError(`Fout bij afspelen: ${failingTrack.title || failingTrack.id}`);
             }
-        }
-
-        if (isNotFound && state.nextTrack && failingTrack && state.nextTrack.id === failingTrack.id) {
-            state.nextTrack = null;
-            state.nextTrackReady = false;
-        }
-
-        if (player && typeof player.pause === 'function') {
-            try { player.pause(); } catch (_) { /* noop */ }
-        }
 
         setTimeout(playNextTrack, isNotFound ? 0 : 2000);
     }
@@ -1048,6 +1043,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.stroke();
         }
     }
+
     
     function formatTime(seconds) { 
         if (isNaN(seconds)) return "0:00"; 
