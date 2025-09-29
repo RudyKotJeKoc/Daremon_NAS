@@ -6,9 +6,7 @@ import { waitForMediaReady } from './media-utils.js';
  * Dit bestand bevat de volledige functionaliteit voor de webradioapplicatie.
  * Belangrijkste verbeteringen in v8:
  * - Internationalisatie (i18n): Ondersteuning voor Pools en Nederlands, met automatische detectie.
- * - Nieuwe functie: Machine-evacuatiekalender voor planning en persistentie.
- * - Weergave wisselen tussen de radiospeler en de kalender.
- * - Alle eerdere functies (recensies, likes, etc.) zijn behouden en vertaald.
+ * - Focus op de radiospeler met uitgebreide sociale functies (recensies, likes, dedykacje).
  */
 document.addEventListener('DOMContentLoaded', () => {
     // --- DOM Element Referenties ---
@@ -59,27 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
         header: {
             listenerCount: document.getElementById('listener-count'),
         },
-        views: {
-            radio: document.getElementById('radio-view'),
-            calendar: document.getElementById('calendar-view'),
-        },
-        navigation: {
-            toCalendarBtn: document.getElementById('calendar-view-btn'),
-            toRadioBtn: document.getElementById('radio-view-btn'),
-        },
-        calendar: {
-            header: document.getElementById('month-year-display'),
-            grid: document.getElementById('calendar-grid'),
-            prevMonthBtn: document.getElementById('prev-month-btn'),
-            nextMonthBtn: document.getElementById('next-month-btn'),
-            modal: document.getElementById('event-modal'),
-            modalDateDisplay: document.getElementById('modal-date-display'),
-            eventForm: document.getElementById('modal-note-form'),
-            machineSelect: document.getElementById('modal-name-input'),
-            eventTypeSelect: document.getElementById('modal-note-input'),
-            modalCancelBtn: document.getElementById('modal-cancel-btn'),
-            modalFeedback: document.getElementById('modal-feedback'),
-        },
         autoplayOverlay: document.getElementById('autoplay-overlay'),
         introVideo: document.getElementById('intro-video'),
         welcomeGreeting: document.getElementById('welcome-greeting'),
@@ -118,15 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
         tempBoosts: {},
         failedTracks: [],
         introSequenceFinished: false,
-        // Kalender State
-        currentDate: new Date(),
-        events: {}, // { 'JJJJ-MM-DD': [{ machine, eventType }] }
         // App State
         language: 'nl',
         translations: {},
-        machines: [
-            "CNC Alpha", "Laser Cutter Pro", "Assembly Line 3", "Packaging Bot X", "Welding Station Omega"
-        ]
     };
 
     // --- INTERNATIONALISATIE (i18n) ---
@@ -577,16 +548,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 displayError(`Fout bij afspelen: ${failingTrack.title || failingTrack.id}`);
             }
-        }
-
-        if (isNotFound && state.nextTrack && failingTrack && state.nextTrack.id === failingTrack.id) {
-            state.nextTrack = null;
-            state.nextTrackReady = false;
-        }
-
-        if (player && typeof player.pause === 'function') {
-            try { player.pause(); } catch (_) { /* noop */ }
-        }
 
         setTimeout(playNextTrack, isNotFound ? 0 : 2000);
     }
@@ -625,16 +586,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) {
             console.error("Fout bij parsen van quietHours:", e);
             return false;
-        }
-    }
-
-    // --- Weergavebeheer ---
-    function switchView(viewName) {
-        Object.values(dom.views).forEach(view => {
-            if (view) view.classList.add('hidden');
-        });
-        if (dom.views[viewName]) {
-            dom.views[viewName].classList.remove('hidden');
         }
     }
 
@@ -753,7 +704,6 @@ document.addEventListener('DOMContentLoaded', () => {
         state.songDedications = safeLocalStorage('songDedications') || [];
         state.history = safeLocalStorage('history') || [];
         state.reviews = safeLocalStorage('reviews') || {};
-        state.events = safeLocalStorage('events') || {};
         applyTheme(safeLocalStorage('theme') || 'arburg');
     }
 
@@ -763,7 +713,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function saveMessages() { safeLocalStorage('messages', state.messages); }
     function saveSongDedications() { safeLocalStorage('songDedications', state.songDedications); }
     function saveReviews() { safeLocalStorage('reviews', state.reviews); }
-    function saveEvents() { safeLocalStorage('events', state.events); }
 
     // --- Beoordelings- en Recensiesysteem ---
     function renderRatingUI(trackId) {
@@ -1046,103 +995,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Kalender Logica ---
-    function renderCalendar() {
-        if (!dom.calendar.grid || !dom.calendar.header) return;
-        
-        dom.calendar.grid.innerHTML = '';
-        const date = state.currentDate;
-        const year = date.getFullYear();
-        const month = date.getMonth();
-
-        const monthNames = ["Januari", "Februari", "Maart", "April", "Mei", "Juni", 
-                           "Juli", "Augustus", "September", "Oktober", "November", "December"];
-        dom.calendar.header.textContent = `${monthNames[month]} ${year}`;
-        
-        // Dagkoppen toevoegen
-        const dayHeaders = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'];
-        dayHeaders.forEach(header => {
-            const headerEl = document.createElement('div');
-            headerEl.classList.add('calendar-day-header');
-            headerEl.textContent = header;
-            dom.calendar.grid.appendChild(headerEl);
-        });
-
-        const firstDay = new Date(year, month, 1).getDay();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-        const dayOffset = (firstDay === 0) ? 6 : firstDay - 1;
-
-        for (let i = 0; i < dayOffset; i++) {
-            const emptyCell = document.createElement('div');
-            emptyCell.classList.add('calendar-day', 'other-month');
-            dom.calendar.grid.appendChild(emptyCell);
-        }
-
-        for (let day = 1; day <= daysInMonth; day++) {
-            const dayCell = document.createElement('div');
-            dayCell.classList.add('calendar-day');
-            dayCell.innerHTML = `<div class="day-number">${day}</div><div class="day-events"></div>`;
-            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-            dayCell.dataset.date = dateStr;
-
-            if (state.events[dateStr]) {
-                const eventsContainer = dayCell.querySelector('.day-events');
-                state.events[dateStr].forEach(event => {
-                    const eventEl = document.createElement('div');
-                    eventEl.classList.add('day-event', event.eventType);
-                    eventEl.textContent = event.machine;
-                    eventsContainer.appendChild(eventEl);
-                });
-            }
-
-            dayCell.addEventListener('click', () => openEventModal(dateStr));
-            dom.calendar.grid.appendChild(dayCell);
-        }
-    }
-
-    function populateMachineSelect() {
-        if (!dom.calendar.machineSelect) return;
-        dom.calendar.machineSelect.innerHTML = '';
-        state.machines.forEach(machine => {
-            const option = document.createElement('option');
-            option.value = machine;
-            option.textContent = machine;
-            dom.calendar.machineSelect.appendChild(option);
-        });
-    }
-
-    function openEventModal(dateStr) {
-        if (!dom.calendar.modal || !dom.calendar.modalDateDisplay || !dom.calendar.eventForm) return;
-        dom.calendar.modal.classList.remove('hidden');
-        dom.calendar.modalDateDisplay.textContent = dateStr;
-        dom.calendar.eventForm.dataset.date = dateStr;
-    }
-
-    function handleEventSubmit(e) {
-        e.preventDefault();
-        if (!dom.calendar.machineSelect || !dom.calendar.eventTypeSelect) return;
-        
-        const date = e.target.dataset.date;
-        const machine = dom.calendar.machineSelect.value;
-        const eventType = dom.calendar.eventTypeSelect.value;
-        
-        if (!state.events[date]) {
-            state.events[date] = [];
-        }
-        state.events[date].push({ machine, eventType });
-        saveEvents();
-        renderCalendar();
-        if (dom.calendar.modal) dom.calendar.modal.classList.add('hidden');
-        
-        // Show feedback
-        if (dom.calendar.modalFeedback) {
-            dom.calendar.modalFeedback.textContent = `Event toegevoegd voor ${machine} op ${date}`;
-            setTimeout(() => {
-                if (dom.calendar.modalFeedback) dom.calendar.modalFeedback.textContent = '';
-            }, 3000);
-        }
-    }
-
     // --- Visualizer & Hulpprogramma's ---
     function drawVisualizer() {
         requestAnimationFrame(drawVisualizer);
@@ -1191,6 +1043,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.stroke();
         }
     }
+
     
     function formatTime(seconds) { 
         if (isNaN(seconds)) return "0:00"; 
@@ -1259,30 +1112,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         if (dom.errorRetryBtn) dom.errorRetryBtn.addEventListener('click', retryLoad);
 
-        // Weergave Navigatie
-        if (dom.navigation.toCalendarBtn) dom.navigation.toCalendarBtn.addEventListener('click', () => switchView('calendar'));
-        if (dom.navigation.toRadioBtn) dom.navigation.toRadioBtn.addEventListener('click', () => switchView('radio'));
-
-        // Kalender Listeners
-        if (dom.calendar.prevMonthBtn) {
-            dom.calendar.prevMonthBtn.addEventListener('click', () => { 
-                state.currentDate.setMonth(state.currentDate.getMonth() - 1); 
-                renderCalendar(); 
-            });
-        }
-        if (dom.calendar.nextMonthBtn) {
-            dom.calendar.nextMonthBtn.addEventListener('click', () => { 
-                state.currentDate.setMonth(state.currentDate.getMonth() + 1); 
-                renderCalendar(); 
-            });
-        }
-        if (dom.calendar.eventForm) dom.calendar.eventForm.addEventListener('submit', handleEventSubmit);
-        if (dom.calendar.modalCancelBtn) {
-            dom.calendar.modalCancelBtn.addEventListener('click', () => {
-                if (dom.calendar.modal) dom.calendar.modal.classList.add('hidden');
-            });
-        }
-
         // Systeem Events
         window.addEventListener('online', updateOfflineStatus);
         window.addEventListener('offline', updateOfflineStatus);
@@ -1297,9 +1126,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Toetsenbord & Touch
         window.addEventListener('keydown', (e) => { 
-            if (document.activeElement.tagName === 'TEXTAREA' || 
-                (dom.errorOverlay && !dom.errorOverlay.classList.contains('hidden')) || 
-                (dom.views.radio && dom.views.radio.classList.contains('hidden'))) return; 
+            if (document.activeElement.tagName === 'TEXTAREA' ||
+                (dom.errorOverlay && !dom.errorOverlay.classList.contains('hidden'))) return;
             
             if (e.code === 'Space') { 
                 e.preventDefault(); 

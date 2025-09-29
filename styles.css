@@ -69,21 +69,6 @@ body {
     height: 100%;
     z-index: -1;
     opacity: 0.55;
-    pointer-events: none;
-    background: radial-gradient(circle at center, rgba(4, 19, 43, 0.35), transparent 70%);
-}
-
-#daremon-logo {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: min(320px, 55vw);
-    max-width: 100%;
-    opacity: 1;
-    z-index: 1;
-    pointer-events: none;
-    filter: drop-shadow(0 0 28px rgba(0, 0, 0, 0.35));
 }
 
 /* --- Animaties --- */
@@ -151,8 +136,6 @@ body {
 
 #now-playing-section {
     position: relative;
-    overflow: hidden;
-    min-height: 420px;
 }
 
 #player-ui {
@@ -160,9 +143,6 @@ body {
     z-index: 2;
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-    padding: 1rem 1.5rem;
-    border-radius: 1rem;
-    background: linear-gradient(135deg, rgba(9, 33, 66, 0.55), rgba(9, 33, 66, 0.15));
 }
 
 /* --- Header --- */
@@ -182,11 +162,6 @@ header p {
 }
 
 /* --- Speler --- */
-#player-ui {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-}
 
 #track-cover {
     width: 120px;
@@ -248,8 +223,7 @@ header p {
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    margin-top: 1.5rem;
-    flex-wrap: wrap;
+
 }
 
 .control-btn {
@@ -368,20 +342,9 @@ header p {
     background: var(--primary-accent); 
 }
 
-/* --- Kalender & Navigatie --- */
-.nav-btn { background: var(--tertiary-accent); }
-.nav-btn:hover { box-shadow: 0 0 15px var(--tertiary-accent); }
-#calendar-header button { border: 2px solid var(--primary-accent); color: var(--primary-accent); }
-.calendar-day-header { color: var(--secondary-accent); }
-.day-event.disconnect { background-color: var(--secondary-accent); color: #000; }
-.day-event.transport { background-color: var(--tertiary-accent); color: #fff; }
-#event-modal-content { border: 2px solid var(--primary-accent); }
-#event-form select { border: 1px solid var(--tertiary-accent); }
-#modal-buttons button[type="submit"] { background: var(--primary-accent); color: #000; }
-
 /* Pozostałe style bez zmian... */
 .hidden { display: none !important; }
-body, #app-container, #main-content, #player-ui, #player-controls, #side-panel, #calendar-view { transition: all 0.3s ease-in-out; }
+body, #app-container, #main-content, #player-ui, #player-controls, #side-panel { transition: all 0.3s ease-in-out; }
 #listener-count-display { color: var(--tertiary-accent); text-shadow: 0 0 4px var(--tertiary-accent); margin: -0.5rem 0 1rem; font-size: 1rem; }
 #volume-control { display: flex; align-items: center; }
 #volume-slider { -webkit-appearance: none; appearance: none; width: 100px; height: 5px; background: #333; outline: none; border-radius: 5px; cursor: pointer; transition: 0.2s; }
@@ -535,21 +498,6 @@ body, #app-container, #main-content, #player-ui, #player-controls, #side-panel, 
 #sticky-progress-container { background: #333; border-radius: 5px; height: 4px; width: 100%; margin-top: 5px; overflow: hidden; }
 #error-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 20px; box-sizing: border-box; text-align: center; opacity: 1; transition: opacity 0.3s; }
 #error-overlay.hidden { opacity: 0; pointer-events: none; }
-#calendar-view { width: 100%; max-width: 900px; }
-#calendar-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem; }
-#calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; padding-bottom: 10px; }
-.calendar-day { background: rgba(255, 255, 255, 0.05); border: 1px solid #333; min-height: 120px; padding: 8px; font-size: 0.9em; cursor: pointer; transition: background-color 0.2s; display: flex; flex-direction: column; }
-.calendar-day:hover { background: rgba(255, 255, 255, 0.15); }
-.calendar-day.other-month { opacity: 0.4; cursor: default; }
-.calendar-day .day-number { font-weight: bold; }
-.day-events { margin-top: 5px; font-size: 0.8em; flex-grow: 1; max-height: 80px; overflow-y: auto; }
-.day-event { padding: 3px; border-radius: 3px; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-#event-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; justify-content: center; align-items: center; z-index: 2000; }
-#event-modal-content h3, #event-modal-content p { text-align: center; }
-#event-form label { display: block; margin-top: 1rem; margin-bottom: 0.5rem; }
-#modal-buttons { display: flex; justify-content: space-between; margin-top: 1.5rem; }
-#modal-buttons button { padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; font-family: var(--font-family); font-weight: bold; }
-#modal-buttons button[type="button"] { background: #555; color: #fff; }
 #hotkeys-info { text-align: center; font-size: 0.8rem; padding: 0.75rem; color: #777; }
 #main-footer { text-align: center; margin-top: 1rem; color: #555; font-size: 0.8rem; }
 .disclaimer-text { font-size: 0.7em; opacity: 0.6; text-align: center; margin-top: 10px; }
@@ -599,5 +547,4 @@ body, #app-container, #main-content, #player-ui, #player-controls, #side-panel, 
         font-size: 24px; 
         cursor: pointer; 
     }
-    .calendar-day { min-height: 80px; }
 }
