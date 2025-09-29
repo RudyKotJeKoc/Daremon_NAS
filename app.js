@@ -355,6 +355,11 @@ document.addEventListener('DOMContentLoaded', () => {
             state.history = state.currentTrack ? [state.currentTrack.id] : [];
         }
 
+        // FIX: Ensure the current track is not repeated if other options are available.
+        if (trackPool.length > 1 && state.currentTrack) {
+            trackPool = trackPool.filter(track => track.id !== state.currentTrack.id);
+        }
+
         const weightedPool = [];
         trackPool.forEach(track => {
             const boost = state.tempBoosts[track.id] || 0;
