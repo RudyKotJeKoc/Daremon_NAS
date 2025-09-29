@@ -113,6 +113,10 @@ document.addEventListener('DOMContentLoaded', () => {
         songsSinceJingle: 0,
         likes: {},
         tempBoosts: {},
+        recentRotation: [],
+        recentTrackSet: new Set(),
+        nextGroupPreference: 'recent',
+        trackRecencyRank: new Map(),
         // Kalender State
         currentDate: new Date(),
         events: {}, // { 'JJJJ-MM-DD': [{ machine, eventType }] }
@@ -272,11 +276,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             state.playlist = data.tracks || [];
             state.config = data.config || {};
-            
+
+            prepareRecentRotation();
+
             if (state.playlist.length === 0) {
                 throw new Error('Playlist is empty');
             }
-            
+
             console.log(`Loaded ${state.playlist.length} tracks`);
         } catch (e) {
             console.error('Playlist load error:', e);
@@ -300,10 +306,134 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function prepareRecentRotation() {
+        const songs = state.playlist.filter(track => track.type === 'song');
+        const scored = songs.map(track => ({
+            track,
+            score: resolveTrackRecencyScore(track)
+        })).sort((a, b) => b.score - a.score);
+
+        state.trackRecencyRank = new Map();
+        scored.forEach((entry, index) => {
+            state.trackRecencyRank.set(entry.track.id, index);
+        });
+
+        const recentConfig = state.config.recent || {};
+        const recentCount = Math.max(0, recentConfig.count || 10);
+        const recentTracks = scored.slice(0, recentCount).map(entry => entry.track);
+
+        state.recentTrackSet = new Set(recentTracks.map(track => track.id));
+        state.recentRotation = shuffleArray(recentTracks);
+        state.nextGroupPreference = state.recentRotation.length > 0 ? 'recent' : 'older';
+    }
+
+    function resolveTrackRecencyScore(track) {
+        const recentConfig = state.config.recent || {};
+        const directDate = track.dateAdded ? Date.parse(track.dateAdded) : NaN;
+        const configDate = recentConfig.trackDates && recentConfig.trackDates[track.id]
+            ? Date.parse(recentConfig.trackDates[track.id])
+            : NaN;
+
+        let score = 0;
+        if (!Number.isNaN(directDate)) {
+            score = directDate;
+        } else if (!Number.isNaN(configDate)) {
+            score = configDate;
+        }
+
+        if (recentConfig.trackIds && Array.isArray(recentConfig.trackIds)) {
+            const index = recentConfig.trackIds.indexOf(track.id);
+            if (index !== -1) {
+                score += (recentConfig.trackIds.length - index) * 1000;
+            }
+        }
+
+        if (recentConfig.folderPrefixes && Array.isArray(recentConfig.folderPrefixes)) {
+            const folderIndex = recentConfig.folderPrefixes.findIndex(prefix => track.src?.startsWith(prefix));
+            if (folderIndex !== -1) {
+                score += (recentConfig.folderPrefixes.length - folderIndex) * 100;
+            }
+        }
+
+        const numericId = extractNumericId(track.id);
+        if (numericId !== null) {
+            score += numericId;
+        }
+
+        return score;
+    }
+
+    function extractNumericId(trackId) {
+        if (!trackId) return null;
+        const match = trackId.match(/(\d+)/);
+        return match ? parseInt(match[1], 10) : null;
+    }
+
+    function replenishRecentRotation() {
+        if (!state.recentTrackSet || state.recentTrackSet.size === 0) return;
+        const recentTracks = state.playlist.filter(track => state.recentTrackSet.has(track.id));
+        state.recentRotation = shuffleArray(recentTracks);
+    }
+
+    function shuffleArray(items) {
+        const array = [...items];
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function drawRecentTrack(trackPool) {
+        if (!state.recentRotation.length) return null;
+        const playableIds = new Set(trackPool.map(track => track.id));
+        for (let attempt = state.recentRotation.length; attempt > 0; attempt--) {
+            const index = Math.floor(Math.random() * state.recentRotation.length);
+            const candidate = state.recentRotation[index];
+            state.recentRotation.splice(index, 1);
+            if (playableIds.has(candidate.id)) {
+                return candidate;
+            }
+        }
+        return null;
+    }
+
+    function removeFromRecentRotation(trackId) {
+        const index = state.recentRotation.findIndex(track => track.id === trackId);
+        if (index !== -1) {
+            state.recentRotation.splice(index, 1);
+        }
+    }
+
+    function buildWeightedPool(trackPool) {
+        const weightedPool = [];
+        trackPool.forEach(track => {
+            const boost = state.tempBoosts[track.id] || 0;
+            const avgRating = calculateAverageRating(track.id);
+            const ratingBoost = avgRating ? avgRating / 2 : 0;
+            const recencyBoost = calculateRecencyWeight(track.id);
+            const weight = (track.weight || 1) + boost + ratingBoost + recencyBoost;
+            const entries = Math.max(1, Math.ceil(weight));
+            for (let i = 0; i < entries; i++) {
+                weightedPool.push(track);
+            }
+        });
+        return weightedPool;
+    }
+
+    function calculateRecencyWeight(trackId) {
+        if (!state.trackRecencyRank || state.trackRecencyRank.size === 0) return 0;
+        const rank = state.trackRecencyRank.get(trackId);
+        if (rank === undefined) return 0;
+        const total = state.trackRecencyRank.size;
+        const normalized = 1 - (rank / total);
+        return Math.max(0, normalized) * 2;
+    }
+
     function startRadio() {
         if (state.isInitialized) return;
         state.isInitialized = true;
-        
+
         setupAudioContext();
         
         if (dom.autoplayOverlay) {
@@ -360,18 +490,31 @@ document.addEventListener('DOMContentLoaded', () => {
             trackPool = trackPool.filter(track => track.id !== state.currentTrack.id);
         }
 
-        const weightedPool = [];
-        trackPool.forEach(track => {
-            const boost = state.tempBoosts[track.id] || 0;
-            const avgRating = calculateAverageRating(track.id);
-            const ratingBoost = avgRating ? avgRating / 2 : 0;
-            const weight = (track.weight || 1) + boost + ratingBoost;
-            for (let i = 0; i < Math.ceil(weight); i++) {
-                weightedPool.push(track);
+        if (!state.recentRotation.length && state.nextGroupPreference === 'recent') {
+            replenishRecentRotation();
+        }
+
+        let nextTrack = null;
+        if (state.recentRotation.length && state.nextGroupPreference === 'recent') {
+            nextTrack = drawRecentTrack(trackPool);
+        }
+
+        if (!nextTrack) {
+            const weightedPool = buildWeightedPool(trackPool);
+            if (weightedPool.length === 0) {
+                console.warn('Weighted pool is empty, falling back to random selection.');
+                nextTrack = trackPool[Math.floor(Math.random() * trackPool.length)];
+            } else {
+                nextTrack = weightedPool[Math.floor(Math.random() * weightedPool.length)];
             }
-        });
-        
-        const nextTrack = weightedPool[Math.floor(Math.random() * weightedPool.length)];
+        }
+
+        if (nextTrack && state.recentTrackSet.has(nextTrack.id)) {
+            removeFromRecentRotation(nextTrack.id);
+            state.nextGroupPreference = 'older';
+        } else if (state.recentTrackSet && state.recentTrackSet.size > 0) {
+            state.nextGroupPreference = 'recent';
+        }
 
         if (!isPreload && nextTrack && nextTrack.type === 'song') state.songsSinceJingle++;
         return nextTrack;
