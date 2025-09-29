@@ -106,8 +106,9 @@
                 </header>
 
                 <section id="now-playing-section" class="content-box">
+                    <img id="daremon-logo" src="images/icons/logo.png" alt="Logo DAREMON Solutions" role="img" aria-label="Logo DAREMON Solutions">
                     <div id="player-ui">
-                        <img id="track-cover" src="https://placehold.co/120x120/1A1A1A/008878?text=ETS" alt="Okładka aktualnego utworu">
+                        <img id="track-cover" src="https://placehold.co/120x120/04132B/18A0C7?text=ETS" alt="Okładka aktualnego utworu">
                         <div id="track-info">
                             <h2 id="track-title" aria-live="polite" data-i18n-key="trackTitleDefault"></h2>
                             <h3 id="track-artist" data-i18n-key="trackArtistDefault"></h3>
@@ -174,9 +175,9 @@
         </div>
     </div>
     
-    <div id="autoplay-overlay">
-        <div id="welcome-greeting"></div>
-        <button id="start-btn" data-i18n-key="startBtn"></button>
+    <div id="autoplay-overlay" role="dialog" aria-modal="true" aria-live="polite" aria-labelledby="welcome-greeting">
+        <video id="intro-video" src="video/logo.mp4" playsinline muted autoplay aria-hidden="true"></video>
+        <p id="welcome-greeting"></p>
     </div>
 
     <div id="error-overlay" class="hidden">
@@ -223,6 +224,6 @@
         <p class="disclaimer-text" data-i18n-key="footerDisclaimer2"></p>
     </footer>
 
-    <script src="app.js" defer></script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>
