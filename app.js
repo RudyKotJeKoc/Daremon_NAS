@@ -1158,31 +1158,28 @@ document.addEventListener('DOMContentLoaded', () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = 'rgba(4, 19, 43, 0.14)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         const centerX = canvas.width / 2;
         const centerY = canvas.height / 2;
-        const baseRadius = Math.min(centerX, centerY) * 0.25;
-        const styles = getComputedStyle(document.documentElement);
-        const startColor = styles.getPropertyValue('--primary-accent').trim() || '#00a389';
-        const endColor = styles.getPropertyValue('--secondary-accent').trim() || '#ffb547';
+        const baseRadius = Math.min(centerX, centerY) * 0.28;
 
-        ctx.lineWidth = 2;
-        ctx.shadowBlur = 20;
-        ctx.shadowColor = endColor;
+        ctx.lineCap = 'round';
+        ctx.shadowBlur = 24;
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.45)';
 
         for (let i = 0; i < bufferLength; i++) {
             const value = dataArray[i];
+            const amplitude = value / 255;
             const angle = (i / bufferLength) * Math.PI * 2;
-            const radius = baseRadius + (value * 2);
+            const radius = baseRadius + amplitude * Math.min(centerX, centerY) * 0.75;
             const targetX = centerX + Math.cos(angle) * radius;
             const targetY = centerY + Math.sin(angle) * radius;
 
-            const gradient = ctx.createLinearGradient(centerX, centerY, targetX, targetY);
-            gradient.addColorStop(0, startColor);
-            gradient.addColorStop(1, endColor);
-
-            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 1.2 + amplitude * 3.4;
+            ctx.strokeStyle = `rgba(0, 0, 0, ${0.35 + amplitude * 0.55})`;
             ctx.beginPath();
             ctx.moveTo(centerX, centerY);
             ctx.lineTo(targetX, targetY);
