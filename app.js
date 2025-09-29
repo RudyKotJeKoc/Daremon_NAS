@@ -93,8 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         songsSinceJingle: 0,
         likes: {},
         tempBoosts: {},
-        failedTracks: [],
-        introSequenceFinished: false,
+
         // App State
         language: 'nl',
         translations: {},
@@ -240,11 +239,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             state.playlist = data.tracks || [];
             state.config = data.config || {};
-            
+
+            prepareRecentRotation();
+
             if (state.playlist.length === 0) {
                 throw new Error('Playlist is empty');
             }
-            
+
             console.log(`Loaded ${state.playlist.length} tracks`);
         } catch (e) {
             console.error('Playlist load error:', e);
@@ -265,45 +266,6 @@ document.addEventListener('DOMContentLoaded', () => {
             displayError(t('retryFailed', { message: err.message }), true);
         } finally {
             if (dom.errorRetryBtn) dom.errorRetryBtn.disabled = false;
-        }
-    }
-
-    function prepareIntroSequence() {
-        if (!dom.autoplayOverlay) {
-            startRadio();
-            return;
-        }
-
-        dom.autoplayOverlay.style.display = 'flex';
-        dom.autoplayOverlay.classList.remove('is-hidden');
-
-        const introVideo = dom.introVideo;
-        let fallbackTimer;
-
-        const finalizeIntro = () => {
-            if (state.introSequenceFinished) return;
-            state.introSequenceFinished = true;
-            if (fallbackTimer) clearTimeout(fallbackTimer);
-            startRadio();
-        };
-
-        fallbackTimer = setTimeout(finalizeIntro, 6500);
-
-        if (!introVideo) {
-            finalizeIntro();
-            return;
-        }
-
-        const flagReady = () => dom.autoplayOverlay.classList.add('is-ready');
-        introVideo.addEventListener('canplaythrough', flagReady, { once: true });
-        introVideo.addEventListener('loadeddata', flagReady, { once: true });
-        introVideo.addEventListener('ended', finalizeIntro, { once: true });
-        introVideo.addEventListener('error', finalizeIntro, { once: true });
-        introVideo.addEventListener('abort', finalizeIntro, { once: true });
-
-        const playPromise = introVideo.play();
-        if (playPromise && typeof playPromise.catch === 'function') {
-            playPromise.catch(() => finalizeIntro());
         }
     }
 
@@ -379,18 +341,31 @@ document.addEventListener('DOMContentLoaded', () => {
             trackPool = trackPool.filter(track => track.id !== state.currentTrack.id);
         }
 
-        const weightedPool = [];
-        trackPool.forEach(track => {
-            const boost = state.tempBoosts[track.id] || 0;
-            const avgRating = calculateAverageRating(track.id);
-            const ratingBoost = avgRating ? avgRating / 2 : 0;
-            const weight = (track.weight || 1) + boost + ratingBoost;
-            for (let i = 0; i < Math.ceil(weight); i++) {
-                weightedPool.push(track);
+        if (!state.recentRotation.length && state.nextGroupPreference === 'recent') {
+            replenishRecentRotation();
+        }
+
+        let nextTrack = null;
+        if (state.recentRotation.length && state.nextGroupPreference === 'recent') {
+            nextTrack = drawRecentTrack(trackPool);
+        }
+
+        if (!nextTrack) {
+            const weightedPool = buildWeightedPool(trackPool);
+            if (weightedPool.length === 0) {
+                console.warn('Weighted pool is empty, falling back to random selection.');
+                nextTrack = trackPool[Math.floor(Math.random() * trackPool.length)];
+            } else {
+                nextTrack = weightedPool[Math.floor(Math.random() * weightedPool.length)];
             }
-        });
-        
-        const nextTrack = weightedPool[Math.floor(Math.random() * weightedPool.length)];
+        }
+
+        if (nextTrack && state.recentTrackSet.has(nextTrack.id)) {
+            removeFromRecentRotation(nextTrack.id);
+            state.nextGroupPreference = 'older';
+        } else if (state.recentTrackSet && state.recentTrackSet.size > 0) {
+            state.nextGroupPreference = 'recent';
+        }
 
         if (!isPreload && nextTrack && nextTrack.type === 'song') state.songsSinceJingle++;
         return nextTrack;

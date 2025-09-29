@@ -9,6 +9,21 @@
       "orMinutes": 15,
       "enabled": true
     },
+    "recent": {
+      "count": 10,
+      "trackIds": [
+        "utwor-177",
+        "utwor-176",
+        "utwor-175",
+        "utwor-174",
+        "utwor-173",
+        "utwor-172",
+        "utwor-171",
+        "utwor-170",
+        "utwor-169",
+        "utwor-168"
+      ]
+    },
     "recentMemory": 15,
     "crossfadeSeconds": 2.0
   },
