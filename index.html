@@ -90,11 +90,6 @@
                             <button id="theme-rave" data-i18n-title="themeRave" data-i18n-aria-label="themeRaveLabel"></button>
                         </div>
                     </section>
-                    
-                    <section class="content-box">
-                        <h3 data-i18n-key="tools"></h3>
-                        <button id="calendar-view-btn" class="nav-btn" data-i18n-key="evacuationCalendar"></button>
-                    </section>
                 </div>
             </aside>
 
@@ -106,8 +101,9 @@
                 </header>
 
                 <section id="now-playing-section" class="content-box">
+                    <img id="daremon-logo" src="images/icons/logo.png" alt="Logo DAREMON Solutions" role="img" aria-label="Logo DAREMON Solutions">
                     <div id="player-ui">
-                        <img id="track-cover" src="https://placehold.co/120x120/1A1A1A/008878?text=ETS" alt="Okładka aktualnego utworu">
+                        <img id="track-cover" src="https://placehold.co/120x120/04132B/18A0C7?text=ETS" alt="Okładka aktualnego utworu">
                         <div id="track-info">
                             <h2 id="track-title" aria-live="polite" data-i18n-key="trackTitleDefault"></h2>
                             <h3 id="track-artist" data-i18n-key="trackArtistDefault"></h3>
@@ -143,21 +139,6 @@
 
         </div>
         
-        <div id="calendar-view" class="hidden">
-            <header>
-                <h1 data-i18n-key="evacuationCalendar"></h1>
-                <button id="radio-view-btn" class="nav-btn" data-i18n-key="backToRadio"></button>
-            </header>
-            <section id="calendar-section" class="content-box">
-                <div id="calendar-header">
-                    <button id="prev-month-btn">‹</button>
-                    <h2 id="month-year-display"></h2>
-                    <button id="next-month-btn">›</button>
-                </div>
-                <div id="calendar-grid"></div>
-            </section>
-        </div>
-
     </div>
 
     <div id="sticky-player">
@@ -174,9 +155,9 @@
         </div>
     </div>
     
-    <div id="autoplay-overlay">
-        <div id="welcome-greeting"></div>
-        <button id="start-btn" data-i18n-key="startBtn"></button>
+    <div id="autoplay-overlay" role="dialog" aria-modal="true" aria-live="polite" aria-labelledby="welcome-greeting">
+        <video id="intro-video" src="video/logo.mp4" playsinline muted autoplay aria-hidden="true"></video>
+        <p id="welcome-greeting"></p>
     </div>
 
     <div id="error-overlay" class="hidden">
@@ -187,30 +168,6 @@
         </div>
     </div>
     
-    <!-- Fixed Modal for Calendar Events -->
-    <div id="event-modal" class="hidden">
-        <div id="event-modal-content">
-            <h3 data-i18n-key="planEvent"></h3>
-            <p id="modal-date-display"></p>
-            <form id="modal-note-form">
-                <label for="modal-name-input" data-i18n-key="machine"></label>
-                <select id="modal-name-input" required></select>
-                
-                <label for="modal-note-input" data-i18n-key="eventType"></label>
-                <select id="modal-note-input" required>
-                    <option value="disconnect" data-i18n-key="eventDisconnect"></option>
-                    <option value="transport" data-i18n-key="eventTransport"></option>
-                </select>
-                
-                <div id="modal-buttons">
-                    <button type="submit" data-i18n-key="saveBtn"></button>
-                    <button type="button" id="modal-cancel-btn" data-i18n-key="cancelBtn"></button>
-                </div>
-                <p id="modal-feedback"></p>
-            </form>
-        </div>
-    </div>
-
     <noscript>
         <div style="background-color: #0d0d0d; color: white; text-align: center; padding: 2rem; font-family: sans-serif;">
             <h1>DAREMON Radio ETS</h1>
@@ -223,6 +180,6 @@
         <p class="disclaimer-text" data-i18n-key="footerDisclaimer2"></p>
     </footer>
 
-    <script src="app.js" defer></script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>
