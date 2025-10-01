@@ -34,6 +34,75 @@
     <canvas id="visualizer-canvas"></canvas>
     <div id="offline-indicator" class="hidden" aria-live="assertive" data-i18n-key="offlineMessage"></div>
 
+    <section id="visualizer-showcase" aria-label="Audio visualizer Daremon Solutions">
+        <div class="visualizer-glow" aria-hidden="true">
+            <div class="visualizer-burst"></div>
+            <div class="visualizer-rays"></div>
+        </div>
+        <div class="logo-card" role="img" aria-label="Logo ib In Team Betrouwbaar Daremon Solutions">
+            <div class="logo-header">
+                <span class="logo-ib">i<span>b</span></span>
+                <div class="logo-tagline">
+                    <span class="logo-in">In</span>
+                    <span class="logo-team">Team</span>
+                    <span class="logo-betrouwbaar">Betrouwbaar</span>
+                </div>
+            </div>
+            <div class="logo-emblem" aria-hidden="true">
+                <span class="ring outer"></span>
+                <span class="ring middle"></span>
+                <span class="ring inner"></span>
+                <span class="dot"></span>
+            </div>
+            <div class="logo-wordmark" aria-hidden="true">
+                <span class="wordmark-primary">DAREMON</span>
+                <span class="wordmark-secondary">SOLUTIONS</span>
+            </div>
+        </div>
+        <div class="visualizer-bars" aria-hidden="true">
+            <span class="bar" style="--i:0"></span>
+            <span class="bar" style="--i:1"></span>
+            <span class="bar" style="--i:2"></span>
+            <span class="bar" style="--i:3"></span>
+            <span class="bar" style="--i:4"></span>
+            <span class="bar" style="--i:5"></span>
+            <span class="bar" style="--i:6"></span>
+            <span class="bar" style="--i:7"></span>
+            <span class="bar" style="--i:8"></span>
+            <span class="bar" style="--i:9"></span>
+            <span class="bar" style="--i:10"></span>
+            <span class="bar" style="--i:11"></span>
+            <span class="bar" style="--i:12"></span>
+            <span class="bar" style="--i:13"></span>
+            <span class="bar" style="--i:14"></span>
+            <span class="bar" style="--i:15"></span>
+            <span class="bar" style="--i:16"></span>
+            <span class="bar" style="--i:17"></span>
+            <span class="bar" style="--i:18"></span>
+            <span class="bar" style="--i:19"></span>
+            <span class="bar" style="--i:20"></span>
+            <span class="bar" style="--i:21"></span>
+            <span class="bar" style="--i:22"></span>
+            <span class="bar" style="--i:23"></span>
+            <span class="bar" style="--i:24"></span>
+            <span class="bar" style="--i:25"></span>
+            <span class="bar" style="--i:26"></span>
+            <span class="bar" style="--i:27"></span>
+            <span class="bar" style="--i:28"></span>
+            <span class="bar" style="--i:29"></span>
+            <span class="bar" style="--i:30"></span>
+            <span class="bar" style="--i:31"></span>
+        </div>
+        <figure class="photo-frame hero-left" aria-labelledby="hero-photo-left-caption">
+            <img src="https://placehold.co/220x300/04132B/18A0C7?text=Live+Show" alt="Teamlid presenteert live-uitzending">
+            <figcaption id="hero-photo-left-caption" data-i18n-key="heroPhotoLeftCaption"></figcaption>
+        </figure>
+        <figure class="photo-frame hero-right" aria-labelledby="hero-photo-right-caption">
+            <img src="https://placehold.co/220x300/082552/9BD6FF?text=Studio" alt="Studioverlichting en mengpaneel">
+            <figcaption id="hero-photo-right-caption" data-i18n-key="heroPhotoRightCaption"></figcaption>
+        </figure>
+    </section>
+
     <div id="app-container">
         <!-- Main Radio Player View -->
         <div id="radio-view">
@@ -90,6 +159,24 @@
                             <button id="theme-rave" data-i18n-title="themeRave" data-i18n-aria-label="themeRaveLabel"></button>
                         </div>
                     </section>
+
+                    <section class="content-box photo-gallery" aria-label="Fotogalerij radio">
+                        <h3 data-i18n-key="photoGalleryTitle"></h3>
+                        <div class="photo-gallery-grid">
+                            <figure class="photo-card">
+                                <img src="https://placehold.co/180x180/0B1F3A/18A0C7?text=DJ" alt="DJ achter het mengpaneel" loading="lazy">
+                                <figcaption data-i18n-key="photoGalleryCaptionStudio"></figcaption>
+                            </figure>
+                            <figure class="photo-card">
+                                <img src="https://placehold.co/180x180/04132B/9BD6FF?text=Team" alt="Productieteam lacht in studio" loading="lazy">
+                                <figcaption data-i18n-key="photoGalleryCaptionTeam"></figcaption>
+                            </figure>
+                            <figure class="photo-card">
+                                <img src="https://placehold.co/180x180/082552/18A0C7?text=Live" alt="Luisteraars tijdens live-event" loading="lazy">
+                                <figcaption data-i18n-key="photoGalleryCaptionCommunity"></figcaption>
+                            </figure>
+                        </div>
+                    </section>
                 </div>
             </aside>
 
@@ -132,6 +219,24 @@
                             <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" data-i18n-aria-label="volumeLabel">
                         </div>
                         <button id="tv-mode-btn" class="control-btn" data-i18n-title="fullscreenTooltip" data-i18n-aria-label="fullscreenLabel" disabled>📺</button>
+                    </div>
+                </section>
+                <section id="team-moments" class="content-box photo-collage" aria-labelledby="team-moments-title">
+                    <h2 id="team-moments-title" data-i18n-key="teamMomentsTitle"></h2>
+                    <p class="section-intro" data-i18n-key="teamMomentsIntro"></p>
+                    <div class="photo-collage-grid">
+                        <figure class="collage-card">
+                            <img src="https://placehold.co/260x160/082552/18A0C7?text=Behind+the+Scenes" alt="Technici stemmen microfoons af" loading="lazy">
+                            <figcaption data-i18n-key="teamMomentsCaptionPrep"></figcaption>
+                        </figure>
+                        <figure class="collage-card">
+                            <img src="https://placehold.co/260x160/04132B/9BD6FF?text=Interview" alt="Interview met speciale gast" loading="lazy">
+                            <figcaption data-i18n-key="teamMomentsCaptionInterview"></figcaption>
+                        </figure>
+                        <figure class="collage-card">
+                            <img src="https://placehold.co/260x160/0B1F3A/18A0C7?text=Community" alt="Luisteraars sturen berichten" loading="lazy">
+                            <figcaption data-i18n-key="teamMomentsCaptionCommunity"></figcaption>
+                        </figure>
                     </div>
                 </section>
                 <div id="hotkeys-info" data-i18n-key="hotkeysInfo"></div>

@@ -1,4 +1,5 @@
 import { waitForMediaReady } from './media-utils.js';
+import { createInitialState } from './state.js';
 
 /**
  * DAREMON Radio ETS - Hoofdlogica van de applicatie v8
@@ -75,29 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let activePlayerIndex = 0;
     players.forEach(p => { p.crossOrigin = "anonymous"; p.preload = "auto"; });
 
-    let state = {
-        // Radio State
-        playlist: [],
-        config: {},
-        history: [],
-        messages: [],
-        songDedications: [],
-        reviews: {},
-        currentTrack: null,
-        nextTrack: null,
-        nextTrackReady: false,
-        isPlaying: false,
-        isInitialized: false,
-        lastMessageTimestamp: 0,
-        lastSongDedicationTimestamp: 0,
-        songsSinceJingle: 0,
-        likes: {},
-        tempBoosts: {},
-
-        // App State
-        language: 'nl',
-        translations: {},
-    };
+    const state = createInitialState();
 
     // --- INTERNATIONALISATIE (i18n) ---
     async function i18n_init() {

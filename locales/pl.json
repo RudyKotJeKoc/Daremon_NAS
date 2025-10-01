@@ -8,7 +8,12 @@
   "retryFailed": "Ponowna próba nieudana: {{message}}",
   "you": "Ty",
   "aiDjName": "DJ Bot",
-  "aiResponses": ["Dzięki za wiadomość!", "Miło, że słuchasz!", "Świetny wybór muzyki!", "Ciesz się muzyką!"],
+  "aiResponses": [
+    "Dzięki za wiadomość!",
+    "Miło, że słuchasz!",
+    "Świetny wybór muzyki!",
+    "Ciesz się muzyką!"
+  ],
   "trackTitleDefault": "Witamy w DAREMON Radio ETS",
   "trackArtistDefault": "Najlepsze z technologii i muzyki",
   "headerSubtitle": "Oficjalne radio firmowe",
@@ -73,5 +78,16 @@
   "cancelBtn": "Anuluj",
   "noScript": "JavaScript jest wymagany dla tej aplikacji. Włącz JavaScript aby kontynuować.",
   "footerDisclaimer": "© 2024 DAREMON Radio ETS - Fikcyjne radio firmowe do celów demonstracyjnych",
-  "footerDisclaimer2": "Cała muzyka i treści są do celów edukacyjnych. Brak rzeczywistej transmisji."
+  "footerDisclaimer2": "Cała muzyka i treści są do celów edukacyjnych. Brak rzeczywistej transmisji.",
+  "heroPhotoLeftCaption": "Transmisja na żywo",
+  "heroPhotoRightCaption": "Atmosfera studia",
+  "photoGalleryTitle": "Galeria zdjęć",
+  "photoGalleryCaptionStudio": "Przy konsolecie",
+  "photoGalleryCaptionTeam": "Zespół w akcji",
+  "photoGalleryCaptionCommunity": "Społeczność na żywo",
+  "teamMomentsTitle": "Kadry ze stacji",
+  "teamMomentsIntro": "Zobacz kulisy działania DAREMON Radio ETS na wybranych fotografiach.",
+  "teamMomentsCaptionPrep": "Przygotowania za kulisami",
+  "teamMomentsCaptionInterview": "Wywiad ze specjalnym gościem",
+  "teamMomentsCaptionCommunity": "Interakcje ze słuchaczami"
 }
