@@ -8,7 +8,12 @@
   "retryFailed": "Opnieuw proberen mislukt: {{message}}",
   "you": "Jij",
   "aiDjName": "DJ Bot",
-  "aiResponses": ["Bedankt voor je bericht!", "Leuk dat je luistert!", "Geweldige muziekkeuze!", "Blijf genieten van de muziek!"],
+  "aiResponses": [
+    "Bedankt voor je bericht!",
+    "Leuk dat je luistert!",
+    "Geweldige muziekkeuze!",
+    "Blijf genieten van de muziek!"
+  ],
   "trackTitleDefault": "Welkom bij DAREMON Radio ETS",
   "trackArtistDefault": "Het beste van technologie en muziek",
   "headerSubtitle": "Het officiële bedrijfsradiostation",
@@ -73,5 +78,16 @@
   "cancelBtn": "Annuleren",
   "noScript": "JavaScript is vereist voor deze applicatie. Schakel JavaScript in om door te gaan.",
   "footerDisclaimer": "© 2024 DAREMON Radio ETS - Fictief bedrijfsradiostation voor demonstratiedoeleinden",
-  "footerDisclaimer2": "Alle muziek en inhoud zijn voor educatieve doeleinden. Geen echte uitzending."
+  "footerDisclaimer2": "Alle muziek en inhoud zijn voor educatieve doeleinden. Geen echte uitzending.",
+  "heroPhotoLeftCaption": "Live-uitzending",
+  "heroPhotoRightCaption": "Studiogloed",
+  "photoGalleryTitle": "Fotogalerij",
+  "photoGalleryCaptionStudio": "Aan het mengpaneel",
+  "photoGalleryCaptionTeam": "Team in actie",
+  "photoGalleryCaptionCommunity": "Community live moment",
+  "teamMomentsTitle": "Momenten uit het station",
+  "teamMomentsIntro": "Ontdek de sfeer achter de schermen met snapshots uit het DAREMON Radio ETS-team.",
+  "teamMomentsCaptionPrep": "Voorbereiding achter de schermen",
+  "teamMomentsCaptionInterview": "Interview met speciale gast",
+  "teamMomentsCaptionCommunity": "Community interactie"
 }
