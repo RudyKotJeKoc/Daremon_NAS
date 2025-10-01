@@ -1,2 +1,4 @@
 node_modules/
 jules-scratch/
+package-lock.json
+dist/
