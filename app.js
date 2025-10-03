@@ -168,6 +168,103 @@ document.addEventListener('DOMContentLoaded', () => {
         renderSongDedications();
     }
 
+    // --- Recent Rotation System ---
+    function prepareRecentRotation() {
+        if (!state.config.recent || !state.config.recent.trackIds) return;
+
+        state.recentRotation = [...state.config.recent.trackIds];
+        state.recentTrackSet = new Set(state.recentRotation);
+
+        console.log(`Recent rotation prepared: ${state.recentRotation.length} tracks`);
+    }
+
+    function replenishRecentRotation() {
+        if (!state.config.recent || !state.config.recent.trackIds) return;
+
+        state.recentRotation = [...state.config.recent.trackIds];
+        state.recentTrackSet = new Set(state.recentRotation);
+
+        console.log('Recent rotation replenished');
+    }
+
+    function removeFromRecentRotation(trackId) {
+        const index = state.recentRotation.indexOf(trackId);
+        if (index > -1) {
+            state.recentRotation.splice(index, 1);
+        }
+        state.recentTrackSet.delete(trackId);
+    }
+
+    function drawRecentTrack(trackPool) {
+        const availableRecent = state.recentRotation.filter(id =>
+            trackPool.some(track => track.id === id)
+        );
+
+        if (availableRecent.length === 0) return null;
+
+        const randomId = availableRecent[Math.floor(Math.random() * availableRecent.length)];
+        return trackPool.find(t => t.id === randomId);
+    }
+
+    function buildWeightedPool(tracks) {
+        const pool = [];
+        tracks.forEach(track => {
+            const weight = track.weight || 1;
+            const boost = state.tempBoosts[track.id] || 0;
+            const finalWeight = Math.max(1, weight + boost);
+
+            for (let i = 0; i < finalWeight; i++) {
+                pool.push(track);
+            }
+        });
+        return pool;
+    }
+
+    // --- Intro Sequence ---
+    function prepareIntroSequence() {
+        const startBtn = document.createElement('button');
+        startBtn.id = 'start-btn';
+        startBtn.textContent = t('startBtn');
+        startBtn.setAttribute('aria-label', t('startBtn'));
+
+        startBtn.style.cssText = `
+            padding: 1rem 3rem;
+            font-size: 1.5rem;
+            background: transparent;
+            border: 3px solid var(--primary-accent);
+            color: var(--primary-accent);
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: var(--font-family);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            animation: neon-flicker 3s infinite;
+        `;
+
+        startBtn.addEventListener('click', startRadio);
+
+        if (dom.autoplayOverlay) {
+            dom.autoplayOverlay.appendChild(startBtn);
+        }
+
+        setTimeout(() => {
+            if (!state.isInitialized && startBtn.parentElement) {
+                startBtn.click();
+            }
+        }, 3000);
+    }
+
+    // --- Placeholder Functions (usuń jeśli nie planujesz kalendarza) ---
+    function populateMachineSelect() {
+        console.log('populateMachineSelect - not implemented');
+    }
+
+    function renderCalendar() {
+        console.log('renderCalendar - not implemented');
+    }
+
     // --- Initialisatie ---
     async function initialize() {
         await i18n_init();
