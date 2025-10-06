@@ -458,6 +458,24 @@ body {
 
 #now-playing-section {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.now-playing-layout {
+    display: grid;
+    grid-template-columns: minmax(120px, 180px) minmax(0, 1fr);
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+}
+
+#daremon-logo {
+    width: clamp(120px, 18vw, 200px);
+    height: auto;
+    justify-self: center;
+    display: block;
 }
 
 #player-ui {
@@ -465,6 +483,10 @@ body {
     z-index: 2;
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.5rem;
 }
 
 /* --- Header --- */
@@ -997,11 +1019,21 @@ body, #app-container, #main-content, #player-ui, #player-controls, #side-panel {
 
     #radio-view { flex-direction: column; }
 
-    #side-panel { 
-        width: 100%; 
+    .now-playing-layout {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 1.5rem;
+    }
+
+    #daremon-logo {
+        margin: 0;
+    }
+
+    #side-panel {
+        width: 100%;
         order: 3;
-        position: fixed; 
-        top: 0; 
+        position: fixed;
+        top: 0;
         left: -100%;
         height: 100%; 
         background: #111; 
