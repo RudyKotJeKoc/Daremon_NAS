@@ -503,7 +503,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 displayError(`Fout bij afspelen: ${failingTrack.title || failingTrack.id}`);
             }
 
-        setTimeout(playNextTrack, isNotFound ? 0 : 2000);
+            setTimeout(playNextTrack, isNotFound ? 0 : 2000);
+        }
     }
 
     function togglePlayPause() {
