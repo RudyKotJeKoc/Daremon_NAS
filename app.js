@@ -1,5 +1,6 @@
 import { waitForMediaReady } from './media-utils.js';
 import { createInitialState } from './state.js';
+import { createTrackListItem } from './ui-utils.js';
 
 /**
  * DAREMON Radio ETS - Hoofdlogica van de applicatie v8
@@ -607,9 +608,12 @@ document.addEventListener('DOMContentLoaded', () => {
             state.history.forEach(trackId => {
                 const track = state.playlist.find(t => t.id === trackId);
                 if (track) {
-                    const li = document.createElement('li');
-                    li.textContent = `${track.artist} - ${track.title}`;
-                    dom.sidePanel.historyList.appendChild(li);
+                    const item = createTrackListItem(track, {
+                        subtitle: Array.isArray(track.tags) && track.tags.length > 0
+                            ? track.tags.slice(0, 2).join(', ')
+                            : ''
+                    });
+                    dom.sidePanel.historyList.appendChild(item);
                 }
             });
         }
@@ -763,11 +767,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         dom.sidePanel.topRatedList.innerHTML = '';
         ratedTracks.slice(0, 5).forEach(track => {
-            const li = document.createElement('li');
-            li.textContent = `${track.artist} - ${track.title} (${track.avgRating.toFixed(1)} ⭐)`;
-            li.dataset.trackId = track.id;
-            li.addEventListener('click', () => playTrackNow(track));
-            dom.sidePanel.topRatedList.appendChild(li);
+            const subtitle = `${track.avgRating.toFixed(1)} ⭐ · ${track.reviewCount}`;
+            const item = createTrackListItem(track, {
+                subtitle,
+                interactive: true,
+                onActivate: () => playTrackNow(track)
+            });
+            dom.sidePanel.topRatedList.appendChild(item);
         });
     }
 
@@ -788,18 +794,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Gouden Platen & Berichten ---
     function renderGoldenRecords() { 
         if (!dom.sidePanel.goldenRecordsList) return;
-        const goldenTracks = state.playlist.filter(t => t.golden); 
-        dom.sidePanel.goldenRecordsList.innerHTML = ''; 
-        goldenTracks.forEach(track => { 
-            const li = document.createElement('li'); 
-            li.textContent = `${track.artist} - ${track.title}`; 
-            li.dataset.trackId = track.id; 
-            li.addEventListener('click', () => { 
-                const trackToPlay = state.playlist.find(t => t.id === li.dataset.trackId); 
-                playTrackNow(trackToPlay); 
-            }); 
-            dom.sidePanel.goldenRecordsList.appendChild(li); 
-        }); 
+        const goldenTracks = state.playlist.filter(t => t.golden);
+        dom.sidePanel.goldenRecordsList.innerHTML = '';
+        goldenTracks.forEach(track => {
+            const item = createTrackListItem(track, {
+                subtitle: Array.isArray(track.tags) && track.tags.length > 0
+                    ? track.tags.slice(0, 2).join(', ')
+                    : '',
+                interactive: true,
+                onActivate: () => playTrackNow(track)
+            });
+            dom.sidePanel.goldenRecordsList.appendChild(item);
+        });
     }
 
     function handleLike() {
