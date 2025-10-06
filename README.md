@@ -32,12 +32,11 @@
 - ⭐ **System ocen** - możliwość oceniania i komentowania utworów
 - 💬 **Czat DJ** - interaktywna komunikacja z automatycznymi odpowiedziami
 - 🎁 **Song Capsule** - dedykacje utworów z pamięcią czasową
-- 📅 **Kalendarz ewakuacji** - narzędzie planowania wydarzeń
 
 ## ✨ Funkcje
 
 ### Odtwarzacz audio
-- Automatyczne odtwarzanie playlisty z ponad 177 utworami
+- Automatyczne odtwarzanie playlisty z konfigurowalnymi utworami
 - Płynne przejścia między utworami (crossfade 2 sekundy)
 - Inteligentne zarządzanie historią odtwarzania (15 ostatnio odtworzonych)
 - Wsparcie dla różnych typów utworów (piosenki, jingle)
@@ -71,7 +70,14 @@
 - Service Worker z cache-first strategią
 - Offline fallback dla zasobów
 - Stale-while-revalidate dla playlisty i tłumaczeń
-- Manifest z ikonami 192x192 i 512x512
+- Manifest skonfigurowany (wymaga dodania ikon)
+
+**Uwaga**: Aby w pełni wykorzystać funkcje PWA, należy dodać ikony aplikacji:
+- `./icons/icon-192.png` (192x192)
+- `./icons/icon-512.png` (512x512)  
+- `./icons/favicon.svg`
+
+Lub zaktualizować ścieżki w `manifest.json` i `sw.js` do istniejących ikon.
 
 ## 🛠 Stack technologiczny
 
@@ -139,6 +145,7 @@ Daremon_NAS/
 ├── app.js                  # Główna logika aplikacji
 ├── state.js                # Zarządzanie stanem aplikacji
 ├── media-utils.js          # Utilsy dla mediów
+├── ui-utils.js             # UI utilities (track list items)
 ├── styles.css              # Style CSS
 ├── sw.js                   # Service Worker (v9)
 ├── script.js               # Dodatkowe skrypty
@@ -151,16 +158,12 @@ Daremon_NAS/
 │   └── nl.json            # Niderlandzki
 │
 ├── tests/                  # Testy jednostkowe
-│   ├── state.test.js
-│   └── crossfade.test.js
+│   ├── state.test.js              # Testy stanu aplikacji
+│   ├── crossfade.test.js          # Testy crossfade
+│   ├── ui-utils.test.js           # Testy UI utilities
+│   └── now-playing-layout.test.js # Testy layoutu
 │
-├── music/                  # Pliki audio (177 utworów)
-│   └── Utwor (1-177).mp3
-│
-├── icons/                  # Ikony PWA
-│   ├── icon-192.png
-│   ├── icon-512.png
-│   └── favicon.svg
+├── video/                  # Katalog wideo (zarezerwowany)
 │
 ├── package.json            # Zależności projektu
 └── pnpm-lock.yaml         # Lock file dla pnpm
@@ -302,7 +305,7 @@ pnpm lint
 
 ### Dodawanie nowych utworów
 
-1. Dodaj plik MP3 do katalogu `music/`
+1. Umieść pliki audio w lokalizacji dostępnej dla aplikacji (np. katalog `music/`)
 2. Dodaj wpis w `playlist.json`:
 
 ```json
@@ -319,7 +322,7 @@ pnpm lint
 }
 ```
 
-3. Zwiększ wersję cache w `sw.js`
+3. Jeśli dodajesz nowe zasoby do cache, zwiększ wersję cache w `sw.js`
 4. Przebuduj aplikację
 
 ### Dodawanie nowych motywów
@@ -371,6 +374,8 @@ pnpm test --coverage
 Przykładowe testy:
 - `tests/state.test.js` - testy zarządzania stanem
 - `tests/crossfade.test.js` - testy funkcji crossfade
+- `tests/ui-utils.test.js` - testy UI utilities
+- `tests/now-playing-layout.test.js` - testy layoutu odtwarzacza
 
 ## 🤝 Wkład w projekt
 
