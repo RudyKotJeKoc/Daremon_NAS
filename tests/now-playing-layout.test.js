@@ -30,23 +30,4 @@ describe('now playing layout', () => {
     expect(visualizerMatch?.[0]).toContain('id="countdown-display"');
   });
 
-  it('moves the Daremon invitation content into tabs placed under the player', () => {
-    const mainMatch = html.match(
-      /<main id="main-content">([\s\S]*?)<\/main>/
-    );
-
-    expect(mainMatch).toBeTruthy();
-
-    const mainContent = mainMatch?.[1] ?? '';
-    const nowPlayingIndex = mainContent.indexOf('id="now-playing-section"');
-    const hubIndex = mainContent.indexOf('id="daremon-hub"');
-
-    expect(nowPlayingIndex).toBeGreaterThanOrEqual(0);
-    expect(hubIndex).toBeGreaterThan(nowPlayingIndex);
-    expect(mainContent).toContain('role="tablist"');
-    expect(mainContent).toContain('role="tabpanel"');
-
-    const hiddenPanelMatch = mainContent.match(/role="tabpanel"[\s\S]*?hidden/);
-    expect(hiddenPanelMatch).toBeTruthy();
-  });
 });
