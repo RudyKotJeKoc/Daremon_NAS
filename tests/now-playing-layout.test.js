@@ -8,7 +8,7 @@ const __dirname = dirname(__filename);
 const html = readFileSync(resolve(__dirname, '../index.html'), 'utf-8');
 
 describe('now playing layout', () => {
-  it('keeps the Daremon logo centered inside the player layout container', () => {
+  it('renders the player UI without the Daremon logo inside the layout grid', () => {
     expect(html).toContain('class="now-playing-layout"');
 
     const sectionMatch = html.match(
@@ -16,7 +16,17 @@ describe('now playing layout', () => {
     );
 
     expect(sectionMatch).toBeTruthy();
-    expect(sectionMatch?.[1]).toContain('<img id="daremon-logo"');
+    expect(sectionMatch?.[1]).not.toContain('<img id="daremon-logo"');
     expect(sectionMatch?.[1]).toContain('<div id="player-ui">');
+  });
+
+  it('positions the Daremon logo and countdown inside the visualizer showcase', () => {
+    const visualizerMatch = html.match(
+      /<section id="visualizer-showcase"[\s\S]*?<\/section>/
+    );
+
+    expect(visualizerMatch).toBeTruthy();
+    expect(visualizerMatch?.[0]).toContain('<img id="daremon-logo"');
+    expect(visualizerMatch?.[0]).toContain('id="countdown-display"');
   });
 });
