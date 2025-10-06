@@ -668,13 +668,15 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function updatePlayPauseButtons() {
         state.isPlaying = !players[activePlayerIndex].paused;
-        const icon = state.isPlaying ? '⏸️' : '▶️';
+        const icon = state.isPlaying ? '⸸️' : '▶️';
         if (dom.player.playPauseBtn) dom.player.playPauseBtn.textContent = icon;
         if (dom.stickyPlayer.playPauseBtn) dom.stickyPlayer.playPauseBtn.textContent = icon;
-        
+
         const label = t(state.isPlaying ? 'playPauseLabel_pause' : 'playPauseLabel_play');
         if (dom.player.playPauseBtn) dom.player.playPauseBtn.setAttribute("aria-label", label);
         if (dom.stickyPlayer.playPauseBtn) dom.stickyPlayer.playPauseBtn.setAttribute("aria-label", label);
+
+        document.body.classList.toggle('playing', state.isPlaying);
     }
 
     function updateProgressBar() {
@@ -1058,10 +1060,6 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(drawVisualizer);
         if (!analyser || !state.isPlaying || !dom.visualizerCanvas) return;
 
-        if (!dom.visualizerCanvas || typeof dom.visualizerCanvas.getContext !== 'function') {
-            return;
-        }
-
         const bufferLength = analyser.frequencyBinCount;
         const dataArray = new Uint8Array(bufferLength);
         analyser.getByteFrequencyData(dataArray);
@@ -1070,36 +1068,121 @@ document.addEventListener('DOMContentLoaded', () => {
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
+        // Ustaw rozmiar canvas
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        ctx.globalCompositeOperation = 'source-over';
-        ctx.fillStyle = 'rgba(4, 19, 43, 0.14)';
+        // Wyczyść canvas z ciemnym gradientem tła
+        const bgGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        bgGradient.addColorStop(0, 'rgba(4, 19, 43, 0.95)');
+        bgGradient.addColorStop(1, 'rgba(8, 37, 82, 0.95)');
+        ctx.fillStyle = bgGradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+        // === SUNBURST EFFECT (promienie z centrum) ===
         const centerX = canvas.width / 2;
         const centerY = canvas.height / 2;
-        const baseRadius = Math.min(centerX, centerY) * 0.28;
+        const numRays = 48;
+        const maxRayLength = Math.max(canvas.width, canvas.height) * 0.6;
 
-        ctx.lineCap = 'round';
-        ctx.shadowBlur = 24;
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.45)';
+        ctx.save();
+        ctx.globalAlpha = 0.3;
 
-        for (let i = 0; i < bufferLength; i++) {
-            const value = dataArray[i];
-            const amplitude = value / 255;
-            const angle = (i / bufferLength) * Math.PI * 2;
-            const radius = baseRadius + amplitude * Math.min(centerX, centerY) * 0.75;
-            const targetX = centerX + Math.cos(angle) * radius;
-            const targetY = centerY + Math.sin(angle) * radius;
+        for (let i = 0; i < numRays; i++) {
+            const angle = (i / numRays) * Math.PI * 2;
+            const amplitude = dataArray[Math.floor((i / numRays) * bufferLength)];
+            const rayLength = (amplitude / 255) * maxRayLength * 0.5;
 
-            ctx.lineWidth = 1.2 + amplitude * 3.4;
-            ctx.strokeStyle = `rgba(0, 0, 0, ${0.35 + amplitude * 0.55})`;
+            const gradient = ctx.createLinearGradient(
+                centerX, centerY,
+                centerX + Math.cos(angle) * rayLength,
+                centerY + Math.sin(angle) * rayLength
+            );
+            gradient.addColorStop(0, 'rgba(255, 165, 0, 0.8)');
+            gradient.addColorStop(0.5, 'rgba(255, 140, 0, 0.4)');
+            gradient.addColorStop(1, 'rgba(255, 140, 0, 0)');
+
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 3;
             ctx.beginPath();
             ctx.moveTo(centerX, centerY);
-            ctx.lineTo(targetX, targetY);
+            ctx.lineTo(
+                centerX + Math.cos(angle) * rayLength,
+                centerY + Math.sin(angle) * rayLength
+            );
             ctx.stroke();
         }
+        ctx.restore();
+
+        // === BOTTOM EQUALIZER BARS (złote słupki na dole) ===
+        const numBars = 64;
+        const barWidth = canvas.width / numBars;
+        const maxBarHeight = canvas.height * 0.25; // 25% wysokości ekranu
+
+        for (let i = 0; i < numBars; i++) {
+            const dataIndex = Math.floor((i / numBars) * bufferLength);
+            const amplitude = dataArray[dataIndex];
+            const barHeight = (amplitude / 255) * maxBarHeight;
+
+            // Gradient dla każdego słupka (ciemny dół -> jasny góra)
+            const barGradient = ctx.createLinearGradient(
+                i * barWidth, canvas.height,
+                i * barWidth, canvas.height - barHeight
+            );
+            barGradient.addColorStop(0, 'rgba(255, 100, 0, 0.9)');
+            barGradient.addColorStop(0.5, 'rgba(255, 165, 0, 0.95)');
+            barGradient.addColorStop(1, 'rgba(255, 215, 0, 1)');
+
+            ctx.fillStyle = barGradient;
+            ctx.fillRect(
+                i * barWidth + 1, // mała przerwa między słupkami
+                canvas.height - barHeight,
+                barWidth - 2,
+                barHeight
+            );
+
+            // Dodatkowy blask na górze słupka
+            if (barHeight > maxBarHeight * 0.3) {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+                ctx.fillRect(
+                    i * barWidth + 1,
+                    canvas.height - barHeight,
+                    barWidth - 2,
+                    3
+                );
+            }
+        }
+
+        // === PARTICLES EFFECT (spadające cząsteczki) ===
+        if (!window.visualizerParticles) {
+            window.visualizerParticles = [];
+        }
+
+        // Generuj nowe cząsteczki
+        if (Math.random() > 0.7) {
+            window.visualizerParticles.push({
+                x: Math.random() * canvas.width,
+                y: 0,
+                speedY: Math.random() * 2 + 1,
+                size: Math.random() * 2 + 1,
+                opacity: Math.random() * 0.5 + 0.3
+            });
+        }
+
+        // Rysuj i aktualizuj cząsteczki
+        ctx.fillStyle = 'rgba(255, 180, 50, 0.6)';
+        window.visualizerParticles = window.visualizerParticles.filter(particle => {
+            particle.y += particle.speedY;
+
+            if (particle.y > canvas.height) return false;
+
+            ctx.globalAlpha = particle.opacity;
+            ctx.fillRect(particle.x, particle.y, particle.size, particle.size * 3);
+
+            return true;
+        });
+
+        ctx.globalAlpha = 1;
     }
 
     

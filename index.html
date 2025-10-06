@@ -32,6 +32,22 @@
 <body data-theme="arburg">
     
     <canvas id="visualizer-canvas"></canvas>
+    <!-- Dodatkowa warstwa efektów -->
+    <div class="visualizer-overlay" style="
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      background: radial-gradient(
+        ellipse at 50% 50%,
+        transparent 0%,
+        transparent 40%,
+        rgba(4, 19, 43, 0.6) 100%
+      );
+    "></div>
     <div id="offline-indicator" class="hidden" aria-live="assertive" data-i18n-key="offlineMessage"></div>
 
     <section id="visualizer-showcase" aria-label="Audio visualizer Daremon Solutions">

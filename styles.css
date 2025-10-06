@@ -1299,3 +1299,69 @@ body, #app-container, #main-content, #player-ui, #player-controls, #side-panel {
         align-self: stretch;
     }
 }
+/* === VISUALIZER ENHANCEMENTS === */
+#visualizer-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+body[data-track-top="true"] #visualizer-canvas {
+  opacity: 1;
+  animation: visualizer-pulse 3s ease-in-out infinite;
+}
+
+@keyframes visualizer-pulse {
+  0%, 100% {
+    filter: saturate(1.2) brightness(1);
+  }
+  50% {
+    filter: saturate(1.5) brightness(1.15);
+  }
+}
+
+/* Lekkie zaciemnienie tła gdy gra muzyka */
+body.playing #visualizer-canvas {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(4, 19, 43, 0.8) 100%
+  );
+}
+
+/* Dodatkowy efekt glow dla głównego kontenera */
+#app-container {
+  position: relative;
+  z-index: 1;
+  /* Lekkie podświetlenie od dołu (od wizualizera) */
+  box-shadow: 0 -20px 60px rgba(255, 140, 0, 0.1);
+}
+
+/* Animacja dla elementów podczas odtwarzania */
+@keyframes gentle-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+body.playing #track-cover {
+  animation: gentle-float 3s ease-in-out infinite;
+}
+
+/* Dodatkowy efekt dla złotych płyt */
+#golden-records-list li,
+[data-track-top="true"] #track-title {
+  text-shadow: 
+    0 0 10px rgba(255, 215, 0, 0.8),
+    0 0 20px rgba(255, 165, 0, 0.6),
+    0 0 30px rgba(255, 140, 0, 0.4);
+}
