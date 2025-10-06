@@ -39,25 +39,40 @@
             <div class="visualizer-burst"></div>
             <div class="visualizer-rays"></div>
         </div>
-        <div class="logo-card" role="img" aria-label="Logo ib In Team Betrouwbaar Daremon Solutions">
-            <div class="logo-header">
-                <span class="logo-ib">i<span>b</span></span>
-                <div class="logo-tagline">
-                    <span class="logo-in">In</span>
-                    <span class="logo-team">Team</span>
-                    <span class="logo-betrouwbaar">Betrouwbaar</span>
+        <div class="visualizer-content" role="group" aria-labelledby="countdown-heading deadline-heading">
+            <img id="daremon-logo" src="images/icons/logo.png" alt="Logo DAREMON Solutions" role="img" aria-label="Logo DAREMON Solutions">
+            <div class="countdown-card" aria-live="polite">
+                <p id="countdown-heading">Odliczanie do nowego rozdziału</p>
+                <div id="countdown-display" role="timer" aria-live="polite" aria-atomic="true">
+                    <span class="countdown-part">
+                        <span id="countdown-days" class="countdown-value">0</span>
+                        <span class="countdown-unit">dni</span>
+                    </span>
+                    <span class="countdown-part">
+                        <span id="countdown-hours" class="countdown-value">0</span>
+                        <span class="countdown-unit">godz.</span>
+                    </span>
+                    <span class="countdown-part">
+                        <span id="countdown-minutes" class="countdown-value">0</span>
+                        <span class="countdown-unit">min</span>
+                    </span>
+                    <span class="countdown-part">
+                        <span id="countdown-seconds" class="countdown-value">0</span>
+                        <span class="countdown-unit">sek</span>
+                    </span>
                 </div>
+                <p id="countdown-status">Do 31 marca 2026 roku pozostało jeszcze sporo czasu na przygotowania.</p>
             </div>
-            <div class="logo-emblem" aria-hidden="true">
-                <span class="ring outer"></span>
-                <span class="ring middle"></span>
-                <span class="ring inner"></span>
-                <span class="dot"></span>
-            </div>
-            <div class="logo-wordmark" aria-hidden="true">
-                <span class="wordmark-primary">DAREMON</span>
-                <span class="wordmark-secondary">SOLUTIONS</span>
-            </div>
+            <article class="deadline-article" aria-labelledby="deadline-heading">
+                <h2 id="deadline-heading">Znaczenie terminu 31 marca 2026</h2>
+                <p>Termin ten, określany w Planie Socjalnym jako Faza 3, wyznacza moment przejścia zespołu Daremon do kolejnego etapu. To symboliczna granica, która podkreśla wspólne przygotowania i otwiera przestrzeń na budowanie nowych inicjatyw.</p>
+                <p>Oto dlaczego ta data inspiruje nas do działania:</p>
+                <ol>
+                    <li><strong>Pełna swoboda działania:</strong> Tego dnia wygasają formalne ograniczenia dotyczące zakazu konkurencji i pozyskiwania klientów, dzięki czemu możemy śmiało rozwijać Daremon i proponować rynkowi świeże rozwiązania.</li>
+                    <li><strong>Nowe możliwości współpracy:</strong> Po 31 marca 2026 roku kończy się zewnętrzna kontrola nad terenem i wyposażeniem, co otwiera drogę do rozmów o dalszym wykorzystaniu zasobów i wspieraniu lokalnej społeczności.</li>
+                    <li><strong>Skupienie na przyszłości:</strong> Odliczanie przypomina, że kończy się pewien etap, a przed zespołem stoją projekty, które możemy kształtować według własnych wartości i ambicji.</li>
+                </ol>
+            </article>
         </div>
         <div class="visualizer-bars" aria-hidden="true">
             <span class="bar" style="--i:0"></span>
@@ -189,7 +204,6 @@
 
                 <section id="now-playing-section" class="content-box">
                     <div class="now-playing-layout">
-                        <img id="daremon-logo" src="images/icons/logo.png" alt="Logo DAREMON Solutions" role="img" aria-label="Logo DAREMON Solutions">
                         <div id="player-ui">
                             <img id="track-cover" src="https://placehold.co/120x120/04132B/18A0C7?text=ETS" alt="Okładka aktualnego utworu">
                             <div id="track-info">
@@ -221,6 +235,127 @@
                             <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" data-i18n-aria-label="volumeLabel">
                         </div>
                         <button id="tv-mode-btn" class="control-btn" data-i18n-title="fullscreenTooltip" data-i18n-aria-label="fullscreenLabel" disabled>📺</button>
+                    </div>
+                </section>
+                <section id="daremon-hub" class="content-box" aria-labelledby="daremon-hub-heading">
+                    <div class="daremon-hub-header" role="presentation">
+                        <h2 id="daremon-hub-heading">DAREMON — kontynuujemy razem</h2>
+                        <p class="daremon-hub-subtitle">Niet wraak. Voortzetting.</p>
+                        <p id="countdown-freedom-message">
+                            <span id="countdown-prep-message">Jeszcze <span data-countdown-days>0</span> dni, aby rozwinąć naszą swobodę.</span>
+                            <span id="countdown-celebration-message" hidden>Swoboda już jest z nami — korzystamy z niej razem.</span>
+                        </p>
+                    </div>
+                    <div class="daremon-tablist" role="tablist" aria-label="Sekcje planu Daremon">
+                        <button type="button" class="daremon-tab" id="daremon-tab-button-rekensom" role="tab" aria-selected="true" aria-controls="daremon-tab-rekensom">Plan na 2026</button>
+                        <button type="button" class="daremon-tab" id="daremon-tab-button-faq" role="tab" aria-selected="false" aria-controls="daremon-tab-faq" tabindex="-1">Najczęstsze pytania</button>
+                        <button type="button" class="daremon-tab" id="daremon-tab-button-training" role="tab" aria-selected="false" aria-controls="daremon-tab-training" tabindex="-1">Szkolenia</button>
+                        <button type="button" class="daremon-tab" id="daremon-tab-button-newsletter" role="tab" aria-selected="false" aria-controls="daremon-tab-newsletter" tabindex="-1">Kontakt</button>
+                    </div>
+                    <div class="daremon-tabpanels">
+                        <section id="daremon-tab-rekensom" class="daremon-tabpanel" role="tabpanel" tabindex="0" aria-labelledby="daremon-tab-button-rekensom">
+                            <div class="value-section" aria-labelledby="rekensom-heading">
+                                <h3 id="rekensom-heading">De rekensom: wspólny plan na 2026</h3>
+                                <div class="value-columns" role="list">
+                                    <article class="value-card" role="listitem" aria-labelledby="rekensom-benefits-heading">
+                                        <h4 id="rekensom-benefits-heading">Wat Rompa ons geeft</h4>
+                                        <ul>
+                                            <li>Scholingsbudget z Planu Socjalnego — inwestujemy je w strategiczne kursy.</li>
+                                            <li>Uwolnienie od non-concurrentie od 1 april 2026 — pełna legalna przestrzeń na działanie.</li>
+                                            <li>Czas do końca marca 2026 — spokój na zaplanowanie kolejnych kroków.</li>
+                                        </ul>
+                                    </article>
+                                    <article class="value-card" role="listitem" aria-labelledby="rekensom-assets-heading">
+                                        <h4 id="rekensom-assets-heading">Wat wij al hebben</h4>
+                                        <ul>
+                                            <li>200+ jaar gezamenlijke ervaring w procesach, jakości i relacjach.</li>
+                                            <li>Klantcontacten, które znają ludzi, nie tylko logo.</li>
+                                            <li>Wzajemne wsparcie — razem tworzymy zespół ekspertów.</li>
+                                        </ul>
+                                    </article>
+                                    <article class="value-card" role="listitem" aria-labelledby="rekensom-outlook-heading">
+                                        <h4 id="rekensom-outlook-heading">Wat Rompa achterlaat</h4>
+                                        <ul>
+                                            <li>Budynki Hansa i maszyny, które mogą zyskać nowe życie.</li>
+                                            <li>Popyt klientów na ciągłość produkcji.</li>
+                                            <li>Przestrzeń na Daremon — jeśli zdecydujemy się działać.</li>
+                                        </ul>
+                                    </article>
+                                </div>
+                                <p class="value-summary">Razem = większa szansa na sukces. <span class="value-highlight">Jeśli działamy wspólnie, wygrywamy doświadczeniem.</span></p>
+                            </div>
+                        </section>
+                        <section id="daremon-tab-faq" class="daremon-tabpanel" role="tabpanel" tabindex="-1" aria-labelledby="daremon-tab-button-faq" hidden>
+                            <div class="faq-section" aria-labelledby="faq-heading">
+                                <h3 id="faq-heading">De vragen die iedereen heeft</h3>
+                                <div class="faq-list" role="list">
+                                    <details class="faq-item" role="listitem">
+                                        <summary><span aria-label="Pytanie: Czy możemy legalnie konkurować?">❓ Mag ik überhaupt concurreren?</span></summary>
+                                        <p><strong>✅ Ja.</strong> Non-concurrentiebeding wygasa przy rozwiązaniu umowy — od 1 april 2026 jesteśmy wolni.</p>
+                                    </details>
+                                    <details class="faq-item" role="listitem">
+                                        <summary><span aria-label="Pytanie: Skąd wziąć środki na start?">❓ Maar ik heb geen geld om te starten...</span></summary>
+                                        <p><strong>✅ Scholingsgeld działa jak startkapitaal.</strong> Rompa finansuje kursy — wybieramy te, które przygotują nas na Daremon.</p>
+                                    </details>
+                                    <details class="faq-item" role="listitem">
+                                        <summary><span aria-label="Pytanie: Kto może dołączyć?">❓ Wie worden "wij"?</span></summary>
+                                        <p><strong>✅ Iedereen die wil.</strong> Nie ma presji, ale wspólne działanie wzmacnia wszystkich.</p>
+                                    </details>
+                                    <details class="faq-item" role="listitem">
+                                        <summary><span aria-label="Pytanie: Czy są dostępne maszyny?">❓ Kunnen we echt machines krijgen?</span></summary>
+                                        <p><strong>✅ Możemy rozmawiać.</strong> Hans posiada budynki, a maszyny mogą zostać u nas, jeśli je zabezpieczymy.</p>
+                                    </details>
+                                    <details class="faq-item" role="listitem">
+                                        <summary><span aria-label="Pytanie: Co jeśli się nie uda?">❓ Wat als het niet lukt?</span></summary>
+                                        <p><strong>✅ Próbujemy razem.</strong> Działanie daje szansę — nic nie robiąc, oddajemy tę szansę.</p>
+                                    </details>
+                                </div>
+                            </div>
+                        </section>
+                        <section id="daremon-tab-training" class="daremon-tabpanel" role="tabpanel" tabindex="-1" aria-labelledby="daremon-tab-button-training" hidden>
+                            <div class="scholings-section" aria-labelledby="scholings-heading">
+                                <h3 id="scholings-heading">Gebruik het scholingsgeld slim</h3>
+                                <p class="scholings-intro">Środki z Planu Socjalnego to inwestycja w Twoją przyszłość — wybieramy kursy, które wzmacniają Daremon.</p>
+                                <div class="scholings-grid" role="list">
+                                    <article class="scholings-card" role="listitem" aria-labelledby="scholings-production-heading">
+                                        <h4 id="scholings-production-heading">Voor productie</h4>
+                                        <ul>
+                                            <li>Geavanceerde CNC-programmering</li>
+                                            <li>MIM procesoptimalisatie</li>
+                                            <li>Systemy jakości ISO</li>
+                                        </ul>
+                                    </article>
+                                    <article class="scholings-card" role="listitem" aria-labelledby="scholings-business-heading">
+                                        <h4 id="scholings-business-heading">Voor business</h4>
+                                        <ul>
+                                            <li>Projectmanagement</li>
+                                            <li>Relacje z klientami</li>
+                                            <li>Planowanie finansowe</li>
+                                        </ul>
+                                    </article>
+                                    <article class="scholings-card" role="listitem" aria-labelledby="scholings-technical-heading">
+                                        <h4 id="scholings-technical-heading">Voor techniek</h4>
+                                        <ul>
+                                            <li>CAD/CAM &amp; nowe materiały</li>
+                                            <li>Utrzymanie ruchu</li>
+                                            <li>Diagnostyka i troubleshooting</li>
+                                        </ul>
+                                    </article>
+                                </div>
+                            </div>
+                        </section>
+                        <section id="daremon-tab-newsletter" class="daremon-tabpanel" role="tabpanel" tabindex="-1" aria-labelledby="daremon-tab-button-newsletter" hidden>
+                            <div class="newsletter-section" aria-labelledby="newsletter-heading">
+                                <h3 id="newsletter-heading">Wees op de hoogte</h3>
+                                <p>Pozostańmy w kontakcie. Wpisz adres e-mail, aby otrzymywać pozytywne aktualizacje o Daremon.</p>
+                                <form id="newsletter-form" aria-describedby="newsletter-helper">
+                                    <label for="newsletter-email">Adres e-mail</label>
+                                    <input id="newsletter-email" name="email" type="email" required aria-required="true" placeholder="naam@voorbeeld.com">
+                                    <button type="submit">Wyślij</button>
+                                    <p id="newsletter-helper">Brak zobowiązań — tylko informacje o kolejnych krokach.</p>
+                                </form>
+                            </div>
+                        </section>
                     </div>
                 </section>
                 <section id="team-moments" class="content-box photo-collage" aria-labelledby="team-moments-title">
