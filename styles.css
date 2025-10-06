@@ -677,6 +677,52 @@ header p {
     text-transform: uppercase;
 }
 
+.video-library {
+    position: relative;
+}
+
+.video-library-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.video-card {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(160deg, rgba(4, 19, 43, 0.85), rgba(9, 43, 86, 0.75));
+    border-radius: 18px;
+    border: 1px solid rgba(24, 160, 199, 0.35);
+    box-shadow: 0 22px 44px rgba(4, 19, 43, 0.38);
+    overflow: hidden;
+}
+
+.video-card video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-bottom: 1px solid rgba(24, 160, 199, 0.35);
+}
+
+.video-card video:focus-visible {
+    outline: 3px solid var(--secondary-accent);
+    outline-offset: 0;
+}
+
+.video-card figcaption {
+    padding: 0.9rem 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.8rem;
+}
+
 /* --- Autoplay & Fout Overlay --- */
 #start-btn { border: 3px solid var(--primary-accent); color: var(--primary-accent); }
 #start-btn:hover, #start-btn:disabled { background: var(--primary-accent); color: var(--bg-dark); box-shadow: 0 0 25px var(--primary-accent); }
@@ -911,8 +957,9 @@ body, #app-container, #main-content, #player-ui, #player-controls, #side-panel {
     #main-content { max-width: 100%; }
     #player-ui { flex-direction: column; text-align: center; }
     #track-cover { width: 150px; height: 150px; }
-    
-    #menu-toggle { 
+    .video-grid { grid-template-columns: 1fr; }
+
+    #menu-toggle {
         display: flex; 
         justify-content: center; 
         align-items: center; 
@@ -942,4 +989,5 @@ body, #app-container, #main-content, #player-ui, #player-controls, #side-panel {
     .visualizer-bars { height: 110px; }
     .photo-gallery-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
     .photo-collage-grid { grid-template-columns: 1fr; }
+    .video-card figcaption { text-align: center; }
 }

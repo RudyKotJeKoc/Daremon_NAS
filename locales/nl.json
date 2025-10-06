@@ -89,5 +89,11 @@
   "teamMomentsIntro": "Ontdek de sfeer achter de schermen met snapshots uit het DAREMON Radio ETS-team.",
   "teamMomentsCaptionPrep": "Voorbereiding achter de schermen",
   "teamMomentsCaptionInterview": "Interview met speciale gast",
-  "teamMomentsCaptionCommunity": "Community interactie"
+  "teamMomentsCaptionCommunity": "Community interactie",
+  "videoLibraryTitle": "Videomomenten",
+  "videoLibraryIntro": "Duik in de meest gevraagde clips rechtstreeks vanuit de DAREMON studio.",
+  "videoFallback": "Je browser ondersteunt deze video niet.",
+  "videoDJDaremon": "DJ DAREMON live-set",
+  "videoDJBobro": "DJ Bobro in de studio",
+  "videoBeaver": "Beaver aftermovie"
 }

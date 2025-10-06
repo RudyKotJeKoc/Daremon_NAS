@@ -89,5 +89,11 @@
   "teamMomentsIntro": "Zobacz kulisy działania DAREMON Radio ETS na wybranych fotografiach.",
   "teamMomentsCaptionPrep": "Przygotowania za kulisami",
   "teamMomentsCaptionInterview": "Wywiad ze specjalnym gościem",
-  "teamMomentsCaptionCommunity": "Interakcje ze słuchaczami"
+  "teamMomentsCaptionCommunity": "Interakcje ze słuchaczami",
+  "videoLibraryTitle": "Wideoteka",
+  "videoLibraryIntro": "Obejrzyj najpopularniejsze nagrania prosto ze studia DAREMON.",
+  "videoFallback": "Twoja przeglądarka nie obsługuje wideo.",
+  "videoDJDaremon": "DJ DAREMON – set na żywo",
+  "videoDJBobro": "DJ Bobro w studiu",
+  "videoBeaver": "Beaver – aftermovie"
 }
