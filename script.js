@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         seconds: document.getElementById('countdown-seconds')
     };
     const countdownStatus = document.getElementById('countdown-status');
+
     const rompaDeadline = new Date(2026, 2, 31, 23, 59, 59);
 
     const updateElementText = (element, value) => {
@@ -38,12 +39,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const seconds = totalSeconds % 60;
 
         updateElementText(countdownElements.days, days.toString());
+
         updateElementText(countdownElements.hours, formatDoubleDigit(hours));
         updateElementText(countdownElements.minutes, formatDoubleDigit(minutes));
         updateElementText(countdownElements.seconds, formatDoubleDigit(seconds));
 
         const ariaLabel = `Pozostało ${days} dni, ${hours} godzin, ${minutes} minut i ${seconds} sekund.`;
         countdownDisplay.setAttribute('aria-label', ariaLabel);
+
 
         if (countdownStatus) {
             if (diff <= 0) {

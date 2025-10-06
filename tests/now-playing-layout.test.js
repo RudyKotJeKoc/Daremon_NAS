@@ -29,4 +29,5 @@ describe('now playing layout', () => {
     expect(visualizerMatch?.[0]).toContain('<img id="daremon-logo"');
     expect(visualizerMatch?.[0]).toContain('id="countdown-display"');
   });
+
 });
