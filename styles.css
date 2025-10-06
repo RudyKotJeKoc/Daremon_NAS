@@ -161,167 +161,115 @@ body {
     mix-blend-mode: screen;
 }
 
-.logo-card {
+.visualizer-content {
     position: relative;
     z-index: 2;
-    padding: 56px 72px 64px;
-    border-radius: 42px;
-    background:
-        radial-gradient(circle at 20% 20%, rgba(45, 122, 201, 0.28), transparent 65%),
-        linear-gradient(160deg, rgba(3, 18, 40, 0.96), rgba(6, 31, 68, 0.98));
-    backdrop-filter: blur(16px);
-    box-shadow:
-        0 36px 120px rgba(4, 19, 43, 0.78),
-        inset 0 0 0 1px rgba(118, 205, 255, 0.1);
-    border: 1px solid rgba(36, 103, 171, 0.35);
-    isolation: isolate;
-    color: #f1f6ff;
-}
-
-.logo-card::before {
-    content: "";
-    position: absolute;
-    inset: 14px;
-    border-radius: 32px;
-    background: radial-gradient(circle at top, rgba(126, 224, 255, 0.22), transparent 70%);
-    opacity: 0.55;
-    pointer-events: none;
-}
-
-.logo-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 42px;
-    box-shadow: inset 0 0 22px rgba(255, 189, 77, 0.12);
-    mix-blend-mode: screen;
-    pointer-events: none;
-}
-
-.logo-header {
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
+    align-items: center;
     gap: 28px;
+    max-width: 600px;
+}
+
+#daremon-logo {
+    width: clamp(160px, 22vw, 240px);
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 0 24px rgba(126, 224, 255, 0.45));
+}
+
+.countdown-card {
+    width: 100%;
+    padding: 24px 28px;
+    border-radius: 28px;
+    background:
+        linear-gradient(180deg, rgba(9, 28, 54, 0.92), rgba(4, 12, 28, 0.92));
+    border: 1px solid rgba(126, 224, 255, 0.26);
+    box-shadow:
+        0 30px 50px rgba(2, 9, 24, 0.6),
+        inset 0 0 0 1px rgba(126, 224, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    color: #eaf9ff;
+}
+
+#countdown-heading {
+    margin: 0;
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+#countdown-display {
+    display: flex;
+    gap: clamp(12px, 2vw, 20px);
     justify-content: center;
 }
 
-.logo-ib {
-    font-size: clamp(4.5rem, 10vw, 5.4rem);
-    font-weight: 700;
-    letter-spacing: -6px;
-    text-transform: lowercase;
-    color: #ecf3ff;
-    text-shadow:
-        0 0 12px rgba(126, 224, 255, 0.55),
-        0 0 42px rgba(126, 224, 255, 0.35);
-}
-
-.logo-ib span {
-    display: inline-block;
-    color: #ffffff;
-    font-weight: 800;
-    transform: translateX(-10px);
-    text-shadow: 0 0 16px rgba(255, 255, 255, 0.65);
-}
-
-.logo-tagline {
-    display: grid;
-    text-transform: uppercase;
-    font-size: clamp(0.95rem, 2.2vw, 1.15rem);
-    row-gap: 2px;
-    letter-spacing: 0.3em;
-    text-align: left;
-    color: rgba(155, 214, 255, 0.85);
-}
-
-.logo-in {
-    color: #9bd6ff;
-}
-
-.logo-team {
-    color: #7ee0ff;
-    font-weight: 600;
-}
-
-.logo-betrouwbaar {
-    color: #d4e8ff;
-    font-weight: 300;
-    letter-spacing: 0.24em;
-}
-
-.logo-emblem {
-    position: relative;
-    width: 220px;
-    height: 220px;
-    margin: 36px auto 28px;
-    filter: drop-shadow(0 0 22px rgba(126, 224, 255, 0.35));
-}
-
-.logo-emblem .ring {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    border: 6px solid transparent;
-    background: conic-gradient(from 90deg, rgba(0, 174, 239, 0.9), rgba(4, 19, 43, 0.35), rgba(0, 174, 239, 0.9)) border-box;
-    mask: radial-gradient(circle, transparent 63%, black 64%);
-}
-
-.logo-emblem .ring.outer {
-    width: 220px;
-    height: 220px;
-    border-width: 8px;
-}
-
-.logo-emblem .ring.middle {
-    width: 150px;
-    height: 150px;
-    border-width: 10px;
-    mask: radial-gradient(circle, transparent 54%, black 55%);
-}
-
-.logo-emblem .ring.inner {
-    width: 92px;
-    height: 92px;
-    border-width: 12px;
-    mask: radial-gradient(circle, transparent 37%, black 38%);
-}
-
-.logo-emblem .dot {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #7ee0ff, #18a0c7);
-    box-shadow:
-        0 0 18px rgba(126, 224, 255, 0.9),
-        0 0 38px rgba(126, 224, 255, 0.6);
-}
-
-.logo-wordmark {
+.countdown-part {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 6px;
-    letter-spacing: 0.35em;
+    min-width: 70px;
 }
 
-.wordmark-primary {
-    font-size: clamp(1.6rem, 5vw, 2.2rem);
+.countdown-value {
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
     font-weight: 800;
-    color: #eaf3ff;
-    text-shadow: 0 0 16px rgba(126, 224, 255, 0.35);
+    color: var(--primary-accent);
+    text-shadow: 0 0 16px rgba(126, 224, 255, 0.65);
 }
 
-.wordmark-secondary {
-    font-size: clamp(0.75rem, 2.5vw, 1rem);
-    font-weight: 500;
-    color: rgba(155, 214, 255, 0.78);
-    letter-spacing: 0.48em;
-    text-shadow: 0 0 14px rgba(126, 224, 255, 0.28);
+.countdown-unit {
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(234, 249, 255, 0.75);
+}
+
+#countdown-status {
+    margin: 0;
+    font-size: 0.95rem;
+    color: rgba(234, 249, 255, 0.85);
+    text-align: center;
+}
+
+.deadline-article {
+    width: 100%;
+    padding: 26px 30px;
+    border-radius: 28px;
+    background: rgba(6, 18, 40, 0.82);
+    border: 1px solid rgba(24, 160, 199, 0.2);
+    box-shadow: 0 20px 45px rgba(2, 9, 24, 0.6);
+    color: #f1fbff;
+    text-align: left;
+}
+
+.deadline-article h2 {
+    margin-top: 0;
+    font-size: clamp(1.3rem, 4vw, 2rem);
+    color: var(--primary-accent);
+}
+
+.deadline-article p {
+    margin: 0 0 0.8rem 0;
+    line-height: 1.7;
+}
+
+.deadline-article ol {
+    margin: 0;
+    padding-left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.deadline-article li {
+    line-height: 1.6;
 }
 
 .visualizer-bars {
@@ -464,18 +412,11 @@ body {
 }
 
 .now-playing-layout {
-    display: grid;
-    grid-template-columns: minmax(120px, 180px) minmax(0, 1fr);
-    align-items: center;
-    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
     width: 100%;
-}
-
-#daremon-logo {
-    width: clamp(120px, 18vw, 200px);
-    height: auto;
-    justify-self: center;
-    display: block;
 }
 
 #player-ui {
@@ -1009,10 +950,10 @@ body, #app-container, #main-content, #player-ui, #player-controls, #side-panel {
 @media (max-width: 900px) {
     body { padding: 10px; padding-bottom: 80px; }
     #visualizer-showcase { min-height: 480px; padding: 110px 48px 150px; margin: 30px auto 50px; border-radius: 40px; }
-    .logo-card { padding: 44px 36px 52px; border-radius: 34px; }
-    .logo-header { flex-direction: column; gap: 16px; align-items: center; }
-    .logo-tagline { text-align: center; letter-spacing: 0.22em; }
-    .logo-emblem { transform: scale(0.85); margin: 22px auto; }
+    .visualizer-content { gap: 24px; }
+    .countdown-card { padding: 22px; }
+    #countdown-display { flex-wrap: wrap; }
+    .deadline-article { padding: 22px 24px; }
     .visualizer-bars { height: 150px; gap: 4px; padding: 0 16px; bottom: 26px; }
     .bar { width: 10px; }
     #app-container { flex-direction: column; }
@@ -1020,13 +961,8 @@ body, #app-container, #main-content, #player-ui, #player-controls, #side-panel {
     #radio-view { flex-direction: column; }
 
     .now-playing-layout {
-        grid-template-columns: 1fr;
-        justify-items: center;
-        gap: 1.5rem;
-    }
-
-    #daremon-logo {
-        margin: 0;
+        align-items: center;
+        text-align: center;
     }
 
     #side-panel {
@@ -1071,12 +1007,12 @@ body, #app-container, #main-content, #player-ui, #player-controls, #side-panel {
 
 @media (max-width: 600px) {
     #visualizer-showcase { min-height: 420px; padding: 90px 28px 140px; border-radius: 32px; }
-    .logo-card { padding: 34px 22px 40px; border-radius: 26px; }
-    .logo-ib { font-size: 3.7rem; letter-spacing: -4px; }
-    .logo-tagline { font-size: 0.9rem; letter-spacing: 0.18em; }
-    .logo-emblem { transform: scale(0.7); }
-    .wordmark-primary { font-size: 1.35rem; }
-    .wordmark-secondary { font-size: 0.65rem; letter-spacing: 0.32em; }
+    .visualizer-content { gap: 20px; }
+    #daremon-logo { width: clamp(140px, 40vw, 200px); }
+    .countdown-card { padding: 18px; }
+    #countdown-display { gap: 10px; }
+    .countdown-part { min-width: 60px; }
+    .deadline-article { padding: 18px 20px; }
     .visualizer-bars { height: 130px; bottom: 20px; }
     .bar { width: 9px; }
     .photo-gallery-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }

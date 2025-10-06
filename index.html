@@ -39,25 +39,40 @@
             <div class="visualizer-burst"></div>
             <div class="visualizer-rays"></div>
         </div>
-        <div class="logo-card" role="img" aria-label="Logo ib In Team Betrouwbaar Daremon Solutions">
-            <div class="logo-header">
-                <span class="logo-ib">i<span>b</span></span>
-                <div class="logo-tagline">
-                    <span class="logo-in">In</span>
-                    <span class="logo-team">Team</span>
-                    <span class="logo-betrouwbaar">Betrouwbaar</span>
+        <div class="visualizer-content" role="group" aria-labelledby="countdown-heading deadline-heading">
+            <img id="daremon-logo" src="images/icons/logo.png" alt="Logo DAREMON Solutions" role="img" aria-label="Logo DAREMON Solutions">
+            <div class="countdown-card" aria-live="polite">
+                <p id="countdown-heading">Odliczanie do nowego rozdziału</p>
+                <div id="countdown-display" role="timer" aria-live="polite" aria-atomic="true">
+                    <span class="countdown-part">
+                        <span id="countdown-days" class="countdown-value">0</span>
+                        <span class="countdown-unit">dni</span>
+                    </span>
+                    <span class="countdown-part">
+                        <span id="countdown-hours" class="countdown-value">0</span>
+                        <span class="countdown-unit">godz.</span>
+                    </span>
+                    <span class="countdown-part">
+                        <span id="countdown-minutes" class="countdown-value">0</span>
+                        <span class="countdown-unit">min</span>
+                    </span>
+                    <span class="countdown-part">
+                        <span id="countdown-seconds" class="countdown-value">0</span>
+                        <span class="countdown-unit">sek</span>
+                    </span>
                 </div>
+                <p id="countdown-status">Do 31 marca 2026 roku pozostało jeszcze sporo czasu na przygotowania.</p>
             </div>
-            <div class="logo-emblem" aria-hidden="true">
-                <span class="ring outer"></span>
-                <span class="ring middle"></span>
-                <span class="ring inner"></span>
-                <span class="dot"></span>
-            </div>
-            <div class="logo-wordmark" aria-hidden="true">
-                <span class="wordmark-primary">DAREMON</span>
-                <span class="wordmark-secondary">SOLUTIONS</span>
-            </div>
+            <article class="deadline-article" aria-labelledby="deadline-heading">
+                <h2 id="deadline-heading">Znaczenie terminu 31 marca 2026</h2>
+                <p>Termin ten, określany w Planie Socjalnym jako Faza 3, wyznacza moment przejścia zespołu Daremon do kolejnego etapu. To symboliczna granica, która podkreśla wspólne przygotowania i otwiera przestrzeń na budowanie nowych inicjatyw.</p>
+                <p>Oto dlaczego ta data inspiruje nas do działania:</p>
+                <ol>
+                    <li><strong>Pełna swoboda działania:</strong> Tego dnia wygasają formalne ograniczenia dotyczące zakazu konkurencji i pozyskiwania klientów, dzięki czemu możemy śmiało rozwijać Daremon i proponować rynkowi świeże rozwiązania.</li>
+                    <li><strong>Nowe możliwości współpracy:</strong> Po 31 marca 2026 roku kończy się zewnętrzna kontrola nad terenem i wyposażeniem, co otwiera drogę do rozmów o dalszym wykorzystaniu zasobów i wspieraniu lokalnej społeczności.</li>
+                    <li><strong>Skupienie na przyszłości:</strong> Odliczanie przypomina, że kończy się pewien etap, a przed zespołem stoją projekty, które możemy kształtować według własnych wartości i ambicji.</li>
+                </ol>
+            </article>
         </div>
         <div class="visualizer-bars" aria-hidden="true">
             <span class="bar" style="--i:0"></span>
@@ -189,7 +204,6 @@
 
                 <section id="now-playing-section" class="content-box">
                     <div class="now-playing-layout">
-                        <img id="daremon-logo" src="images/icons/logo.png" alt="Logo DAREMON Solutions" role="img" aria-label="Logo DAREMON Solutions">
                         <div id="player-ui">
                             <img id="track-cover" src="https://placehold.co/120x120/04132B/18A0C7?text=ETS" alt="Okładka aktualnego utworu">
                             <div id="track-info">
