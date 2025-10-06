@@ -77,11 +77,16 @@ document.addEventListener('DOMContentLoaded', () => {
     let activePlayerIndex = 0;
     players.forEach(p => { p.crossOrigin = "anonymous"; p.preload = "auto"; });
 
+    let visualizerAnimationId = null;
+
     const state = createInitialState();
 
     // --- INTERNATIONALISATIE (i18n) ---
     async function i18n_init() {
-        const userLang = navigator.language.split('-')[0];
+        const rawNavigatorLanguage = typeof navigator === 'object' && typeof navigator.language === 'string'
+            ? navigator.language
+            : 'nl';
+        const userLang = rawNavigatorLanguage.split('-')[0];
         state.language = ['nl', 'pl'].includes(userLang) ? userLang : 'nl'; // Standaard Nederlands
         document.documentElement.lang = state.language;
 
@@ -372,7 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 source.connect(analyser);
             });
             analyser.connect(audioContext.destination);
-            drawVisualizer();
+            scheduleVisualizerFrame();
         } catch (e) {
             console.error("Audio context setup failed:", e);
         }
@@ -504,9 +509,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const markReady = () => {
                 state.nextTrackReady = true;
+                cleanupListeners();
+            };
+
+            const handlePreloadError = (event) => {
+                cleanupListeners();
+                const failedTrack = state.nextTrack;
+                if (failedTrack && !state.failedTracks.includes(failedTrack.id)) {
+                    state.failedTracks.push(failedTrack.id);
+                }
+
+                const trackLabel = failedTrack?.title || failedTrack?.id || 'Onbekend nummer';
+                displayError(`Voorbeluisteren mislukt: ${trackLabel}`);
+
+                state.nextTrack = null;
+                state.nextTrackReady = false;
+
+                const target = event?.target;
+                if (target && typeof target.removeAttribute === 'function') {
+                    target.removeAttribute('src');
+                    if (typeof target.load === 'function') {
+                        target.load();
+                    }
+                }
+
+                setTimeout(preloadNextTrack, 0);
+            };
+
+            const cleanupListeners = () => {
+                inactivePlayer.removeEventListener('canplaythrough', markReady);
+                inactivePlayer.removeEventListener('error', handlePreloadError);
             };
 
             inactivePlayer.addEventListener('canplaythrough', markReady, { once: true });
+            inactivePlayer.addEventListener('error', handlePreloadError, { once: true });
             inactivePlayer.src = normalizeTrackSrc(state.nextTrack.src);
         }
     }
@@ -677,6 +713,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dom.stickyPlayer.playPauseBtn) dom.stickyPlayer.playPauseBtn.setAttribute("aria-label", label);
 
         document.body.classList.toggle('playing', state.isPlaying);
+
+        if (state.isPlaying) {
+            scheduleVisualizerFrame();
+        } else {
+            stopVisualizerLoop();
+            clearVisualizerCanvas();
+        }
     }
 
     function updateProgressBar() {
@@ -732,7 +775,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function updateOfflineStatus() {
         if (dom.offlineIndicator) {
-            dom.offlineIndicator.classList.toggle('hidden', navigator.onLine);
+            const isOnline = typeof navigator === 'object' ? navigator.onLine : true;
+            dom.offlineIndicator.classList.toggle('hidden', isOnline);
         }
     }
     
@@ -879,7 +923,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Luisteraarstelsimulatie ---
     function updateListenerCount() {
         if (!dom.header.listenerCount) return;
-        if (!navigator.onLine) {
+        const isOnline = typeof navigator === 'object' ? navigator.onLine : true;
+        if (!isOnline) {
             dom.header.listenerCount.textContent = 'Offline';
             return;
         }
@@ -1056,9 +1101,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Visualizer & Hulpprogramma's ---
+    function scheduleVisualizerFrame() {
+        if (visualizerAnimationId !== null) return;
+        visualizerAnimationId = requestAnimationFrame(() => {
+            visualizerAnimationId = null;
+            drawVisualizer();
+        });
+    }
+
+    function stopVisualizerLoop() {
+        if (visualizerAnimationId !== null) {
+            cancelAnimationFrame(visualizerAnimationId);
+            visualizerAnimationId = null;
+        }
+    }
+
+    function clearVisualizerCanvas() {
+        if (!dom.visualizerCanvas) return;
+        const ctx = dom.visualizerCanvas.getContext('2d');
+        if (ctx) {
+            ctx.clearRect(0, 0, dom.visualizerCanvas.width, dom.visualizerCanvas.height);
+        }
+    }
+
     function drawVisualizer() {
-        requestAnimationFrame(drawVisualizer);
-        if (!analyser || !state.isPlaying || !dom.visualizerCanvas) return;
+        const particleHost = typeof window !== 'undefined' ? window : globalThis;
+        if (!analyser || !state.isPlaying || !dom.visualizerCanvas) {
+            stopVisualizerLoop();
+            clearVisualizerCanvas();
+            if (particleHost.visualizerParticles) {
+                particleHost.visualizerParticles = [];
+            }
+            return;
+        }
 
         const bufferLength = analyser.frequencyBinCount;
         const dataArray = new Uint8Array(bufferLength);
@@ -1154,13 +1229,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // === PARTICLES EFFECT (spadające cząsteczki) ===
-        if (!window.visualizerParticles) {
-            window.visualizerParticles = [];
+        if (!particleHost.visualizerParticles) {
+            particleHost.visualizerParticles = [];
         }
 
         // Generuj nowe cząsteczki
         if (Math.random() > 0.7) {
-            window.visualizerParticles.push({
+            particleHost.visualizerParticles.push({
                 x: Math.random() * canvas.width,
                 y: 0,
                 speedY: Math.random() * 2 + 1,
@@ -1171,7 +1246,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Rysuj i aktualizuj cząsteczki
         ctx.fillStyle = 'rgba(255, 180, 50, 0.6)';
-        window.visualizerParticles = window.visualizerParticles.filter(particle => {
+        particleHost.visualizerParticles = particleHost.visualizerParticles.filter(particle => {
             particle.y += particle.speedY;
 
             if (particle.y > canvas.height) return false;
@@ -1183,6 +1258,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         ctx.globalAlpha = 1;
+
+        scheduleVisualizerFrame();
     }
 
     
@@ -1316,7 +1393,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // --- Service Worker ---
-    if ('serviceWorker' in navigator) {
+    if (typeof navigator === 'object' && 'serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('./sw.js')
                 .then(reg => console.log('Service Worker geregistreerd:', reg.scope))

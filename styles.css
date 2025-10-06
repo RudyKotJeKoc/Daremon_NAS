@@ -1216,20 +1216,27 @@ body, #app-container, #main-content, #player-ui, #player-controls, #side-panel {
 
     #side-panel {
         width: 100%;
+        max-width: 520px;
         order: 3;
         position: fixed;
-        top: 0;
-        left: -100%;
-        height: 100%; 
-        background: #111; 
-        z-index: 1000; 
-        padding: 20px; 
-        box-shadow: 10px 0 20px rgba(0,0,0,0.5); 
-        transition: left 0.3s ease-in-out; 
-        overflow-y: auto; 
+        top: 64px;
+        left: -110%;
+        height: calc(100% - 88px);
+        max-height: 640px;
+        background: #111;
+        z-index: 1000;
+        padding: 24px clamp(18px, 4vw, 28px) clamp(28px, 5vw, 36px);
+        box-shadow: 0 18px 28px rgba(0, 0, 0, 0.6);
+        transition: left 0.3s ease-in-out, transform 0.3s ease-in-out;
+        overflow-y: auto;
         box-sizing: border-box;
+        border-radius: 28px 28px 0 0;
+        margin: 0 auto;
     }
-    #side-panel.open { left: 0; }
+    #side-panel.open {
+        left: 50%;
+        transform: translateX(-50%);
+    }
     #main-content { max-width: 100%; }
     #player-ui { flex-direction: column; text-align: center; }
     #track-cover { width: 150px; height: 150px; }
@@ -1278,6 +1285,25 @@ body, #app-container, #main-content, #player-ui, #player-controls, #side-panel {
     .photo-collage-grid { grid-template-columns: 1fr; }
     .video-card figcaption { text-align: center; }
 
+    #side-panel {
+        max-width: 460px;
+        top: 72px;
+        height: calc(100% - 104px);
+        padding-inline: clamp(16px, 6vw, 24px);
+    }
+
+    #side-panel.open {
+        width: calc(100% - 24px);
+        left: 50%;
+    }
+
+    #menu-toggle {
+        top: 12px;
+        right: 12px;
+        width: 48px;
+        height: 48px;
+    }
+
     #daremon-hub {
         padding: 0 6px;
         gap: 28px;
@@ -1297,6 +1323,31 @@ body, #app-container, #main-content, #player-ui, #player-controls, #side-panel {
 
     .newsletter-section button {
         align-self: stretch;
+    }
+}
+
+@media (max-width: 400px) {
+    body { padding: 6px; padding-bottom: 72px; }
+    #visualizer-showcase { min-height: 360px; padding: 72px 18px 120px; border-radius: 28px; }
+    #countdown-display { gap: 8px; }
+    .countdown-part { min-width: 52px; padding: 10px 6px; }
+    .deadline-article { padding: 16px; }
+
+    #side-panel {
+        max-width: 420px;
+        top: 76px;
+        height: calc(100% - 118px);
+        padding-inline: clamp(14px, 7vw, 20px);
+        border-radius: 24px 24px 0 0;
+    }
+
+    #side-panel.open {
+        width: calc(100% - 18px);
+    }
+
+    #menu-toggle {
+        top: 10px;
+        right: 10px;
     }
 }
 /* === VISUALIZER ENHANCEMENTS === */
