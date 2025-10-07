@@ -5,6 +5,7 @@
       "end": "06:00"
     },
     "jingle": {
+      "enabled": true,
       "everySongs": 4,
       "orMinutes": 15,
   "cover": "https://placehold.co/120x120/ff00ff/ffffff?text=RETRO"
@@ -30,39 +31,39 @@
   "tracks": [
     {
       "id": "kaput",
-      "title": "Kaput!",
-      "artist": "Daremon Band",
+      "title": "Start!",
+      "artist": "Radio Crew",
       "src": "./music/Utwor (1).mp3",
       "cover": "https://placehold.co/120x120/ffd700/000000?text=GOLD!",
-      "tags": ["fun", "factory"],
+      "tags": ["intro", "energy"],
       "weight": 4,
       "type": "song",
       "golden": true
     },
     {
       "id": "bmw-kut",
-      "title": "BMW jeździ chujowo",
-      "artist": "DJ Bóbr",
+      "title": "Nocna jazda",
+      "artist": "DJ",
       "src": "./music/Utwor (2).mp3",
-      "cover": "https://placehold.co/120x120/0055ff/ffffff?text=BMW",
-      "tags": ["brabant", "night"],
+      "cover": "https://placehold.co/120x120/0055ff/ffffff?text=RADIO",
+      "tags": ["night", "drive"],
       "weight": 5,
       "type": "song"
     },
     {
       "id": "plasdan",
-      "title": "Plasdan padł (Remix)",
-      "artist": "Cleanroom Crew",
+      "title": "Awaria (Remix)",
+      "artist": "Studio Crew",
       "src": "./music/Utwor (3).mp3",
       "cover": "https://placehold.co/120x120/ffd700/000000?text=GOLD!",
-      "tags": ["cleanroom", "fun"],
+      "tags": ["remix", "energy"],
       "weight": 3,
       "type": "song",
       "golden": true
     },
     {
       "id": "rompa-disco",
-      "title": "Rompa (Disco Version)",
+      "title": "Disco Noc (Version)",
       "artist": "Electric Team",
       "src": "./music/Utwor (4).mp3",
       "cover": "https://placehold.co/120x120/ff00ff/ffffff?text=ROMPA",
@@ -72,7 +73,7 @@
     },
     {
       "id": "jingle-ets",
-      "title": "DAREMON Radio – Jingle",
+      "title": "Radio – Jingle",
       "artist": "AI Voice",
       "src": "./music/Utwor (5).mp3",
       "cover": "https://placehold.co/120x120/ffffff/000000?text=JINGLE",
@@ -82,7 +83,7 @@
     },
     {
       "id": "jingle-night",
-      "title": "Nocne Jazdy z ETS",
+      "title": "Nocne Jazdy",
       "artist": "AI Voice",
       "src": "./music/Utwor (6).mp3",
       "cover": "https://placehold.co/120x120/1a1a1a/ffffff?text=NOC",
