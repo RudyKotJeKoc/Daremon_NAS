@@ -21,6 +21,8 @@ export function createInitialState() {
         nextGroupPreference: 'recent',
         recentRotation: [],
         recentTrackSet: new Set(),
+        pollSystem: null,
+        strategicPollSystem: null,
 
         // App State
         language: 'nl',

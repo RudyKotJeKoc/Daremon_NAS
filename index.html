@@ -195,6 +195,127 @@
                         </div>
                     </section>
 
+                    <section id="machine-documentation-cta" class="content-box urgent-cta" aria-labelledby="machine-cta-title">
+                        <div class="urgent-cta-header">
+                            <span class="urgent-badge" aria-hidden="true">🚨 PILNE</span>
+                            <h3 id="machine-cta-title">A NIE MÓWIŁEM?! Zabezpiecz maszyny zanim znikną</h3>
+                        </div>
+                        <p class="urgent-intro">Każde zdjęcie to dowód, że wiemy co nam się należy. Dokumentuj, zanim Rompa wywiezie sprzęt.</p>
+                        <ol class="urgent-steps" aria-label="Instrukcja dokumentacji maszyn">
+                            <li><strong>Sfotografuj</strong> tabliczki, liczniki i całą maszynę.</li>
+                            <li><strong>Zapisz</strong> nazwę, model i numer seryjny.</li>
+                            <li><strong>Wyślij</strong> w formularzu i wrzuć na grupę WhatsApp.</li>
+                        </ol>
+                        <div class="machine-live-stats" aria-live="polite">
+                            <div class="machine-stat-card">
+                                <span class="machine-stat-value" id="machine-stat-machines">0</span>
+                                <span class="machine-stat-label">Udokumentowane maszyny</span>
+                            </div>
+                            <div class="machine-stat-card">
+                                <span class="machine-stat-value" id="machine-stat-team">0</span>
+                                <span class="machine-stat-label">Osoby w akcji</span>
+                            </div>
+                            <div class="machine-stat-card">
+                                <span class="machine-stat-value" id="machine-stat-value">€0</span>
+                                <span class="machine-stat-label">Szacowana wartość</span>
+                            </div>
+                        </div>
+                        <div class="machine-register">
+                            <h4 id="machine-register-title">Rejestr maszyn</h4>
+                            <table aria-labelledby="machine-register-title">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Nazwa</th>
+                                        <th scope="col">Model</th>
+                                        <th scope="col">Nr seryjny</th>
+                                        <th scope="col">Stan</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="machine-doc-table-body"></tbody>
+                            </table>
+                        </div>
+                        <form id="machine-doc-form" class="machine-doc-form" aria-describedby="machine-doc-helper">
+                            <div class="form-row">
+                                <label for="machine-name">Nazwa maszyny</label>
+                                <input id="machine-name" name="machineName" type="text" required aria-required="true" autocomplete="off">
+                            </div>
+                            <div class="form-row">
+                                <label for="machine-model">Model</label>
+                                <input id="machine-model" name="machineModel" type="text" autocomplete="off">
+                            </div>
+                            <div class="form-row">
+                                <label for="machine-serial">Numer seryjny</label>
+                                <input id="machine-serial" name="machineSerial" type="text" autocomplete="off">
+                            </div>
+                            <div class="form-row">
+                                <label for="machine-location">Lokalizacja</label>
+                                <input id="machine-location" name="machineLocation" type="text" placeholder="Hala, linia, strefa">
+                            </div>
+                            <div class="form-row">
+                                <label for="machine-condition">Stan / uwagi</label>
+                                <textarea id="machine-condition" name="machineCondition" rows="2"></textarea>
+                            </div>
+                            <div class="form-row">
+                                <label for="machine-photos">Zdjęcia</label>
+                                <input id="machine-photos" name="machinePhotos" type="file" multiple accept="image/*">
+                            </div>
+                            <div class="form-row">
+                                <label for="machine-reporter">Twoje imię (opcjonalnie)</label>
+                                <input id="machine-reporter" name="machineReporter" type="text" autocomplete="name">
+                            </div>
+                            <p id="machine-doc-helper" class="form-helper">Wysyłając dane zgadzasz się na ich użycie w analizie GO/NO-GO. Pliki przechowywane są lokalnie do momentu wysyłki.</p>
+                            <button type="submit" class="cta-button primary">Zapisz zgłoszenie</button>
+                            <p id="machine-doc-status" class="form-feedback" aria-live="assertive"></p>
+                        </form>
+                        <div class="cta-actions">
+                            <button type="button" id="machine-whatsapp-button" class="cta-button secondary" aria-label="Otwórz grupę WhatsApp Komisji Maszyn">💬 Grupa WhatsApp</button>
+                            <a class="cta-button ghost" href="machine-documentation.html" target="_blank" rel="noopener" aria-label="Otwórz pełną instrukcję dokumentacji maszyn">📂 Instrukcja &amp; formularz</a>
+                        </div>
+                    </section>
+
+                    <section id="strategic-polls-section" class="content-box" aria-labelledby="strategic-polls-title">
+                        <h3 id="strategic-polls-title" class="polls-section-title">🎯 Deklaracja Zaangażowania</h3>
+                        <p class="section-intro"><strong style="color: #ff9500;">POUFNE - Tylko dla zespołu</strong><br>Te ankiety przekuwają emocje w dane do decyzji GO/NO-GO.</p>
+                        <div class="kpi-dashboard" aria-label="Kluczowe wskaźniki postępu">
+                            <div class="kpi-grid">
+                                <div class="kpi-card">
+                                    <div class="kpi-value" id="kpi-responses">0%</div>
+                                    <div class="kpi-label">Wypełnione ankiety</div>
+                                    <div class="kpi-target">Cel: 80%</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-value" id="kpi-core-team">0</div>
+                                    <div class="kpi-label">Zespół Rdzenia</div>
+                                    <div class="kpi-target">Cel: 5+</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-value" id="kpi-capital">€0</div>
+                                    <div class="kpi-label">Kapitał zadeklarowany</div>
+                                    <div class="kpi-target">Cel: €40,000</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-value" id="kpi-machines">0</div>
+                                    <div class="kpi-label">Maszyny udokumentowane</div>
+                                    <div class="kpi-target">Cel: 15+</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="strategic-polls-container" class="polls-container" aria-live="polite"></div>
+                        <p class="section-note">Analiza GO/NO-GO uruchomi się automatycznie po zebraniu głosów. Raport pokaże się w formie okna na stronie.</p>
+                    </section>
+
+                    <section id="vso-calculator-section" class="content-box" aria-labelledby="vso-calculator-title">
+                        <h3 id="vso-calculator-title" class="polls-section-title">💰 Kalkulator Decyzyjny</h3>
+                        <p style="text-align: center; margin-bottom: 1.5rem;">
+                            <a href="vso-calculator.html" target="_blank" class="cta-button primary" style="display: inline-block; padding: 1rem 2rem; text-decoration: none;" aria-label="Otwórz kalkulator VSO versus Daremon">📊 Otwórz Kalkulator VSO vs DAREMON</a>
+                        </p>
+                    </section>
+
+                    <section class="content-box" id="polls-section" aria-label="Ankiety słuchaczy" data-i18n-aria-label="pollsAriaLabel">
+                        <h3 data-i18n-key="pollsTitle">Ankiety</h3>
+                        <div id="polls-container" class="polls-container" aria-live="polite"></div>
+                    </section>
+
                     <section class="content-box photo-gallery" aria-label="Fotogalerij radio">
                         <h3 data-i18n-key="photoGalleryTitle"></h3>
                         <div class="photo-gallery-grid">
