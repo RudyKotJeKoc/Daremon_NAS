@@ -757,8 +757,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function loadPlaylist() {
+        const TIMEOUT_MS = 15000; // Zwiększony timeout do 15s
+        
         const timeoutPromise = new Promise((_, reject) => 
-            setTimeout(() => reject(new Error(t('errorTimeout'))), 10000)
+            setTimeout(() => reject(new Error('Przekroczono czas ładowania playlisty (15s)')), TIMEOUT_MS)
         );
         
         try {
@@ -785,7 +787,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const tracks = await scanner.scanMusicFolder();
             
             // Zastosuj wagi na podstawie ocen użytkowników
-            const reviews = JSON.parse(localStorage.getItem(`${window.CONFIG.STORAGE_PREFIX}reviews`) || '{}');
+            // Use STORAGE_PREFIX safely with fallback
+            const STORAGE_PREFIX = (window.CONFIG && window.CONFIG.STORAGE_PREFIX) || 'daremon';
+            const reviews = JSON.parse(window.localStorage.getItem(`${STORAGE_PREFIX}_reviews`) || '{}');
             
             let processedTracks = tracks;
             if (scanner.applyRatingWeights && Object.keys(reviews).length > 0) {
@@ -821,7 +825,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 updatePlaylistWeights();
             }
         } catch (e) {
-            console.error('Playlist load error:', e);
+            console.error('❌ Błąd ładowania playlisty:', e);
+            
+            // Próba użycia cache jako fallback
+            if (e.message.includes('Przekroczono czas')) {
+                console.log('🔄 Próba pobrania z cache...');
+                try {
+                    const cachedResponse = await caches.match('./playlist.json');
+                    if (cachedResponse) {
+                        const data = await cachedResponse.json();
+                        state.playlist = data.tracks || [];
+                        state.config = data.config || {};
+                        prepareRecentRotation();
+                        console.log(`✅ Załadowano z cache: ${state.playlist.length} utworów`);
+                        return;
+                    }
+                } catch (cacheError) {
+                    console.error('Cache fallback failed:', cacheError);
+                }
+            }
+            
             throw new Error(`Failed to load playlist: ${e.message}`);
         }
     }
@@ -1301,29 +1324,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- LocalStorage Management ---
     function safeLocalStorage(key, value) {
+        // Guard clause for environment without localStorage
+        if (typeof window === 'undefined' || !window.localStorage) {
+            console.warn('localStorage niedostępny');
+            return value === undefined ? null : undefined;
+        }
+        
+        // Use STORAGE_PREFIX from CONFIG with fallback
+        const STORAGE_PREFIX = (window.CONFIG && window.CONFIG.STORAGE_PREFIX) || 'daremon';
+        
         try {
             if (value === undefined) {
-                const item = localStorage.getItem(`daremon_${key}`);
+                const item = window.localStorage.getItem(`${STORAGE_PREFIX}_${key}`);
                 return item ? JSON.parse(item) : null;
             }
-            localStorage.setItem(`daremon_${key}`, JSON.stringify(value));
+            window.localStorage.setItem(`${STORAGE_PREFIX}_${key}`, JSON.stringify(value));
         } catch (e) {
-            console.error(`localStorage fout voor sleutel "${key}":`, e);
-            return null;
+            console.error(`localStorage błąd dla klucza "${key}":`, e);
+            return value === undefined ? null : undefined;
         }
     }
     
     function loadStateFromLocalStorage() {
-        state.likes = safeLocalStorage('likes') || {};
-        state.messages = safeLocalStorage('messages') || [];
-        state.songDedications = safeLocalStorage('songDedications') || [];
-        state.history = safeLocalStorage('history') || [];
-        state.reviews = safeLocalStorage('reviews') || {};
-        applyTheme(safeLocalStorage('theme') || 'arburg');
-        
-        // Zaktualizuj wagi utworów na podstawie załadowanych ocen
-        if (state.playlist && state.playlist.length > 0) {
-            updatePlaylistWeights();
+        try {
+            state.likes = safeLocalStorage('likes') || {};
+            state.messages = safeLocalStorage('messages') || [];
+            state.songDedications = safeLocalStorage('songDedications') || [];
+            state.history = safeLocalStorage('history') || [];
+            state.reviews = safeLocalStorage('reviews') || {};
+            
+            const savedTheme = safeLocalStorage('theme');
+            applyTheme(savedTheme || 'arburg');
+            
+            console.log('✅ Stan aplikacji załadowany z localStorage');
+            
+            // Zaktualizuj wagi utworów na podstawie załadowanych ocen
+            if (state.playlist && state.playlist.length > 0) {
+                updatePlaylistWeights();
+            }
+        } catch (error) {
+            console.error('❌ Błąd ładowania stanu:', error);
+            // Initialize with default values
+            state.likes = {};
+            state.messages = [];
+            state.songDedications = [];
+            state.history = [];
+            state.reviews = {};
+            applyTheme('arburg');
         }
     }
 
