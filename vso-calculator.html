@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator VSO vs DAREMON</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: grid;
+            gap: 2rem;
+        }
+        header {
+            text-align: center;
+        }
+        header h1 {
+            margin-bottom: 0.5rem;
+        }
+        .calculator-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+        @media (min-width: 900px) {
+            .calculator-grid {
+                grid-template-columns: 320px 1fr;
+                align-items: start;
+            }
+        }
+        .input-card {
+            background: rgba(6, 25, 56, 0.65);
+            border: 1px solid rgba(24, 160, 199, 0.2);
+            border-radius: 18px;
+            padding: 1.5rem;
+            display: grid;
+            gap: 1rem;
+        }
+        .input-group {
+            display: grid;
+            gap: 0.35rem;
+        }
+        .input-group label {
+            font-size: 0.9rem;
+        }
+        .input-group input {
+            background: rgba(4, 19, 43, 0.75);
+            border: 1px solid rgba(24, 160, 199, 0.25);
+            border-radius: 8px;
+            padding: 0.55rem 0.65rem;
+            color: var(--text-color);
+            font-family: inherit;
+        }
+        .results-card {
+            background: rgba(4, 19, 43, 0.7);
+            border-radius: 18px;
+            border: 1px solid rgba(24, 160, 199, 0.22);
+            padding: 1.5rem;
+            display: grid;
+            gap: 1.25rem;
+        }
+        .summary-grid {
+            display: grid;
+            gap: 0.75rem;
+        }
+        @media (min-width: 900px) {
+            .summary-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        .summary-card {
+            background: rgba(8, 37, 82, 0.55);
+            border-radius: 16px;
+            padding: 1rem;
+            border: 1px solid rgba(24, 160, 199, 0.2);
+            display: grid;
+            gap: 0.25rem;
+        }
+        .summary-card strong {
+            font-size: 1.1rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        th, td {
+            border: 1px solid rgba(24, 160, 199, 0.12);
+            padding: 0.45rem 0.55rem;
+            text-align: right;
+        }
+        th {
+            background: rgba(6, 25, 56, 0.7);
+        }
+        td:first-child, th:first-child {
+            text-align: left;
+        }
+        .recommendation {
+            padding: 1rem;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 149, 0, 0.35);
+            background: rgba(255, 149, 0, 0.12);
+        }
+    </style>
+</head>
+<body data-theme="arburg">
+    <header>
+        <h1>Kalkulator VSO vs Daremon</h1>
+        <p>Porównaj jednorazowy zastrzyk VSO z potencjałem Daremon w ciągu pierwszych 12 miesięcy.</p>
+    </header>
+
+    <section class="calculator-grid" aria-label="Kalkulator decyzyjny">
+        <form class="input-card" id="calculator-form">
+            <div class="input-group">
+                <label for="vso-amount">Kwota VSO (netto) [€]</label>
+                <input type="number" id="vso-amount" name="vsoAmount" value="25000" min="0" step="500">
+            </div>
+            <div class="input-group">
+                <label for="investment">Ile zainwestujesz w Daremon? [€]</label>
+                <input type="number" id="investment" name="investment" value="10000" min="0" step="500">
+            </div>
+            <div class="input-group">
+                <label for="monthly-revenue">Przewidywany miesięczny przychód Daremon [€]</label>
+                <input type="number" id="monthly-revenue" name="monthlyRevenue" value="28000" min="0" step="500">
+            </div>
+            <div class="input-group">
+                <label for="monthly-costs">Miesięczne koszty operacyjne (materiały, czynsz itd.) [€]</label>
+                <input type="number" id="monthly-costs" name="monthlyCosts" value="16000" min="0" step="500">
+            </div>
+            <div class="input-group">
+                <label for="team-size">Liczba osób na pensji</label>
+                <input type="number" id="team-size" name="teamSize" value="6" min="1" step="1">
+            </div>
+            <div class="input-group">
+                <label for="monthly-salary">Średnie wynagrodzenie brutto / os. [€]</label>
+                <input type="number" id="monthly-salary" name="monthlySalary" value="3200" min="0" step="100">
+            </div>
+            <div class="input-group">
+                <label for="growth-rate">Miesięczna dynamika sprzedaży Daremon [%]</label>
+                <input type="number" id="growth-rate" name="growthRate" value="5" step="1">
+            </div>
+        </form>
+
+        <div class="results-card" aria-live="polite">
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <span>Scenariusz A</span>
+                    <strong id="scenario-a-total">€0</strong>
+                    <span>Łączna wartość VSO po 12 miesiącach (bez odsetek).</span>
+                </div>
+                <div class="summary-card">
+                    <span>Scenariusz B</span>
+                    <strong id="scenario-b-total">€0</strong>
+                    <span>Skumulowany zysk Daremon po 12 miesiącach (po pensjach i kosztach).</span>
+                </div>
+            </div>
+            <div class="summary-card">
+                <span>Break-even Daremon</span>
+                <strong id="break-even">—</strong>
+                <span>Miesiąc, w którym Daremon dogania kwotę VSO.</span>
+            </div>
+            <div class="recommendation" id="recommendation" aria-live="polite"></div>
+            <div>
+                <h2 style="margin-bottom:0.75rem;">Symulacja 12 miesięcy</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Miesiąc</th>
+                            <th>Przychód Daremon</th>
+                            <th>Koszty (operacje + pensje)</th>
+                            <th>Zysk miesiąca</th>
+                            <th>Skumulowany zysk</th>
+                        </tr>
+                    </thead>
+                    <tbody id="timeline-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const euro = new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 });
+
+        const form = document.getElementById('calculator-form');
+        const scenarioATotal = document.getElementById('scenario-a-total');
+        const scenarioBTotal = document.getElementById('scenario-b-total');
+        const breakEvenEl = document.getElementById('break-even');
+        const recommendationEl = document.getElementById('recommendation');
+        const timelineBody = document.getElementById('timeline-body');
+
+        function calculate() {
+            const data = new FormData(form);
+            const vsoAmount = Number.parseFloat(data.get('vsoAmount')) || 0;
+            const investment = Number.parseFloat(data.get('investment')) || 0;
+            const monthlyRevenue = Number.parseFloat(data.get('monthlyRevenue')) || 0;
+            const monthlyCosts = Number.parseFloat(data.get('monthlyCosts')) || 0;
+            const teamSize = Number.parseFloat(data.get('teamSize')) || 0;
+            const monthlySalary = Number.parseFloat(data.get('monthlySalary')) || 0;
+            const growthRate = (Number.parseFloat(data.get('growthRate')) || 0) / 100;
+
+            const salaryCosts = teamSize * monthlySalary;
+            const fixedCosts = monthlyCosts + salaryCosts;
+
+            scenarioATotal.textContent = euro.format(vsoAmount);
+
+            let cumulative = -investment;
+            let breakEvenMonth = null;
+            timelineBody.innerHTML = '';
+
+            for (let month = 1; month <= 12; month += 1) {
+                const monthRevenue = monthlyRevenue * Math.pow(1 + growthRate, month - 1);
+                const monthProfit = monthRevenue - fixedCosts;
+                cumulative += monthProfit;
+
+                if (breakEvenMonth === null && cumulative >= vsoAmount) {
+                    breakEvenMonth = month;
+                }
+
+                const row = document.createElement('tr');
+                const cells = [
+                    `M${month}`,
+                    euro.format(monthRevenue),
+                    euro.format(fixedCosts),
+                    euro.format(monthProfit),
+                    euro.format(cumulative),
+                ];
+                cells.forEach(value => {
+                    const cell = document.createElement('td');
+                    cell.textContent = value;
+                    row.appendChild(cell);
+                });
+                timelineBody.appendChild(row);
+            }
+
+            scenarioBTotal.textContent = euro.format(cumulative);
+            breakEvenEl.textContent = breakEvenMonth ? `M${breakEvenMonth}` : 'Nie osiągnięto w 12 mies.';
+
+            if (cumulative > vsoAmount) {
+                recommendationEl.textContent = 'Scenariusz B (Daremon) przebija VSO w ciągu roku. Warto rozważyć reinwestycję i przyspieszyć negocjacje GO.';
+            } else if (cumulative === vsoAmount) {
+                recommendationEl.textContent = 'Po 12 miesiącach oba scenariusze są porównywalne. Rozważ dodatkowe źródła przychodu lub redukcję kosztów, aby przechylić szalę na Daremon.';
+            } else {
+                recommendationEl.textContent = 'Scenariusz A (VSO) daje wyższą wartość przy obecnych założeniach. Przyjrzyj się strukturze kosztów i planowi sprzedaży Daremon.';
+            }
+        }
+
+        form.addEventListener('input', calculate);
+        document.addEventListener('DOMContentLoaded', calculate);
+    </script>
+</body>
+</html>

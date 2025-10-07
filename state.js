@@ -21,7 +21,6 @@ export function createInitialState() {
         nextGroupPreference: 'recent',
         recentRotation: [],
         recentTrackSet: new Set(),
-
         // App State
         language: 'nl',
         translations: {},

@@ -271,6 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('renderCalendar - not implemented');
     }
 
+
     // --- Initialisatie ---
     async function initialize() {
         await i18n_init();
@@ -744,7 +745,7 @@ document.addEventListener('DOMContentLoaded', () => {
         state.history.unshift(state.currentTrack.id);
         state.history = state.history.slice(0, 15);
         saveHistory();
-        
+
         if (dom.sidePanel.historyList) {
             dom.sidePanel.historyList.innerHTML = '';
             state.history.forEach(trackId => {
@@ -1329,7 +1330,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (dom.errorOverlay) dom.errorOverlay.classList.add('hidden');
         });
         if (dom.errorRetryBtn) dom.errorRetryBtn.addEventListener('click', retryLoad);
-
         // Systeem Events
         window.addEventListener('online', updateOfflineStatus);
         window.addEventListener('offline', updateOfflineStatus);
@@ -1399,6 +1399,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(reg => console.log('Service Worker geregistreerd:', reg.scope))
                 .catch(err => console.error('Service Worker registratie mislukt:', err));
         });
+    }
+
+    if (typeof window === 'object') {
+        window.createQuickPoll = createQuickPoll;
+        window.exportPollStats = exportPollStats;
     }
 
     initialize();
