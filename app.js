@@ -4,9 +4,9 @@ import { createTrackListItem } from './ui-utils.js';
 import { PollSystem } from './poll-system.js';
 import { STRATEGIC_POLLS, calculateStrategicMetrics, generateGoNoGoReport } from './strategic-polls.js';
 
-const MACHINE_DOCS_KEY = 'daremon_machine_docs_v1';
-const ANALYSIS_SCHEDULE_KEY = 'daremon_analysis_scheduled';
-const WHATSAPP_GROUP_LINK = 'https://chat.whatsapp.com/TO-BE-SET';
+const MACHINE_DOCS_KEY = (window.CONFIG && window.CONFIG.MACHINE_DOCS_KEY) || 'daremon_machine_docs_v1';
+const ANALYSIS_SCHEDULE_KEY = (window.CONFIG && window.CONFIG.ANALYSIS_SCHEDULE_KEY) || 'daremon_analysis_scheduled';
+const WHATSAPP_GROUP_LINK = (window.CONFIG && window.CONFIG.WHATSAPP_LINK) || 'https://example.com';
 
 /**
  * DAREMON Radio ETS - Hoofdlogica van de applicatie v8
@@ -76,18 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 machines: document.getElementById('kpi-machines'),
             },
         },
-        machineDocumentation: {
-            section: document.getElementById('machine-documentation-cta'),
-            form: document.getElementById('machine-doc-form'),
-            status: document.getElementById('machine-doc-status'),
-            tableBody: document.getElementById('machine-doc-table-body'),
-            stats: {
-                machines: document.getElementById('machine-stat-machines'),
-                team: document.getElementById('machine-stat-team'),
-                value: document.getElementById('machine-stat-value'),
-            },
-            whatsappButton: document.getElementById('machine-whatsapp-button'),
-        },
+        // machineDocumentation section removed
         header: {
             listenerCount: document.getElementById('listener-count'),
         },
@@ -141,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 you: "Jij",
                 aiDjName: "DJ Bot",
                 aiResponses: ["Bedankt voor je bericht!", "Leuk dat je luistert!", "Geweldige muziekkeuze!"],
-                trackTitleDefault: "Welkom bij DAREMON Radio ETS",
+                trackTitleDefault: "Welkom bij Radio",
                 trackArtistDefault: "Het beste van technologie en muziek",
                 headerSubtitle: "Het officiële bedrijfsradiostation",
                 listenersLabel: "Luisteraars:",
@@ -342,7 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     { id: 'kaput', label: 'Kaput! - Daremon Band' },
                     { id: 'bmw-kut', label: 'BMW jeździ chujowo - DJ Bóbr' },
                     { id: 'plasdan', label: 'Plasdan padł (Remix) - Cleanroom Crew' },
-                    { id: 'rompa-disco', label: 'Rompa (Disco Version) - Electric Team' }
+                    { id: 'retro-disco', label: 'Retro (Disco Version) - Electric Team' }
                 ],
                 duration: '7 days'
             },
@@ -358,7 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ]
             },
             {
-                question: 'Jak oceniasz DAREMON Radio ogólnie?',
+                question: 'Jak oceniasz radio ogólnie?',
                 type: 'rating',
                 scale: 5,
                 labels: ['Słabo', 'Średnio', 'Świetnie']
@@ -369,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 options: ['😞', '😐', '🙂', '😊', '🎉']
             },
             {
-                question: 'O której godzinie najczęściej słuchasz DAREMON Radio?',
+                question: 'O której godzinie najczęściej słuchasz radia?',
                 type: 'single-choice',
                 options: [
                     '6:00 - 9:00 (Poranny Rush)',
@@ -381,7 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ]
             },
             {
-                question: 'Która funkcja DAREMON Radio najbardziej Ci się podoba?',
+                question: 'Która funkcja radia najbardziej Ci się podoba?',
                 type: 'multiple-choice',
                 options: [
                     'Odliczanie do 31 marca 2026',
@@ -478,112 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function updateMachineDocTable(entries = loadMachineDocs()) {
-        if (!dom.machineDocumentation.tableBody) {
-            return;
-        }
-
-        dom.machineDocumentation.tableBody.innerHTML = '';
-
-        if (!entries.length) {
-            const row = document.createElement('tr');
-            const cell = document.createElement('td');
-            cell.colSpan = 4;
-            cell.textContent = 'Brak zgłoszeń — zrób pierwsze zdjęcie.';
-            row.appendChild(cell);
-            dom.machineDocumentation.tableBody.appendChild(row);
-            return;
-        }
-
-        entries.slice(0, 10).forEach(entry => {
-            const row = document.createElement('tr');
-
-            const nameCell = document.createElement('td');
-            nameCell.textContent = entry.machineName || '—';
-            row.appendChild(nameCell);
-
-            const modelCell = document.createElement('td');
-            modelCell.textContent = entry.machineModel || '—';
-            row.appendChild(modelCell);
-
-            const serialCell = document.createElement('td');
-            serialCell.textContent = entry.machineSerial || '—';
-            row.appendChild(serialCell);
-
-            const conditionCell = document.createElement('td');
-            conditionCell.textContent = entry.machineCondition || entry.machineLocation || 'Brak danych';
-            row.appendChild(conditionCell);
-
-            dom.machineDocumentation.tableBody.appendChild(row);
-        });
-    }
-
-    function updateMachineStats(entries = loadMachineDocs()) {
-        if (!dom.machineDocumentation.stats) {
-            return;
-        }
-
-        const machines = entries.length;
-        const reporters = new Set();
-        entries.forEach(entry => {
-            if (entry.reporter) {
-                reporters.add(entry.reporter.trim().toLowerCase());
-            }
-        });
-        const estimatedValue = Math.max(0, machines * 2500);
-
-        if (dom.machineDocumentation.stats.machines) {
-            dom.machineDocumentation.stats.machines.textContent = `${machines}`;
-            dom.machineDocumentation.stats.machines.setAttribute('aria-label', `Udokumentowane maszyny: ${machines}`);
-        }
-        if (dom.machineDocumentation.stats.team) {
-            dom.machineDocumentation.stats.team.textContent = `${reporters.size}`;
-            dom.machineDocumentation.stats.team.setAttribute('aria-label', `Osoby dokumentujące: ${reporters.size}`);
-        }
-        if (dom.machineDocumentation.stats.value) {
-            const formatted = new Intl.NumberFormat('pl-PL', {
-                style: 'currency',
-                currency: 'EUR',
-                minimumFractionDigits: 0,
-            }).format(estimatedValue);
-            dom.machineDocumentation.stats.value.textContent = formatted;
-            dom.machineDocumentation.stats.value.setAttribute('aria-label', `Szacowana wartość: ${formatted}`);
-        }
-    }
-
-    function handleMachineDocSubmit(event) {
-        event.preventDefault();
-
-        if (!dom.machineDocumentation.form) {
-            return;
-        }
-
-        const formData = new FormData(dom.machineDocumentation.form);
-        const files = dom.machineDocumentation.form.machinePhotos?.files || [];
-        const entry = {
-            machineName: formData.get('machineName')?.trim() || '',
-            machineModel: formData.get('machineModel')?.trim() || '',
-            machineSerial: formData.get('machineSerial')?.trim() || '',
-            machineLocation: formData.get('machineLocation')?.trim() || '',
-            machineCondition: formData.get('machineCondition')?.trim() || '',
-            reporter: formData.get('machineReporter')?.trim() || '',
-            photoCount: files.length,
-            createdAt: new Date().toISOString(),
-        };
-
-        const currentEntries = loadMachineDocs();
-        const updatedEntries = [entry, ...currentEntries].slice(0, 30);
-        saveMachineDocs(updatedEntries);
-        updateMachineDocTable(updatedEntries);
-        updateMachineStats(updatedEntries);
-
-        dom.machineDocumentation.form.reset();
-        if (dom.machineDocumentation.status) {
-            dom.machineDocumentation.status.textContent = files.length
-                ? 'Zapisano lokalnie. Udostępnij zdjęcia na grupie WhatsApp.'
-                : 'Zapisano lokalnie. Dodaj zdjęcia i podziel się w grupie.';
-        }
-    }
+    // Machine documentation functions removed - feature discontinued
 
     function openWhatsAppGroup() {
         if (typeof window !== 'undefined') {
@@ -878,32 +762,64 @@ document.addEventListener('DOMContentLoaded', () => {
         );
         
         try {
-            const fetchPromise = fetch('./playlist.json');
-            const response = await Promise.race([fetchPromise, timeoutPromise]);
+            console.log('🔍 Skanowanie muzyki...');
             
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            // Użyj music-scanner do automatycznego skanowania folderu music
+            let scanner;
+            if (window.MusicScanner) {
+                scanner = new window.MusicScanner();
+            } else {
+                // Fallback jeśli moduł nie jest dostępny
+                console.warn('⚠️ MusicScanner nie jest dostępny, używam playlist.json');
+                scanner = { 
+                    scanMusicFolder: async () => {
+                        const response = await fetch('./playlist.json');
+                        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                        const data = await response.json();
+                        return data.tracks || [];
+                    }
+                };
             }
             
-            const contentType = response.headers.get('content-type');
-            if (!contentType || !contentType.includes('application/json')) {
-                console.warn('Response is not JSON, content-type:', contentType);
-                const text = await response.text();
-                console.error('Received content:', text.substring(0, 200));
-                throw new Error('Server returned HTML instead of JSON - check file path');
+            // Skanuj muzykę z uwzględnieniem ocen
+            const tracks = await scanner.scanMusicFolder();
+            
+            // Zastosuj wagi na podstawie ocen użytkowników
+            const reviews = JSON.parse(localStorage.getItem(`${window.CONFIG.STORAGE_PREFIX}reviews`) || '{}');
+            
+            let processedTracks = tracks;
+            if (scanner.applyRatingWeights && Object.keys(reviews).length > 0) {
+                processedTracks = scanner.applyRatingWeights(tracks, reviews);
+                console.log(`🎵 Zastosowano wagi na podstawie ${Object.keys(reviews).length} ocen`);
             }
             
-            const data = await response.json();
-            state.playlist = data.tracks || [];
-            state.config = data.config || {};
+            state.playlist = processedTracks;
+
+            // Załaduj konfigurację z playlist.json (bez utworów)
+            try {
+                const configResponse = await fetch('./playlist.json');
+                if (configResponse.ok) {
+                    const configData = await configResponse.json();
+                    state.config = configData.config || {};
+                    console.log('📄 Załadowano konfigurację z playlist.json');
+                }
+            } catch (error) {
+                console.warn('⚠️ Nie można załadować konfiguracji, używam domyślnej');
+                state.config = {};
+            }
 
             prepareRecentRotation();
 
             if (state.playlist.length === 0) {
-                throw new Error('Playlist is empty');
+                throw new Error('Playlist is empty - no music files found');
             }
 
-            console.log(`Loaded ${state.playlist.length} tracks`);
+            console.log(`✅ Załadowano ${state.playlist.length} utworów z automatycznego skanowania`);
+            
+            // Zaktualizuj wagi na podstawie istniejących ocen
+            if (state.reviews && Object.keys(state.reviews).length > 0) {
+                updatePlaylistWeights();
+            }
         } catch (e) {
             console.error('Playlist load error:', e);
             throw new Error(`Failed to load playlist: ${e.message}`);
@@ -1287,7 +1203,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (dom.player.cover) dom.player.cover.src = cover;
             if (dom.stickyPlayer.title) dom.stickyPlayer.title.textContent = title;
             if (dom.stickyPlayer.cover) dom.stickyPlayer.cover.src = cover;
-            document.title = `${title} - DAREMON Radio ETS`;
+            document.title = `${title} - Radio`;
             
             renderRatingUI(id);
             elementsToFade.forEach(el => el.classList.remove('fade-out'));
@@ -1361,11 +1277,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateWelcomeGreeting() {
         if (!dom.welcomeGreeting) return;
         const hour = new Date().getHours();
-        let greeting = "Welkom bij DAREMON Radio ETS!";
-        if (hour >= 6 && hour < 12) greeting = "Goedemorgen! Welkom bij DAREMON Radio ETS!";
-        else if (hour >= 12 && hour < 18) greeting = "Goedemiddag! Welkom bij DAREMON Radio ETS!";
-        else if (hour >= 18 && hour < 22) greeting = "Goedenavond! Welkom bij DAREMON Radio ETS!";
-        else greeting = "Goedenacht! Welkom bij DAREMON Radio ETS!";
+    let greeting = "Welkom bij Radio!";
+    if (hour >= 6 && hour < 12) greeting = "Goedemorgen! Welkom bij Radio!";
+    else if (hour >= 12 && hour < 18) greeting = "Goedemiddag! Welkom bij Radio!";
+    else if (hour >= 18 && hour < 22) greeting = "Goedenavond! Welkom bij Radio!";
+    else greeting = "Goedenacht! Welkom bij Radio!";
         
         dom.welcomeGreeting.textContent = greeting;
     }
@@ -1404,6 +1320,11 @@ document.addEventListener('DOMContentLoaded', () => {
         state.history = safeLocalStorage('history') || [];
         state.reviews = safeLocalStorage('reviews') || {};
         applyTheme(safeLocalStorage('theme') || 'arburg');
+        
+        // Zaktualizuj wagi utworów na podstawie załadowanych ocen
+        if (state.playlist && state.playlist.length > 0) {
+            updatePlaylistWeights();
+        }
     }
 
     function saveHistory() { safeLocalStorage('history', state.history); }
@@ -1487,6 +1408,46 @@ document.addEventListener('DOMContentLoaded', () => {
         const avg = calculateAverageRating(trackId);
         const count = state.reviews[trackId]?.length || 0;
         dom.player.averageRatingDisplay.textContent = count > 0 ? `Gemiddeld: ${avg.toFixed(1)} ⭐ (${count} beoordelingen)` : "Nog geen beoordelingen";
+        
+        // Zaktualizuj wagi utworów na podstawie nowych ocen
+        updatePlaylistWeights();
+    }
+    
+    /**
+     * Aktualizuje wagi utworów w playliście na podstawie ocen użytkowników
+     */
+    function updatePlaylistWeights() {
+        if (!state.playlist || state.playlist.length === 0) return;
+        
+        state.playlist.forEach(track => {
+            const reviews = state.reviews[track.id];
+            if (!reviews || reviews.length === 0) {
+                // Brak ocen - zachowaj oryginalną wagę
+                track.weight = track.originalWeight || track.weight || 1;
+                return;
+            }
+            
+            // Zachowaj oryginalną wagę przy pierwszym uruchomieniu
+            if (!track.originalWeight) {
+                track.originalWeight = track.weight || 1;
+            }
+            
+            // Oblicz średnią ocenę
+            const avgRating = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
+            
+            // Przekształć ocenę na mnożnik wagi (1-5 gwiazdek → 0.5-3.0 mnożnik)
+            const ratingMultiplier = 0.5 + (avgRating - 1) * 0.625; // 1★→0.5x, 3★→1.75x, 5★→3.0x
+            
+            // Dodatkowy boost dla popularnych utworów (wiele ocen)
+            const popularityBoost = Math.min(1.5, 1 + (reviews.length - 1) * 0.1); // Max +50% za popularność
+            
+            // Oblicz finalną wagę
+            track.weight = Math.max(0.1, Math.round(track.originalWeight * ratingMultiplier * popularityBoost * 10) / 10);
+            
+            console.log(`🎵 ${track.title}: ocena ${avgRating.toFixed(1)}/5 (${reviews.length} głosów) → waga ${track.weight}`);
+        });
+        
+        console.log(`✅ Zaktualizowano wagi ${state.playlist.length} utworów na podstawie ocen`);
     }
 
     // --- Best Beoordeelde Nummers ---
@@ -1927,8 +1888,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         if (dom.errorRetryBtn) dom.errorRetryBtn.addEventListener('click', retryLoad);
 
-        if (dom.machineDocumentation.form) dom.machineDocumentation.form.addEventListener('submit', handleMachineDocSubmit);
-        if (dom.machineDocumentation.whatsappButton) dom.machineDocumentation.whatsappButton.addEventListener('click', openWhatsAppGroup);
+        // Machine documentation event listeners removed
 
         // Systeem Events
         window.addEventListener('online', updateOfflineStatus);

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalkulator VSO vs DAREMON</title>
+    <title>Kalkulator VSO vs Projekt</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
@@ -106,8 +106,8 @@
 </head>
 <body data-theme="arburg">
     <header>
-        <h1>Kalkulator VSO vs Daremon</h1>
-        <p>Porównaj jednorazowy zastrzyk VSO z potencjałem Daremon w ciągu pierwszych 12 miesięcy.</p>
+    <h1>Kalkulator VSO vs Projekt</h1>
+    <p>Porównaj jednorazowy zastrzyk VSO z potencjałem własnego projektu w ciągu pierwszych 12 miesięcy. Wartości są przykładowe.</p>
     </header>
 
     <section class="calculator-grid" aria-label="Kalkulator decyzyjny">
@@ -117,11 +117,11 @@
                 <input type="number" id="vso-amount" name="vsoAmount" value="25000" min="0" step="500">
             </div>
             <div class="input-group">
-                <label for="investment">Ile zainwestujesz w Daremon? [€]</label>
+                <label for="investment">Ile zainwestujesz w projekt? [€]</label>
                 <input type="number" id="investment" name="investment" value="10000" min="0" step="500">
             </div>
             <div class="input-group">
-                <label for="monthly-revenue">Przewidywany miesięczny przychód Daremon [€]</label>
+                <label for="monthly-revenue">Przewidywany miesięczny przychód projektu [€]</label>
                 <input type="number" id="monthly-revenue" name="monthlyRevenue" value="28000" min="0" step="500">
             </div>
             <div class="input-group">
@@ -137,7 +137,7 @@
                 <input type="number" id="monthly-salary" name="monthlySalary" value="3200" min="0" step="100">
             </div>
             <div class="input-group">
-                <label for="growth-rate">Miesięczna dynamika sprzedaży Daremon [%]</label>
+                <label for="growth-rate">Miesięczna dynamika sprzedaży projektu [%]</label>
                 <input type="number" id="growth-rate" name="growthRate" value="5" step="1">
             </div>
         </form>
@@ -152,13 +152,13 @@
                 <div class="summary-card">
                     <span>Scenariusz B</span>
                     <strong id="scenario-b-total">€0</strong>
-                    <span>Skumulowany zysk Daremon po 12 miesiącach (po pensjach i kosztach).</span>
+                    <span>Skumulowany zysk projektu po 12 miesiącach (po pensjach i kosztach).</span>
                 </div>
             </div>
             <div class="summary-card">
                 <span>Break-even Daremon</span>
                 <strong id="break-even">—</strong>
-                <span>Miesiąc, w którym Daremon dogania kwotę VSO.</span>
+                <span>Miesiąc, w którym projekt dogania kwotę VSO.</span>
             </div>
             <div class="recommendation" id="recommendation" aria-live="polite"></div>
             <div>
@@ -167,7 +167,7 @@
                     <thead>
                         <tr>
                             <th>Miesiąc</th>
-                            <th>Przychód Daremon</th>
+                            <th>Przychód projektu</th>
                             <th>Koszty (operacje + pensje)</th>
                             <th>Zysk miesiąca</th>
                             <th>Skumulowany zysk</th>
@@ -237,11 +237,11 @@
             breakEvenEl.textContent = breakEvenMonth ? `M${breakEvenMonth}` : 'Nie osiągnięto w 12 mies.';
 
             if (cumulative > vsoAmount) {
-                recommendationEl.textContent = 'Scenariusz B (Daremon) przebija VSO w ciągu roku. Warto rozważyć reinwestycję i przyspieszyć negocjacje GO.';
+                recommendationEl.textContent = 'Scenariusz B (projekt) przebija VSO w ciągu roku. Warto rozważyć reinwestycję i plan GO zgodnie z ryzykiem.';
             } else if (cumulative === vsoAmount) {
-                recommendationEl.textContent = 'Po 12 miesiącach oba scenariusze są porównywalne. Rozważ dodatkowe źródła przychodu lub redukcję kosztów, aby przechylić szalę na Daremon.';
+                recommendationEl.textContent = 'Po 12 miesiącach oba scenariusze są porównywalne. Rozważ dodatkowe źródła przychodu lub redukcję kosztów, aby przechylić szalę na projekt.';
             } else {
-                recommendationEl.textContent = 'Scenariusz A (VSO) daje wyższą wartość przy obecnych założeniach. Przyjrzyj się strukturze kosztów i planowi sprzedaży Daremon.';
+                recommendationEl.textContent = 'Scenariusz A (VSO) daje wyższą wartość przy obecnych założeniach. Przyjrzyj się strukturze kosztów i planowi sprzedaży projektu.';
             }
         }
 

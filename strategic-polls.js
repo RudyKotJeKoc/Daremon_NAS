@@ -19,7 +19,7 @@ export const STRATEGIC_POLLS = [
         category: 'Zespół',
         priority: 'CRITICAL',
         confidential: true,
-        question: 'Czy dołączasz do Zespołu Rdzenia Daremon?',
+    question: 'Czy dołączasz do Zespołu Rdzenia projektu?',
         type: 'single-choice',
         options: [
             { id: 'core-team-commit', label: 'Tak — jestem w Zespole Rdzenia' },
@@ -48,7 +48,7 @@ export const STRATEGIC_POLLS = [
         category: 'Kapitał',
         priority: 'CRITICAL',
         confidential: true,
-        question: 'Jaką kwotę możesz zadeklarować na start Daremon?',
+    question: 'Jaką przykładową kwotę możesz zadeklarować na start projektu?',
         type: 'single-choice',
         options: [
             { id: 'invest-0', label: '0 € — tylko wsparcie operacyjne' },
@@ -63,7 +63,7 @@ export const STRATEGIC_POLLS = [
         category: 'Zespół',
         priority: 'CRITICAL',
         confidential: true,
-        question: 'Ile godzin tygodniowo możesz przeznaczyć na Daremon od kwietnia?',
+    question: 'Ile godzin tygodniowo możesz przeznaczyć na projekt od kwietnia?',
         type: 'single-choice',
         options: [
             { id: 'time-10', label: 'Do 10 h/tydzień' },
@@ -78,7 +78,7 @@ export const STRATEGIC_POLLS = [
         category: 'Relacje',
         priority: 'URGENT',
         confidential: true,
-        question: 'Ilu aktywnych klientów możesz przyprowadzić do Daremon?',
+    question: 'Ilu aktywnych klientów możesz wprowadzić do projektu?',
         type: 'single-choice',
         options: [
             { id: 'clients-0', label: 'Brak — potrzebuję wsparcia' },
@@ -87,20 +87,7 @@ export const STRATEGIC_POLLS = [
             { id: 'clients-3', label: '3 lub więcej relacji' },
         ],
     },
-    {
-        id: 'machine-documentation-status',
-        category: 'Maszyny',
-        priority: 'URGENT',
-        confidential: false,
-        question: 'Na jakim etapie masz dokumentację maszyn?',
-        type: 'single-choice',
-        options: [
-            { id: 'machines-0', label: 'Jeszcze nie zacząłem' },
-            { id: 'machines-5', label: 'Mam zdjęcia 1-5 maszyn' },
-            { id: 'machines-10', label: 'Udokumentowałem 6-10 maszyn' },
-            { id: 'machines-15', label: 'Ponad 10 maszyn gotowych' },
-        ],
-    },
+
     {
         id: 'competency-gaps',
         category: 'Kompetencje',
@@ -147,12 +134,12 @@ export const STRATEGIC_POLLS = [
         category: 'Koordynacja',
         priority: 'HIGH',
         confidential: false,
-        question: 'Czy dołączyłeś już do grupy WhatsApp Komisji Maszyn?',
+    question: 'Czy masz dostęp do wyznaczonego kanału komunikacji Komisji Maszyn?',
         type: 'single-choice',
         options: [
-            { id: 'whatsapp-yes', label: 'Tak — jestem w grupie' },
-            { id: 'whatsapp-later', label: 'Jeszcze nie, dołączę dzisiaj' },
-            { id: 'whatsapp-no', label: 'Potrzebuję zaproszenia' },
+            { id: 'channel-yes', label: 'Tak — mam dostęp' },
+            { id: 'channel-later', label: 'Jeszcze nie, dołączę dzisiaj' },
+            { id: 'channel-no', label: 'Potrzebuję zaproszenia' },
         ],
     },
     {
@@ -160,7 +147,7 @@ export const STRATEGIC_POLLS = [
         category: 'Zespół',
         priority: 'MEDIUM',
         confidential: true,
-        question: 'Co jest Twoją największą motywacją do projektu Daremon?',
+    question: 'Co jest Twoją największą motywacją do udziału w projekcie?',
         type: 'open-text',
         options: [],
     },
@@ -204,12 +191,7 @@ const CLIENT_WEIGHTS = {
     'clients-3': 3,
 };
 
-const MACHINE_WEIGHTS = {
-    'machines-0': 0,
-    'machines-5': 4,
-    'machines-10': 8,
-    'machines-15': 12,
-};
+// MACHINE_WEIGHTS removed - functionality discontinued
 
 const ROLE_IDS = {
     'role-operations': 'Operacje',
@@ -286,10 +268,8 @@ export function calculateStrategicMetrics(store = {}) {
         metrics.clients += count * getOptionVotes(clientState, optionId);
     });
 
-    const machineState = getPollState('machine-documentation-status', store);
-    Object.entries(MACHINE_WEIGHTS).forEach(([optionId, count]) => {
-        metrics.machines += count * getOptionVotes(machineState, optionId);
-    });
+    // Machine documentation tracking removed for security reasons
+    metrics.machines = 0;
 
     const leadershipState = getPollState('core-team-roles', store);
     metrics.leadershipCoverage = Object.keys(ROLE_IDS).reduce((acc, optionId) => {

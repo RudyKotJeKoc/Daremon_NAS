@@ -7,7 +7,7 @@
     "jingle": {
       "everySongs": 4,
       "orMinutes": 15,
-      "enabled": true
+  "cover": "https://placehold.co/120x120/ff00ff/ffffff?text=RETRO"
     },
     "recent": {
       "count": 10,

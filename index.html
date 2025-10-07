@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DAREMON Radio ETS</title>
+    <title>Radio ETS</title>
     
-    <meta name="description" content="Het officiële bedrijfsradiostation DAREMON ETS. Een energieke dosis humor, technologie en de beste muziek. Luister live!">
+    <meta name="description" content="Het officiële bedrijfsradiostation. Een energieke dosis humor, technologie en de beste muziek. Luister live!">
     <meta name="theme-color" content="#1A1A1A">
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
     
     <!-- SEO & Social Media -->
-    <meta property="og:title" content="DAREMON Radio ETS">
+    <meta property="og:title" content="Radio ETS">
     <meta property="og:description" content="De beste bedrijfsradio vol humor en zorgvuldig geselecteerde energie.">
-    <meta property="og:image" content="https://placehold.co/1200x1200/1A1A1A/008878?text=DAREMON+Radio">
+    <meta property="og:image" content="https://placehold.co/1200x1200/1A1A1A/008878?text=RADIO">
     <meta property="og:type" content="website">
     <link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
     
@@ -28,6 +28,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
+    <script src="config.js"></script>
 </head>
 <body data-theme="arburg">
     
@@ -50,13 +51,13 @@
     "></div>
     <div id="offline-indicator" class="hidden" aria-live="assertive" data-i18n-key="offlineMessage"></div>
 
-    <section id="visualizer-showcase" aria-label="Audio visualizer Daremon Solutions">
+    <section id="visualizer-showcase" aria-label="Audio visualizer">
         <div class="visualizer-glow" aria-hidden="true">
             <div class="visualizer-burst"></div>
             <div class="visualizer-rays"></div>
         </div>
         <div class="visualizer-content" role="group" aria-labelledby="countdown-heading deadline-heading">
-            <img id="daremon-logo" src="images/icons/logo.png" alt="Logo DAREMON Solutions" role="img" aria-label="Logo DAREMON Solutions">
+            <img id="daremon-logo" src="images/icons/logo.png" alt="Logo projektu" role="img" aria-label="Logo projektu">
             <div class="countdown-card" aria-live="polite">
 
 
@@ -86,10 +87,11 @@
             <article class="deadline-article" aria-labelledby="deadline-heading">
                 <h2 id="deadline-heading">31 marca 2026 w skrócie</h2>
                 <p class="tldr" aria-label="Podsumowanie najważniejszych informacji">
-                    <strong>TL;DR:</strong> Rompa oddaje teren i maszyny, a Daremon rusza samodzielnie od 31 marca 2026.
+                    <strong>TL;DR:</strong> Poprzedni pracodawca przekazuje zasoby, a nasz zespół startuje samodzielnie od 31 marca 2026.
                 </p>
                 <ul class="deadline-points" aria-label="Kluczowe fakty o tej dacie">
                     <li>Koniec zakazu konkurencji i swobodna oferta Daremon.</li>
+                        <li>Koniec ograniczeń konkurencyjnych i swobodna oferta zespołu.</li>
                     <li>Zespół przejmuje sprzęt i planuje własne wdrożenia.</li>
                     <li>To data startu niezależnego rozwoju Daremon.</li>
                 </ul>
@@ -197,83 +199,7 @@
                     </section>
 
 
-                    <section id="machine-documentation-cta" class="content-box urgent-cta" aria-labelledby="machine-cta-title">
-                        <div class="urgent-cta-header">
-                            <span class="urgent-badge" aria-hidden="true">🚨 PILNE</span>
-                            <h3 id="machine-cta-title">A NIE MÓWIŁEM?! Zabezpiecz maszyny zanim znikną</h3>
-                        </div>
-                        <p class="urgent-intro">Każde zdjęcie to dowód, że wiemy co nam się należy. Dokumentuj, zanim Rompa wywiezie sprzęt.</p>
-                        <ol class="urgent-steps" aria-label="Instrukcja dokumentacji maszyn">
-                            <li><strong>Sfotografuj</strong> tabliczki, liczniki i całą maszynę.</li>
-                            <li><strong>Zapisz</strong> nazwę, model i numer seryjny.</li>
-                            <li><strong>Wyślij</strong> w formularzu i wrzuć na grupę WhatsApp.</li>
-                        </ol>
-                        <div class="machine-live-stats" aria-live="polite">
-                            <div class="machine-stat-card">
-                                <span class="machine-stat-value" id="machine-stat-machines">0</span>
-                                <span class="machine-stat-label">Udokumentowane maszyny</span>
-                            </div>
-                            <div class="machine-stat-card">
-                                <span class="machine-stat-value" id="machine-stat-team">0</span>
-                                <span class="machine-stat-label">Osoby w akcji</span>
-                            </div>
-                            <div class="machine-stat-card">
-                                <span class="machine-stat-value" id="machine-stat-value">€0</span>
-                                <span class="machine-stat-label">Szacowana wartość</span>
-                            </div>
-                        </div>
-                        <div class="machine-register">
-                            <h4 id="machine-register-title">Rejestr maszyn</h4>
-                            <table aria-labelledby="machine-register-title">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Nazwa</th>
-                                        <th scope="col">Model</th>
-                                        <th scope="col">Nr seryjny</th>
-                                        <th scope="col">Stan</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="machine-doc-table-body"></tbody>
-                            </table>
-                        </div>
-                        <form id="machine-doc-form" class="machine-doc-form" aria-describedby="machine-doc-helper">
-                            <div class="form-row">
-                                <label for="machine-name">Nazwa maszyny</label>
-                                <input id="machine-name" name="machineName" type="text" required aria-required="true" autocomplete="off">
-                            </div>
-                            <div class="form-row">
-                                <label for="machine-model">Model</label>
-                                <input id="machine-model" name="machineModel" type="text" autocomplete="off">
-                            </div>
-                            <div class="form-row">
-                                <label for="machine-serial">Numer seryjny</label>
-                                <input id="machine-serial" name="machineSerial" type="text" autocomplete="off">
-                            </div>
-                            <div class="form-row">
-                                <label for="machine-location">Lokalizacja</label>
-                                <input id="machine-location" name="machineLocation" type="text" placeholder="Hala, linia, strefa">
-                            </div>
-                            <div class="form-row">
-                                <label for="machine-condition">Stan / uwagi</label>
-                                <textarea id="machine-condition" name="machineCondition" rows="2"></textarea>
-                            </div>
-                            <div class="form-row">
-                                <label for="machine-photos">Zdjęcia</label>
-                                <input id="machine-photos" name="machinePhotos" type="file" multiple accept="image/*">
-                            </div>
-                            <div class="form-row">
-                                <label for="machine-reporter">Twoje imię (opcjonalnie)</label>
-                                <input id="machine-reporter" name="machineReporter" type="text" autocomplete="name">
-                            </div>
-                            <p id="machine-doc-helper" class="form-helper">Wysyłając dane zgadzasz się na ich użycie w analizie GO/NO-GO. Pliki przechowywane są lokalnie do momentu wysyłki.</p>
-                            <button type="submit" class="cta-button primary">Zapisz zgłoszenie</button>
-                            <p id="machine-doc-status" class="form-feedback" aria-live="assertive"></p>
-                        </form>
-                        <div class="cta-actions">
-                            <button type="button" id="machine-whatsapp-button" class="cta-button secondary" aria-label="Otwórz grupę WhatsApp Komisji Maszyn">💬 Grupa WhatsApp</button>
-                            <a class="cta-button ghost" href="machine-documentation.html" target="_blank" rel="noopener" aria-label="Otwórz pełną instrukcję dokumentacji maszyn">📂 Instrukcja &amp; formularz</a>
-                        </div>
-                    </section>
+                    <!-- Machine documentation section removed -->
 
                     <section id="strategic-polls-section" class="content-box" aria-labelledby="strategic-polls-title">
                         <h3 id="strategic-polls-title" class="polls-section-title">🎯 Deklaracja Zaangażowania</h3>
@@ -310,7 +236,7 @@
                     <section id="vso-calculator-section" class="content-box" aria-labelledby="vso-calculator-title">
                         <h3 id="vso-calculator-title" class="polls-section-title">💰 Kalkulator Decyzyjny</h3>
                         <p style="text-align: center; margin-bottom: 1.5rem;">
-                            <a href="vso-calculator.html" target="_blank" class="cta-button primary" style="display: inline-block; padding: 1rem 2rem; text-decoration: none;" aria-label="Otwórz kalkulator VSO versus Daremon">📊 Otwórz Kalkulator VSO vs DAREMON</a>
+                            <a href="vso-calculator.html" target="_blank" class="cta-button primary" style="display: inline-block; padding: 1rem 2rem; text-decoration: none;" aria-label="Otwórz kalkulator VSO versus Projekt">📊 Otwórz Kalkulator VSO vs Projekt</a>
                         </p>
                     </section>
 
@@ -342,7 +268,7 @@
 
             <main id="main-content">
                 <header>
-                    <h1>DAREMON Radio ETS</h1>
+                    <h1>Radio ETS</h1>
                     <p data-i18n-key="headerSubtitle"></p>
                     <p id="listener-count-display"><span data-i18n-key="listenersLabel"></span> <span id="listener-count">...</span></p>
                 </header>
@@ -596,6 +522,7 @@
         <p class="disclaimer-text" data-i18n-key="footerDisclaimer2"></p>
     </footer>
 
+    <script type="module" src="music-scanner.js"></script>
     <script type="module" src="app.js"></script>
 </body>
 </html>

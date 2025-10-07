@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dokumentacja Maszyn - DAREMON</title>
+    <title>Dokumentacja Maszyn</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
@@ -91,15 +91,15 @@
 <body data-theme="arburg">
     <main>
         <section class="intro-banner" aria-labelledby="doc-title">
-            <h1 id="doc-title">A NIE MÓWIŁEM?! Zabezpieczamy maszyny dla Daremon</h1>
+            <h1 id="doc-title">Zabezpieczamy maszyny — działamy świadomie</h1>
             <p>Dowody to nasza tarcza. Każde zdjęcie i każda linijka danych zbliża nas do GO/NO-GO z faktami na stole.</p>
-            <p class="support-note">Ta strona zapisuje dane tylko lokalnie w Twojej przeglądarce. Udostępnij zdjęcia w grupie WhatsApp lub przeklej do arkusza Google.</p>
+            <p class="support-note">Ta strona zapisuje dane tylko lokalnie w Twojej przeglądarce. Udostępnij zdjęcia w wyznaczonym kanale komunikacji lub przeklej do arkusza Google.</p>
         </section>
 
         <section aria-labelledby="why-now" class="resource-card">
             <h2 id="why-now">Po co to robimy?</h2>
             <ul class="checklist">
-                <li><strong>Negocjacje</strong> — dokumentacja pokazuje realną wartość przy rozmowach z Rompą i Hansem.</li>
+                <li><strong>Negocjacje</strong> — dokumentacja pokazuje realną wartość przy rozmowach z poprzednim pracodawcą.</li>
                 <li><strong>Backup</strong> — gdyby sprzęt zniknął, mamy dowód stanu i kompletności.</li>
                 <li><strong>Planowanie</strong> — wiemy, które maszyny są krytyczne dla startu Daremon.</li>
             </ul>
@@ -110,12 +110,12 @@
             <ol class="checklist" aria-label="Instrukcja dokumentacji">
                 <li><strong>Sfotografuj</strong> tabliczkę znamionową, licznik godzin, całą maszynę.</li>
                 <li><strong>Zapisz</strong> nazwę, model, numer seryjny, lokalizację i stan.</li>
-                <li><strong>Wyślij</strong> przez formularz i wrzuć zdjęcia do grupy WhatsApp lub arkusza.</li>
+                <li><strong>Wyślij</strong> przez formularz i wrzuć zdjęcia do wyznaczonego kanału komunikacji lub arkusza.</li>
             </ol>
         </section>
 
         <section class="resource-card grid-span-2" aria-labelledby="live-tracker">
-            <h2 id="live-tracker">Live tracker — tylko dla Ciebie</h2>
+            <h2 id="live-tracker">Live tracker — tylko lokalnie</h2>
             <div class="machine-live-stats" aria-live="polite">
                 <div class="machine-stat-card">
                     <span class="machine-stat-value" id="full-machine-count">0</span>
@@ -134,7 +134,7 @@
                 <table aria-label="Lista zarejestrowanych maszyn">
                     <thead>
                         <tr>
-                            <th scope="col">Nazwa</th>
+                            <th scope="col">Opis</th>
                             <th scope="col">Model</th>
                             <th scope="col">Numer seryjny</th>
                             <th scope="col">Lokalizacja</th>
@@ -150,8 +150,8 @@
             <h2 id="doc-form-title">Formularz dokumentacji</h2>
             <form id="machine-doc-full-form" class="machine-doc-form" aria-describedby="full-form-helper">
                 <div class="form-row">
-                    <label for="full-machine-name">Nazwa maszyny *</label>
-                    <input id="full-machine-name" name="machineName" required autocomplete="off">
+                    <label for="full-machine-name">Opis urządzenia *</label>
+                    <input id="full-machine-name" name="deviceDescription" required autocomplete="off">
                 </div>
                 <div class="form-row">
                     <label for="full-machine-model">Model</label>
@@ -171,13 +171,13 @@
                 </div>
                 <div class="form-row">
                     <label for="full-machine-reporter">Twoje imię (opcjonalnie)</label>
-                    <input id="full-machine-reporter" name="machineReporter" autocomplete="name">
+                    <input id="full-machine-reporter" name="reporter" autocomplete="off">
                 </div>
                 <div class="form-row">
                     <label for="full-photo-count">Liczba zdjęć</label>
                     <input id="full-photo-count" name="photoCount" type="number" min="0" step="1" value="0">
                 </div>
-                <p id="full-form-helper" class="form-helper">Dane trafiają do localStorage Twojej przeglądarki pod kluczem <code>daremon_machine_docs_v1</code>. Następnie wyślij zdjęcia w grupie WhatsApp lub przez arkusz Google.</p>
+                <p id="full-form-helper" class="form-helper">Dane trafiają wyłącznie lokalnie (localStorage). Następnie udostępnij zdjęcia w wyznaczonym kanale komunikacji lub arkuszu.</p>
                 <button type="submit" class="cta-button primary">Zapisz lokalnie</button>
                 <p id="full-form-status" class="form-feedback" aria-live="assertive"></p>
             </form>
@@ -206,12 +206,13 @@
     </main>
 
     <footer>
-        Przygotował zespół Daremon. Dane zostają u Ciebie — udostępniaj je świadomie.
+    Przygotował zespół projektowy. Dane zostają u Ciebie — udostępniaj je świadomie.
     </footer>
 
+    <script src="config.js"></script>
     <script>
-        const MACHINE_DOCS_KEY = 'daremon_machine_docs_v1';
-        const WHATSAPP_GROUP_LINK = 'https://chat.whatsapp.com/TO-BE-SET';
+    const MACHINE_DOCS_KEY = window.CONFIG?.MACHINE_DOCS_KEY || 'daremon_machine_docs_v1';
+    const WHATSAPP_GROUP_LINK = window.CONFIG?.WHATSAPP_LINK || 'https://example.com';
 
         const loadDocs = () => {
             try {
@@ -275,8 +276,8 @@
 
             entries.slice(0, 30).forEach(entry => {
                 const row = document.createElement('tr');
-                const cells = [
-                    entry.machineName || '—',
+                    const cells = [
+                        entry.deviceDescription || '—',
                     entry.machineModel || '—',
                     entry.machineSerial || '—',
                     entry.machineLocation || '—',
@@ -297,12 +298,12 @@
             const status = document.getElementById('full-form-status');
             const formData = new FormData(form);
             const entry = {
-                machineName: formData.get('machineName')?.trim() || '',
+                deviceDescription: formData.get('deviceDescription')?.trim() || '',
                 machineModel: formData.get('machineModel')?.trim() || '',
                 machineSerial: formData.get('machineSerial')?.trim() || '',
                 machineLocation: formData.get('machineLocation')?.trim() || '',
                 machineCondition: formData.get('machineCondition')?.trim() || '',
-                reporter: formData.get('machineReporter')?.trim() || '',
+                reporter: formData.get('reporter')?.trim() || '',
                 photoCount: Number.parseInt(formData.get('photoCount'), 10) || 0,
                 createdAt: new Date().toISOString(),
             };
@@ -314,7 +315,7 @@
             form.reset();
 
             if (status) {
-                status.textContent = 'Zapisano lokalnie. Podeślij zdjęcia na grupie WhatsApp!';
+                status.textContent = 'Zapisano lokalnie. Udostępnij zdjęcia w wyznaczonym kanale komunikacji!';
             }
         }
 
