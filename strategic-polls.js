@@ -191,7 +191,12 @@ const CLIENT_WEIGHTS = {
     'clients-3': 3,
 };
 
-// MACHINE_WEIGHTS removed - functionality discontinued
+const MACHINE_WEIGHTS = {
+    'machines-5': 5,
+    'machines-10': 10,
+    'machines-15': 15,
+    'machines-20': 20,
+};
 
 const ROLE_IDS = {
     'role-operations': 'Operacje',
@@ -268,8 +273,17 @@ export function calculateStrategicMetrics(store = {}) {
         metrics.clients += count * getOptionVotes(clientState, optionId);
     });
 
-    // Machine documentation tracking removed for security reasons
-    metrics.machines = 0;
+    const machineState = getPollState('machine-documentation-status', store);
+    let machinesTotal = 0;
+    Object.entries(MACHINE_WEIGHTS).forEach(([optionId, count]) => {
+        machinesTotal += count * getOptionVotes(machineState, optionId);
+    });
+    if (metrics.coreTeam > 0 && machineState.totalVotes > 0) {
+        const avgMachinesPerVoter = machinesTotal / machineState.totalVotes;
+        metrics.machines = Math.round(avgMachinesPerVoter * metrics.coreTeam);
+    } else {
+        metrics.machines = 0;
+    }
 
     const leadershipState = getPollState('core-team-roles', store);
     metrics.leadershipCoverage = Object.keys(ROLE_IDS).reduce((acc, optionId) => {
