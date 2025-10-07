@@ -176,19 +176,7 @@
                         </p>
                     </section>
 
-                    <section class="content-box">
-                        <h3 data-i18n-key="songDedicationTitle"></h3>
-                        <p class="section-intro" data-i18n-key="songDedicationIntro"></p>
-                        <form id="song-dedication-form">
-                            <label for="song-words-input" data-i18n-key="songWordsLabel"></label>
-                            <textarea id="song-words-input" name="songWords" rows="3" maxlength="250" data-i18n-placeholder="songWordsPlaceholder" required aria-required="true"></textarea>
-                            <label for="song-name-input" data-i18n-key="songNameLabel"></label>
-                            <input id="song-name-input" name="songName" type="text" maxlength="60" data-i18n-placeholder="songNamePlaceholder" required aria-required="true" />
-                            <button type="submit" data-i18n-key="songDedicationSubmit"></button>
-                        </form>
-                        <p id="song-dedication-feedback" class="form-feedback" aria-live="polite"></p>
-                        <ul id="song-dedication-list" aria-live="polite"></ul>
-                    </section>
+                    <!-- Song Dedications section removed - aplikacja uproszczona do core radio -->
 
                     <section class="content-box">
                         <h3 data-i18n-key="changeTheme"></h3>
@@ -200,69 +188,15 @@
 
 
                     <!-- Machine documentation section removed -->
-
-                    <section id="strategic-polls-section" class="content-box" aria-labelledby="strategic-polls-title">
-                        <h3 id="strategic-polls-title" class="polls-section-title">🎯 Deklaracja Zaangażowania</h3>
-                        <p class="section-intro"><strong style="color: #ff9500;">POUFNE - Tylko dla zespołu</strong><br>Te ankiety przekuwają emocje w dane do decyzji GO/NO-GO.</p>
-                        <div class="kpi-dashboard" aria-label="Kluczowe wskaźniki postępu">
-                            <div class="kpi-grid">
-                                <div class="kpi-card">
-                                    <div class="kpi-value" id="kpi-responses">0%</div>
-                                    <div class="kpi-label">Wypełnione ankiety</div>
-                                    <div class="kpi-target">Cel: 80%</div>
-                                </div>
-                                <div class="kpi-card">
-                                    <div class="kpi-value" id="kpi-core-team">0</div>
-                                    <div class="kpi-label">Zespół Rdzenia</div>
-                                    <div class="kpi-target">Cel: 5+</div>
-                                </div>
-                                <div class="kpi-card">
-                                    <div class="kpi-value" id="kpi-capital">€0</div>
-                                    <div class="kpi-label">Kapitał zadeklarowany</div>
-                                    <div class="kpi-target">Cel: €40,000</div>
-                                </div>
-                                <div class="kpi-card">
-                                    <div class="kpi-value" id="kpi-machines">0</div>
-                                    <div class="kpi-label">Maszyny udokumentowane</div>
-                                    <div class="kpi-target">Cel: 15+</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="strategic-polls-container" class="polls-container" aria-live="polite"></div>
-                        <p class="section-note">Analiza GO/NO-GO uruchomi się automatycznie po zebraniu głosów. Raport pokaże się w formie okna na stronie.</p>
-                    </section>
-
-
-                    <section id="vso-calculator-section" class="content-box" aria-labelledby="vso-calculator-title">
-                        <h3 id="vso-calculator-title" class="polls-section-title">💰 Kalkulator Decyzyjny</h3>
-                        <p style="text-align: center; margin-bottom: 1.5rem;">
-                            <a href="vso-calculator.html" target="_blank" class="cta-button primary" style="display: inline-block; padding: 1rem 2rem; text-decoration: none;" aria-label="Otwórz kalkulator VSO versus Projekt">📊 Otwórz Kalkulator VSO vs Projekt</a>
-                        </p>
-                    </section>
-
+                    <!-- Strategic polls section removed - aplikacja uproszczona do core radio -->
+                    <!-- VSO Calculator section removed - aplikacja uproszczona do core radio -->
 
                     <section class="content-box" id="polls-section" aria-label="Ankiety słuchaczy" data-i18n-aria-label="pollsAriaLabel">
                         <h3 data-i18n-key="pollsTitle">Ankiety</h3>
                         <div id="polls-container" class="polls-container" aria-live="polite"></div>
                     </section>
 
-                    <section class="content-box photo-gallery" aria-label="Fotogalerij radio">
-                        <h3 data-i18n-key="photoGalleryTitle"></h3>
-                        <div class="photo-gallery-grid">
-                            <figure class="photo-card">
-                                <img src="https://placehold.co/180x180/0B1F3A/18A0C7?text=DJ" alt="DJ achter het mengpaneel" loading="lazy">
-                                <figcaption data-i18n-key="photoGalleryCaptionStudio"></figcaption>
-                            </figure>
-                            <figure class="photo-card">
-                                <img src="https://placehold.co/180x180/04132B/9BD6FF?text=Team" alt="Productieteam lacht in studio" loading="lazy">
-                                <figcaption data-i18n-key="photoGalleryCaptionTeam"></figcaption>
-                            </figure>
-                            <figure class="photo-card">
-                                <img src="https://placehold.co/180x180/082552/18A0C7?text=Live" alt="Luisteraars tijdens live-event" loading="lazy">
-                                <figcaption data-i18n-key="photoGalleryCaptionCommunity"></figcaption>
-                            </figure>
-                        </div>
-                    </section>
+                    <!-- Photo Gallery usunięta - aplikacja uproszczona do core radio -->
                 </div>
             </aside>
 
@@ -305,7 +239,13 @@
                         <div id="volume-control" data-i18n-title="volumeTooltip">
                             <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" data-i18n-aria-label="volumeLabel">
                         </div>
-                        <button id="tv-mode-btn" class="control-btn" data-i18n-title="fullscreenTooltip" data-i18n-aria-label="fullscreenLabel" disabled>📺</button>
+                                                <button id="tv-mode-btn" class="control-btn" data-i18n-title="fullscreenTooltip" data-i18n-aria-label="fullscreenLabel" disabled>📺</button>
+                    </div>
+                </section>
+
+                <!-- DAREMON HUB USUNIĘTY - UPROSZCZENIE APLIKACJI -->
+                
+                <section id="team-moments" class="content-box photo-collage" aria-labelledby="team-moments-title">
                     </div>
                 </section>
                 <section id="daremon-hub" class="content-box" aria-labelledby="daremon-hub-heading">
@@ -429,53 +369,9 @@
                         </section>
                     </div>
                 </section>
-                <section id="team-moments" class="content-box photo-collage" aria-labelledby="team-moments-title">
-                    <h2 id="team-moments-title" data-i18n-key="teamMomentsTitle"></h2>
-                    <p class="section-intro" data-i18n-key="teamMomentsIntro"></p>
-                    <div class="photo-collage-grid">
-                        <figure class="collage-card">
-                            <img src="https://placehold.co/260x160/082552/18A0C7?text=Behind+the+Scenes" alt="Technici stemmen microfoons af" loading="lazy">
-                            <figcaption data-i18n-key="teamMomentsCaptionPrep"></figcaption>
-                        </figure>
-                        <figure class="collage-card">
-                            <img src="https://placehold.co/260x160/04132B/9BD6FF?text=Interview" alt="Interview met speciale gast" loading="lazy">
-                            <figcaption data-i18n-key="teamMomentsCaptionInterview"></figcaption>
-                        </figure>
-                        <figure class="collage-card">
-                            <img src="https://placehold.co/260x160/0B1F3A/18A0C7?text=Community" alt="Luisteraars sturen berichten" loading="lazy">
-                            <figcaption data-i18n-key="teamMomentsCaptionCommunity"></figcaption>
-                        </figure>
-                    </div>
-                </section>
-                <section id="video-library" class="content-box video-library" aria-labelledby="video-library-title">
-                    <div class="video-library-header">
-                        <h2 id="video-library-title" data-i18n-key="videoLibraryTitle"></h2>
-                        <p class="section-intro" data-i18n-key="videoLibraryIntro"></p>
-                    </div>
-                    <div class="video-grid">
-                        <figure class="video-card">
-                            <video controls preload="metadata" poster="https://placehold.co/320x180/082552/18A0C7?text=DJ+Daremon" aria-describedby="video-dj-daremon-caption">
-                                <source src="video/DJ_Daremon.mp4" type="video/mp4">
-                                <p data-i18n-key="videoFallback"></p>
-                            </video>
-                            <figcaption id="video-dj-daremon-caption" data-i18n-key="videoDJDaremon"></figcaption>
-                        </figure>
-                        <figure class="video-card">
-                            <video controls preload="metadata" poster="https://placehold.co/320x180/04132B/9BD6FF?text=DJ+Bobro" aria-describedby="video-dj-bobro-caption">
-                                <source src="video/DJ_Bobro.mp4" type="video/mp4">
-                                <p data-i18n-key="videoFallback"></p>
-                            </video>
-                            <figcaption id="video-dj-bobro-caption" data-i18n-key="videoDJBobro"></figcaption>
-                        </figure>
-                        <figure class="video-card">
-                            <video controls preload="metadata" poster="https://placehold.co/320x180/0B1F3A/9BD6FF?text=Beaver" aria-describedby="video-beaver-caption">
-                                <source src="video/Beaver.mp4" type="video/mp4">
-                                <p data-i18n-key="videoFallback"></p>
-                            </video>
-                            <figcaption id="video-beaver-caption" data-i18n-key="videoBeaver"></figcaption>
-                        </figure>
-                    </div>
-                </section>
+
+                <!-- Team moments i video library usunięte - aplikacja uproszczona do core radio -->
+                
                 <div id="hotkeys-info" data-i18n-key="hotkeysInfo"></div>
             </main>
 

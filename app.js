@@ -2,11 +2,7 @@ import { waitForMediaReady } from './media-utils.js';
 import { createInitialState } from './state.js';
 import { createTrackListItem } from './ui-utils.js';
 import { PollSystem } from './poll-system.js';
-import { STRATEGIC_POLLS, calculateStrategicMetrics, generateGoNoGoReport } from './strategic-polls.js';
-import { CONFIG } from './config.js';
-
-const MACHINE_DOCS_KEY = (window.CONFIG && window.CONFIG.MACHINE_DOCS_KEY) || 'daremon_machine_docs_v1';
-const ANALYSIS_SCHEDULE_KEY = (window.CONFIG && window.CONFIG.ANALYSIS_SCHEDULE_KEY) || 'daremon_analysis_scheduled';
+// strategic/machine docs imports removed in simplified build
 
 /**
  * DAREMON Radio ETS - Hoofdlogica van de applicatie v8
@@ -56,26 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
             messagesList: document.getElementById('messages-list'),
             djMessageForm: document.getElementById('dj-message-form'),
             djMessageInput: document.getElementById('dj-message-input'),
-            songDedicationForm: document.getElementById('song-dedication-form'),
-            songWordsInput: document.getElementById('song-words-input'),
-            songNameInput: document.getElementById('song-name-input'),
-            songDedicationList: document.getElementById('song-dedication-list'),
-            songDedicationFeedback: document.getElementById('song-dedication-feedback'),
         },
         polls: {
             container: document.getElementById('polls-container'),
             section: document.getElementById('polls-section'),
         },
-        strategicPolls: {
-            container: document.getElementById('strategic-polls-container'),
-            section: document.getElementById('strategic-polls-section'),
-            kpis: {
-                responses: document.getElementById('kpi-responses'),
-                coreTeam: document.getElementById('kpi-core-team'),
-                capital: document.getElementById('kpi-capital'),
-                machines: document.getElementById('kpi-machines'),
-            },
-        },
+        // strategic polls removed in simplified build
         // machineDocumentation section removed
         header: {
             listenerCount: document.getElementById('listener-count'),
@@ -145,18 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 sendBtn: "Verstuur",
                 submitReview: "Verstuur Recensie",
                 hotkeysInfo: "Sneltoetsen: Spatie = Afspelen/Pauzeren, N = Volgende, L = Like, ↑↓ = Volume",
-                songDedicationTitle: "Song Capsule",
-                songDedicationIntro: "Deel een paar woorden en wie er in jouw herinneringssong moet schitteren.",
-                songWordsLabel: "Jouw woorden",
-                songWordsPlaceholder: "Schrijf een korte tekst voor de song...",
-                songNameLabel: "Naam van de ster",
-                songNamePlaceholder: "Wie moeten we noemen?",
-                songDedicationSubmit: "Bewaar herinnering",
-                songDedicationThanks: "Bedankt! Je woorden zijn opgeslagen.",
-                songDedicationCooldown: "Even geduld – één herinnering per minuut.",
-                songDedicationMissing: "Vul zowel je woorden als een naam in.",
-                songDedicationEmpty: "Nog geen inzendingen. Wees de eerste om iets te delen!",
-                songDedicationTime: "Toegevoegd: {{timestamp}}"
+                
             };
             i18n_apply();
         }
@@ -192,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        renderSongDedications();
+        // song dedications removed in simplified build
     }
 
     // --- Recent Rotation System ---
@@ -320,348 +291,69 @@ document.addEventListener('DOMContentLoaded', () => {
                 totalVotesLabel: translate('pollTotalVotesLabel', 'Oddane głosy:'),
             }
         });
+        state.pollSystem = pollSystem;
 
         dom.polls.container.innerHTML = '';
 
+        // Tylko 5 prostych ankiet związanych z radiem
         const examplePolls = [
             {
                 question: 'Który utwór był HITEM tego tygodnia?',
                 type: 'single-choice',
                 options: [
-                    { id: 'kaput', label: 'Kaput! - Daremon Band' },
-                    { id: 'bmw-kut', label: 'BMW jeździ chujowo - DJ Bóbr' },
-                    { id: 'plasdan', label: 'Plasdan padł (Remix) - Cleanroom Crew' },
-                    { id: 'retro-disco', label: 'Retro (Disco Version) - Electric Team' }
+                    'Retro (Live Edit)',
+                    'City Lights (Synthwave)',
+                    'Ocean Drive (Remix)',
+                    'Neon Nights (Club Mix)'
                 ],
-                duration: '7 days'
+                duration: '7 dni'
             },
             {
                 question: 'Jaki gatunek muzyczny chcesz słyszeć częściej?',
                 type: 'multiple-choice',
-                options: [
-                    'Electro/Synth',
-                    'Rock/Alternative',
-                    'Techno/House',
-                    'Pop/Dance',
-                    'Ambient/Chill'
-                ]
+                options: ['Electro/Synth', 'Rock', 'Techno/House', 'Pop/Dance', 'Ambient']
             },
             {
-                question: 'Jak oceniasz radio ogólnie?',
+                question: 'Jak oceniasz DAREMON Radio ogólnie?',
                 type: 'rating',
                 scale: 5,
                 labels: ['Słabo', 'Średnio', 'Świetnie']
             },
             {
-                question: 'Jak oceniasz obecny klimat pracy w zespole?',
-                type: 'emoji-rating',
-                options: ['😞', '😐', '🙂', '😊', '🎉']
-            },
-            {
-                question: 'O której godzinie najczęściej słuchasz radia?',
+                question: 'O której godzinie najczęściej słuchasz?',
                 type: 'single-choice',
                 options: [
-                    '6:00 - 9:00 (Poranny Rush)',
+                    '6:00 - 9:00 (Rano)',
                     '9:00 - 12:00 (Praca)',
                     '12:00 - 14:00 (Lunch)',
                     '14:00 - 18:00 (Popołudnie)',
-                    '18:00 - 22:00 (Wieczór)',
-                    '22:00 - 6:00 (Nocna zmiana)'
+                    '18:00 - 22:00 (Wieczór)'
                 ]
             },
             {
-                question: 'Która funkcja radia najbardziej Ci się podoba?',
+                question: 'Która funkcja najbardziej Ci się podoba?',
                 type: 'multiple-choice',
                 options: [
-                    'Odliczanie do 31 marca 2026',
                     'System ocen utworów',
-                    'Chat DJ Bot',
-                    'Song Dedications',
                     'Wizualizacja audio',
                     'Złote Płyty',
                     'Najwyżej ocenione',
                     'Motywy kolorystyczne'
                 ]
-            },
-            {
-                question: 'Co Twoim zdaniem powinno się stać z maszynami po przejęciu?',
-                type: 'single-choice',
-                options: [
-                    'Wykup przez zespół Daremon',
-                    'Sprzedaż zewnętrznej firmie',
-                    'Negocjacje z Hansem (właściciel budynków)',
-                    'Leasing z opcją wykupu',
-                    'Nie mam zdania'
-                ]
-            },
-            {
-                question: 'Jak prawdopodobne jest, że polecisz DAREMON Radio współpracownikom?',
-                type: 'rating',
-                scale: 10,
-                labels: ['Bardzo nieprawdopodobne', 'Neutralnie', 'Bardzo prawdopodobne']
-            },
-            {
-                question: 'Ile utworów znajduje się w obecnej playliście DAREMON Radio?',
-                type: 'single-choice',
-                options: [
-                    'Około 100',
-                    'Około 150',
-                    'Około 177',
-                    'Ponad 200'
-                ],
-                correctAnswer: 'Około 177',
-                reward: 'Badge: Music Expert 🎵'
-            },
-            {
-                question: 'Jakiej funkcji najbardziej brakuje w radiu?',
-                type: 'open-text',
-                options: [],
-                duration: null
             }
         ];
 
-        examplePolls.forEach(pollData => {
-            const poll = pollSystem.addPoll(pollData);
+        console.log('System ankiet zainicjalizowany z', examplePolls.length, 'ankietami');
+
+        // Renderuj ankiety w kontenerze
+        examplePolls.forEach(pollDef => {
+            const poll = pollSystem.addPoll(pollDef);
             const pollContainer = document.createElement('div');
             pollContainer.id = `poll-${poll.id}`;
             pollContainer.className = 'poll-container';
             dom.polls.container.appendChild(pollContainer);
             pollSystem.renderPoll(poll, pollContainer);
         });
-
-        state.pollSystem = pollSystem;
-        if (dom.polls.section) {
-            dom.polls.section.classList.remove('hidden');
-        }
-
-        console.log('System ankiet zainicjalizowany z', examplePolls.length, 'ankietami');
-    }
-
-    function loadMachineDocs() {
-        if (typeof window === 'undefined' || !window.localStorage) {
-            return [];
-        }
-
-        try {
-            const raw = window.localStorage.getItem(MACHINE_DOCS_KEY);
-            if (!raw) {
-                return [];
-            }
-            const parsed = JSON.parse(raw);
-            return Array.isArray(parsed) ? parsed : [];
-        } catch (error) {
-            console.error('Nie udało się odczytać rejestru maszyn:', error);
-            return [];
-        }
-    }
-
-    function saveMachineDocs(entries) {
-        if (typeof window === 'undefined' || !window.localStorage) {
-            return;
-        }
-
-        try {
-            window.localStorage.setItem(MACHINE_DOCS_KEY, JSON.stringify(entries));
-        } catch (error) {
-            console.error('Nie udało się zapisać rejestru maszyn:', error);
-        }
-    }
-
-    // Machine documentation functions removed - feature discontinued
-
-    function openWhatsAppGroup() {
-        if (typeof window !== 'undefined') {
-            window.open(CONFIG.WHATSAPP_LINK, '_blank', 'noopener');
-        }
-    }
-
-    function initializeStrategicPolls() {
-        if (!dom.strategicPolls?.container) {
-            console.warn('Brak kontenera dla ankiet strategicznych');
-            return;
-        }
-
-        const translate = (key, fallback) => {
-            const value = t(key);
-            return typeof value === 'string' && !value.startsWith('[') ? value : fallback;
-        };
-
-        const pollSystem = new PollSystem({
-            storageKey: 'daremon_strategic_polls_v1',
-            strings: {
-                submit: translate('pollSubmit', 'Wyślij odpowiedź'),
-                success: translate('pollSuccess', 'Dziękujemy za głos!'),
-                selectOption: translate('pollSelectOption', 'Wybierz odpowiedź przed wysłaniem.'),
-                selectMultiple: translate('pollSelectMultiple', 'Zaznacz przynajmniej jedną odpowiedź.'),
-                textRequired: translate('pollTextRequired', 'Wpisz odpowiedź, zanim wyślesz.'),
-                resultsHeading: translate('pollResultsHeading', 'Wyniki'),
-                noVotes: translate('pollNoVotes', 'Brak głosów w tej ankiecie.'),
-                rangeLabel: translate('pollRangeLabel', 'Wybierz ocenę na skali'),
-                openTextPlaceholder: translate('pollOpenTextPlaceholder', 'Twoja odpowiedź...'),
-                totalVotesLabel: translate('pollTotalVotesLabel', 'Oddane głosy:'),
-            }
-        });
-
-        const originalRecordVote = pollSystem.recordVote.bind(pollSystem);
-        pollSystem.recordVote = (poll, submission) => {
-            originalRecordVote(poll, submission);
-            updateStrategicKpis();
-            scheduleGoNoGoAnalysis();
-        };
-
-        dom.strategicPolls.container.innerHTML = '';
-        const priorityOrder = { CRITICAL: 0, URGENT: 1, HIGH: 2, MEDIUM: 3, LOW: 4 };
-        const priorityPolls = STRATEGIC_POLLS
-            .slice()
-            .sort((a, b) => (priorityOrder[a.priority] ?? 5) - (priorityOrder[b.priority] ?? 5))
-            .filter(poll => ['CRITICAL', 'URGENT'].includes(poll.priority))
-            .slice(0, 6);
-
-        priorityPolls.forEach(pollData => {
-            const poll = pollSystem.addPoll(pollData);
-            const container = document.createElement('div');
-            container.className = `poll-container strategic-poll${pollData.confidential ? ' strategic-poll-confidential' : ''}`;
-            container.dataset.category = pollData.category;
-            dom.strategicPolls.container.appendChild(container);
-            pollSystem.renderPoll(poll, container);
-        });
-
-        state.strategicPollSystem = pollSystem;
-        updateStrategicKpis();
-        scheduleGoNoGoAnalysis(true);
-        checkAndRunGoNoGoAnalysis();
-    }
-
-    function scheduleGoNoGoAnalysis(force = false) {
-        if (typeof window === 'undefined' || !window.localStorage) {
-            return;
-        }
-
-        const existing = window.localStorage.getItem(ANALYSIS_SCHEDULE_KEY);
-        if (existing && !force) {
-            return;
-        }
-
-        const analysisDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-        window.localStorage.setItem(ANALYSIS_SCHEDULE_KEY, analysisDate.toISOString());
-        console.log(`📊 Analiza GO/NO-GO zaplanowana na: ${analysisDate.toLocaleDateString()}`);
-    }
-
-    function checkAndRunGoNoGoAnalysis() {
-        if (typeof window === 'undefined' || !window.localStorage || !state.strategicPollSystem) {
-            return;
-        }
-
-        const scheduled = window.localStorage.getItem(ANALYSIS_SCHEDULE_KEY);
-        if (!scheduled) {
-            return;
-        }
-
-        const scheduledDate = new Date(scheduled);
-        if (Number.isNaN(scheduledDate.getTime())) {
-            return;
-        }
-
-        if (Date.now() >= scheduledDate.getTime()) {
-            const report = generateGoNoGoReport(state.strategicPollSystem.store?.polls || {});
-            displayGoNoGoReport(report);
-            window.localStorage.removeItem(ANALYSIS_SCHEDULE_KEY);
-        }
-    }
-
-    function updateStrategicKpis() {
-        if (!dom.strategicPolls?.kpis) {
-            return;
-        }
-
-        const metrics = state.strategicPollSystem
-            ? calculateStrategicMetrics(state.strategicPollSystem.store?.polls || {})
-            : { responseRate: 0, coreTeam: 0, formattedCapital: '€0', machines: 0 };
-
-        if (dom.strategicPolls.kpis.responses) {
-            dom.strategicPolls.kpis.responses.textContent = `${metrics.responseRate || 0}%`;
-            dom.strategicPolls.kpis.responses.setAttribute('aria-label', `Wypełnione ankiety: ${metrics.responseRate || 0} procent`);
-        }
-        if (dom.strategicPolls.kpis.coreTeam) {
-            dom.strategicPolls.kpis.coreTeam.textContent = `${metrics.coreTeam || 0}`;
-            dom.strategicPolls.kpis.coreTeam.setAttribute('aria-label', `Zespół rdzenia: ${metrics.coreTeam || 0} osób`);
-        }
-        if (dom.strategicPolls.kpis.capital) {
-            dom.strategicPolls.kpis.capital.textContent = metrics.formattedCapital || '€0';
-            dom.strategicPolls.kpis.capital.setAttribute('aria-label', `Kapitał zadeklarowany: ${metrics.formattedCapital || '€0'}`);
-        }
-        if (dom.strategicPolls.kpis.machines) {
-            dom.strategicPolls.kpis.machines.textContent = `${metrics.machines || 0}`;
-            dom.strategicPolls.kpis.machines.setAttribute('aria-label', `Maszyny udokumentowane: ${metrics.machines || 0}`);
-        }
-    }
-
-    function displayGoNoGoReport(report) {
-        if (!report || typeof document === 'undefined') {
-            return;
-        }
-
-        const existingModal = document.querySelector('.go-nogo-modal');
-        if (existingModal) {
-            existingModal.remove();
-        }
-
-        const modal = document.createElement('div');
-        modal.className = 'go-nogo-modal';
-        modal.setAttribute('role', 'dialog');
-        modal.setAttribute('aria-modal', 'true');
-        modal.setAttribute('aria-labelledby', 'go-nogo-heading');
-        modal.tabIndex = -1;
-
-        const content = document.createElement('div');
-        content.className = 'go-nogo-content';
-
-        const gapsHtml = report.criticalGaps?.length
-            ? `<div class="critical-gaps"><h3>⚠️ Krytyczne luki</h3><ul>${report.criticalGaps.map(gap => `<li>${gap}</li>`).join('')}</ul></div>`
-            : '';
-
-        content.innerHTML = `
-            <h2 id="go-nogo-heading">📊 RAPORT GO/NO-GO</h2>
-            <div class="decision-badge ${report.decision.toLowerCase()}">${report.decision}</div>
-            <div class="report-stats">
-                <div class="stat"><span class="label">Zespół Rdzenia</span><span class="value">${report.coreTeam}</span></div>
-                <div class="stat"><span class="label">Kapitał</span><span class="value">${report.capital}</span></div>
-                <div class="stat"><span class="label">Maszyny</span><span class="value">${report.machines}</span></div>
-                <div class="stat"><span class="label">Relacje z klientami</span><span class="value">${report.clients}</span></div>
-                <div class="stat"><span class="label">Frekwencja</span><span class="value">${report.responseRate}%</span></div>
-            </div>
-            <p class="report-note">Średnia deklaracja czasu: ${report.hoursAverage} h/tydz.</p>
-            ${gapsHtml}
-            <div class="next-steps">
-                <h3>📋 Następne kroki</h3>
-                <ol>${report.nextSteps.map(step => `<li>${step}</li>`).join('')}</ol>
-            </div>
-        `;
-
-        const closeButton = document.createElement('button');
-        closeButton.type = 'button';
-        closeButton.className = 'go-nogo-close';
-        closeButton.textContent = 'Zamknij';
-        closeButton.setAttribute('aria-label', 'Zamknij raport GO/NO-GO');
-        closeButton.addEventListener('click', () => modal.remove());
-        content.appendChild(closeButton);
-
-        modal.appendChild(content);
-        modal.addEventListener('click', event => {
-            if (event.target === modal) {
-                modal.remove();
-            }
-        });
-
-        document.body.appendChild(modal);
-        setTimeout(() => modal.focus(), 0);
-
-        const escHandler = (event) => {
-            if (event.key === 'Escape') {
-                modal.remove();
-            }
-        };
-        document.addEventListener('keydown', escHandler, { once: true });
     }
 
     function checkMilestoneAndAddPoll() {
@@ -734,20 +426,16 @@ document.addEventListener('DOMContentLoaded', () => {
             loadStateFromLocalStorage();
             setupEventListeners();
             initializePolls();
-            initializeStrategicPolls();
-            updateMachineDocTable();
-            updateMachineStats();
+            // strategic polls and machine docs removed in simplified build
             updateWelcomeGreeting();
             updateOfflineStatus();
-            renderMessages();
-            renderSongDedications();
+            // messages and song dedications removed in simplified build
             renderGoldenRecords();
             renderTopRated();
-            populateMachineSelect();
-            renderCalendar();
+            // calendar and machine select removed
             setInterval(updateListenerCount, 15000);
             updateListenerCount();
-            setInterval(checkAndRunGoNoGoAnalysis, 6 * 60 * 60 * 1000);
+            // GO/NO-GO analysis removed
 
             prepareIntroSequence();
         } catch (error) {
@@ -1346,31 +1034,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function loadStateFromLocalStorage() {
-        try {
-            state.likes = safeLocalStorage('likes') || {};
-            state.messages = safeLocalStorage('messages') || [];
-            state.songDedications = safeLocalStorage('songDedications') || [];
-            state.history = safeLocalStorage('history') || [];
-            state.reviews = safeLocalStorage('reviews') || {};
-            
-            const savedTheme = safeLocalStorage('theme');
-            applyTheme(savedTheme || 'arburg');
-            
-            console.log('✅ Stan aplikacji załadowany z localStorage');
-            
-            // Zaktualizuj wagi utworów na podstawie załadowanych ocen
-            if (state.playlist && state.playlist.length > 0) {
-                updatePlaylistWeights();
-            }
-        } catch (error) {
-            console.error('❌ Błąd ładowania stanu:', error);
-            // Initialize with default values
-            state.likes = {};
-            state.messages = [];
-            state.songDedications = [];
-            state.history = [];
-            state.reviews = {};
-            applyTheme('arburg');
+        state.likes = safeLocalStorage('likes') || {};
+        state.messages = safeLocalStorage('messages') || [];
+        // song dedications removed in simplified build
+        state.history = safeLocalStorage('history') || [];
+        state.reviews = safeLocalStorage('reviews') || {};
+        applyTheme(safeLocalStorage('theme') || 'arburg');
+
+        // Zaktualizuj wagi utworów na podstawie załadowanych ocen
+        if (state.playlist && state.playlist.length > 0) {
+            updatePlaylistWeights();
         }
     }
 
@@ -1378,7 +1051,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function saveTheme(theme) { safeLocalStorage('theme', theme); }
     function saveLikes() { safeLocalStorage('likes', state.likes); }
     function saveMessages() { safeLocalStorage('messages', state.messages); }
-    function saveSongDedications() { safeLocalStorage('songDedications', state.songDedications); }
+    // song dedications feature removed in simplified build
     function saveReviews() { safeLocalStorage('reviews', state.reviews); }
 
     // --- Beoordelings- en Recensiesysteem ---
@@ -1590,16 +1263,7 @@ document.addEventListener('DOMContentLoaded', () => {
         addMessage("Jij", sanitizeHTML(message));
         if (dom.sidePanel.djMessageForm) dom.sidePanel.djMessageForm.reset();
 
-        const keywords = { 'cleanroom': 'plasdan', 'plasdan': 'plasdan', 'bmw': 'bmw-kut' };
-        Object.keys(keywords).forEach(key => {
-            if (message.toLowerCase().includes(key)) {
-                const trackId = keywords[key];
-                state.tempBoosts[trackId] = (state.tempBoosts[trackId] || 0) + 5;
-                setTimeout(() => {
-                    state.tempBoosts[trackId] -= 5;
-                }, 10 * 60 * 1000);
-            }
-        });
+        // Keyword-based boosting removed in simplified, privacy-safe build
         
         setTimeout(() => {
             const aiResponses = ["Bedankt voor je bericht!", "Leuk dat je luistert!", "Geweldige muziekkeuze!", "Blijf genieten van de muziek!"];
@@ -1629,81 +1293,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function setSongDedicationFeedback(key, isError = false) {
-        if (!dom.sidePanel.songDedicationFeedback) return;
-        dom.sidePanel.songDedicationFeedback.textContent = key ? t(key) : '';
-        dom.sidePanel.songDedicationFeedback.classList.toggle('error', Boolean(isError));
-    }
-
-    function handleSongDedicationSubmit(event) {
-        event.preventDefault();
-        if (!dom.sidePanel.songWordsInput || !dom.sidePanel.songNameInput) return;
-
-        setSongDedicationFeedback('', false);
-
-        const now = Date.now();
-        if (now - state.lastSongDedicationTimestamp < 60000) {
-            setSongDedicationFeedback('songDedicationCooldown', true);
-            return;
-        }
-
-        const words = dom.sidePanel.songWordsInput.value.trim();
-        const name = dom.sidePanel.songNameInput.value.trim();
-
-        if (!words || !name) {
-            setSongDedicationFeedback('songDedicationMissing', true);
-            return;
-        }
-
-        const entry = {
-            words: sanitizeHTML(words),
-            name: sanitizeHTML(name),
-            timestamp: new Date().toLocaleString(state.language === 'nl' ? 'nl-NL' : 'pl-PL')
-        };
-
-        state.songDedications.push(entry);
-        state.songDedications = state.songDedications.slice(-15);
-        state.lastSongDedicationTimestamp = now;
-        saveSongDedications();
-        renderSongDedications();
-
-        if (dom.sidePanel.songDedicationForm) dom.sidePanel.songDedicationForm.reset();
-        setSongDedicationFeedback('songDedicationThanks', false);
-    }
-
-    function renderSongDedications() {
-        if (!dom.sidePanel.songDedicationList) return;
-        dom.sidePanel.songDedicationList.innerHTML = '';
-
-        if (!state.songDedications.length) {
-            const emptyItem = document.createElement('li');
-            emptyItem.classList.add('empty-state');
-            emptyItem.textContent = t('songDedicationEmpty');
-            dom.sidePanel.songDedicationList.appendChild(emptyItem);
-            return;
-        }
-
-        [...state.songDedications].reverse().forEach(entry => {
-            const item = document.createElement('li');
-
-            const nameEl = document.createElement('span');
-            nameEl.classList.add('song-dedication-name');
-            nameEl.innerHTML = entry.name;
-
-            const wordsEl = document.createElement('span');
-            wordsEl.classList.add('song-dedication-words');
-            wordsEl.innerHTML = entry.words;
-
-            const timeEl = document.createElement('span');
-            timeEl.classList.add('song-dedication-time');
-            timeEl.textContent = t('songDedicationTime', { timestamp: entry.timestamp });
-
-            item.appendChild(nameEl);
-            item.appendChild(wordsEl);
-            item.appendChild(timeEl);
-            dom.sidePanel.songDedicationList.appendChild(item);
-        });
-    }
+    // song dedications feature removed in simplified build
 
     // --- Visualizer & Hulpprogramma's ---
     function scheduleVisualizerFrame() {
@@ -1928,8 +1518,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } 
             });
         }
-        if (dom.sidePanel.djMessageForm) dom.sidePanel.djMessageForm.addEventListener('submit', handleMessageSubmit);
-        if (dom.sidePanel.songDedicationForm) dom.sidePanel.songDedicationForm.addEventListener('submit', handleSongDedicationSubmit);
+    if (dom.sidePanel.djMessageForm) dom.sidePanel.djMessageForm.addEventListener('submit', handleMessageSubmit);
         if (dom.errorCloseBtn) dom.errorCloseBtn.addEventListener('click', () => {
             if (dom.errorOverlay) dom.errorOverlay.classList.add('hidden');
         });
