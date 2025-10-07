@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (countdownStatus) {
             if (diff <= 0) {
-                countdownStatus.textContent = '01.04.2026 startuje — witamy w nowym etapie Daremon!';
+                countdownStatus.textContent = '01.04.2026 — osiągnięto termin.';
             } else {
                 countdownStatus.textContent = `Do 01.04.2026 pozostało ${days} dni, ${hours} godzin, ${minutes} minut i ${seconds} sekund.`;
             }

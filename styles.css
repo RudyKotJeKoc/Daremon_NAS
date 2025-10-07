@@ -238,39 +238,6 @@ body {
     text-align: center;
 }
 
-.deadline-article {
-    width: 100%;
-    padding: 26px 30px;
-    border-radius: 28px;
-    background: rgba(6, 18, 40, 0.82);
-    border: 1px solid rgba(24, 160, 199, 0.2);
-    box-shadow: 0 20px 45px rgba(2, 9, 24, 0.6);
-    color: #f1fbff;
-    text-align: left;
-}
-
-.deadline-article h2 {
-    margin-top: 0;
-    font-size: clamp(1.3rem, 4vw, 2rem);
-    color: var(--primary-accent);
-}
-
-.deadline-article p {
-    margin: 0 0 0.8rem 0;
-    line-height: 1.7;
-}
-
-.deadline-article ol {
-    margin: 0;
-    padding-left: 1.2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-.deadline-article li {
-    line-height: 1.6;
-}
 
 .visualizer-bars {
     position: absolute;
