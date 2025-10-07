@@ -303,6 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('renderCalendar - not implemented');
     }
 
+
     function initializePolls() {
         if (!dom.polls || !dom.polls.container) {
             console.warn('Brak kontenera dla ankiet');
@@ -839,6 +840,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return stats;
     }
 
+
     // --- Initialisatie ---
     async function initialize() {
         await i18n_init();
@@ -1337,6 +1339,7 @@ document.addEventListener('DOMContentLoaded', () => {
         state.history.unshift(state.currentTrack.id);
         state.history = state.history.slice(0, 15);
         saveHistory();
+
         checkMilestoneAndAddPoll();
 
         if (dom.sidePanel.historyList) {
@@ -1923,6 +1926,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (dom.errorOverlay) dom.errorOverlay.classList.add('hidden');
         });
         if (dom.errorRetryBtn) dom.errorRetryBtn.addEventListener('click', retryLoad);
+
         if (dom.machineDocumentation.form) dom.machineDocumentation.form.addEventListener('submit', handleMachineDocSubmit);
         if (dom.machineDocumentation.whatsappButton) dom.machineDocumentation.whatsappButton.addEventListener('click', openWhatsAppGroup);
 

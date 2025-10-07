@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const countdownStatus = document.getElementById('countdown-status');
 
-    const rompaDeadline = new Date(2026, 2, 31, 23, 59, 59);
+    const rompaDeadline = new Date(2026, 3, 1, 0, 0, 0);
 
     const updateElementText = (element, value) => {
         if (element) {
@@ -50,9 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (countdownStatus) {
             if (diff <= 0) {
-                countdownStatus.textContent = '31 marca 2026 nadszedł — czas na nowy etap Daremon!';
+                countdownStatus.textContent = '01.04.2026 startuje — witamy w nowym etapie Daremon!';
             } else {
-                countdownStatus.textContent = `Do 31 marca 2026 pozostało ${days} dni, ${hours} godzin, ${minutes} minut i ${seconds} sekund.`;
+                countdownStatus.textContent = `Do 01.04.2026 pozostało ${days} dni, ${hours} godzin, ${minutes} minut i ${seconds} sekund.`;
             }
         }
 

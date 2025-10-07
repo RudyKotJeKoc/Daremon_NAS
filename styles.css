@@ -377,17 +377,22 @@ body {
     width: 100%;
     max-width: 1200px;
     display: flex;
-    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: clamp(16px, 3vw, 32px);
 }
 
 #radio-view {
     display: flex;
-    gap: 20px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: clamp(16px, 3vw, 32px);
     width: 100%;
 }
 
 #main-content {
-    flex-grow: 1;
+    flex: 1 1 520px;
     z-index: 2;
 }
 
@@ -558,10 +563,11 @@ header p {
 #comment-form button { background: var(--tertiary-accent); }
 
 /* --- Zijpaneel (Drawer) --- */
-#side-panel { 
-    width: 300px; 
-    position: relative; 
-    flex-shrink: 0; 
+#side-panel {
+    position: relative;
+    flex: 1 1 280px;
+    max-width: 320px;
+    width: 100%;
 }
 #menu-toggle { display: none; }
 .side-panel-list { list-style: none; padding: 0; margin: 0; max-height: 150px; overflow-y: auto; }
@@ -634,6 +640,7 @@ header p {
     gap: 16px;
     margin-top: 1rem;
 }
+
 
 /* --- Poll System --- */
 
