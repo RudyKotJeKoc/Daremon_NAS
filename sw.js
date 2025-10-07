@@ -104,3 +104,12 @@ self.addEventListener('fetch', e => {
         })
     );
 });
+
+// Error event handler
+self.addEventListener('error', (event) => {
+    console.error('[Service Worker] Error:', event.error);
+});
+
+self.addEventListener('unhandledrejection', (event) => {
+    console.error('[Service Worker] Unhandled Promise Rejection:', event.reason);
+});
