@@ -3,10 +3,10 @@ import { createInitialState } from './state.js';
 import { createTrackListItem } from './ui-utils.js';
 import { PollSystem } from './poll-system.js';
 import { STRATEGIC_POLLS, calculateStrategicMetrics, generateGoNoGoReport } from './strategic-polls.js';
+import { CONFIG } from './config.js';
 
 const MACHINE_DOCS_KEY = (window.CONFIG && window.CONFIG.MACHINE_DOCS_KEY) || 'daremon_machine_docs_v1';
 const ANALYSIS_SCHEDULE_KEY = (window.CONFIG && window.CONFIG.ANALYSIS_SCHEDULE_KEY) || 'daremon_analysis_scheduled';
-const WHATSAPP_GROUP_LINK = (window.CONFIG && window.CONFIG.WHATSAPP_LINK) || 'https://example.com';
 
 /**
  * DAREMON Radio ETS - Hoofdlogica van de applicatie v8
@@ -471,7 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function openWhatsAppGroup() {
         if (typeof window !== 'undefined') {
-            window.open(WHATSAPP_GROUP_LINK, '_blank', 'noopener');
+            window.open(CONFIG.WHATSAPP_LINK, '_blank', 'noopener');
         }
     }
 

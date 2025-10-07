@@ -212,7 +212,6 @@
     <script src="config.js"></script>
     <script>
     const MACHINE_DOCS_KEY = window.CONFIG?.MACHINE_DOCS_KEY || 'daremon_machine_docs_v1';
-    const WHATSAPP_GROUP_LINK = window.CONFIG?.WHATSAPP_LINK || 'https://example.com';
 
         const loadDocs = () => {
             try {
@@ -327,7 +326,7 @@
             }
             const button = document.getElementById('full-whatsapp-button');
             if (button) {
-                button.addEventListener('click', () => window.open(WHATSAPP_GROUP_LINK, '_blank', 'noopener'));
+                button.addEventListener('click', () => window.open(window.CONFIG?.WHATSAPP_LINK || 'https://example.com', '_blank', 'noopener'));
             }
         });
     </script>
