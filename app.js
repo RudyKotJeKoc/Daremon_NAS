@@ -1,6 +1,12 @@
 import { waitForMediaReady } from './media-utils.js';
 import { createInitialState } from './state.js';
 import { createTrackListItem } from './ui-utils.js';
+import { PollSystem } from './poll-system.js';
+import { STRATEGIC_POLLS, calculateStrategicMetrics, generateGoNoGoReport } from './strategic-polls.js';
+
+const MACHINE_DOCS_KEY = 'daremon_machine_docs_v1';
+const ANALYSIS_SCHEDULE_KEY = 'daremon_analysis_scheduled';
+const WHATSAPP_GROUP_LINK = 'https://chat.whatsapp.com/TO-BE-SET';
 
 /**
  * DAREMON Radio ETS - Hoofdlogica van de applicatie v8
@@ -55,6 +61,32 @@ document.addEventListener('DOMContentLoaded', () => {
             songNameInput: document.getElementById('song-name-input'),
             songDedicationList: document.getElementById('song-dedication-list'),
             songDedicationFeedback: document.getElementById('song-dedication-feedback'),
+        },
+        polls: {
+            container: document.getElementById('polls-container'),
+            section: document.getElementById('polls-section'),
+        },
+        strategicPolls: {
+            container: document.getElementById('strategic-polls-container'),
+            section: document.getElementById('strategic-polls-section'),
+            kpis: {
+                responses: document.getElementById('kpi-responses'),
+                coreTeam: document.getElementById('kpi-core-team'),
+                capital: document.getElementById('kpi-capital'),
+                machines: document.getElementById('kpi-machines'),
+            },
+        },
+        machineDocumentation: {
+            section: document.getElementById('machine-documentation-cta'),
+            form: document.getElementById('machine-doc-form'),
+            status: document.getElementById('machine-doc-status'),
+            tableBody: document.getElementById('machine-doc-table-body'),
+            stats: {
+                machines: document.getElementById('machine-stat-machines'),
+                team: document.getElementById('machine-stat-team'),
+                value: document.getElementById('machine-stat-value'),
+            },
+            whatsappButton: document.getElementById('machine-whatsapp-button'),
         },
         header: {
             listenerCount: document.getElementById('listener-count'),
@@ -272,6 +304,543 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
+    function initializePolls() {
+        if (!dom.polls || !dom.polls.container) {
+            console.warn('Brak kontenera dla ankiet');
+            return;
+        }
+
+        const translate = (key, fallback) => {
+            const value = t(key);
+            return typeof value === 'string' && !value.startsWith('[') ? value : fallback;
+        };
+
+        const pollSystem = new PollSystem({
+            strings: {
+                submit: translate('pollSubmit', 'Wyślij odpowiedź'),
+                success: translate('pollSuccess', 'Dziękujemy za głos!'),
+                selectOption: translate('pollSelectOption', 'Wybierz odpowiedź przed wysłaniem.'),
+                selectMultiple: translate('pollSelectMultiple', 'Zaznacz przynajmniej jedną odpowiedź.'),
+                textRequired: translate('pollTextRequired', 'Wpisz odpowiedź, zanim wyślesz.'),
+                resultsHeading: translate('pollResultsHeading', 'Wyniki'),
+                noVotes: translate('pollNoVotes', 'Brak głosów w tej ankiecie.'),
+                correctAnswer: translate('pollCorrectAnswer', 'Poprawna odpowiedź!'),
+                incorrectAnswer: translate('pollIncorrectAnswer', 'Dziękujemy za odpowiedź!'),
+                rangeLabel: translate('pollRangeLabel', 'Wybierz ocenę na skali'),
+                openTextPlaceholder: translate('pollOpenTextPlaceholder', 'Twoja odpowiedź...'),
+                totalVotesLabel: translate('pollTotalVotesLabel', 'Oddane głosy:'),
+            }
+        });
+
+        dom.polls.container.innerHTML = '';
+
+        const examplePolls = [
+            {
+                question: 'Który utwór był HITEM tego tygodnia?',
+                type: 'single-choice',
+                options: [
+                    { id: 'kaput', label: 'Kaput! - Daremon Band' },
+                    { id: 'bmw-kut', label: 'BMW jeździ chujowo - DJ Bóbr' },
+                    { id: 'plasdan', label: 'Plasdan padł (Remix) - Cleanroom Crew' },
+                    { id: 'rompa-disco', label: 'Rompa (Disco Version) - Electric Team' }
+                ],
+                duration: '7 days'
+            },
+            {
+                question: 'Jaki gatunek muzyczny chcesz słyszeć częściej?',
+                type: 'multiple-choice',
+                options: [
+                    'Electro/Synth',
+                    'Rock/Alternative',
+                    'Techno/House',
+                    'Pop/Dance',
+                    'Ambient/Chill'
+                ]
+            },
+            {
+                question: 'Jak oceniasz DAREMON Radio ogólnie?',
+                type: 'rating',
+                scale: 5,
+                labels: ['Słabo', 'Średnio', 'Świetnie']
+            },
+            {
+                question: 'Jak oceniasz obecny klimat pracy w zespole?',
+                type: 'emoji-rating',
+                options: ['😞', '😐', '🙂', '😊', '🎉']
+            },
+            {
+                question: 'O której godzinie najczęściej słuchasz DAREMON Radio?',
+                type: 'single-choice',
+                options: [
+                    '6:00 - 9:00 (Poranny Rush)',
+                    '9:00 - 12:00 (Praca)',
+                    '12:00 - 14:00 (Lunch)',
+                    '14:00 - 18:00 (Popołudnie)',
+                    '18:00 - 22:00 (Wieczór)',
+                    '22:00 - 6:00 (Nocna zmiana)'
+                ]
+            },
+            {
+                question: 'Która funkcja DAREMON Radio najbardziej Ci się podoba?',
+                type: 'multiple-choice',
+                options: [
+                    'Odliczanie do 31 marca 2026',
+                    'System ocen utworów',
+                    'Chat DJ Bot',
+                    'Song Dedications',
+                    'Wizualizacja audio',
+                    'Złote Płyty',
+                    'Najwyżej ocenione',
+                    'Motywy kolorystyczne'
+                ]
+            },
+            {
+                question: 'Co Twoim zdaniem powinno się stać z maszynami po przejęciu?',
+                type: 'single-choice',
+                options: [
+                    'Wykup przez zespół Daremon',
+                    'Sprzedaż zewnętrznej firmie',
+                    'Negocjacje z Hansem (właściciel budynków)',
+                    'Leasing z opcją wykupu',
+                    'Nie mam zdania'
+                ]
+            },
+            {
+                question: 'Jak prawdopodobne jest, że polecisz DAREMON Radio współpracownikom?',
+                type: 'rating',
+                scale: 10,
+                labels: ['Bardzo nieprawdopodobne', 'Neutralnie', 'Bardzo prawdopodobne']
+            },
+            {
+                question: 'Ile utworów znajduje się w obecnej playliście DAREMON Radio?',
+                type: 'single-choice',
+                options: [
+                    'Około 100',
+                    'Około 150',
+                    'Około 177',
+                    'Ponad 200'
+                ],
+                correctAnswer: 'Około 177',
+                reward: 'Badge: Music Expert 🎵'
+            },
+            {
+                question: 'Jakiej funkcji najbardziej brakuje w radiu?',
+                type: 'open-text',
+                options: [],
+                duration: null
+            }
+        ];
+
+        examplePolls.forEach(pollData => {
+            const poll = pollSystem.addPoll(pollData);
+            const pollContainer = document.createElement('div');
+            pollContainer.id = `poll-${poll.id}`;
+            pollContainer.className = 'poll-container';
+            dom.polls.container.appendChild(pollContainer);
+            pollSystem.renderPoll(poll, pollContainer);
+        });
+
+        state.pollSystem = pollSystem;
+        if (dom.polls.section) {
+            dom.polls.section.classList.remove('hidden');
+        }
+
+        console.log('System ankiet zainicjalizowany z', examplePolls.length, 'ankietami');
+    }
+
+    function loadMachineDocs() {
+        if (typeof window === 'undefined' || !window.localStorage) {
+            return [];
+        }
+
+        try {
+            const raw = window.localStorage.getItem(MACHINE_DOCS_KEY);
+            if (!raw) {
+                return [];
+            }
+            const parsed = JSON.parse(raw);
+            return Array.isArray(parsed) ? parsed : [];
+        } catch (error) {
+            console.error('Nie udało się odczytać rejestru maszyn:', error);
+            return [];
+        }
+    }
+
+    function saveMachineDocs(entries) {
+        if (typeof window === 'undefined' || !window.localStorage) {
+            return;
+        }
+
+        try {
+            window.localStorage.setItem(MACHINE_DOCS_KEY, JSON.stringify(entries));
+        } catch (error) {
+            console.error('Nie udało się zapisać rejestru maszyn:', error);
+        }
+    }
+
+    function updateMachineDocTable(entries = loadMachineDocs()) {
+        if (!dom.machineDocumentation.tableBody) {
+            return;
+        }
+
+        dom.machineDocumentation.tableBody.innerHTML = '';
+
+        if (!entries.length) {
+            const row = document.createElement('tr');
+            const cell = document.createElement('td');
+            cell.colSpan = 4;
+            cell.textContent = 'Brak zgłoszeń — zrób pierwsze zdjęcie.';
+            row.appendChild(cell);
+            dom.machineDocumentation.tableBody.appendChild(row);
+            return;
+        }
+
+        entries.slice(0, 10).forEach(entry => {
+            const row = document.createElement('tr');
+
+            const nameCell = document.createElement('td');
+            nameCell.textContent = entry.machineName || '—';
+            row.appendChild(nameCell);
+
+            const modelCell = document.createElement('td');
+            modelCell.textContent = entry.machineModel || '—';
+            row.appendChild(modelCell);
+
+            const serialCell = document.createElement('td');
+            serialCell.textContent = entry.machineSerial || '—';
+            row.appendChild(serialCell);
+
+            const conditionCell = document.createElement('td');
+            conditionCell.textContent = entry.machineCondition || entry.machineLocation || 'Brak danych';
+            row.appendChild(conditionCell);
+
+            dom.machineDocumentation.tableBody.appendChild(row);
+        });
+    }
+
+    function updateMachineStats(entries = loadMachineDocs()) {
+        if (!dom.machineDocumentation.stats) {
+            return;
+        }
+
+        const machines = entries.length;
+        const reporters = new Set();
+        entries.forEach(entry => {
+            if (entry.reporter) {
+                reporters.add(entry.reporter.trim().toLowerCase());
+            }
+        });
+        const estimatedValue = Math.max(0, machines * 2500);
+
+        if (dom.machineDocumentation.stats.machines) {
+            dom.machineDocumentation.stats.machines.textContent = `${machines}`;
+            dom.machineDocumentation.stats.machines.setAttribute('aria-label', `Udokumentowane maszyny: ${machines}`);
+        }
+        if (dom.machineDocumentation.stats.team) {
+            dom.machineDocumentation.stats.team.textContent = `${reporters.size}`;
+            dom.machineDocumentation.stats.team.setAttribute('aria-label', `Osoby dokumentujące: ${reporters.size}`);
+        }
+        if (dom.machineDocumentation.stats.value) {
+            const formatted = new Intl.NumberFormat('pl-PL', {
+                style: 'currency',
+                currency: 'EUR',
+                minimumFractionDigits: 0,
+            }).format(estimatedValue);
+            dom.machineDocumentation.stats.value.textContent = formatted;
+            dom.machineDocumentation.stats.value.setAttribute('aria-label', `Szacowana wartość: ${formatted}`);
+        }
+    }
+
+    function handleMachineDocSubmit(event) {
+        event.preventDefault();
+
+        if (!dom.machineDocumentation.form) {
+            return;
+        }
+
+        const formData = new FormData(dom.machineDocumentation.form);
+        const files = dom.machineDocumentation.form.machinePhotos?.files || [];
+        const entry = {
+            machineName: formData.get('machineName')?.trim() || '',
+            machineModel: formData.get('machineModel')?.trim() || '',
+            machineSerial: formData.get('machineSerial')?.trim() || '',
+            machineLocation: formData.get('machineLocation')?.trim() || '',
+            machineCondition: formData.get('machineCondition')?.trim() || '',
+            reporter: formData.get('machineReporter')?.trim() || '',
+            photoCount: files.length,
+            createdAt: new Date().toISOString(),
+        };
+
+        const currentEntries = loadMachineDocs();
+        const updatedEntries = [entry, ...currentEntries].slice(0, 30);
+        saveMachineDocs(updatedEntries);
+        updateMachineDocTable(updatedEntries);
+        updateMachineStats(updatedEntries);
+
+        dom.machineDocumentation.form.reset();
+        if (dom.machineDocumentation.status) {
+            dom.machineDocumentation.status.textContent = files.length
+                ? 'Zapisano lokalnie. Udostępnij zdjęcia na grupie WhatsApp.'
+                : 'Zapisano lokalnie. Dodaj zdjęcia i podziel się w grupie.';
+        }
+    }
+
+    function openWhatsAppGroup() {
+        if (typeof window !== 'undefined') {
+            window.open(WHATSAPP_GROUP_LINK, '_blank', 'noopener');
+        }
+    }
+
+    function initializeStrategicPolls() {
+        if (!dom.strategicPolls?.container) {
+            console.warn('Brak kontenera dla ankiet strategicznych');
+            return;
+        }
+
+        const translate = (key, fallback) => {
+            const value = t(key);
+            return typeof value === 'string' && !value.startsWith('[') ? value : fallback;
+        };
+
+        const pollSystem = new PollSystem({
+            storageKey: 'daremon_strategic_polls_v1',
+            strings: {
+                submit: translate('pollSubmit', 'Wyślij odpowiedź'),
+                success: translate('pollSuccess', 'Dziękujemy za głos!'),
+                selectOption: translate('pollSelectOption', 'Wybierz odpowiedź przed wysłaniem.'),
+                selectMultiple: translate('pollSelectMultiple', 'Zaznacz przynajmniej jedną odpowiedź.'),
+                textRequired: translate('pollTextRequired', 'Wpisz odpowiedź, zanim wyślesz.'),
+                resultsHeading: translate('pollResultsHeading', 'Wyniki'),
+                noVotes: translate('pollNoVotes', 'Brak głosów w tej ankiecie.'),
+                rangeLabel: translate('pollRangeLabel', 'Wybierz ocenę na skali'),
+                openTextPlaceholder: translate('pollOpenTextPlaceholder', 'Twoja odpowiedź...'),
+                totalVotesLabel: translate('pollTotalVotesLabel', 'Oddane głosy:'),
+            }
+        });
+
+        const originalRecordVote = pollSystem.recordVote.bind(pollSystem);
+        pollSystem.recordVote = (poll, submission) => {
+            originalRecordVote(poll, submission);
+            updateStrategicKpis();
+            scheduleGoNoGoAnalysis();
+        };
+
+        dom.strategicPolls.container.innerHTML = '';
+        const priorityOrder = { CRITICAL: 0, URGENT: 1, HIGH: 2, MEDIUM: 3, LOW: 4 };
+        const priorityPolls = STRATEGIC_POLLS
+            .slice()
+            .sort((a, b) => (priorityOrder[a.priority] ?? 5) - (priorityOrder[b.priority] ?? 5))
+            .filter(poll => ['CRITICAL', 'URGENT'].includes(poll.priority))
+            .slice(0, 6);
+
+        priorityPolls.forEach(pollData => {
+            const poll = pollSystem.addPoll(pollData);
+            const container = document.createElement('div');
+            container.className = `poll-container strategic-poll${pollData.confidential ? ' strategic-poll-confidential' : ''}`;
+            container.dataset.category = pollData.category;
+            dom.strategicPolls.container.appendChild(container);
+            pollSystem.renderPoll(poll, container);
+        });
+
+        state.strategicPollSystem = pollSystem;
+        updateStrategicKpis();
+        scheduleGoNoGoAnalysis(true);
+        checkAndRunGoNoGoAnalysis();
+    }
+
+    function scheduleGoNoGoAnalysis(force = false) {
+        if (typeof window === 'undefined' || !window.localStorage) {
+            return;
+        }
+
+        const existing = window.localStorage.getItem(ANALYSIS_SCHEDULE_KEY);
+        if (existing && !force) {
+            return;
+        }
+
+        const analysisDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+        window.localStorage.setItem(ANALYSIS_SCHEDULE_KEY, analysisDate.toISOString());
+        console.log(`📊 Analiza GO/NO-GO zaplanowana na: ${analysisDate.toLocaleDateString()}`);
+    }
+
+    function checkAndRunGoNoGoAnalysis() {
+        if (typeof window === 'undefined' || !window.localStorage || !state.strategicPollSystem) {
+            return;
+        }
+
+        const scheduled = window.localStorage.getItem(ANALYSIS_SCHEDULE_KEY);
+        if (!scheduled) {
+            return;
+        }
+
+        const scheduledDate = new Date(scheduled);
+        if (Number.isNaN(scheduledDate.getTime())) {
+            return;
+        }
+
+        if (Date.now() >= scheduledDate.getTime()) {
+            const report = generateGoNoGoReport(state.strategicPollSystem.store?.polls || {});
+            displayGoNoGoReport(report);
+            window.localStorage.removeItem(ANALYSIS_SCHEDULE_KEY);
+        }
+    }
+
+    function updateStrategicKpis() {
+        if (!dom.strategicPolls?.kpis) {
+            return;
+        }
+
+        const metrics = state.strategicPollSystem
+            ? calculateStrategicMetrics(state.strategicPollSystem.store?.polls || {})
+            : { responseRate: 0, coreTeam: 0, formattedCapital: '€0', machines: 0 };
+
+        if (dom.strategicPolls.kpis.responses) {
+            dom.strategicPolls.kpis.responses.textContent = `${metrics.responseRate || 0}%`;
+            dom.strategicPolls.kpis.responses.setAttribute('aria-label', `Wypełnione ankiety: ${metrics.responseRate || 0} procent`);
+        }
+        if (dom.strategicPolls.kpis.coreTeam) {
+            dom.strategicPolls.kpis.coreTeam.textContent = `${metrics.coreTeam || 0}`;
+            dom.strategicPolls.kpis.coreTeam.setAttribute('aria-label', `Zespół rdzenia: ${metrics.coreTeam || 0} osób`);
+        }
+        if (dom.strategicPolls.kpis.capital) {
+            dom.strategicPolls.kpis.capital.textContent = metrics.formattedCapital || '€0';
+            dom.strategicPolls.kpis.capital.setAttribute('aria-label', `Kapitał zadeklarowany: ${metrics.formattedCapital || '€0'}`);
+        }
+        if (dom.strategicPolls.kpis.machines) {
+            dom.strategicPolls.kpis.machines.textContent = `${metrics.machines || 0}`;
+            dom.strategicPolls.kpis.machines.setAttribute('aria-label', `Maszyny udokumentowane: ${metrics.machines || 0}`);
+        }
+    }
+
+    function displayGoNoGoReport(report) {
+        if (!report || typeof document === 'undefined') {
+            return;
+        }
+
+        const existingModal = document.querySelector('.go-nogo-modal');
+        if (existingModal) {
+            existingModal.remove();
+        }
+
+        const modal = document.createElement('div');
+        modal.className = 'go-nogo-modal';
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-modal', 'true');
+        modal.setAttribute('aria-labelledby', 'go-nogo-heading');
+        modal.tabIndex = -1;
+
+        const content = document.createElement('div');
+        content.className = 'go-nogo-content';
+
+        const gapsHtml = report.criticalGaps?.length
+            ? `<div class="critical-gaps"><h3>⚠️ Krytyczne luki</h3><ul>${report.criticalGaps.map(gap => `<li>${gap}</li>`).join('')}</ul></div>`
+            : '';
+
+        content.innerHTML = `
+            <h2 id="go-nogo-heading">📊 RAPORT GO/NO-GO</h2>
+            <div class="decision-badge ${report.decision.toLowerCase()}">${report.decision}</div>
+            <div class="report-stats">
+                <div class="stat"><span class="label">Zespół Rdzenia</span><span class="value">${report.coreTeam}</span></div>
+                <div class="stat"><span class="label">Kapitał</span><span class="value">${report.capital}</span></div>
+                <div class="stat"><span class="label">Maszyny</span><span class="value">${report.machines}</span></div>
+                <div class="stat"><span class="label">Relacje z klientami</span><span class="value">${report.clients}</span></div>
+                <div class="stat"><span class="label">Frekwencja</span><span class="value">${report.responseRate}%</span></div>
+            </div>
+            <p class="report-note">Średnia deklaracja czasu: ${report.hoursAverage} h/tydz.</p>
+            ${gapsHtml}
+            <div class="next-steps">
+                <h3>📋 Następne kroki</h3>
+                <ol>${report.nextSteps.map(step => `<li>${step}</li>`).join('')}</ol>
+            </div>
+        `;
+
+        const closeButton = document.createElement('button');
+        closeButton.type = 'button';
+        closeButton.className = 'go-nogo-close';
+        closeButton.textContent = 'Zamknij';
+        closeButton.setAttribute('aria-label', 'Zamknij raport GO/NO-GO');
+        closeButton.addEventListener('click', () => modal.remove());
+        content.appendChild(closeButton);
+
+        modal.appendChild(content);
+        modal.addEventListener('click', event => {
+            if (event.target === modal) {
+                modal.remove();
+            }
+        });
+
+        document.body.appendChild(modal);
+        setTimeout(() => modal.focus(), 0);
+
+        const escHandler = (event) => {
+            if (event.key === 'Escape') {
+                modal.remove();
+            }
+        };
+        document.addEventListener('keydown', escHandler, { once: true });
+    }
+
+    function checkMilestoneAndAddPoll() {
+        if (state.history.length === 10 && state.pollSystem && dom.polls?.container) {
+            const newPoll = state.pollSystem.addPoll({
+                question: 'Gratulacje! Posłuchałeś 10 utworów. Jak Ci się podoba radio?',
+                type: 'emoji-rating',
+                options: ['😞', '😐', '🙂', '😊', '🤩']
+            });
+
+            const pollContainer = document.createElement('div');
+            pollContainer.id = `poll-${newPoll.id}`;
+            pollContainer.className = 'poll-container';
+            dom.polls.container.insertBefore(pollContainer, dom.polls.container.firstChild);
+
+            state.pollSystem.renderPoll(newPoll, pollContainer);
+            pollContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+
+    function createQuickPoll(question, options, type = 'single-choice') {
+        if (!state.pollSystem) {
+            console.error('System ankiet nie jest zainicjalizowany');
+            return null;
+        }
+
+        const poll = state.pollSystem.addPoll({ question, options, type });
+        if (!dom.polls?.container) {
+            return poll;
+        }
+
+        const pollContainer = document.createElement('div');
+        pollContainer.id = `poll-${poll.id}`;
+        pollContainer.className = 'poll-container';
+        dom.polls.container.insertBefore(pollContainer, dom.polls.container.firstChild);
+        state.pollSystem.renderPoll(poll, pollContainer);
+        return poll;
+    }
+
+    function exportPollStats() {
+        if (!state.pollSystem) {
+            console.warn('System ankiet nie jest dostępny');
+            return null;
+        }
+
+        const stats = state.pollSystem.polls
+            .map(poll => {
+                const result = state.pollSystem.getResults(poll.id);
+                if (!result) return null;
+                return {
+                    question: poll.question,
+                    type: poll.type,
+                    totalVotes: result.totalVotes,
+                    results: result.results || result.responses,
+                };
+            })
+            .filter(Boolean);
+
+        console.table(stats.map(item => ({ question: item.question, totalVotes: item.totalVotes })));
+        return stats;
+    }
+
+
     // --- Initialisatie ---
     async function initialize() {
         await i18n_init();
@@ -280,6 +849,10 @@ document.addEventListener('DOMContentLoaded', () => {
             await loadPlaylist();
             loadStateFromLocalStorage();
             setupEventListeners();
+            initializePolls();
+            initializeStrategicPolls();
+            updateMachineDocTable();
+            updateMachineStats();
             updateWelcomeGreeting();
             updateOfflineStatus();
             renderMessages();
@@ -290,6 +863,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderCalendar();
             setInterval(updateListenerCount, 15000);
             updateListenerCount();
+            setInterval(checkAndRunGoNoGoAnalysis, 6 * 60 * 60 * 1000);
 
             prepareIntroSequence();
         } catch (error) {
@@ -478,6 +1052,26 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!nextTrack) {
             console.error("No track to play");
             return;
+        }
+
+        const previousTrack = state.currentTrack;
+        if (previousTrack?.golden && state.pollSystem && dom.polls?.container) {
+            const existingPoll = state.pollSystem.polls.find(poll => poll.question.includes(previousTrack.title));
+            if (!existingPoll) {
+                const goldPoll = state.pollSystem.addPoll({
+                    question: `Jak oceniasz "${previousTrack.title}"?`,
+                    type: 'rating',
+                    scale: 5,
+                    labels: ['Słabo', 'W porządku', 'Rewelacja!']
+                });
+
+                const pollContainer = document.createElement('div');
+                pollContainer.id = `poll-${goldPoll.id}`;
+                pollContainer.className = 'poll-container';
+                dom.polls.container.insertBefore(pollContainer, dom.polls.container.firstChild);
+
+                state.pollSystem.renderPoll(goldPoll, pollContainer);
+            }
         }
 
         state.currentTrack = nextTrack;
@@ -745,6 +1339,8 @@ document.addEventListener('DOMContentLoaded', () => {
         state.history.unshift(state.currentTrack.id);
         state.history = state.history.slice(0, 15);
         saveHistory();
+
+        checkMilestoneAndAddPoll();
 
         if (dom.sidePanel.historyList) {
             dom.sidePanel.historyList.innerHTML = '';
@@ -1330,6 +1926,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (dom.errorOverlay) dom.errorOverlay.classList.add('hidden');
         });
         if (dom.errorRetryBtn) dom.errorRetryBtn.addEventListener('click', retryLoad);
+
+        if (dom.machineDocumentation.form) dom.machineDocumentation.form.addEventListener('submit', handleMachineDocSubmit);
+        if (dom.machineDocumentation.whatsappButton) dom.machineDocumentation.whatsappButton.addEventListener('click', openWhatsAppGroup);
+
         // Systeem Events
         window.addEventListener('online', updateOfflineStatus);
         window.addEventListener('offline', updateOfflineStatus);
