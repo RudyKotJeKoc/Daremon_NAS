@@ -31,7 +31,7 @@
 - 📊 **Wizualizacja audio** - efekty wizualne w czasie rzeczywistym
 - ⭐ **System ocen** - możliwość oceniania i komentowania utworów
 - 💬 **Czat DJ** - interaktywna komunikacja z automatycznymi odpowiedziami
-- 🎁 **Song Capsule** - dedykacje utworów z pamięcią czasową
+- 🗳️ **Ankiety słuchaczy** - interaktywne głosowania reagujące na wydarzenia w radiu
 
 ## ✨ Funkcje
 
@@ -57,7 +57,7 @@
 - **Najwyżej ocenione** - rankingi utworów na podstawie ocen użytkowników
 - **Ostatnio grane** - historia 10 ostatnio odtworzonych utworów
 - **Wiadomości DJ** - możliwość wysyłania wiadomości z AI odpowiedziami
-- **Song Dedications** - system dedykacji z cooldownem (1 minuta)
+- **Ankiety słuchaczy** - dynamiczne głosowania z różnymi typami pytań
 
 ### Wizualizacje
 - Canvas-based audio visualizer w czasie rzeczywistym
@@ -252,12 +252,12 @@ Automatyczne wykrywanie języka przeglądarki z fallback na niderlandzki.
 3. Kliknij "Wyślij Recenzję"
 4. Oceny są przechowywane lokalnie w IndexedDB
 
-### Dedykacje (Song Capsule)
+### Ankiety słuchaczy
 
-1. Wpisz swoje słowa w polu tekstowym
-2. Podaj imię osoby, której dedykujesz
-3. Kliknij "Zapisz pamiątkę"
-4. Cooldown: 1 minuta między dedykacjami
+1. Wybierz ankietę w panelu bocznym
+2. Odpowiedz zgodnie z typem pytania (pojedynczy wybór, wielokrotne odpowiedzi, skala lub tekst)
+3. Kliknij "Wyślij odpowiedź"
+4. Wyniki aktualizują się natychmiast po oddaniu głosu
 
 ### Wiadomości DJ
 
@@ -413,4 +413,4 @@ Projekt DAREMON Radio ETS - Aplikacja demonstracyjna
 
 ---
 
-**Uwaga**: To jest aplikacja demonstracyjna stworzona do celów edukacyjnych. Wszystkie funkcje komunikacji (wiadomości DJ, dedykacje) działają tylko lokalnie i nie są wysyłane do rzeczywistego serwera.
+**Uwaga**: To jest aplikacja demonstracyjna stworzona do celów edukacyjnych. Wszystkie funkcje komunikacji (wiadomości DJ, ankiety) działają tylko lokalnie i nie są wysyłane do rzeczywistego serwera.
