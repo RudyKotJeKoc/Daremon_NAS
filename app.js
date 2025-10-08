@@ -456,6 +456,72 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Użyj music-scanner do automatycznego skanowania folderu music
             let scanner;
+            let generatedDaremon = false;
+            // Dutch-themed titles (beavers, ships, sinking)
+            const makeDutchTitle = (n) => {
+                const themes = [
+                    'Beverdam bij de Rivier',
+                    'Bevers aan Boord',
+                    'Schip in de Storm',
+                    'Noodsignaal op Zee',
+                    'Onder de Waterlijn',
+                    'Kapitein Bever',
+                    'Zinkende Schemering',
+                    'Scheepswrak in de Diepte',
+                    'Zeegang en Houten Dam',
+                    'Rivierdelta en Dammen',
+                    'Schipbreuk bij de Dam',
+                    'Stille Haven, Zware Golf',
+                    'Bevers en de Oostzee',
+                    'Romp en Ratelstaart',
+                    'Kielwater van de Bever',
+                    'Ondergaande Zon, Ondergaand Schip',
+                    'Drijvend Hout en Burcht',
+                    'Muiterij op de Beverboot',
+                    'Noorderwind en Natte Vacht',
+                    'Sirenes over de Zuidpier',
+                    'Damwachter aan Dek',
+                    'Golven tegen de Burcht',
+                    'Schroef en Staart',
+                    'Diepgang naar de Delta',
+                    'Zeilschip en Zinklijn',
+                    'Beverbrigade op Zee',
+                    'Scheepsklok in de Mist',
+                    'Stormvloed en Dam',
+                    'Riviermonding bij Nacht',
+                    'Bakboord Bever',
+                    'Havenlicht op de Burcht',
+                    'Kade van Kastor',
+                    'Redding in het Riet',
+                    'Anker bij de Beverdam',
+                    'Zeebranding en Burchtmuur',
+                    'Vloedlijn en Vacht',
+                    'Scheepstoeter en Stuwdam',
+                    'Planken, Peddels en Pels',
+                    'Middengolf voor de Burcht',
+                    'Zeeschuim en Zinkgat'
+                ];
+                const base = themes[(n - 1) % themes.length];
+                return `${base}`; // no number suffix in title for a natural look
+            };
+            const generateDaremonTracks = (max = 231) => {
+                const out = [];
+                const ensureCover = (n) => `https://placehold.co/120x120/222/fff?text=${n}`;
+                for (let n = 1; n <= max; n++) {
+                    out.push({
+                        id: `utwor-${n}`,
+                        title: makeDutchTitle(n),
+                        artist: 'Onbekend',
+                        src: `./music/Daremon (${n}).mp3`,
+                        cover: ensureCover(n),
+                        tags: ['bever', 'schip', 'zinken'],
+                        weight: 3,
+                        type: 'song',
+                        golden: false
+                    });
+                }
+                return out;
+            };
             if (window.MusicScanner) {
                 scanner = new window.MusicScanner();
             } else {
@@ -463,10 +529,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.warn('⚠️ MusicScanner nie jest dostępny, używam playlist.json');
                 scanner = { 
                     scanMusicFolder: async () => {
-                        const response = await fetch('./playlist.json');
-                        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                        const data = await response.json();
-                        return data.tracks || [];
+                        // Generuj listę utworów w schemacie Daremon (1..231)
+                        generatedDaremon = true;
+                        return generateDaremonTracks(231);
                     }
                 };
             }
@@ -474,7 +539,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Skanuj muzykę z uwzględnieniem ocen
             const tracks = await scanner.scanMusicFolder();
 
-            // Mapuj ścieżki z "Utwor (n).mp3" na "Daremon (n).mp3" bez zmiany ID
+            // Mapuj tylko gdy źródło pochodzi z playlist.json (Utwor -> Daremon)
             const mapUtworToDaremonSrc = (src) => {
                 if (typeof src !== 'string') return src;
                 const m = src.match(/^(?:\.\/|\/)music\/Utwor \((\d+)\)\.mp3$/i);
@@ -485,10 +550,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 return src;
             };
 
-            const normalizedTracks = tracks.map(t => ({
-                ...t,
-                src: t.type === 'song' ? mapUtworToDaremonSrc(t.src) : t.src
-            }));
+            const normalizedTracks = generatedDaremon
+                ? tracks
+                : tracks.map(t => ({
+                    ...t,
+                    src: t.type === 'song' ? mapUtworToDaremonSrc(t.src) : t.src
+                }));
 
             // Dodaj brakujące utwory, jeśli folder zawiera pliki Daremon (1..231)
             // Zachowaj spójny schemat ID jak istniejące: utwor-N dla zwykłych piosenek
@@ -498,25 +565,27 @@ document.addEventListener('DOMContentLoaded', () => {
             const hasId = new Set(normalizedTracks.map(t => t.id));
             const ensureCover = (n) => `https://placehold.co/120x120/222/fff?text=${n}`;
 
-            for (let n = 1; n <= MAX_NUM; n++) {
-                const daremonSrc = `./music/Daremon (${n}).mp3`;
-                if (!hasSrcFor.has(canonicalize(daremonSrc))) {
-                    // Nie dubluj istniejących specjalnych ID (np. kaput/bmw-kut/jingle-*)
-                    const newId = `utwor-${n}`;
-                    if (hasId.has(newId)) continue;
-                    normalizedTracks.push({
-                        id: newId,
-                        title: `Utwór ${n}`,
-                        artist: 'Nieznany',
-                        src: daremonSrc,
-                        cover: ensureCover(n),
-                        tags: [],
-                        weight: 3,
-                        type: 'song',
-                        golden: false
-                    });
-                    hasSrcFor.add(daremonSrc.toLowerCase());
-                    hasId.add(newId);
+            if (!generatedDaremon) {
+                for (let n = 1; n <= MAX_NUM; n++) {
+                    const daremonSrc = `./music/Daremon (${n}).mp3`;
+                    if (!hasSrcFor.has(canonicalize(daremonSrc))) {
+                        // Nie dubluj istniejących specjalnych ID (np. kaput/bmw-kut/jingle-*)
+                        const newId = `utwor-${n}`;
+                        if (hasId.has(newId)) continue;
+                        normalizedTracks.push({
+                            id: newId,
+                            title: makeDutchTitle(n),
+                            artist: 'Onbekend',
+                            src: daremonSrc,
+                            cover: ensureCover(n),
+                            tags: ['bever', 'schip', 'zinken'],
+                            weight: 3,
+                            type: 'song',
+                            golden: false
+                        });
+                        hasSrcFor.add(canonicalize(daremonSrc));
+                        hasId.add(newId);
+                    }
                 }
             }
             

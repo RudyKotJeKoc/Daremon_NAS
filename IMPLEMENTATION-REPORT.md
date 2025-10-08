@@ -105,6 +105,35 @@ console.table(state.playlist.map(t => ({
 2. Sprawdź w konsoli: `"🎵 [tytuł]: ocena X/5 → waga Y"`
 3. Sprawdź czy wyżej ocenione utwory grają częściej
 
-## 🚀 Status: GOTOWE ✅
+# Implementation Report
 
-Wszystkie żądane funkcje zostały wdrożone i przetestowane.
+## Daremon scanning update (2025-10-08)
+
+Summary:
+
+- Playlist loading now targets Daremon files directly.
+- Fallback scanner generates a runtime playlist for `./music/Daremon (1..231).mp3` without relying on legacy `Utwor (n).mp3` names.
+- If a custom `window.MusicScanner` is present, it’s used; otherwise, the app synthesizes Daremon tracks on the fly.
+- If cached `playlist.json` is used (offline), sources are remapped to Daremon and completed up to 231.
+- Jingles are auto-disabled when no valid jingle files are present to avoid 404s.
+
+Details:
+
+- File: `app.js`
+  - `loadPlaylist()` updates:
+    - Fallback scanner now returns generated Daremon tracks (IDs `utwor-N`, src `./music/Daremon (N).mp3`).
+    - Utwor→Daremon remapping only applies when reading legacy entries; skipped for generated tracks.
+    - Canonicalization prevents duplicate entries (`/music/...` vs `./music/...`).
+    - Cache fallback applies the same Daremon mapping/completion.
+
+Verification:
+
+- Static check: no syntax errors reported.
+- Runtime expectations:
+  - Songs load from `./music/Daremon (N).mp3`.
+  - All numbers 1–231 are available if present in `music/`.
+  - Jingles disabled if their files are not present.
+
+Follow-ups:
+
+- Optional: generate a static `playlist.json` listing only Daremon tracks if you prefer a static manifest.
