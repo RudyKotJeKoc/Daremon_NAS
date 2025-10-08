@@ -137,3 +137,35 @@ Verification:
 Follow-ups:
 
 - Optional: generate a static `playlist.json` listing only Daremon tracks if you prefer a static manifest.
+
+## PWA install & update flow (2025-10-08)
+
+Goals:
+
+- Ensure users always open the latest version (avoid stale SW caches)
+- Offer an easy way to install the app (Add to Home Screen / Desktop)
+
+Changes:
+
+- Service Worker bumped to `v10` with a message channel to trigger `skipWaiting`.
+- App registers SW and, when a new worker is installed, requests immediate activation and reloads once.
+- Manifest updated to use local SVG icons under `/icons/` (maskable capable).
+- Install banner (`#install-banner`) with a button shows when `beforeinstallprompt` fires; clicking prompts install.
+- `appinstalled` event hides the banner.
+
+Files:
+
+- `sw.js`: `CACHE_NAME = daremon-radio-v10`, `message` handler for `SKIP_WAITING`.
+- `app.js`: install prompt wiring, SW auto-reload on update.
+- `manifest.json`: use `./icons/icon-192.svg`, `./icons/icon-512.svg`, and `./icons/favicon.svg`.
+- `index.html`: adds `#install-banner` with `#install-btn`.
+- `icons/`: added `icon-192.svg`, `icon-512.svg`.
+
+User experience:
+
+- First load of a new version: the page detects the updated SW and automatically reloads once, so the newest assets are shown.
+- A small “Install” button appears when the browser allows installation; after installing, the button disappears.
+
+Notes:
+
+- On iOS Safari, `beforeinstallprompt` is not available; users must use the Share → Add to Home Screen flow. The app remains fully functional.

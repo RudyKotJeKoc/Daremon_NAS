@@ -74,6 +74,68 @@ document.addEventListener('DOMContentLoaded', () => {
         themeSwitcher: document.querySelector('.theme-switcher'),
     };
 
+    // --- One-time Reset: clear storage, caches, SW, and IndexedDB ---
+    async function resetAppStorageOnce() {
+        try {
+            if (typeof window === 'undefined') return false;
+            // avoid infinite loop: only once per session
+            if (window.sessionStorage && window.sessionStorage.getItem('daremon_reset_done') === '1') {
+                return false;
+            }
+
+            // Clear localStorage (app state, likes, reviews, polls)
+            try {
+                if (window.localStorage) {
+                    window.localStorage.clear();
+                }
+            } catch (e) {
+                console.warn('localStorage clear failed:', e);
+            }
+
+            // Clear caches (PWA cache)
+            try {
+                if ('caches' in window) {
+                    const keys = await caches.keys();
+                    await Promise.all(keys.map(k => caches.delete(k)));
+                }
+            } catch (e) {
+                console.warn('Cache clear failed:', e);
+            }
+
+            // Unregister Service Workers
+            try {
+                if ('serviceWorker' in navigator) {
+                    const regs = await navigator.serviceWorker.getRegistrations();
+                    await Promise.all(regs.map(r => r.unregister()));
+                }
+            } catch (e) {
+                console.warn('SW unregister failed:', e);
+            }
+
+            // Best-effort: delete all IndexedDB databases (if supported)
+            try {
+                if (window.indexedDB && typeof indexedDB.databases === 'function') {
+                    const dbs = await indexedDB.databases();
+                    await Promise.all((dbs || []).map(db => new Promise(resolve => {
+                        if (!db || !db.name) return resolve();
+                        const req = indexedDB.deleteDatabase(db.name);
+                        req.onsuccess = req.onerror = req.onblocked = () => resolve();
+                    })));
+                }
+            } catch (e) {
+                console.warn('IndexedDB cleanup skipped/failed:', e);
+            }
+
+            // Mark and reload
+            try { window.sessionStorage.setItem('daremon_reset_done', '1'); } catch {}
+            try { window.location.reload(); } catch {}
+            return true;
+        } catch (e) {
+            console.warn('Reset routine failed:', e);
+            return false;
+        }
+    }
+
     // --- State Management ---
     let audioContext, analyser;
     const players = [new Audio(), new Audio()];
@@ -83,6 +145,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let visualizerAnimationId = null;
 
     const state = createInitialState();
+
+    // Ensure fresh start; on first load, perform reset then reload
+    (async () => { if (await resetAppStorageOnce()) return; })();
 
     // --- INTERNATIONALISATIE (i18n) ---
     async function i18n_init() {
@@ -1747,12 +1812,64 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // --- Service Worker ---
+    // --- PWA Install Prompt & Service Worker ---
+    let deferredPrompt = null;
+    const installBanner = document.getElementById('install-banner');
+    const installBtn = document.getElementById('install-btn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        // Prevent the mini-infobar from appearing on mobile
+        e.preventDefault();
+        deferredPrompt = e;
+        if (installBanner) installBanner.classList.remove('hidden');
+    });
+
+    if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log('A2HS prompt outcome:', outcome);
+            deferredPrompt = null;
+            if (installBanner) installBanner.classList.add('hidden');
+        });
+    }
+
+    window.addEventListener('appinstalled', () => {
+        console.log('PWA installed');
+        if (installBanner) installBanner.classList.add('hidden');
+    });
+
     if (typeof navigator === 'object' && 'serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js')
-                .then(reg => console.log('Service Worker geregistreerd:', reg.scope))
-                .catch(err => console.error('Service Worker registratie mislukt:', err));
+        window.addEventListener('load', async () => {
+            try {
+                const reg = await navigator.serviceWorker.register('./sw.js');
+                console.log('Service Worker geregistreerd:', reg.scope);
+
+                // Listen for updates: if a new SW is waiting, ask it to skip waiting and reload once
+                let refreshing = false;
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    if (refreshing) return;
+                    refreshing = true;
+                    window.location.reload();
+                });
+
+                if (reg.waiting) {
+                    reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+                }
+
+                reg.addEventListener('updatefound', () => {
+                    const newWorker = reg.installing;
+                    if (!newWorker) return;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            newWorker.postMessage({ type: 'SKIP_WAITING' });
+                        }
+                    });
+                });
+            } catch (err) {
+                console.error('Service Worker registratie mislukt:', err);
+            }
         });
     }
 

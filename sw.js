@@ -1,5 +1,5 @@
 // ===================================================================================
-// DAREMON Radio ETS - Service Worker v9
+// DAREMON Radio ETS - Service Worker v10
 //
 // Strategie:
 // - Zwiększono wersję cache do v9, aby wymusić aktualizację wszystkich zasobów,
@@ -7,7 +7,7 @@
 // - Dodano lokalne ikony do pamięci podręcznej dla pełnej funkcjonalności offline.
 // ===================================================================================
 
-const CACHE_NAME = 'daremon-radio-v9'; // WAŻNE: Zmiana wersji cache
+const CACHE_NAME = 'daremon-radio-v10'; // WAŻNE: Zmiana wersji cache
 
 // Basis app-resources (App Shell) z dodanymi ikonami
 const APP_SHELL_ASSETS = [
@@ -19,13 +19,13 @@ const APP_SHELL_ASSETS = [
     './playlist.json',
     './locales/nl.json',
     './locales/pl.json',
-    './icons/icon-192.png', // Dodano
-    './icons/icon-512.png', // Dodano
-    './icons/favicon.svg' // Dodano
+    './icons/icon-192.svg',
+    './icons/icon-512.svg',
+    './icons/favicon.svg'
 ];
 
 self.addEventListener('install', e => {
-    console.log('[Service Worker] Instalacja nowej wersji v9...');
+    console.log('[Service Worker] Instalacja nowej wersji v10...');
     e.waitUntil(
         caches.open(CACHE_NAME).then(cache => {
             console.log('[Service Worker] Caching van basis app-resources.');
@@ -38,7 +38,7 @@ self.addEventListener('install', e => {
 });
 
 self.addEventListener('activate', e => {
-    console.log('[Service Worker] Aktywacja v9...');
+    console.log('[Service Worker] Aktywacja v10...');
     e.waitUntil(
         caches.keys().then(cacheNames => {
             return Promise.all(
@@ -112,4 +112,11 @@ self.addEventListener('error', (event) => {
 
 self.addEventListener('unhandledrejection', (event) => {
     console.error('[Service Worker] Unhandled Promise Rejection:', event.reason);
+});
+
+// Allow page to trigger immediate activation of a waiting SW
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+        self.skipWaiting();
+    }
 });
