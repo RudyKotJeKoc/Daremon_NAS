@@ -14,6 +14,7 @@ const APP_SHELL_ASSETS = [
     './',
     './index.html',
     './app.js',
+    './config.js',
     './styles.css',
     './manifest.json',
     './playlist.json',

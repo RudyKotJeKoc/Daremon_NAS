@@ -83,10 +83,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 return false;
             }
 
-            // Clear localStorage (app state, likes, reviews, polls)
+            // Clear localStorage (app state, polls, etc.) but PRESERVE ratings/likes
             try {
                 if (window.localStorage) {
+                    const STORAGE_PREFIX = (window.CONFIG && window.CONFIG.STORAGE_PREFIX) || 'daremon';
+                    const preserveKeys = [
+                        `${STORAGE_PREFIX}_reviews`,
+                        `${STORAGE_PREFIX}_likes`
+                    ];
+                    const preserved = {};
+                    preserveKeys.forEach(k => { try { preserved[k] = window.localStorage.getItem(k); } catch {} });
                     window.localStorage.clear();
+                    Object.entries(preserved).forEach(([k, v]) => { if (v !== null && v !== undefined) try { window.localStorage.setItem(k, v); } catch {} });
                 }
             } catch (e) {
                 console.warn('localStorage clear failed:', e);
@@ -151,21 +159,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- INTERNATIONALISATIE (i18n) ---
     async function i18n_init() {
-        const rawNavigatorLanguage = typeof navigator === 'object' && typeof navigator.language === 'string'
-            ? navigator.language
-            : 'nl';
-        const userLang = rawNavigatorLanguage.split('-')[0];
-        state.language = ['nl', 'pl'].includes(userLang) ? userLang : 'nl'; // Standaard Nederlands
-        document.documentElement.lang = state.language;
-
         try {
+            console.log('🌍 Wykrywanie języka...');
+            const supportedLangs = ['nl', 'pl'];
+            const rawNavigatorLanguage = typeof navigator === 'object' && typeof navigator.language === 'string' ? navigator.language : 'nl';
+            console.log('📍 navigator.language:', rawNavigatorLanguage);
+            const userLang = String(rawNavigatorLanguage).split('-')[0].toLowerCase();
+            const savedLang = (() => { try { return (window.localStorage && localStorage.getItem('daremon_language')) || null; } catch { return null; } })();
+            console.log('📍 Wykryty język:', userLang, '| Zapisany język:', savedLang);
+            state.language = (savedLang && supportedLangs.includes(savedLang)) ? savedLang : (supportedLangs.includes(userLang) ? userLang : 'nl');
+            console.log('✅ Używany język:', state.language);
+            document.documentElement.lang = state.language;
+
             const response = await fetch(`locales/${state.language}.json`);
-            if (!response.ok) throw new Error('Vertaalbestand niet gevonden');
+            if (!response.ok) throw new Error(`Nie znaleziono pliku: locales/${state.language}.json`);
             state.translations = await response.json();
+            try { window.localStorage && localStorage.setItem('daremon_language', state.language); } catch {}
             i18n_apply();
         } catch (error) {
-            console.error("Kon vertaalbestand niet laden:", error);
-            // Use fallback translations
+            console.error("❌ Błąd ładowania tłumaczeń:", error);
             state.translations = {
                 loading: "Laden...",
                 startBtn: "Start Radio",
@@ -192,7 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 sendBtn: "Verstuur",
                 submitReview: "Verstuur Recensie",
                 hotkeysInfo: "Sneltoetsen: Spatie = Afspelen/Pauzeren, N = Volgende, L = Like, ↑↓ = Volume",
-                
             };
             i18n_apply();
         }
@@ -498,8 +509,28 @@ document.addEventListener('DOMContentLoaded', () => {
             renderGoldenRecords();
             renderTopRated();
             // calendar and machine select removed
-            setInterval(updateListenerCount, 15000);
-            updateListenerCount();
+            function safeUpdateListenerCount() {
+                try {
+                    if (state && state.isInitialized && dom.header?.listenerCount) {
+                        updateListenerCount();
+                    }
+                } catch (err) {
+                    console.error('Błąd updateListenerCount:', err);
+                }
+            }
+            if (state.isInitialized) {
+                safeUpdateListenerCount();
+                setInterval(safeUpdateListenerCount, 15000);
+            } else {
+                // jednorazowy trigger po inicjalizacji
+                const readyCheck = setInterval(() => {
+                    if (state.isInitialized) {
+                        clearInterval(readyCheck);
+                        safeUpdateListenerCount();
+                        setInterval(safeUpdateListenerCount, 15000);
+                    }
+                }, 500);
+            }
             // GO/NO-GO analysis removed
 
             prepareIntroSequence();
@@ -936,12 +967,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const playPromise = activePlayer.play();
         if (playPromise !== undefined) {
-            playPromise.then(() => {
-                state.isPlaying = true;
-                updateUIForNewTrack();
-                updateHistory();
-                preloadNextTrack();
-            }).catch(handleAudioError);
+            playPromise
+                .then(() => {
+                    state.isPlaying = true;
+                    updateUIForNewTrack();
+                    updateHistory();
+                    preloadNextTrack();
+                    console.log('✅ Odtwarzanie rozpoczęte');
+                })
+                .catch(error => {
+                    console.warn('⚠️ Autoplay zablokowany lub błąd odtwarzania:', error?.name || error);
+                    if (error && error.name === 'NotAllowedError') {
+                        if (dom.autoplayOverlay) {
+                            dom.autoplayOverlay.classList.remove('is-hidden');
+                            dom.autoplayOverlay.style.display = 'flex';
+                        }
+                        state.isPlaying = false;
+                        console.log('💡 Czekam na interakcję użytkownika...');
+                    } else {
+                        handleAudioError(error);
+                    }
+                });
         }
     }
 
@@ -1015,7 +1061,20 @@ document.addEventListener('DOMContentLoaded', () => {
             activePlayerIndex = inactivePlayerIndex;
 
             nextPlayer.volume = 0;
-            await nextPlayer.play();
+            try {
+                await nextPlayer.play();
+            } catch (error) {
+                if (error && error.name === 'NotAllowedError') {
+                    console.warn('⚠️ Autoplay zablokowany podczas crossfade');
+                    if (dom.autoplayOverlay) {
+                        dom.autoplayOverlay.classList.remove('is-hidden');
+                        dom.autoplayOverlay.style.display = 'flex';
+                    }
+                    state.isPlaying = false;
+                    return; // wyjdź, poczekaj na interakcję użytkownika
+                }
+                throw error;
+            }
 
             state.currentTrack = state.nextTrack;
             state.nextTrack = null;
@@ -1280,7 +1339,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Beoordelings- en Recensiesysteem ---
     function renderRatingUI(trackId) {
-        if (!dom.player.starRatingContainer) return;
+        if (!dom.player.starRatingContainer) { console.warn('⚠️ Brak kontenera gwiazdek'); return; }
+        console.log('⭐ Renderuję rating dla:', trackId);
         
         dom.player.starRatingContainer.innerHTML = '';
         if (dom.player.commentForm) dom.player.commentForm.classList.add('hidden');
@@ -1291,25 +1351,33 @@ document.addEventListener('DOMContentLoaded', () => {
             star.setAttribute("viewBox", "0 0 24 24");
             star.setAttribute("fill", "currentColor");
             star.dataset.value = i;
+            star.style.cursor = 'pointer';
             star.innerHTML = `<path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>`;
             
-            star.addEventListener('mouseover', () => highlightStars(i));
+            star.addEventListener('mouseover', () => { console.log('🖱️ Hover na gwiazdce:', i); highlightStars(i); });
             star.addEventListener('mouseout', () => highlightStars(currentRating));
-            star.addEventListener('click', () => {
+            star.addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
                 currentRating = i;
+                console.log('⭐ Wybrano ocenę:', currentRating);
                 if (dom.player.commentForm) dom.player.commentForm.classList.remove('hidden');
+                highlightStars(currentRating);
             });
             dom.player.starRatingContainer.appendChild(star);
         }
 
+        console.log('✅ System ocen zainicjalizowany');
         updateAverageRatingDisplay(trackId);
     }
 
     function highlightStars(rating) {
         if (!dom.player.starRatingContainer) return;
         const stars = dom.player.starRatingContainer.querySelectorAll('svg');
+        console.log(`🌟 Podświetlam ${rating} gwiazdek`);
         stars.forEach(star => {
-            star.classList.toggle('active', star.dataset.value <= rating);
+            const value = parseInt(star.dataset.value, 10);
+            if (value <= rating) { star.classList.add('active'); } else { star.classList.remove('active'); }
         });
     }
 
