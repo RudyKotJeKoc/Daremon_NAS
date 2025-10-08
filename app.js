@@ -473,15 +473,61 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Skanuj muzykę z uwzględnieniem ocen
             const tracks = await scanner.scanMusicFolder();
+
+            // Mapuj ścieżki z "Utwor (n).mp3" na "Daremon (n).mp3" bez zmiany ID
+            const mapUtworToDaremonSrc = (src) => {
+                if (typeof src !== 'string') return src;
+                const m = src.match(/^(?:\.\/|\/)music\/Utwor \((\d+)\)\.mp3$/i);
+                if (m) {
+                    const n = m[1];
+                    return `./music/Daremon (${n}).mp3`;
+                }
+                return src;
+            };
+
+            const normalizedTracks = tracks.map(t => ({
+                ...t,
+                src: t.type === 'song' ? mapUtworToDaremonSrc(t.src) : t.src
+            }));
+
+            // Dodaj brakujące utwory, jeśli folder zawiera pliki Daremon (1..231)
+            // Zachowaj spójny schemat ID jak istniejące: utwor-N dla zwykłych piosenek
+            const MAX_NUM = 231;
+            const canonicalize = (s) => typeof s === 'string' ? s.replace(/^\/music\//i, './music/').toLowerCase() : '';
+            const hasSrcFor = new Set(normalizedTracks.map(t => canonicalize(t.src)));
+            const hasId = new Set(normalizedTracks.map(t => t.id));
+            const ensureCover = (n) => `https://placehold.co/120x120/222/fff?text=${n}`;
+
+            for (let n = 1; n <= MAX_NUM; n++) {
+                const daremonSrc = `./music/Daremon (${n}).mp3`;
+                if (!hasSrcFor.has(canonicalize(daremonSrc))) {
+                    // Nie dubluj istniejących specjalnych ID (np. kaput/bmw-kut/jingle-*)
+                    const newId = `utwor-${n}`;
+                    if (hasId.has(newId)) continue;
+                    normalizedTracks.push({
+                        id: newId,
+                        title: `Utwór ${n}`,
+                        artist: 'Nieznany',
+                        src: daremonSrc,
+                        cover: ensureCover(n),
+                        tags: [],
+                        weight: 3,
+                        type: 'song',
+                        golden: false
+                    });
+                    hasSrcFor.add(daremonSrc.toLowerCase());
+                    hasId.add(newId);
+                }
+            }
             
             // Zastosuj wagi na podstawie ocen użytkowników
             // Use STORAGE_PREFIX safely with fallback
             const STORAGE_PREFIX = (window.CONFIG && window.CONFIG.STORAGE_PREFIX) || 'daremon';
             const reviews = JSON.parse(window.localStorage.getItem(`${STORAGE_PREFIX}_reviews`) || '{}');
             
-            let processedTracks = tracks;
+            let processedTracks = normalizedTracks;
             if (scanner.applyRatingWeights && Object.keys(reviews).length > 0) {
-                processedTracks = scanner.applyRatingWeights(tracks, reviews);
+                processedTracks = scanner.applyRatingWeights(normalizedTracks, reviews);
                 console.log(`🎵 Zastosowano wagi na podstawie ${Object.keys(reviews).length} ocen`);
             }
             
@@ -494,6 +540,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     const configData = await configResponse.json();
                     state.config = configData.config || {};
                     console.log('📄 Załadowano konfigurację z playlist.json');
+
+                    // Jeśli brak zgodnych plików jingle w folderze, wyłącz jinglowanie
+                    const jingleTracks = state.playlist.filter(t => t.type === 'jingle');
+                    const hasDaremonStyleJingle = jingleTracks.some(t => /Daremon\s*\(/i.test(String(t.src)));
+                    if (jingleTracks.length > 0 && !hasDaremonStyleJingle) {
+                        state.config.jingle = { ...(state.config.jingle || {}), enabled: false };
+                        console.warn('🔇 Wyłączono jingle: brak pasujących plików w katalogu music');
+                    }
                 }
             } catch (error) {
                 console.warn('⚠️ Nie można załadować konfiguracji, używam domyślnej');
@@ -522,7 +576,43 @@ document.addEventListener('DOMContentLoaded', () => {
                     const cachedResponse = await caches.match('./playlist.json');
                     if (cachedResponse) {
                         const data = await cachedResponse.json();
-                        state.playlist = data.tracks || [];
+                        // Map cached playlist to nowe ścieżki Daremon oraz uzupełnij brakujące pozycje
+                        const mapUtworToDaremonSrc = (src) => {
+                            if (typeof src !== 'string') return src;
+                            const m = src.match(/^(?:\.\/|\/)music\/Utwor \((\d+)\)\.mp3$/i);
+                            if (m) {
+                                const n = m[1];
+                                return `./music/Daremon (${n}).mp3`;
+                            }
+                            return src;
+                        };
+                        const canonicalize = (s) => typeof s === 'string' ? s.replace(/^\/music\//i, './music/').toLowerCase() : '';
+                        const normalized = (data.tracks || []).map(t => ({ ...t, src: mapUtworToDaremonSrc(t.src) }));
+                        const hasSrcFor = new Set(normalized.map(t => canonicalize(t.src)));
+                        const hasId = new Set(normalized.map(t => t.id));
+                        const ensureCover = (n) => `https://placehold.co/120x120/222/fff?text=${n}`;
+                        for (let n = 1; n <= 231; n++) {
+                            const daremonSrc = `./music/Daremon (${n}).mp3`;
+                            if (!hasSrcFor.has(canonicalize(daremonSrc))) {
+                                const newId = `utwor-${n}`;
+                                if (!hasId.has(newId)) {
+                                    normalized.push({
+                                        id: newId,
+                                        title: `Utwór ${n}`,
+                                        artist: 'Nieznany',
+                                        src: daremonSrc,
+                                        cover: ensureCover(n),
+                                        tags: [],
+                                        weight: 3,
+                                        type: 'song',
+                                        golden: false
+                                    });
+                                    hasSrcFor.add(canonicalize(daremonSrc));
+                                    hasId.add(newId);
+                                }
+                            }
+                        }
+                        state.playlist = normalized;
                         state.config = data.config || {};
                         prepareRecentRotation();
                         console.log(`✅ Załadowano z cache: ${state.playlist.length} utworów`);
