@@ -154,8 +154,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const state = createInitialState();
 
-    // Ensure fresh start; on first load, perform reset then reload
-    (async () => { if (await resetAppStorageOnce()) return; })();
+    // Ensure fresh start; on first load, perform reset then reload (development only)
+    const isDevelopment = window.location.hostname === 'localhost';
+    if (isDevelopment) {
+        (async () => { if (await resetAppStorageOnce()) return; })();
+    }
 
     // --- INTERNATIONALISATIE (i18n) ---
     async function i18n_init() {
