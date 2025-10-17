@@ -1,3 +1,5 @@
+import { checkFileExists as verifyMediaFile } from './media-availability.js';
+
 /**
  * Music Scanner - Automatyczne tworzenie playlisty z folderu music
  * Skanuje folder music i tworzy dynamiczną playlistę
@@ -86,12 +88,7 @@ export class MusicScanner {
      * Sprawdza czy plik istnieje
      */
     async checkFileExists(src) {
-        try {
-            const response = await fetch(src, { method: 'HEAD' });
-            return response.ok;
-        } catch {
-            return false;
-        }
+        return verifyMediaFile(src, { timeout: 3000 });
     }
 
     /**
