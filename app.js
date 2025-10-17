@@ -2,6 +2,7 @@ import { waitForMediaReady } from './media-utils.js';
 import { createInitialState } from './state.js';
 import { createTrackListItem } from './ui-utils.js';
 import { PollSystem } from './poll-system.js';
+import { filterUnavailableTracks } from './media-availability.js';
 // strategic/machine docs imports removed in simplified build
 
 /**
@@ -698,8 +699,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 processedTracks = scanner.applyRatingWeights(normalizedTracks, reviews);
                 console.log(`🎵 Zastosowano wagi na podstawie ${Object.keys(reviews).length} ocen`);
             }
-            
-            state.playlist = processedTracks;
+
+            const availability = await filterUnavailableTracks(processedTracks);
+            state.playlist = availability.playableTracks;
+
+            if (availability.missingTracks.length > 0) {
+                const failedIds = availability.missingTracks
+                    .map(track => track?.id)
+                    .filter(Boolean);
+                if (failedIds.length > 0) {
+                    const failedSet = new Set(state.failedTracks);
+                    failedIds.forEach(id => failedSet.add(id));
+                    state.failedTracks = Array.from(failedSet);
+                }
+            }
+
+            if (state.playlist.length === 0) {
+                console.warn('Brak dostępnych plików audio z automatycznego skanowania, próba fallback.');
+                let fallbackTracks = [];
+                if (typeof scanner.loadFallbackPlaylist === 'function') {
+                    try {
+                        fallbackTracks = await scanner.loadFallbackPlaylist();
+                    } catch (fallbackError) {
+                        console.warn('Nie można załadować playlisty fallback:', fallbackError);
+                    }
+                }
+
+                if (fallbackTracks.length === 0 && typeof scanner.getEmergencyPlaylist === 'function') {
+                    fallbackTracks = scanner.getEmergencyPlaylist();
+                }
+
+                if (fallbackTracks.length > 0) {
+                    const fallbackAvailability = await filterUnavailableTracks(fallbackTracks);
+                    state.playlist = fallbackAvailability.playableTracks;
+                    if (fallbackAvailability.missingTracks.length > 0) {
+                        const fallbackFailedIds = fallbackAvailability.missingTracks
+                            .map(track => track?.id)
+                            .filter(Boolean);
+                        if (fallbackFailedIds.length > 0) {
+                            const failedSet = new Set(state.failedTracks);
+                            fallbackFailedIds.forEach(id => failedSet.add(id));
+                            state.failedTracks = Array.from(failedSet);
+                        }
+                    }
+                }
+            }
 
             // Załaduj konfigurację z playlist.json (bez utworów)
             try {
