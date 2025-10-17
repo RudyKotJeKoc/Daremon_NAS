@@ -1988,9 +1988,104 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    class DJArburg {
+        constructor({ languageResolver = () => document.documentElement?.lang || 'nl', logger = console } = {}) {
+            this.languageResolver = languageResolver;
+            this.logger = logger;
+            this.voice = null;
+            this.isSpeechSupported = typeof window === 'object'
+                && 'speechSynthesis' in window
+                && typeof window.SpeechSynthesisUtterance === 'function';
+
+            if (this.isSpeechSupported) {
+                this.logger.log('🎙️ DJ Arburg ready to announce with speech synthesis.');
+                this.bindVoiceSelection();
+            } else {
+                this.logger.warn('🔇 Speech synthesis unavailable, DJ Arburg will log announcements.');
+            }
+        }
+
+        bindVoiceSelection() {
+            this.selectVoice();
+            const synth = window.speechSynthesis;
+            const handler = () => this.selectVoice();
+            if (synth && typeof synth.addEventListener === 'function') {
+                synth.addEventListener('voiceschanged', handler);
+            } else if (synth) {
+                synth.onvoiceschanged = handler;
+            }
+        }
+
+        selectVoice() {
+            if (!this.isSpeechSupported) return;
+            const synth = window.speechSynthesis;
+            if (!synth) return;
+            const voices = synth.getVoices();
+            if (!voices || voices.length === 0) {
+                this.logger.warn('🎙️ Geen beschikbare stemmen voor speechSynthesis.');
+                return;
+            }
+
+            const lang = (this.languageResolver?.() || 'nl').toLowerCase();
+            const primary = lang.split('-')[0];
+
+            const exactMatch = voices.find(voice => voice.lang?.toLowerCase() === lang);
+            const partialMatch = voices.find(voice => voice.lang?.toLowerCase().startsWith(primary));
+
+            this.voice = exactMatch || partialMatch || voices[0];
+            if (this.voice) {
+                this.logger.log(`🎙️ DJ Arburg gebruikt stem: ${this.voice.name} (${this.voice.lang}).`);
+            }
+        }
+
+        announce(message, options = {}) {
+            const text = typeof message === 'string' ? message.trim() : '';
+            if (!text) {
+                this.logger.warn('🎙️ DJ Arburg ontving leeg bericht en heeft niets aangekondigd.');
+                return;
+            }
+
+            const lang = options.lang || this.languageResolver?.() || 'nl';
+            this.logger.log(`📣 DJ Arburg kondigt aan (${lang}): ${text}`);
+
+            if (!this.isSpeechSupported) {
+                this.logger.info('🔁 Console fallback geactiveerd voor DJ Arburg aankondiging.');
+                return;
+            }
+
+            try {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = lang;
+                utterance.rate = options.rate || 1;
+                utterance.pitch = options.pitch || 1;
+
+                if (this.voice) {
+                    utterance.voice = this.voice;
+                }
+
+                window.speechSynthesis.cancel();
+                window.speechSynthesis.speak(utterance);
+            } catch (error) {
+                this.logger.error('🎙️ DJ Arburg kon de aankondiging niet uitspreken:', error);
+            }
+        }
+
+        testAnnounce() {
+            const lang = this.languageResolver?.() || 'nl';
+            const sampleText = lang.startsWith('pl')
+                ? 'To jest testowe ogłoszenie DJ Arburg.'
+                : 'Dit is een testbericht van DJ Arburg.';
+            this.announce(sampleText, { lang });
+        }
+    }
+
+    const djArburg = new DJArburg({ languageResolver: () => state.language, logger: console });
+
     if (typeof window === 'object') {
         window.createQuickPoll = createQuickPoll;
         window.exportPollStats = exportPollStats;
+        window.DJArburg = DJArburg;
+        window.djArburg = djArburg;
     }
 
     initialize();
