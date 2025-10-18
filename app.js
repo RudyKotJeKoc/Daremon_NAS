@@ -3,6 +3,7 @@ import { createInitialState } from './state.js';
 import { createTrackListItem } from './ui-utils.js';
 import { PollSystem } from './poll-system.js';
 import { filterUnavailableTracks } from './media-availability.js';
+import { fetchPlaylist, normalizeRealTracks } from './playlist-service.js';
 // strategic/machine docs imports removed in simplified build
 
 /**
@@ -556,193 +557,49 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Użyj music-scanner do automatycznego skanowania folderu music
             let scanner;
-            let generatedDaremon = false;
-            // Dutch-themed titles (beavers, ships, sinking)
-            const makeDutchTitle = (n) => {
-                const themes = [
-                    'Beverdam bij de Rivier',
-                    'Bevers aan Boord',
-                    'Schip in de Storm',
-                    'Noodsignaal op Zee',
-                    'Onder de Waterlijn',
-                    'Kapitein Bever',
-                    'Zinkende Schemering',
-                    'Scheepswrak in de Diepte',
-                    'Zeegang en Houten Dam',
-                    'Rivierdelta en Dammen',
-                    'Schipbreuk bij de Dam',
-                    'Stille Haven, Zware Golf',
-                    'Bevers en de Oostzee',
-                    'Romp en Ratelstaart',
-                    'Kielwater van de Bever',
-                    'Ondergaande Zon, Ondergaand Schip',
-                    'Drijvend Hout en Burcht',
-                    'Muiterij op de Beverboot',
-                    'Noorderwind en Natte Vacht',
-                    'Sirenes over de Zuidpier',
-                    'Damwachter aan Dek',
-                    'Golven tegen de Burcht',
-                    'Schroef en Staart',
-                    'Diepgang naar de Delta',
-                    'Zeilschip en Zinklijn',
-                    'Beverbrigade op Zee',
-                    'Scheepsklok in de Mist',
-                    'Stormvloed en Dam',
-                    'Riviermonding bij Nacht',
-                    'Bakboord Bever',
-                    'Havenlicht op de Burcht',
-                    'Kade van Kastor',
-                    'Redding in het Riet',
-                    'Anker bij de Beverdam',
-                    'Zeebranding en Burchtmuur',
-                    'Vloedlijn en Vacht',
-                    'Scheepstoeter en Stuwdam',
-                    'Planken, Peddels en Pels',
-                    'Middengolf voor de Burcht',
-                    'Zeeschuim en Zinkgat'
-                ];
-                const base = themes[(n - 1) % themes.length];
-                return `${base}`; // no number suffix in title for a natural look
-            };
-            const generateDaremonTracks = (max = 231) => {
-                const out = [];
-                const ensureCover = (n) => `https://placehold.co/120x120/222/fff?text=${n}`;
-                for (let n = 1; n <= max; n++) {
-                    out.push({
-                        id: `utwor-${n}`,
-                        title: makeDutchTitle(n),
-                        artist: 'Onbekend',
-                        src: `./music/Daremon (${n}).mp3`,
-                        cover: ensureCover(n),
-                        tags: ['bever', 'schip', 'zinken'],
-                        weight: 3,
-                        type: 'song',
-                        golden: false
-                    });
-                }
-                return out;
-            };
             if (window.MusicScanner) {
                 scanner = new window.MusicScanner();
             } else {
                 // Fallback jeśli moduł nie jest dostępny
                 console.warn('⚠️ MusicScanner nie jest dostępny, używam playlist.json');
-                scanner = { 
-                    scanMusicFolder: async () => {
-                        // Generuj listę utworów w schemacie Daremon (1..231)
-                        generatedDaremon = true;
-                        return generateDaremonTracks(231);
+                scanner = {
+                    async scanMusicFolder() {
+                        return await this.loadFallbackPlaylist();
+                    },
+                    async loadFallbackPlaylist() {
+                        try {
+                            const response = await fetch('./playlist.json');
+                            if (!response.ok) {
+                                return [];
+                            }
+                            const data = await response.json();
+                            return Array.isArray(data.tracks) ? data.tracks : [];
+                        } catch (error) {
+                            console.warn('Nie można załadować playlisty fallback:', error);
+                            return [];
+                        }
+                    },
+                    getEmergencyPlaylist() {
+                        return [];
                     }
                 };
             }
-            
-            // Skanuj muzykę z uwzględnieniem ocen
-            const tracks = await scanner.scanMusicFolder();
 
-            // Mapuj tylko gdy źródło pochodzi z playlist.json (Utwor -> Daremon)
-            const mapUtworToDaremonSrc = (src) => {
-                if (typeof src !== 'string') return src;
-                const m = src.match(/^(?:\.\/|\/)music\/Utwor \((\d+)\)\.mp3$/i);
-                if (m) {
-                    const n = m[1];
-                    return `./music/Daremon (${n}).mp3`;
-                }
-                return src;
-            };
-
-            const normalizedTracks = generatedDaremon
-                ? tracks
-                : tracks.map(t => ({
-                    ...t,
-                    src: t.type === 'song' ? mapUtworToDaremonSrc(t.src) : t.src
-                }));
-
-            // Dodaj brakujące utwory, jeśli folder zawiera pliki Daremon (1..231)
-            // Zachowaj spójny schemat ID jak istniejące: utwor-N dla zwykłych piosenek
-            const MAX_NUM = 231;
-            const canonicalize = (s) => typeof s === 'string' ? s.replace(/^\/music\//i, './music/').toLowerCase() : '';
-            const hasSrcFor = new Set(normalizedTracks.map(t => canonicalize(t.src)));
-            const hasId = new Set(normalizedTracks.map(t => t.id));
-            const ensureCover = (n) => `https://placehold.co/120x120/222/fff?text=${n}`;
-
-            if (!generatedDaremon) {
-                for (let n = 1; n <= MAX_NUM; n++) {
-                    const daremonSrc = `./music/Daremon (${n}).mp3`;
-                    if (!hasSrcFor.has(canonicalize(daremonSrc))) {
-                        // Nie dubluj istniejących specjalnych ID (np. kaput/bmw-kut/jingle-*)
-                        const newId = `utwor-${n}`;
-                        if (hasId.has(newId)) continue;
-                        normalizedTracks.push({
-                            id: newId,
-                            title: makeDutchTitle(n),
-                            artist: 'Onbekend',
-                            src: daremonSrc,
-                            cover: ensureCover(n),
-                            tags: ['bever', 'schip', 'zinken'],
-                            weight: 3,
-                            type: 'song',
-                            golden: false
-                        });
-                        hasSrcFor.add(canonicalize(daremonSrc));
-                        hasId.add(newId);
-                    }
-                }
-            }
-            
-            // Zastosuj wagi na podstawie ocen użytkowników
-            // Use STORAGE_PREFIX safely with fallback
             const STORAGE_PREFIX = (window.CONFIG && window.CONFIG.STORAGE_PREFIX) || 'daremon';
             const reviews = JSON.parse(window.localStorage.getItem(`${STORAGE_PREFIX}_reviews`) || '{}');
-            
-            let processedTracks = normalizedTracks;
-            if (scanner.applyRatingWeights && Object.keys(reviews).length > 0) {
-                processedTracks = scanner.applyRatingWeights(normalizedTracks, reviews);
-                console.log(`🎵 Zastosowano wagi na podstawie ${Object.keys(reviews).length} ocen`);
-            }
 
-            const availability = await filterUnavailableTracks(processedTracks);
-            state.playlist = availability.playableTracks;
+            const { playlist, failedTrackIds } = await fetchPlaylist({
+                scanner,
+                filterUnavailableTracks,
+                reviews
+            });
 
-            if (availability.missingTracks.length > 0) {
-                const failedIds = availability.missingTracks
-                    .map(track => track?.id)
-                    .filter(Boolean);
-                if (failedIds.length > 0) {
-                    const failedSet = new Set(state.failedTracks);
-                    failedIds.forEach(id => failedSet.add(id));
-                    state.failedTracks = Array.from(failedSet);
-                }
-            }
+            state.playlist = playlist;
 
-            if (state.playlist.length === 0) {
-                console.warn('Brak dostępnych plików audio z automatycznego skanowania, próba fallback.');
-                let fallbackTracks = [];
-                if (typeof scanner.loadFallbackPlaylist === 'function') {
-                    try {
-                        fallbackTracks = await scanner.loadFallbackPlaylist();
-                    } catch (fallbackError) {
-                        console.warn('Nie można załadować playlisty fallback:', fallbackError);
-                    }
-                }
-
-                if (fallbackTracks.length === 0 && typeof scanner.getEmergencyPlaylist === 'function') {
-                    fallbackTracks = scanner.getEmergencyPlaylist();
-                }
-
-                if (fallbackTracks.length > 0) {
-                    const fallbackAvailability = await filterUnavailableTracks(fallbackTracks);
-                    state.playlist = fallbackAvailability.playableTracks;
-                    if (fallbackAvailability.missingTracks.length > 0) {
-                        const fallbackFailedIds = fallbackAvailability.missingTracks
-                            .map(track => track?.id)
-                            .filter(Boolean);
-                        if (fallbackFailedIds.length > 0) {
-                            const failedSet = new Set(state.failedTracks);
-                            fallbackFailedIds.forEach(id => failedSet.add(id));
-                            state.failedTracks = Array.from(failedSet);
-                        }
-                    }
-                }
+            if (failedTrackIds.length > 0) {
+                const failedSet = new Set(state.failedTracks);
+                failedTrackIds.forEach(id => failedSet.add(id));
+                state.failedTracks = Array.from(failedSet);
             }
 
             // Załaduj konfigurację z playlist.json (bez utworów)
@@ -788,42 +645,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const cachedResponse = await caches.match('./playlist.json');
                     if (cachedResponse) {
                         const data = await cachedResponse.json();
-                        // Map cached playlist to nowe ścieżki Daremon oraz uzupełnij brakujące pozycje
-                        const mapUtworToDaremonSrc = (src) => {
-                            if (typeof src !== 'string') return src;
-                            const m = src.match(/^(?:\.\/|\/)music\/Utwor \((\d+)\)\.mp3$/i);
-                            if (m) {
-                                const n = m[1];
-                                return `./music/Daremon (${n}).mp3`;
-                            }
-                            return src;
-                        };
-                        const canonicalize = (s) => typeof s === 'string' ? s.replace(/^\/music\//i, './music/').toLowerCase() : '';
-                        const normalized = (data.tracks || []).map(t => ({ ...t, src: mapUtworToDaremonSrc(t.src) }));
-                        const hasSrcFor = new Set(normalized.map(t => canonicalize(t.src)));
-                        const hasId = new Set(normalized.map(t => t.id));
-                        const ensureCover = (n) => `https://placehold.co/120x120/222/fff?text=${n}`;
-                        for (let n = 1; n <= 231; n++) {
-                            const daremonSrc = `./music/Daremon (${n}).mp3`;
-                            if (!hasSrcFor.has(canonicalize(daremonSrc))) {
-                                const newId = `utwor-${n}`;
-                                if (!hasId.has(newId)) {
-                                    normalized.push({
-                                        id: newId,
-                                        title: `Utwór ${n}`,
-                                        artist: 'Nieznany',
-                                        src: daremonSrc,
-                                        cover: ensureCover(n),
-                                        tags: [],
-                                        weight: 3,
-                                        type: 'song',
-                                        golden: false
-                                    });
-                                    hasSrcFor.add(canonicalize(daremonSrc));
-                                    hasId.add(newId);
-                                }
-                            }
-                        }
+                        const normalized = normalizeRealTracks(data.tracks || []);
                         state.playlist = normalized;
                         state.config = data.config || {};
                         prepareRecentRotation();
