@@ -9,6 +9,7 @@ const DEFAULT_CONFIG = {
   STORAGE_PREFIX: 'daremon',
   MACHINE_DOCS_KEY: 'daremon_machine_docs_v1',
   ANALYSIS_SCHEDULE_KEY: 'daremon_analysis_scheduled',
+  MUSIC_TRACKS_ENDPOINT: null,
 };
 
 // If a build system injects envs, prefer them. Fallback to defaults.
