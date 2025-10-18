@@ -1,4 +1,4 @@
-import { waitForMediaReady, shouldIgnorePlaybackError } from './media-utils.js';
+import { waitForMediaReady, shouldIgnorePlaybackError, isAudioSourceSupported } from './media-utils.js';
 import { createInitialState } from './state.js';
 import { createTrackListItem } from './ui-utils.js';
 import { PollSystem } from './poll-system.js';
@@ -976,6 +976,45 @@ document.addEventListener('DOMContentLoaded', () => {
         return src;
     }
 
+    function getTrackLabel(track) {
+        if (!track || typeof track !== 'object') {
+            return 'Onbekend nummer';
+        }
+        return track.title || track.id || 'Onbekend nummer';
+    }
+
+    function markTrackAsFailed(track) {
+        if (!track || !track.id) return;
+        if (!state.failedTracks.includes(track.id)) {
+            state.failedTracks.push(track.id);
+        }
+    }
+
+    function getPlayableSource(track, audioElement, { showError = true } = {}) {
+        if (!track) {
+            return null;
+        }
+
+        const normalizedSrc = normalizeTrackSrc(track.src);
+        if (!normalizedSrc) {
+            return null;
+        }
+
+        const supported = isAudioSourceSupported(normalizedSrc, { audioElement });
+        if (!supported) {
+            markTrackAsFailed(track);
+            const trackLabel = getTrackLabel(track);
+            const message = `Nieobsługiwany format audio: ${trackLabel}`;
+            console.warn(`${message} (${normalizedSrc})`);
+            if (showError) {
+                displayError(message);
+            }
+            return null;
+        }
+
+        return normalizedSrc;
+    }
+
     function playNextTrack() {
         const nextTrack = state.nextTrack || selectNextTrack();
         if (!nextTrack) {
@@ -1003,12 +1042,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        const activePlayer = players[activePlayerIndex];
+        const playableSrc = getPlayableSource(nextTrack, activePlayer);
+        if (!playableSrc) {
+            state.nextTrack = null;
+            state.nextTrackReady = false;
+            state.currentTrack = null;
+            state.isPlaying = false;
+            updatePlayPauseButtons();
+            setTimeout(playNextTrack, 0);
+            return;
+        }
+
         state.currentTrack = nextTrack;
         state.nextTrack = null;
         state.nextTrackReady = false;
 
-        const activePlayer = players[activePlayerIndex];
-        activePlayer.src = normalizeTrackSrc(state.currentTrack.src);
+        activePlayer.src = playableSrc;
         const baseVolume = dom.player.volumeSlider ? parseFloat(dom.player.volumeSlider.value) : 0.5;
         activePlayer.volume = isQuietHour() ? baseVolume * 0.5 : baseVolume;
 
@@ -1050,6 +1100,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const inactivePlayerIndex = 1 - activePlayerIndex;
             const inactivePlayer = players[inactivePlayerIndex];
 
+            const playableSrc = getPlayableSource(state.nextTrack, inactivePlayer, { showError: false });
+            if (!playableSrc) {
+                state.nextTrack = null;
+                state.nextTrackReady = false;
+                setTimeout(preloadNextTrack, 0);
+                return;
+            }
+
             const markReady = () => {
                 state.nextTrackReady = true;
                 cleanupListeners();
@@ -1058,8 +1116,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const handlePreloadError = (event) => {
                 cleanupListeners();
                 const failedTrack = state.nextTrack;
-                if (failedTrack && !state.failedTracks.includes(failedTrack.id)) {
-                    state.failedTracks.push(failedTrack.id);
+                if (failedTrack) {
+                    markTrackAsFailed(failedTrack);
                 }
 
                 const trackLabel = failedTrack?.title || failedTrack?.id || 'Onbekend nummer';
@@ -1086,7 +1144,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             inactivePlayer.addEventListener('canplaythrough', markReady, { once: true });
             inactivePlayer.addEventListener('error', handlePreloadError, { once: true });
-            inactivePlayer.src = normalizeTrackSrc(state.nextTrack.src);
+            inactivePlayer.src = playableSrc;
         }
     }
 
@@ -1172,6 +1230,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const activePlayer = players[activePlayerIndex];
         const player = mediaTarget || activePlayer;
         const failingTrack = mediaTarget === activePlayer ? state.currentTrack : state.nextTrack || state.currentTrack;
+
+        if (error && error.name === 'NotSupportedError' && failingTrack) {
+            markTrackAsFailed(failingTrack);
+            const message = `Nieobsługiwany format audio: ${getTrackLabel(failingTrack)}`;
+            console.error(message);
+            displayError(message);
+            setTimeout(playNextTrack, 0);
+            return;
+        }
 
         let source = player?.currentSrc || player?.src || failingTrack?.src;
         if (source) {

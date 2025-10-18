@@ -46,6 +46,23 @@ const INTERRUPTED_MESSAGES = [
     'The play() request was interrupted by a new load request'
 ];
 
+const EXTENSION_TO_MIME = {
+    mp3: 'audio/mpeg',
+    mpeg: 'audio/mpeg',
+    mpga: 'audio/mpeg',
+    wav: 'audio/wav',
+    wave: 'audio/wav',
+    ogg: 'audio/ogg',
+    oga: 'audio/ogg',
+    webm: 'audio/webm',
+    m4a: 'audio/mp4',
+    mp4: 'audio/mp4',
+    aac: 'audio/aac',
+    flac: 'audio/flac'
+};
+
+const supportCache = new Map();
+
 export function shouldIgnorePlaybackError(error) {
     if (!error) {
         return false;
@@ -72,4 +89,47 @@ export function shouldIgnorePlaybackError(error) {
     }
 
     return false;
+}
+
+export function getMimeTypeFromSrc(src) {
+    if (typeof src !== 'string') {
+        return null;
+    }
+
+    const match = src.match(/\.([a-z0-9]+)(?:\?.*)?$/i);
+    if (!match) {
+        return null;
+    }
+
+    const extension = match[1].toLowerCase();
+    return EXTENSION_TO_MIME[extension] || null;
+}
+
+export function isAudioSourceSupported(src, { audioElement } = {}) {
+    if (typeof src !== 'string' || src.trim() === '') {
+        return false;
+    }
+
+    const mime = getMimeTypeFromSrc(src);
+    if (!mime) {
+        return true;
+    }
+
+    if (supportCache.has(mime)) {
+        return supportCache.get(mime);
+    }
+
+    const element = audioElement || (typeof Audio !== 'undefined' ? new Audio() : null);
+    if (!element || typeof element.canPlayType !== 'function') {
+        return true;
+    }
+
+    const result = element.canPlayType(mime);
+    const isSupported = result === 'probably' || result === 'maybe';
+    supportCache.set(mime, isSupported);
+    return isSupported;
+}
+
+export function clearAudioSupportCache() {
+    supportCache.clear();
 }
