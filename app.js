@@ -1,4 +1,4 @@
-import { waitForMediaReady } from './media-utils.js';
+import { waitForMediaReady, shouldIgnorePlaybackError } from './media-utils.js';
 import { createInitialState } from './state.js';
 import { createTrackListItem } from './ui-utils.js';
 import { PollSystem } from './poll-system.js';
@@ -1031,6 +1031,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                         state.isPlaying = false;
                         console.log('💡 Czekam na interakcję użytkownika...');
+                    } else if (shouldIgnorePlaybackError(error)) {
+                        state.isPlaying = false;
+                        updatePlayPauseButtons();
+                        console.info('ℹ️ Żądanie odtwarzania zostało przerwane przed startem.');
                     } else {
                         handleAudioError(error);
                     }
@@ -1156,6 +1160,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     async function handleAudioError(error) {
+        if (shouldIgnorePlaybackError(error)) {
+            console.info('ℹ️ Pomijam przerwane żądanie odtwarzania.');
+            return;
+        }
+
         console.error('Audio afspeelfout:', error);
 
         const isHtmlMediaElement = typeof HTMLMediaElement !== 'undefined';

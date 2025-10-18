@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { waitForMediaReady } from '../media-utils.js';
+import { waitForMediaReady, shouldIgnorePlaybackError } from '../media-utils.js';
 
 class FakeMediaElement extends EventTarget {
     constructor() {
@@ -43,5 +43,25 @@ describe('waitForMediaReady', () => {
         expect(error).toBeInstanceOf(Error);
         expect(error.message).toBe('Timed out waiting for media readiness');
         vi.useRealTimers();
+    });
+});
+
+describe('shouldIgnorePlaybackError', () => {
+    it('returns true for AbortError name', () => {
+        expect(shouldIgnorePlaybackError({ name: 'AbortError' })).toBe(true);
+    });
+
+    it('returns true for legacy abort code', () => {
+        expect(shouldIgnorePlaybackError({ code: 20 })).toBe(true);
+    });
+
+    it('matches interruption messages', () => {
+        const error = new Error('The play() request was interrupted by a call to pause().');
+        expect(shouldIgnorePlaybackError(error)).toBe(true);
+    });
+
+    it('returns false for other errors', () => {
+        expect(shouldIgnorePlaybackError(new Error('Network error'))).toBe(false);
+        expect(shouldIgnorePlaybackError(null)).toBe(false);
     });
 });
