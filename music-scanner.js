@@ -1,4 +1,5 @@
-import { checkFileExists as verifyMediaFile } from './media-availability.js';
+import { filterUnavailableTracks } from './media-availability.js';
+import { CONFIG } from './config.js';
 
 /**
  * Music Scanner - Automatyczne tworzenie playlisty z folderu music
@@ -6,9 +7,12 @@ import { checkFileExists as verifyMediaFile } from './media-availability.js';
  */
 
 export class MusicScanner {
-    constructor() {
+    constructor(options = {}) {
         this.musicFolder = './music';
         this.supportedFormats = ['.mp3', '.wav', '.ogg', '.m4a'];
+        this.trackSource = options.trackSource ?? CONFIG.MUSIC_TRACKS_ENDPOINT ?? null;
+        this.fetchImpl = options.fetchImpl ?? (typeof fetch === 'function' ? fetch : null);
+        this.logger = options.logger ?? console;
     }
 
     /**
@@ -17,78 +21,101 @@ export class MusicScanner {
      */
     async scanMusicFolder() {
         try {
-            // W przeglądarce nie możemy bezpośrednio skanować folderów
-            // Musimy użyć alternatywnych metod
-            
-            // Metoda 1: Próba odczytu znanej struktury (numerowanych plików)
-            const tracks = await this.scanNumberedTracks();
-            
+            const tracks = await this.fetchTracksFromSource();
+
             if (tracks.length > 0) {
-                console.log(`🎵 Znaleziono ${tracks.length} utworów w folderze music`);
+                this.logger.log(`🎵 Znaleziono ${tracks.length} utworów w źródle muzyki`);
                 return tracks;
             }
 
-            // Metoda 2: Fallback do playlist.json jeśli nie ma plików
-            console.warn('⚠️ Nie znaleziono plików w folderze music, używam playlist.json');
+            this.logger.warn('⚠️ Nie znaleziono utworów w źródle muzyki, używam playlist.json');
             return await this.loadFallbackPlaylist();
-            
+
         } catch (error) {
-            console.error('❌ Błąd skanowania folderu music:', error);
+            this.logger.error('❌ Błąd skanowania źródła muzyki:', error);
             return await this.loadFallbackPlaylist();
         }
     }
 
-    /**
-     * Skanuje numerowane pliki muzyczne (Utwor (1).mp3, etc.)
-     */
-    async scanNumberedTracks() {
-        const tracks = [];
-        let trackNumber = 1;
-        
-        while (trackNumber <= 200) { // Maksymalnie 200 utworów
-            try {
-                const filename = `Utwor (${trackNumber}).mp3`;
-                const src = `${this.musicFolder}/${filename}`;
-                
-                // Sprawdź czy plik istnieje
-                const exists = await this.checkFileExists(src);
-                if (!exists) {
-                    trackNumber++;
-                    continue;
-                }
-                
-                const track = {
-                    id: `utwor-${trackNumber}`,
-                    title: await this.extractTitle(src) || `Utwór ${trackNumber}`,
-                    artist: await this.extractArtist(src) || 'Nieznany wykonawca',
-                    src: src,
-                    cover: `https://placehold.co/120x120/222/fff?text=${trackNumber}`,
-                    tags: ['auto-scanned'],
-                    weight: 1,
-                    type: 'song',
-                    golden: false
-                };
-                
-                tracks.push(track);
-                trackNumber++;
-                
-            } catch (error) {
-                trackNumber++;
-                if (trackNumber > 10 && tracks.length === 0) {
-                    // Jeśli nie znaleźliśmy nic w pierwszych 10, przerywamy
-                    break;
+    async fetchTracksFromSource() {
+        if (!this.trackSource || !this.fetchImpl) {
+            return [];
+        }
+
+        try {
+            const response = await this.fetchImpl(this.trackSource, { method: 'GET' });
+            if (!response || !response.ok) {
+                throw new Error(`HTTP ${response ? response.status : 'brak odpowiedzi'}`);
+            }
+
+            const payload = await response.json();
+            const rawTracks = Array.isArray(payload) ? payload : Array.isArray(payload?.tracks) ? payload.tracks : [];
+
+            if (!Array.isArray(rawTracks) || rawTracks.length === 0) {
+                return [];
+            }
+
+            const normalizedTracks = [];
+            for (let index = 0; index < rawTracks.length; index++) {
+                const normalized = await this.normalizeTrack(rawTracks[index], index);
+                if (normalized) {
+                    normalizedTracks.push(normalized);
                 }
             }
+
+            if (normalizedTracks.length === 0) {
+                return [];
+            }
+
+            const availability = await filterUnavailableTracks(normalizedTracks, {
+                fetchImpl: this.fetchImpl,
+                logger: this.logger,
+            });
+
+            return availability.playableTracks || [];
+
+        } catch (error) {
+            this.logger.error('❌ Błąd pobierania listy utworów:', error);
+            return [];
         }
-        
-        return tracks;
     }
 
-    /**
-     * Sprawdza czy plik istnieje
-     */
-    async checkFileExists(src) {
-        return verifyMediaFile(src, { timeout: 3000 });
+    async normalizeTrack(track, index = 0) {
+        if (!track || typeof track !== 'object') {
+            return null;
+        }
+
+        const src = typeof track.src === 'string' ? track.src.trim() : '';
+        if (!src) {
+            return null;
+        }
+
+        const fallbackTitle = await this.extractTitle(src);
+        const id = track.id ?? `remote-track-${index + 1}`;
+        const title = track.title ?? fallbackTitle ?? `Utwór ${index + 1}`;
+        const artist = track.artist ?? (typeof track.performer === 'string' ? track.performer : await this.extractArtist(src));
+        const weight = typeof track.weight === 'number' && Number.isFinite(track.weight) ? track.weight : 1;
+        const tags = Array.isArray(track.tags)
+            ? track.tags
+            : typeof track.tags === 'string'
+                ? [track.tags]
+                : [];
+        const type = track.type || 'song';
+        const golden = typeof track.golden === 'boolean' ? track.golden : Boolean(track.gold);
+        const cover = track.cover || track.artwork || track.thumbnail || `https://placehold.co/120x120/222/fff?text=${index + 1}`;
+
+        return {
+            ...track,
+            id,
+            title,
+            artist: artist || 'Nieznany wykonawca',
+            src,
+            cover,
+            tags,
+            weight,
+            type,
+            golden,
+        };
     }
 
     /**
@@ -122,13 +149,20 @@ export class MusicScanner {
      * Fallback do playlist.json
      */
     async loadFallbackPlaylist() {
+        const fetcher = this.fetchImpl ?? (typeof fetch === 'function' ? fetch : null);
+
+        if (!fetcher) {
+            this.logger.error('❌ Brak implementacji fetch do pobrania playlisty awaryjnej');
+            return this.getEmergencyPlaylist();
+        }
+
         try {
-            const response = await fetch('./playlist.json');
+            const response = await fetcher('./playlist.json');
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const data = await response.json();
             return data.tracks || [];
         } catch (error) {
-            console.error('❌ Nie można załadować playlist.json:', error);
+            this.logger.error('❌ Nie można załadować playlist.json:', error);
             return this.getEmergencyPlaylist();
         }
     }
