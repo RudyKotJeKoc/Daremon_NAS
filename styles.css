@@ -1903,6 +1903,41 @@ body.playing #track-cover {
     background: rgba(24, 160, 199, 0.55);
 }
 
+#slideshow-container {
+    width: 100%;
+    height: 300px;
+    margin-top: 1.5rem;
+    background: linear-gradient(135deg, #04132B 0%, #0B3A6C 100%);
+    border: none;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+#slideshow-container img,
+#slideshow-container video {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border: none;
+    background: transparent;
+}
+
+#slideshow-container video {
+    outline: none;
+}
+
+#slideshow-container .slideshow-placeholder {
+    padding: 0 1.5rem;
+    text-align: center;
+    font-size: 1rem;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
 @media (max-width: 768px) {
     .urgent-cta-header {
         flex-direction: column;
