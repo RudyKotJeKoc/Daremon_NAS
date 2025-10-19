@@ -4,6 +4,7 @@ import { createTrackListItem } from './ui-utils.js';
 import { PollSystem } from './poll-system.js';
 import { filterUnavailableTracks } from './media-availability.js';
 import { fetchPlaylist, normalizeRealTracks } from './playlist-service.js';
+import { loadTrackMetadata, applyMetadataToPlaylist } from './track-metadata.js';
 // strategic/machine docs imports removed in simplified build
 
 /**
@@ -153,6 +154,8 @@ document.addEventListener('DOMContentLoaded', () => {
     players.forEach(p => { p.crossOrigin = "anonymous"; p.preload = "auto"; });
 
     let visualizerAnimationId = null;
+
+    let trackMetadataMap = new Map();
 
     const state = createInitialState();
 
@@ -594,7 +597,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 reviews
             });
 
-            state.playlist = playlist;
+            try {
+                trackMetadataMap = await loadTrackMetadata();
+            } catch (metadataError) {
+                console.warn('Nie udało się załadować metadanych z tracks.json:', metadataError);
+                trackMetadataMap = new Map();
+            }
+
+            state.playlist = applyMetadataToPlaylist(playlist, trackMetadataMap);
 
             if (failedTrackIds.length > 0) {
                 const failedSet = new Set(state.failedTracks);
@@ -646,7 +656,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (cachedResponse) {
                         const data = await cachedResponse.json();
                         const normalized = normalizeRealTracks(data.tracks || []);
-                        state.playlist = normalized;
+                        try {
+                            trackMetadataMap = await loadTrackMetadata();
+                        } catch (metadataError) {
+                            console.warn('Nie udało się załadować metadanych z tracks.json:', metadataError);
+                            trackMetadataMap = new Map();
+                        }
+                        state.playlist = applyMetadataToPlaylist(normalized, trackMetadataMap);
                         state.config = data.config || {};
                         prepareRecentRotation();
                         console.log(`✅ Załadowano z cache: ${state.playlist.length} utworów`);
