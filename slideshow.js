@@ -29,20 +29,38 @@ const mediaFiles = [
     'https://daremon.nl/video/video(45).mp4', 'https://daremon.nl/video/video(46).mp4', 'https://daremon.nl/video/video(47).mp4'
 ];
 
-function getRandomMedia() {
-    const randomIndex = Math.floor(Math.random() * mediaFiles.length);
-    return mediaFiles[randomIndex];
+function getRandomMedia(files = mediaFiles) {
+    if (!Array.isArray(files) || files.length === 0) {
+        return undefined;
+    }
+
+    const randomIndex = Math.floor(Math.random() * files.length);
+    const filePath = files[randomIndex];
+
+    if (typeof filePath !== 'string') {
+        return filePath;
+    }
+
+    return encodeURI(filePath);
 }
 
-function updateSlideshow() {
+function updateSlideshow(files = mediaFiles) {
+    if (typeof document === 'undefined') {
+        return;
+    }
+
     const container = document.getElementById('slideshow-container');
-    if (!container || mediaFiles.length === 0) {
+    if (!container || !Array.isArray(files) || files.length === 0) {
         return;
     }
 
     container.innerHTML = '';
-    const mediaPath = getRandomMedia();
-    const fileExtension = mediaPath.split('.').pop().toLowerCase();
+    const mediaPath = getRandomMedia(files);
+    if (!mediaPath) {
+        return;
+    }
+
+    const fileExtension = decodeURI(mediaPath).split('.').pop().toLowerCase();
 
     let mediaElement = null;
     if (['jpg', 'jpeg', 'png'].includes(fileExtension)) {
@@ -69,3 +87,5 @@ function updateSlideshow() {
 
 updateSlideshow();
 setInterval(updateSlideshow, 10000);
+
+export { getRandomMedia, updateSlideshow };
