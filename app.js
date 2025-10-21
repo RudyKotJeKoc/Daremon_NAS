@@ -56,6 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
             djMessageForm: document.getElementById('dj-message-form'),
             djMessageInput: document.getElementById('dj-message-input'),
         },
+        liveTalk: {
+            btn: document.getElementById('live-talk-btn'),
+            status: document.getElementById('live-talk-status'),
+            feedback: document.getElementById('live-talk-feedback'),
+        },
         polls: {
             container: document.getElementById('polls-container'),
             section: document.getElementById('polls-section'),
@@ -349,6 +354,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function initializePolls() {
+        // Polls disabled for TV display optimization
+        return;
+
         if (!dom.polls || !dom.polls.container) {
             console.warn('Brak kontenera dla ankiet');
             return;
@@ -441,6 +449,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function checkMilestoneAndAddPoll() {
+        // Polls disabled for TV display optimization
+        return;
+
         if (state.history.length === 10 && state.pollSystem && dom.polls?.container) {
             const newPoll = state.pollSystem.addPoll({
                 question: 'Gratulacje! Posłuchałeś 10 utworów. Jak Ci się podoba radio?',
@@ -1548,6 +1559,94 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // song dedications feature removed in simplified build
 
+    // --- Live Talk Feature ---
+    let liveTalkStream = null;
+    let liveTalkRecording = false;
+    let liveTalkAudioContext = null;
+    let liveTalkSource = null;
+    let liveTalkDestination = null;
+
+    async function toggleLiveTalk() {
+        if (!dom.liveTalk.btn || !dom.liveTalk.status || !dom.liveTalk.feedback) {
+            console.warn('Live Talk DOM elements not found');
+            return;
+        }
+
+        if (!liveTalkRecording) {
+            // Start recording
+            try {
+                if (dom.liveTalk.feedback) {
+                    dom.liveTalk.feedback.textContent = 'Proszę zezwolić na dostęp do mikrofonu...';
+                }
+
+                liveTalkStream = await navigator.mediaDevices.getUserMedia({
+                    audio: {
+                        echoCancellation: true,
+                        noiseSuppression: true,
+                        autoGainControl: true
+                    }
+                });
+
+                // Create audio context for live playback
+                if (!liveTalkAudioContext) {
+                    liveTalkAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+                }
+
+                liveTalkSource = liveTalkAudioContext.createMediaStreamSource(liveTalkStream);
+                liveTalkDestination = liveTalkAudioContext.createMediaStreamDestination();
+
+                // Connect microphone to speakers (live monitoring)
+                liveTalkSource.connect(liveTalkAudioContext.destination);
+
+                liveTalkRecording = true;
+
+                if (dom.liveTalk.status) {
+                    dom.liveTalk.status.textContent = 'NA ŻYWO - Mówisz do radia!';
+                }
+                if (dom.liveTalk.feedback) {
+                    dom.liveTalk.feedback.textContent = '🔴 Transmisja LIVE - Wszyscy Cię słyszą!';
+                    dom.liveTalk.feedback.style.color = '#ff4444';
+                }
+                if (dom.liveTalk.btn) {
+                    dom.liveTalk.btn.style.backgroundColor = '#ff4444';
+                    dom.liveTalk.btn.style.animation = 'pulse 1s infinite';
+                }
+
+            } catch (error) {
+                console.error('Błąd dostępu do mikrofonu:', error);
+                if (dom.liveTalk.feedback) {
+                    dom.liveTalk.feedback.textContent = 'Błąd: Brak dostępu do mikrofonu. Sprawdź uprawnienia.';
+                    dom.liveTalk.feedback.style.color = '#ff6b6b';
+                }
+            }
+        } else {
+            // Stop recording
+            if (liveTalkStream) {
+                liveTalkStream.getTracks().forEach(track => track.stop());
+                liveTalkStream = null;
+            }
+
+            if (liveTalkSource) {
+                liveTalkSource.disconnect();
+                liveTalkSource = null;
+            }
+
+            liveTalkRecording = false;
+
+            if (dom.liveTalk.status) {
+                dom.liveTalk.status.textContent = 'Naciśnij aby mówić';
+            }
+            if (dom.liveTalk.feedback) {
+                dom.liveTalk.feedback.textContent = 'Transmisja zakończona.';
+                dom.liveTalk.feedback.style.color = '#18a0c7';
+            }
+            if (dom.liveTalk.btn) {
+                dom.liveTalk.btn.style.backgroundColor = '';
+                dom.liveTalk.btn.style.animation = '';
+            }
+        }
+    }
+
     // --- Visualizer & Hulpprogramma's ---
     function scheduleVisualizerFrame() {
         if (visualizerAnimationId !== null) return;
@@ -1772,6 +1871,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     if (dom.sidePanel.djMessageForm) dom.sidePanel.djMessageForm.addEventListener('submit', handleMessageSubmit);
+
+        // Live Talk
+        if (dom.liveTalk.btn) {
+            dom.liveTalk.btn.addEventListener('click', toggleLiveTalk);
+        }
+
         if (dom.errorCloseBtn) dom.errorCloseBtn.addEventListener('click', () => {
             if (dom.errorOverlay) dom.errorOverlay.classList.add('hidden');
         });
