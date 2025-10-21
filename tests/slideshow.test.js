@@ -71,7 +71,7 @@ describe('getRandomMedia', () => {
     it('encodes spaces for default media files', () => {
         const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0);
         const encodedPath = getRandomMedia();
-        expect(encodedPath).toBe('https://daremon.nl/images/image%20(1).jpg');
+        expect(encodedPath).toBe('https://daremon.nl/images/image%20(1).webp');
         randomSpy.mockRestore();
     });
 });
@@ -109,6 +109,19 @@ describe('updateSlideshow', () => {
         const renderedVideo = container.querySelector('video');
         expect(renderedVideo).not.toBeNull();
         expect(renderedVideo?.getAttribute('src')).toBe(encodedPath);
+        randomSpy.mockRestore();
+    });
+
+    it('renders webp images with encoded sources when paths contain spaces', () => {
+        const files = ['https://daremon.nl/images/image (3).webp'];
+        const encodedPath = 'https://daremon.nl/images/image%20(3).webp';
+        const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0);
+
+        updateSlideshow(files);
+
+        const renderedImage = container.querySelector('img');
+        expect(renderedImage).not.toBeNull();
+        expect(renderedImage?.getAttribute('src')).toBe(encodedPath);
         randomSpy.mockRestore();
     });
 });
