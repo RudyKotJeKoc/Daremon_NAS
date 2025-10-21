@@ -9,7 +9,9 @@
     "build": "vite build",
     "lint": "echo 'linted'",
     "test": "vitest run",
-    "generate:media": "node scripts/generate-media-manifest.js"
+    "fix:filenames": "node scripts/fix-media-filenames.js",
+    "generate:media": "node scripts/generate-media-manifest.js",
+    "prepare:media": "npm run fix:filenames && npm run generate:media"
   },
   "keywords": [],
   "author": "",
