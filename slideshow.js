@@ -4,8 +4,8 @@ const createNumberedMediaList = (basePath, prefix, count, extension) => Array.fr
 );
 
 const mediaFiles = [
-    ...createNumberedMediaList('https://daremon.nl/images', 'image', 61, 'jpg'),
-    'https://daremon.nl/images/logo.jpg',
+    ...createNumberedMediaList('https://daremon.nl/images', 'image', 61, 'webp'),
+    'https://daremon.nl/images/logo.webp',
     ...createNumberedMediaList('https://daremon.nl/video', 'video', 47, 'mp4'),
 ];
 
@@ -43,7 +43,7 @@ function updateSlideshow(files = mediaFiles) {
     const fileExtension = decodeURI(mediaPath).split('.').pop().toLowerCase();
 
     let mediaElement = null;
-    if (['jpg', 'jpeg', 'png'].includes(fileExtension)) {
+    if (['jpg', 'jpeg', 'png', 'webp'].includes(fileExtension)) {
         mediaElement = document.createElement('img');
         mediaElement.src = mediaPath;
         mediaElement.alt = 'Multimedialny slajd radia ETS';
