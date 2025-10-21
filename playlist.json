@@ -10,5 +10,39 @@
     "recentMemory": 15,
     "crossfadeSeconds": 2
   },
-  "tracks": []
+  "tracks": [
+    {
+      "id": "track-1",
+      "title": "Utwór 1",
+      "artist": "DAREMON Radio",
+      "src": "./music/Utwor (1).mp3",
+      "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=1",
+      "tags": ["music"],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-2",
+      "title": "Utwór 2",
+      "artist": "DAREMON Radio",
+      "src": "./music/Utwor (2).mp3",
+      "cover": "https://placehold.co/120x120/2196F3/ffffff?text=2",
+      "tags": ["music"],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-3",
+      "title": "Utwór 3",
+      "artist": "DAREMON Radio",
+      "src": "./music/Utwor (3).mp3",
+      "cover": "https://placehold.co/120x120/FF9800/ffffff?text=3",
+      "tags": ["music"],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    }
+  ]
 }
