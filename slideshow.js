@@ -4,8 +4,10 @@ const createNumberedMediaList = (basePath, prefix, count, extension) => Array.fr
 );
 
 const mediaFiles = [
-    ...createNumberedMediaList('https://daremon.nl/images', 'image', 61, 'webp'),
-    'https://daremon.nl/images/logo.webp',
+
+    ...createNumberedMediaList('https://daremon.nl/images', 'image', 61, 'png'),
+    'https://daremon.nl/images/logo.png',
+
     ...createNumberedMediaList('https://daremon.nl/video', 'video', 47, 'mp4'),
 ];
 
