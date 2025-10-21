@@ -173,12 +173,12 @@ export class MusicScanner {
     getEmergencyPlaylist() {
         return [
             {
-                id: 'demo-1',
-                title: 'Demo Track 1',
-                artist: 'System',
-                src: './music/demo.mp3',
-                cover: 'https://placehold.co/120x120/333/fff?text=DEMO',
-                tags: ['demo'],
+                id: 'emergency-1',
+                title: 'Utwór 1',
+                artist: 'DAREMON Radio',
+                src: './music/Utwor (1).mp3',
+                cover: 'https://placehold.co/120x120/333/fff?text=1',
+                tags: ['emergency'],
                 weight: 1,
                 type: 'song',
                 golden: false

@@ -37,6 +37,8 @@ export async function fetchPlaylist({
 
     if (playlist.length === 0) {
         let fallbackTracks = [];
+        let isEmergencyPlaylist = false;
+
         if (typeof scanner.loadFallbackPlaylist === 'function') {
             try {
                 fallbackTracks = await scanner.loadFallbackPlaylist();
@@ -47,14 +49,21 @@ export async function fetchPlaylist({
 
         if ((!Array.isArray(fallbackTracks) || fallbackTracks.length === 0) && typeof scanner.getEmergencyPlaylist === 'function') {
             fallbackTracks = scanner.getEmergencyPlaylist();
+            isEmergencyPlaylist = true;
         }
 
         const normalizedFallback = normalizeRealTracks(fallbackTracks);
         const weightedFallback = applyRatingWeights(scanner, normalizedFallback, reviews);
-        const fallbackAvailability = await filterUnavailableTracks(weightedFallback);
 
-        playlist = fallbackAvailability.playableTracks || [];
-        extractFailedIds(fallbackAvailability.missingTracks).forEach(id => failedIds.add(id));
+        // Don't filter emergency playlist for availability - it's a last resort
+        if (isEmergencyPlaylist) {
+            console.warn('⚠️ Używam playlisty awaryjnej - pominięto sprawdzanie dostępności plików');
+            playlist = weightedFallback;
+        } else {
+            const fallbackAvailability = await filterUnavailableTracks(weightedFallback);
+            playlist = fallbackAvailability.playableTracks || [];
+            extractFailedIds(fallbackAvailability.missingTracks).forEach(id => failedIds.add(id));
+        }
     }
 
     return {
