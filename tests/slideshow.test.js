@@ -67,6 +67,13 @@ describe('getRandomMedia', () => {
         expect(encodedPath).toBe('https://daremon.nl/video/video%20(17).mp4');
         randomSpy.mockRestore();
     });
+
+    it('encodes spaces for default media files', () => {
+        const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0);
+        const encodedPath = getRandomMedia();
+        expect(encodedPath).toBe('https://daremon.nl/images/image%20(1).jpg');
+        randomSpy.mockRestore();
+    });
 });
 
 describe('updateSlideshow', () => {
