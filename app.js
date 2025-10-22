@@ -560,10 +560,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function loadPlaylist() {
-        const TIMEOUT_MS = 15000; // Zwiększony timeout do 15s
-        
-        const timeoutPromise = new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('Przekroczono czas ładowania playlisty (15s)')), TIMEOUT_MS)
+        const TIMEOUT_MS = 60000; // Zwiększony timeout do 60s dla dużych bibliotek muzycznych
+
+        const timeoutPromise = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Przekroczono czas ładowania playlisty (60s)')), TIMEOUT_MS)
         );
         
         try {
