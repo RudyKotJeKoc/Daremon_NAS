@@ -95,6 +95,7 @@ function normalizeTrackSrc(src) {
         return '';
     }
 
+    // URLs are already encoded, return as-is
     if (/^https?:\/\//i.test(trimmed)) {
         return trimmed;
     }
@@ -102,14 +103,15 @@ function normalizeTrackSrc(src) {
     let normalized = trimmed.replace(/\\/g, '/');
 
     if (normalized.startsWith('./') || normalized.startsWith('../')) {
-        return normalized;
+        // Encode spaces and special characters (e.g., "Daremon (213).mp3" → "Daremon%20(213).mp3")
+        return encodeURI(normalized);
     }
 
     if (normalized.startsWith('/')) {
-        return `.${normalized}`;
+        return encodeURI(`.${normalized}`);
     }
 
-    return `./${normalized}`;
+    return encodeURI(`./${normalized}`);
 }
 
 function applyRatingWeights(scanner, tracks, reviews) {

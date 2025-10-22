@@ -85,15 +85,18 @@ export class MusicScanner {
             return null;
         }
 
-        const src = typeof track.src === 'string' ? track.src.trim() : '';
-        if (!src) {
+        const rawSrc = typeof track.src === 'string' ? track.src.trim() : '';
+        if (!rawSrc) {
             return null;
         }
 
-        const fallbackTitle = await this.extractTitle(src);
+        // Encode spaces and special characters in file paths (e.g., "Daremon (213).mp3" → "Daremon%20(213).mp3")
+        const src = encodeURI(rawSrc);
+
+        const fallbackTitle = await this.extractTitle(rawSrc);
         const id = track.id ?? `remote-track-${index + 1}`;
         const title = track.title ?? fallbackTitle ?? `Utwór ${index + 1}`;
-        const artist = track.artist ?? (typeof track.performer === 'string' ? track.performer : await this.extractArtist(src));
+        const artist = track.artist ?? (typeof track.performer === 'string' ? track.performer : await this.extractArtist(rawSrc));
         const weight = typeof track.weight === 'number' && Number.isFinite(track.weight) ? track.weight : 1;
         const tags = Array.isArray(track.tags)
             ? track.tags
