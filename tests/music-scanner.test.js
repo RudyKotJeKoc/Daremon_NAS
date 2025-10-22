@@ -121,4 +121,11 @@ describe('MusicScanner', () => {
         expect(normalized?.src).toBe('https://daremon.nl/music/Daremon%20(213).mp3');
         expect(normalized?.title).toBe('Daremon (213)');
     });
+
+    it('extractTitle usuwa rozszerzenie i parametry zapytań bez utraty spacji', async () => {
+        const scanner = new MusicScanner();
+        const title = await scanner.extractTitle('https://cdn.example.com/audio/Najlepszy utwór.MP3?download=1#fragment');
+
+        expect(title).toBe('Najlepszy utwór');
+    });
 });

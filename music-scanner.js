@@ -139,7 +139,24 @@ export class MusicScanner {
             // If decoding fails, use the original segment
         }
 
-        const filename = decoded.replace('.mp3', '');
+        const withoutParams = decoded.split(/[?#]/)[0];
+
+        const supportedExtensions = Array.isArray(this.supportedFormats)
+            ? this.supportedFormats
+            : ['.mp3'];
+
+        const extensionAlternatives = supportedExtensions
+            .map(ext => typeof ext === 'string' ? ext.trim() : '')
+            .filter(Boolean)
+            .map(ext => ext.replace(/^\./, ''))
+            .filter(Boolean)
+            .map(ext => ext.toLowerCase());
+
+        const extensionPattern = extensionAlternatives.length > 0
+            ? new RegExp(`\\.(${extensionAlternatives.join('|')})$`, 'i')
+            : /\.mp3$/i;
+
+        const filename = withoutParams.replace(extensionPattern, '');
         return this.cleanupTitle(filename);
     }
 
