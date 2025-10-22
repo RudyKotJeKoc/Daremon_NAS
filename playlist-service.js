@@ -21,7 +21,8 @@ export function normalizeRealTracks(tracks) {
 export async function fetchPlaylist({
     scanner,
     filterUnavailableTracks,
-    reviews = {}
+    reviews = {},
+    skipAvailabilityCheck = false
 }) {
     if (!scanner || typeof scanner.scanMusicFolder !== 'function') {
         return { playlist: [], failedTrackIds: [] };
@@ -31,9 +32,17 @@ export async function fetchPlaylist({
     const normalizedPrimary = normalizeRealTracks(primaryTracks);
     const weightedPrimary = applyRatingWeights(scanner, normalizedPrimary, reviews);
 
-    const primaryAvailability = await filterUnavailableTracks(weightedPrimary);
-    let playlist = primaryAvailability.playableTracks || [];
-    const failedIds = new Set(extractFailedIds(primaryAvailability.missingTracks));
+    // Skip availability check for large local libraries (performance optimization)
+    let playlist, failedIds;
+    if (skipAvailabilityCheck || weightedPrimary.length > 100) {
+        console.log(`⚡ Pominięto sprawdzanie dostępności ${weightedPrimary.length} utworów (optymalizacja wydajności)`);
+        playlist = weightedPrimary;
+        failedIds = new Set();
+    } else {
+        const primaryAvailability = await filterUnavailableTracks(weightedPrimary);
+        playlist = primaryAvailability.playableTracks || [];
+        failedIds = new Set(extractFailedIds(primaryAvailability.missingTracks));
+    }
 
     if (playlist.length === 0) {
         let fallbackTracks = [];
@@ -55,9 +64,13 @@ export async function fetchPlaylist({
         const normalizedFallback = normalizeRealTracks(fallbackTracks);
         const weightedFallback = applyRatingWeights(scanner, normalizedFallback, reviews);
 
-        // Don't filter emergency playlist for availability - it's a last resort
-        if (isEmergencyPlaylist) {
-            console.warn('⚠️ Używam playlisty awaryjnej - pominięto sprawdzanie dostępności plików');
+        // Don't filter emergency playlist or large playlists for availability - it's a last resort
+        if (isEmergencyPlaylist || weightedFallback.length > 100) {
+            if (isEmergencyPlaylist) {
+                console.warn('⚠️ Używam playlisty awaryjnej - pominięto sprawdzanie dostępności plików');
+            } else {
+                console.log(`⚡ Pominięto sprawdzanie dostępności ${weightedFallback.length} utworów fallback (optymalizacja wydajności)`);
+            }
             playlist = weightedFallback;
         } else {
             const fallbackAvailability = await filterUnavailableTracks(weightedFallback);

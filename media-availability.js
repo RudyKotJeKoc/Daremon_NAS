@@ -1,3 +1,4 @@
+
 const DEFAULT_TIMEOUT = 2000;
 const DEFAULT_CHUNK_SIZE = 50;
 
@@ -204,17 +205,30 @@ export async function filterUnavailableTracks(tracks = [], options = {}) {
     const playableTracks = [];
     const missingTracks = [];
 
-    for (const track of tracks) {
-        if (!shouldCheck(track)) {
-            playableTracks.push(track);
-            continue;
-        }
+    // Split tracks into chunks for parallel processing
+    const chunks = [];
+    for (let i = 0; i < tracks.length; i += maxConcurrent) {
+        chunks.push(tracks.slice(i, i + maxConcurrent));
+    }
 
-        const exists = await checkFileExists(track.src, { ...checkOptions, logger });
-        if (exists) {
-            playableTracks.push(track);
-        } else {
-            missingTracks.push(track);
+    for (const chunk of chunks) {
+        const results = await Promise.all(
+            chunk.map(async (track) => {
+                if (!shouldCheck(track)) {
+                    return { track, exists: true };
+                }
+
+                const exists = await checkFileExists(track.src, { ...checkOptions, logger });
+                return { track, exists };
+            })
+        );
+
+        for (const { track, exists } of results) {
+            if (exists) {
+                playableTracks.push(track);
+            } else {
+                missingTracks.push(track);
+            }
         }
     }
 
