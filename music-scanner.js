@@ -13,6 +13,8 @@ export class MusicScanner {
         this.trackSource = options.trackSource ?? CONFIG.MUSIC_TRACKS_ENDPOINT ?? null;
         this.fetchImpl = options.fetchImpl ?? (typeof fetch === 'function' ? fetch : null);
         this.logger = options.logger ?? console;
+        this.availabilityStrategy = options.availabilityStrategy ?? CONFIG.MEDIA_AVAILABILITY_STRATEGY ?? 'lazy';
+        this.availabilityChunkSize = options.availabilityChunkSize ?? CONFIG.MEDIA_AVAILABILITY_CHUNK_SIZE ?? 50;
     }
 
     /**
@@ -70,6 +72,8 @@ export class MusicScanner {
             const availability = await filterUnavailableTracks(normalizedTracks, {
                 fetchImpl: this.fetchImpl,
                 logger: this.logger,
+                strategy: this.availabilityStrategy,
+                chunkSize: this.availabilityChunkSize,
             });
 
             return availability.playableTracks || [];

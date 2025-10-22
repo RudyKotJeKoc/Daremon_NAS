@@ -73,7 +73,14 @@ describe('MusicScanner', () => {
             ['HEAD https://cdn.example.com/audio-2.mp3', { status: 404 }],
         ]));
 
-        const scanner = new MusicScanner({ trackSource, fetchImpl: fetchMock });
+        // Create scanner with sequential strategy to test filtering behavior
+        const scanner = new MusicScanner({ 
+            trackSource, 
+            fetchImpl: fetchMock,
+            logger: { ...console, info: vi.fn() },
+            availabilityStrategy: 'sequential'
+        });
+        
         const tracks = await scanner.scanMusicFolder();
 
         expect(fetchMock).toHaveBeenCalledWith(trackSource, { method: 'GET' });
