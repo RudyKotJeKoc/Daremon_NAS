@@ -110,4 +110,15 @@ describe('MusicScanner', () => {
         expect(tracks).toEqual(scanner.getEmergencyPlaylist());
         expect(fetchMock).toHaveBeenCalledWith('./playlist.json');
     });
+
+    it('normalizuje ścieżki utworów z odstępami w nazwie', async () => {
+        const scanner = new MusicScanner();
+        const normalized = await scanner.normalizeTrack({
+            id: 'spaced-track',
+            src: 'https://daremon.nl/music/Daremon (213).mp3'
+        }, 0);
+
+        expect(normalized?.src).toBe('https://daremon.nl/music/Daremon%20(213).mp3');
+        expect(normalized?.title).toBe('Daremon (213)');
+    });
 });

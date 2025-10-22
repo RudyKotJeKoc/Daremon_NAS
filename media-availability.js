@@ -1,6 +1,7 @@
 
 const DEFAULT_TIMEOUT = 2000;
 const DEFAULT_CHUNK_SIZE = 50;
+const LEGACY_MAX_CONCURRENT = 10;
 
 function createAbortController(timeout) {
     if (typeof AbortController === 'undefined') {
@@ -206,9 +207,10 @@ export async function filterUnavailableTracks(tracks = [], options = {}) {
     const missingTracks = [];
 
     // Split tracks into chunks for parallel processing
+    const concurrency = Math.max(1, Math.min(chunkSize, LEGACY_MAX_CONCURRENT));
     const chunks = [];
-    for (let i = 0; i < tracks.length; i += maxConcurrent) {
-        chunks.push(tracks.slice(i, i + maxConcurrent));
+    for (let i = 0; i < tracks.length; i += concurrency) {
+        chunks.push(tracks.slice(i, i + concurrency));
     }
 
     for (const chunk of chunks) {

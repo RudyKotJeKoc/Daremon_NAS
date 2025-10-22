@@ -1,3 +1,4 @@
+import { encodeMediaPath } from './media-utils.js';
 import { mediaFiles as generatedMediaFiles } from './slideshow-media.js';
 
 const createNumberedMediaList = (basePath, prefix, count, extension) => Array.from(
@@ -26,7 +27,7 @@ function getRandomMedia(files = mediaFiles) {
         return filePath;
     }
 
-    return encodeURI(filePath);
+    return encodeMediaPath(filePath);
 }
 
 function updateSlideshow(files = mediaFiles) {
