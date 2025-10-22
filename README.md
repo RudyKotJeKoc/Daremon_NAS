@@ -325,6 +325,28 @@ pnpm lint
 3. Jeśli dodajesz nowe zasoby do cache, zwiększ wersję cache w `sw.js`
 4. Przebuduj aplikację
 
+### Dodawanie obrazów i filmów do pokazu slajdów
+
+Aplikacja automatycznie wykrywa i używa lokalnych plików multimedialnych dla pokazu slajdów:
+
+1. **Dodaj pliki obrazów** do katalogu `images/`:
+   - Obsługiwane formaty: `.png`, `.jpg`, `.jpeg`, `.webp`, `.gif`, `.svg`, `.avif`
+
+2. **Dodaj pliki wideo** do katalogu `video/`:
+   - Obsługiwane formaty: `.mp4`, `.webm`, `.ogg`, `.mov`
+
+3. **Wygeneruj manifest mediów**:
+```bash
+npm run generate:media
+```
+
+4. **Przebuduj aplikację**:
+```bash
+npm run build
+```
+
+Aplikacja automatycznie użyje lokalnych plików. Jeśli żadne lokalne pliki nie zostaną znalezione, system przełączy się na zewnętrzne źródła mediów.
+
 ### Dodawanie nowych motywów
 
 1. Edytuj `styles.css` i dodaj nowy motyw:
