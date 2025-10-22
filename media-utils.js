@@ -1,3 +1,25 @@
+export function encodeMediaPath(input) {
+    if (typeof input !== 'string') {
+        return input;
+    }
+
+    const trimmed = input.trim();
+    if (trimmed === '') {
+        return '';
+    }
+
+    if (trimmed.startsWith('data:')) {
+        return trimmed;
+    }
+
+    try {
+        return encodeURI(decodeURI(trimmed));
+    } catch (error) {
+        const safeValue = trimmed.replace(/%(?![0-9a-fA-F]{2})/g, '%25');
+        return encodeURI(safeValue);
+    }
+}
+
 export function waitForMediaReady(mediaElement, { timeout = 5000 } = {}) {
     if (!mediaElement) {
         return Promise.reject(new Error('Media element is required'));

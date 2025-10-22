@@ -1,5 +1,6 @@
 import { filterUnavailableTracks } from './media-availability.js';
 import { CONFIG } from './config.js';
+import { encodeMediaPath } from './media-utils.js';
 
 /**
  * Music Scanner - Automatyczne tworzenie playlisty z folderu music
@@ -89,10 +90,12 @@ export class MusicScanner {
             return null;
         }
 
-        const src = typeof track.src === 'string' ? track.src.trim() : '';
-        if (!src) {
+        const rawSrc = typeof track.src === 'string' ? track.src.trim() : '';
+        if (!rawSrc) {
             return null;
         }
+
+        const src = encodeMediaPath(rawSrc);
 
         const fallbackTitle = await this.extractTitle(src);
         const id = track.id ?? `remote-track-${index + 1}`;
@@ -127,7 +130,16 @@ export class MusicScanner {
      */
     async extractTitle(src) {
         // W przyszłości można dodać Web Audio API do odczytu metadanych
-        const filename = src.split('/').pop().replace('.mp3', '');
+        const lastSegment = src.split('/').pop() || '';
+        let decoded = lastSegment;
+
+        try {
+            decoded = decodeURI(lastSegment);
+        } catch (error) {
+            // If decoding fails, use the original segment
+        }
+
+        const filename = decoded.replace('.mp3', '');
         return this.cleanupTitle(filename);
     }
 
@@ -164,7 +176,10 @@ export class MusicScanner {
             const response = await fetcher('./playlist.json');
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const data = await response.json();
-            return data.tracks || [];
+            return (data.tracks || []).map(track => ({
+                ...track,
+                src: typeof track?.src === 'string' ? encodeMediaPath(track.src) : track?.src
+            }));
         } catch (error) {
             this.logger.error('❌ Nie można załadować playlist.json:', error);
             return this.getEmergencyPlaylist();
@@ -180,7 +195,7 @@ export class MusicScanner {
                 id: 'emergency-1',
                 title: 'Utwór 1',
                 artist: 'DAREMON Radio',
-                src: './music/Utwor (1).mp3',
+                src: encodeMediaPath('./music/Utwor (1).mp3'),
                 cover: 'https://placehold.co/120x120/333/fff?text=1',
                 tags: ['emergency'],
                 weight: 1,

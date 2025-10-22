@@ -1,3 +1,5 @@
+import { encodeMediaPath } from './media-utils.js';
+
 export function normalizeRealTracks(tracks) {
     if (!Array.isArray(tracks)) {
         return [];
@@ -96,20 +98,20 @@ function normalizeTrackSrc(src) {
     }
 
     if (/^https?:\/\//i.test(trimmed)) {
-        return trimmed;
+        return encodeMediaPath(trimmed);
     }
 
     let normalized = trimmed.replace(/\\/g, '/');
 
     if (normalized.startsWith('./') || normalized.startsWith('../')) {
-        return normalized;
+        return encodeMediaPath(normalized);
     }
 
     if (normalized.startsWith('/')) {
-        return `.${normalized}`;
+        return encodeMediaPath(`.${normalized}`);
     }
 
-    return `./${normalized}`;
+    return encodeMediaPath(`./${normalized}`);
 }
 
 function applyRatingWeights(scanner, tracks, reviews) {
