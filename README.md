@@ -205,6 +205,62 @@ Główny plik konfiguracyjny dla odtwarzacza:
 - **recentMemory** - liczba utworów zapamiętanych jako "ostatnio grane"
 - **crossfadeSeconds** - czas płynnego przejścia między utworami
 
+### config.js - Konfiguracja sprawdzania dostępności plików
+
+Aplikacja oferuje różne strategie sprawdzania dostępności plików multimedialnych, które można skonfigurować w `config.js`:
+
+```javascript
+MEDIA_AVAILABILITY_STRATEGY: 'lazy',  // domyślnie
+MEDIA_AVAILABILITY_CHUNK_SIZE: 50,    // dla strategii 'parallel'
+```
+
+#### Dostępne strategie:
+
+**1. `lazy` (domyślnie, najbardziej optymalne)**
+- Załaduj playlistę natychmiast bez sprawdzania dostępności plików
+- Sprawdzaj dostępność tylko przy próbie odtworzenia utworu
+- ⚡ Najszybsze - zero opóźnień przy ładowaniu
+- ✅ Zalecane dla lokalnych plików i dużych playlist (500+ utworów)
+
+**2. `skip` (optymalizacja dla plików lokalnych)**
+- Pomiń weryfikację HEAD dla plików lokalnych (ścieżki `./` i `../`)
+- Sprawdzaj tylko pliki zdalne (URLs `http://`, `https://`)
+- ⚡ Bardzo szybkie dla lokalnych playlist
+- ✅ Bezpieczniejsze niż `lazy`, gdy masz mieszankę lokalnych i zdalnych plików
+
+**3. `parallel` (równoległe sprawdzanie)**
+- Używa `Promise.all()` z limitowanymi chunkami (domyślnie 50 równolegle)
+- Zmniejsza czas sprawdzania z 500×2s do ~20s
+- ⚖️ Balans między szybkością a bezpieczeństwem
+- ✅ Dobre dla playlist ze zdalnych źródeł
+
+**4. `sequential` (legacy, najwolniejsze)**
+- Sprawdza pliki jeden po drugim
+- 500 utworów × 2s timeout = do 1000s (~16 minut)
+- 🐌 Nie zalecane dla dużych playlist
+- ℹ️ Zachowane dla kompatybilności wstecznej
+
+#### Przykład konfiguracji:
+
+```javascript
+// config.js
+const DEFAULT_CONFIG = {
+  // ... inne ustawienia ...
+  
+  // Wybierz strategię sprawdzania dostępności
+  MEDIA_AVAILABILITY_STRATEGY: 'lazy', // 'lazy' | 'skip' | 'parallel' | 'sequential'
+  
+  // Rozmiar chunka dla strategii 'parallel'
+  MEDIA_AVAILABILITY_CHUNK_SIZE: 50,
+};
+```
+
+**Porównanie wydajności** (dla 500 utworów):
+- `lazy`: ~0s (natychmiastowe ładowanie)
+- `skip`: ~4s (tylko pliki zdalne)
+- `parallel`: ~20s (50 równolegle × 2s timeout / 25 chunków)
+- `sequential`: ~1000s (500 × 2s timeout)
+
 ### Struktura utworu:
 
 ```json
@@ -324,6 +380,28 @@ pnpm lint
 
 3. Jeśli dodajesz nowe zasoby do cache, zwiększ wersję cache w `sw.js`
 4. Przebuduj aplikację
+
+### Dodawanie obrazów i filmów do pokazu slajdów
+
+Aplikacja automatycznie wykrywa i używa lokalnych plików multimedialnych dla pokazu slajdów:
+
+1. **Dodaj pliki obrazów** do katalogu `images/`:
+   - Obsługiwane formaty: `.png`, `.jpg`, `.jpeg`, `.webp`, `.gif`, `.svg`, `.avif`
+
+2. **Dodaj pliki wideo** do katalogu `video/`:
+   - Obsługiwane formaty: `.mp4`, `.webm`, `.ogg`, `.mov`
+
+3. **Wygeneruj manifest mediów**:
+```bash
+npm run generate:media
+```
+
+4. **Przebuduj aplikację**:
+```bash
+npm run build
+```
+
+Aplikacja automatycznie użyje lokalnych plików. Jeśli żadne lokalne pliki nie zostaną znalezione, system przełączy się na zewnętrzne źródła mediów.
 
 ### Dodawanie nowych motywów
 
