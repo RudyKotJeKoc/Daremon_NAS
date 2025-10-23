@@ -4,7 +4,7 @@
 
 [![License](https://img.shields.io/badge/license-ISC-blue.svg)](LICENSE)
 [![PWA](https://img.shields.io/badge/PWA-enabled-brightgreen.svg)](manifest.json)
-[![Service Worker](https://img.shields.io/badge/Service%20Worker-v9-orange.svg)](sw.js)
+[![Service Worker](https://img.shields.io/badge/Service%20Worker-v10-orange.svg)](sw.js)
 
 ## 📋 Spis treści
 
@@ -18,6 +18,7 @@
 - [Rozwój](#-rozwój)
 - [Skróty klawiszowe](#-skróty-klawiszowe)
 - [Wkład w projekt](#-wkład-w-projekt)
+- [Dodatkowa dokumentacja](#-dodatkowa-dokumentacja)
 
 ## 🎯 O projekcie
 
@@ -116,6 +117,7 @@ Lub zaktualizować ścieżki w `manifest.json` i `sw.js` do istniejących ikon.
 ### Wymagania wstępne
 - Node.js >= 18.0.0
 - pnpm >= 10.0.0 (lub npm/yarn)
+- Python 3 (opcjonalnie, dla skryptu normalizacji nazw plików)
 
 ### Kroki instalacji
 
@@ -153,31 +155,68 @@ Zbudowane pliki znajdą się w katalogu `dist/`.
 ```
 Daremon_NAS/
 ├── index.html              # Główny plik HTML
-├── app.js                  # Główna logika aplikacji
+├── app.js                  # Główna logika aplikacji (2200+ linii)
 ├── state.js                # Zarządzanie stanem aplikacji
+├── config.js               # Konfiguracja aplikacji (strategie, prefiksy)
 ├── media-utils.js          # Utilsy dla mediów
+├── media-availability.js   # Sprawdzanie dostępności plików
 ├── ui-utils.js             # UI utilities (track list items)
-├── styles.css              # Style CSS
-├── sw.js                   # Service Worker (v9)
+├── playlist-service.js     # Serwis obsługi playlisty
+├── track-metadata.js       # Metadata utworów
+├── music-scanner.js        # Automatyczne skanowanie muzyki
+├── poll-system.js          # System ankiet
+├── strategic-polls.js      # Strategiczne ankiety
+├── slideshow.js            # Pokaz slajdów
+├── slideshow-media.js      # Manifest mediów pokazu slajdów
+├── styles.css              # Style CSS (1400+ linii)
+├── sw.js                   # Service Worker (v10)
 ├── script.js               # Dodatkowe skrypty
 ├── manifest.json           # PWA manifest
-├── playlist.json           # Konfiguracja playlisty
+├── playlist.json           # Konfiguracja playlisty (144KB)
+├── tracks.json             # Dodatkowe dane utworów
 ├── template_config.json    # Template configuration
+├── rename_files.py         # Skrypt Python do normalizacji nazw plików
+├── vso-calculator.html     # Kalkulator VSO
 │
 ├── locales/                # Tłumaczenia
 │   ├── pl.json            # Polski
 │   └── nl.json            # Niderlandzki
 │
-├── tests/                  # Testy jednostkowe
+├── visualizer/             # Wizualizacje 3D (NOWE!)
+│   ├── Visualizer3D.js            # Wizualizator 3D z Three.js
+│   ├── AudioVisualizerSwitch.js   # Przełącznik 2D/3D
+│   └── README.md                  # Dokumentacja wizualizatora
+│
+├── scripts/                # Skrypty pomocnicze
+│   └── generate-media-manifest.js # Generator manifestu mediów
+│
+├── icons/                  # Ikony PWA (SVG)
+│   ├── icon-192.svg
+│   ├── icon-512.svg
+│   └── favicon.svg
+│
+├── music/                  # Katalog muzyki (pliki MP3)
+├── images/                 # Obrazy dla pokazu slajdów
+├── video/                  # Wideo dla pokazu slajdów
+│
+├── tests/                  # Testy jednostkowe (18 plików)
 │   ├── state.test.js              # Testy stanu aplikacji
 │   ├── crossfade.test.js          # Testy crossfade
 │   ├── ui-utils.test.js           # Testy UI utilities
-│   └── now-playing-layout.test.js # Testy layoutu
+│   ├── now-playing-layout.test.js # Testy layoutu
+│   ├── visualizer-3d.test.js      # Testy wizualizatora 3D
+│   ├── media-availability.test.js # Testy dostępności mediów
+│   ├── playlist-integration.test.js # Testy integracji playlisty
+│   └── ... (i więcej)
 │
-├── video/                  # Katalog wideo (zarezerwowany)
-│
+├── .vscode/                # Konfiguracja VS Code
 ├── package.json            # Zależności projektu
-└── pnpm-lock.yaml         # Lock file dla pnpm
+├── pnpm-lock.yaml          # Lock file dla pnpm
+│
+├── README.md               # Dokumentacja główna (ten plik)
+├── IMPLEMENTATION-REPORT.md        # Raport wdrożenia funkcji
+├── MEDIA-AVAILABILITY-OPTIMIZATION.md # Optymalizacja dostępności
+└── VISUALIZER-GUIDE.md     # Przewodnik po wizualizatorze 3D
 ```
 
 ## ⚙️ Konfiguracja
@@ -368,7 +407,8 @@ pnpm lint
 - **Cache Strategy**: Cache-first dla app shell
 - **Stale-while-revalidate**: dla playlisty i tłumaczeń
 - **Network-first**: dla audio files
-- **Version**: v9 (automatyczne czyszczenie starych cache)
+- **Version**: v10 (automatyczne czyszczenie starych cache + instant update flow)
+- **Message Channel**: Wsparcie dla skipWaiting przy aktualizacji
 
 ### Dodawanie nowych utworów
 
@@ -413,6 +453,28 @@ npm run build
 ```
 
 Aplikacja automatycznie użyje lokalnych plików. Jeśli żadne lokalne pliki nie zostaną znalezione, system przełączy się na zewnętrzne źródła mediów.
+
+### Normalizacja nazw plików multimedialnych
+
+Jeśli masz pliki z numerami bez spacji (np. `video1.mp4`, `image23.jpg`), możesz użyć skryptu Python do normalizacji:
+
+```bash
+# Podgląd zmian (dry run)
+python3 rename_files.py
+
+# Wykonanie zmian
+python3 rename_files.py -y
+```
+
+Skrypt przekształca:
+- `Daremon1.mp3` → `Daremon (1).mp3`
+- `image42.jpg` → `image (42).jpg`
+- `video7.mp4` → `video (7).mp4`
+
+**Limity domyślne**:
+- Muzyka: 200 plików
+- Obrazy: 61 plików
+- Wideo: 50 plików
 
 ### Dodawanie nowych motywów
 
@@ -499,6 +561,35 @@ ISC License - szczegóły w pliku LICENSE
 ## 📞 Kontakt
 
 Projekt DAREMON Radio ETS - Aplikacja demonstracyjna
+
+## 📚 Dodatkowa dokumentacja
+
+Projekt zawiera szczegółową dokumentację w osobnych plikach:
+
+- **[IMPLEMENTATION-REPORT.md](IMPLEMENTATION-REPORT.md)** - Kompletny raport wdrożenia funkcji, w tym:
+  - Usunięcie dokumentacji maszyn
+  - Automatyczne skanowanie muzyki
+  - System oceniania z wagami
+  - Implementacja wizualizatora 3D
+  - PWA install & update flow
+
+- **[MEDIA-AVAILABILITY-OPTIMIZATION.md](MEDIA-AVAILABILITY-OPTIMIZATION.md)** - Optymalizacja sprawdzania dostępności plików:
+  - Strategie: lazy, skip, parallel, sequential
+  - Porównanie wydajności (0s vs 1000s)
+  - Konfiguracja i najlepsze praktyki
+  - Testy wydajnościowe
+
+- **[VISUALIZER-GUIDE.md](VISUALIZER-GUIDE.md)** - Quick Start Guide dla wizualizatora 3D:
+  - Jak używać wizualizatora
+  - Kontrola kamery
+  - Wymagania systemowe
+  - Rozwiązywanie problemów
+
+- **[visualizer/README.md](visualizer/README.md)** - Szczegółowa dokumentacja techniczna wizualizatora:
+  - Architektura kodu
+  - Integracja z Web Audio API
+  - Optymalizacje wydajności
+  - Plany rozwoju
 
 ---
 
