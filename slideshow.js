@@ -13,8 +13,8 @@ const externalMediaFiles = [
     ...createNumberedMediaList('https://daremon.nl/video', 'video', 47, 'mp4'),
 ];
 
-// Use locally generated media files if available, otherwise fall back to external URLs
-const mediaFiles = generatedMediaFiles.length > 0 ? generatedMediaFiles : externalMediaFiles;
+// Combine locally generated media files with external URLs for more variety
+const mediaFiles = [...generatedMediaFiles, ...externalMediaFiles];
 
 function getRandomMedia(files = mediaFiles) {
     if (!Array.isArray(files) || files.length === 0) {
