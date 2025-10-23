@@ -9,7 +9,8 @@
     "build": "vite build",
     "lint": "echo 'linted'",
     "test": "vitest run",
-    "generate:media": "node scripts/generate-media-manifest.js"
+    "generate:media": "node scripts/generate-media-manifest.js",
+    "generate:playlist": "node scripts/generate-playlist.js"
   },
   "keywords": [],
   "author": "",

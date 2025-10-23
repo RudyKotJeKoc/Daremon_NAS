@@ -1,6 +1,9 @@
 {
   "config": {
-    "quietHours": { "start": "22:00", "end": "06:00" },
+    "quietHours": {
+      "start": "22:00",
+      "end": "06:00"
+    },
     "jingle": {
       "enabled": true,
       "everySongs": 4,
@@ -13,33 +16,39 @@
   "tracks": [
     {
       "id": "track-1",
-      "title": "Utwór 1",
+      "title": "Utwor (1)",
       "artist": "DAREMON Radio",
       "src": "./music/Utwor%20(1).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=1",
-      "tags": ["music"],
+      "tags": [
+        "music"
+      ],
       "weight": 1,
       "type": "song",
       "golden": false
     },
     {
       "id": "track-2",
-      "title": "Utwór 2",
+      "title": "Utwor (2)",
       "artist": "DAREMON Radio",
       "src": "./music/Utwor%20(2).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=2",
-      "tags": ["music"],
+      "tags": [
+        "music"
+      ],
       "weight": 1,
       "type": "song",
       "golden": false
     },
     {
       "id": "track-3",
-      "title": "Utwór 3",
+      "title": "Utwor (3)",
       "artist": "DAREMON Radio",
       "src": "./music/Utwor%20(3).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=3",
-      "tags": ["music"],
+      "tags": [
+        "music"
+      ],
       "weight": 1,
       "type": "song",
       "golden": false
