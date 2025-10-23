@@ -6,6 +6,7 @@ const createNumberedMediaList = (basePath, prefix, count, extension) => Array.fr
     (_, index) => `${basePath}/${prefix} (${index + 1}).${extension}`
 );
 
+
 const externalMediaFiles = [
     ...createNumberedMediaList('https://daremon.nl/images', 'image', 61, 'png'),
     'https://daremon.nl/images/logo.png',
@@ -56,6 +57,7 @@ function updateSlideshow(files = mediaFiles) {
         mediaElement.alt = 'Okładka utworu - obraz z pokazu slajdów';
         mediaElement.className = 'track-cover-media';
         mediaElement.setAttribute('role', 'img');
+
 
         mediaElement.setAttribute('aria-label', 'Grafika z pokazu slajdów radia ETS');
         

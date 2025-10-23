@@ -1,8 +1,10 @@
 
 
+
 const DEFAULT_TIMEOUT = 2000;
 const DEFAULT_CHUNK_SIZE = 50;
 const LEGACY_MAX_CONCURRENT = 10;
+
 
 function createAbortController(timeout) {
     if (typeof AbortController === 'undefined') {
@@ -63,6 +65,7 @@ function defaultShouldCheck(track) {
 }
 
 
+
 function isLocalFile(src) {
     if (typeof src !== 'string') return false;
     const trimmed = src.trim();
@@ -87,6 +90,7 @@ async function checkTracksInChunks(tracks, options) {
 
     const playableTracks = [];
     const missingTracks = [];
+
 
 
     // Process tracks in chunks

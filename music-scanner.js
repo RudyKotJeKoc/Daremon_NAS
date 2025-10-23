@@ -96,6 +96,7 @@ export class MusicScanner {
         }
 
 
+
         const src = encodeMediaPath(rawSrc);
 
         const fallbackTitle = await this.extractTitle(src);

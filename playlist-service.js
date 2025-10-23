@@ -24,6 +24,7 @@ export async function fetchPlaylist({
     scanner,
     filterUnavailableTracks,
     reviews = {},
+
     skipAvailabilityCheck = false
 }) {
     if (!scanner || typeof scanner.scanMusicFolder !== 'function') {
@@ -34,7 +35,7 @@ export async function fetchPlaylist({
     const normalizedPrimary = normalizeRealTracks(primaryTracks);
     const weightedPrimary = applyRatingWeights(scanner, normalizedPrimary, reviews);
 
-    // Skip availability check for large local libraries (performance optimization)
+
     let playlist, failedIds;
     if (skipAvailabilityCheck || weightedPrimary.length > 100) {
         console.log(`⚡ Pominięto sprawdzanie dostępności ${weightedPrimary.length} utworów (optymalizacja wydajności)`);
@@ -54,7 +55,7 @@ export async function fetchPlaylist({
             try {
                 fallbackTracks = await scanner.loadFallbackPlaylist();
             } catch (fallbackError) {
-                console.warn('Nie można załadować playlisty fallback:', fallbackError);
+                // console.warn('Nie można załadować playlisty fallback:', fallbackError); // Removed: users don't need to see this
             }
         }
 
@@ -69,7 +70,9 @@ export async function fetchPlaylist({
         // Don't filter emergency playlist or large playlists for availability - it's a last resort
         if (isEmergencyPlaylist || weightedFallback.length > 100) {
             if (isEmergencyPlaylist) {
+
                 console.warn('⚠️ Używam playlisty awaryjnej - pominięto sprawdzanie dostępności plików');
+
             } else {
                 console.log(`⚡ Pominięto sprawdzanie dostępności ${weightedFallback.length} utworów fallback (optymalizacja wydajności)`);
             }
@@ -108,6 +111,7 @@ function normalizeTrackSrc(src) {
     const isAlreadyEncoded = /%[0-9A-F]{2}/i.test(normalized);
 
     if (normalized.startsWith('./') || normalized.startsWith('../')) {
+
 
         return encodeMediaPath(normalized);
     }

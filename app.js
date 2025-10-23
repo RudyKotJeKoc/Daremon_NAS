@@ -6,6 +6,7 @@ import { PollSystem } from './poll-system.js';
 import { filterUnavailableTracks } from './media-availability.js';
 import { fetchPlaylist, normalizeRealTracks } from './playlist-service.js';
 import { loadTrackMetadata, applyMetadataToPlaylist } from './track-metadata.js';
+
 import { CONFIG } from './config.js';
 // strategic/machine docs imports removed in simplified build
 
@@ -593,7 +594,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             const data = await response.json();
                             return Array.isArray(data.tracks) ? data.tracks : [];
                         } catch (error) {
-                            console.warn('Nie można załadować playlisty fallback:', error);
+                            // console.warn('Nie można załadować playlisty fallback:', error); // Removed: users don't need to see this
                             return [];
                         }
                     },
@@ -624,7 +625,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 trackMetadataMap = await loadTrackMetadata();
             } catch (metadataError) {
-                console.warn('Nie udało się załadować metadanych z tracks.json:', metadataError);
+                // console.warn('Nie udało się załadować metadanych z tracks.json:', metadataError); // Removed: users don't need to see this
                 trackMetadataMap = new Map();
             }
 
@@ -683,7 +684,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         try {
                             trackMetadataMap = await loadTrackMetadata();
                         } catch (metadataError) {
-                            console.warn('Nie udało się załadować metadanych z tracks.json:', metadataError);
+                            // console.warn('Nie udało się załadować metadanych z tracks.json:', metadataError); // Removed: users don't need to see this
                             trackMetadataMap = new Map();
                         }
                         state.playlist = applyMetadataToPlaylist(normalized, trackMetadataMap);
@@ -693,10 +694,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         return;
                     }
                 } catch (cacheError) {
-                    console.error('Cache fallback failed:', cacheError);
+                    // console.error('Cache fallback failed:', cacheError); // Removed: users don't need to see this
                 }
             }
-            
+
             throw new Error(`Failed to load playlist: ${e.message}`);
         }
     }
@@ -878,10 +879,10 @@ document.addEventListener('DOMContentLoaded', () => {
             markTrackAsFailed(track);
             const trackLabel = getTrackLabel(track);
             const message = `Nieobsługiwany format audio: ${trackLabel}`;
-            console.warn(`${message} (${normalizedSrc})`);
-            if (showError) {
-                displayError(message);
-            }
+            // console.warn(`${message} (${normalizedSrc})`); // Removed: users don't need to see this
+            // if (showError) {
+            //     displayError(message); // Removed: users don't need to see this
+            // }
             return null;
         }
 
@@ -1107,8 +1108,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (error && error.name === 'NotSupportedError' && failingTrack) {
             markTrackAsFailed(failingTrack);
             const message = `Nieobsługiwany format audio: ${getTrackLabel(failingTrack)}`;
-            console.error(message);
-            displayError(message);
+            // console.error(message); // Removed: users don't need to see this
+            // displayError(message); // Removed: users don't need to see this
             setTimeout(playNextTrack, 0);
             return;
         }
@@ -1124,7 +1125,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const response = await fetch(source, { method: 'HEAD' });
                 isNotFound = response.status === 404;
             } catch (fetchError) {
-                console.warn('Kon audiobron niet verifiëren:', fetchError);
+                // console.warn('Kon audiobron niet verifiëren:', fetchError); // Removed: users don't need to see this
             }
         }
 
@@ -1133,9 +1134,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!state.failedTracks.includes(failingTrack.id)) {
                     state.failedTracks.push(failingTrack.id);
                 }
-                displayError(`Bestand niet gevonden: ${failingTrack.title || failingTrack.id}`);
+                // displayError(`Bestand niet gevonden: ${failingTrack.title || failingTrack.id}`); // Removed: users don't need to see this
             } else {
-                displayError(`Fout bij afspelen: ${failingTrack.title || failingTrack.id}`);
+                // displayError(`Fout bij afspelen: ${failingTrack.title || failingTrack.id}`); // Removed: users don't need to see this
             }
 
             setTimeout(playNextTrack, isNotFound ? 0 : 2000);
@@ -2141,6 +2142,11 @@ document.addEventListener('DOMContentLoaded', () => {
         window.exportPollStats = exportPollStats;
         window.DJArburg = DJArburg;
         window.djArburg = djArburg;
+    }
+
+    // Initialize survey system
+    if (typeof initializeSurvey === 'function') {
+        initializeSurvey();
     }
 
     initialize();

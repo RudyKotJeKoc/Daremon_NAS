@@ -23,7 +23,7 @@ function normalizeTrackFileKey(value) {
     try {
         return decodeURIComponent(lastSegment).toLowerCase();
     } catch (error) {
-        console.warn('Nie można znormalizować nazwy pliku utworu:', error);
+        // console.warn('Nie można znormalizować nazwy pliku utworu:', error); // Removed: users don't need to see this
         return lastSegment.toLowerCase();
     }
 }
@@ -82,7 +82,7 @@ export async function loadTrackMetadata({ fetchImpl } = {}) {
             const payload = await response.json();
             metadataCache = buildMetadataMap(payload?.tracks);
         } catch (error) {
-            console.warn('Nie można załadować metadanych utworów:', error);
+            // console.warn('Nie można załadować metadanych utworów:', error); // Removed: users don't need to see this
             metadataCache = new Map();
         } finally {
             metadataPromise = null;

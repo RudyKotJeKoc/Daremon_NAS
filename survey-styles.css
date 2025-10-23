@@ -1,0 +1,361 @@
+/**
+ * Survey Section Styles
+ * Ankieta "Zostańmy w kontakcie – kto chce budować dalej?"
+ */
+
+/* Survey Section Container */
+.survey-box {
+    margin-top: 2rem;
+    background: linear-gradient(135deg, rgba(24, 160, 199, 0.1) 0%, rgba(4, 19, 43, 0.8) 100%);
+    border: 1px solid rgba(24, 160, 199, 0.3);
+    padding: 2rem;
+    border-radius: 0.75rem;
+}
+
+.survey-title {
+    color: #18A0C7;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Survey Introduction Text */
+.survey-intro {
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.survey-intro p {
+    margin-bottom: 0.75rem;
+}
+
+.survey-intro strong {
+    color: #18A0C7;
+}
+
+.survey-note {
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+}
+
+/* Survey Form */
+.survey-form {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    color: #18A0C7;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    width: 100%;
+    background: rgba(4, 19, 43, 0.6);
+    border: 1px solid rgba(24, 160, 199, 0.4);
+    border-radius: 0.375rem;
+    padding: 0.75rem;
+    color: white;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #18A0C7;
+    box-shadow: 0 0 0 3px rgba(24, 160, 199, 0.2);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Radio and Checkbox Groups */
+.radio-group,
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.radio-label,
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s ease;
+}
+
+.radio-label:hover,
+.checkbox-label:hover {
+    background: rgba(24, 160, 199, 0.1);
+}
+
+.radio-label input[type="radio"],
+.checkbox-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #18A0C7;
+}
+
+.inline-input {
+    flex: 1;
+    margin-left: 0.5rem;
+    background: rgba(4, 19, 43, 0.6);
+    border: 1px solid rgba(24, 160, 199, 0.4);
+    border-radius: 0.375rem;
+    padding: 0.375rem 0.5rem;
+    color: white;
+    font-size: 0.9rem;
+}
+
+.inline-input:focus {
+    outline: none;
+    border-color: #18A0C7;
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.survey-submit-btn,
+.survey-results-btn {
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.survey-submit-btn {
+    background: linear-gradient(135deg, #18A0C7 0%, #008878 100%);
+    color: white;
+}
+
+.survey-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(24, 160, 199, 0.4);
+}
+
+.survey-results-btn {
+    background: rgba(24, 160, 199, 0.2);
+    color: #18A0C7;
+    border: 1px solid rgba(24, 160, 199, 0.5);
+}
+
+.survey-results-btn:hover {
+    background: rgba(24, 160, 199, 0.3);
+    border-color: #18A0C7;
+}
+
+/* Success Message */
+.survey-message {
+    text-align: center;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.success-message {
+    background: rgba(76, 175, 80, 0.2);
+    border: 1px solid rgba(76, 175, 80, 0.5);
+    color: #4CAF50;
+}
+
+/* Survey Results */
+.survey-results {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: rgba(4, 19, 43, 0.9);
+    border: 1px solid rgba(24, 160, 199, 0.4);
+    border-radius: 0.5rem;
+}
+
+.survey-results h3 {
+    color: #18A0C7;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.results-summary {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.total-responses {
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #18A0C7;
+}
+
+.stat-section {
+    margin-bottom: 2rem;
+}
+
+.stat-section h4 {
+    color: #18A0C7;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.stat-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.stat-item {
+    display: grid;
+    grid-template-columns: 180px 1fr 120px;
+    gap: 1rem;
+    align-items: center;
+}
+
+.stat-label {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+}
+
+.stat-progress {
+    height: 28px;
+    background: rgba(24, 160, 199, 0.1);
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(24, 160, 199, 0.3);
+}
+
+.stat-fill {
+    height: 100%;
+    transition: width 0.5s ease;
+    border-radius: 14px;
+}
+
+.yes-fill {
+    background: linear-gradient(90deg, #4CAF50 0%, #8BC34A 100%);
+}
+
+.maybe-fill {
+    background: linear-gradient(90deg, #FF9800 0%, #FFC107 100%);
+}
+
+.no-fill {
+    background: linear-gradient(90deg, #F44336 0%, #E91E63 100%);
+}
+
+.area-fill {
+    background: linear-gradient(90deg, #18A0C7 0%, #00BCD4 100%);
+}
+
+.stat-value {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    text-align: right;
+}
+
+/* Ideas List */
+.ideas-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.idea-item {
+    background: rgba(24, 160, 199, 0.1);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border-left: 3px solid #18A0C7;
+}
+
+.idea-item strong {
+    color: #18A0C7;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.idea-item p {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.no-ideas,
+.no-results {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+    padding: 2rem;
+}
+
+.close-results-btn {
+    display: block;
+    margin: 2rem auto 0;
+    padding: 0.75rem 2rem;
+    background: rgba(24, 160, 199, 0.2);
+    color: #18A0C7;
+    border: 1px solid rgba(24, 160, 199, 0.5);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.close-results-btn:hover {
+    background: rgba(24, 160, 199, 0.3);
+    border-color: #18A0C7;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .survey-box {
+        padding: 1.5rem 1rem;
+    }
+
+    .survey-title {
+        font-size: 1.25rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .stat-item {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+    }
+
+    .stat-value {
+        text-align: left;
+    }
+}
+
+/* Hidden class */
+.hidden {
+    display: none !important;
+}
