@@ -53,7 +53,7 @@ export async function fetchPlaylist({
             try {
                 fallbackTracks = await scanner.loadFallbackPlaylist();
             } catch (fallbackError) {
-                console.warn('Nie można załadować playlisty fallback:', fallbackError);
+                // console.warn('Nie można załadować playlisty fallback:', fallbackError); // Removed: users don't need to see this
             }
         }
 
@@ -68,7 +68,7 @@ export async function fetchPlaylist({
         // Don't filter emergency playlist or large playlists for availability - it's a last resort
         if (isEmergencyPlaylist || weightedFallback.length > 100) {
             if (isEmergencyPlaylist) {
-                console.warn('⚠️ Używam playlisty awaryjnej - pominięto sprawdzanie dostępności plików');
+                // console.warn('⚠️ Używam playlisty awaryjnej - pominięto sprawdzanie dostępności plików'); // Removed: users don't need to see this
             } else {
                 console.log(`⚡ Pominięto sprawdzanie dostępności ${weightedFallback.length} utworów fallback (optymalizacja wydajności)`);
             }
