@@ -1,6 +1,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { encodeMediaPath } from '../media-utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -99,7 +100,8 @@ function isAllowedMediaFile(fileName) {
 
 function formatRelativePath(absolutePath) {
   const relative = path.relative(ROOT_DIR, absolutePath).split(path.sep).join('/');
-  return `./${relative}`;
+  const prefixed = `./${relative}`;
+  return encodeMediaPath(prefixed);
 }
 
 async function writeManifestFile(mediaFiles) {

@@ -71,6 +71,16 @@ body {
     opacity: 0.55;
 }
 
+#visualizer-3d {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.65;
+}
+
 #visualizer-showcase {
     position: relative;
     width: 100%;
@@ -529,6 +539,25 @@ header p {
     width: auto;
     border-radius: 25px;
     padding: 0 1rem;
+}
+
+.visualizer-switch {
+    font-size: 0.9rem;
+    width: auto;
+    border-radius: 25px;
+    padding: 0 0.8rem;
+    white-space: nowrap;
+}
+
+.visualizer-switch:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.visualizer-switch:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
     font-size: 1rem;
 }
 

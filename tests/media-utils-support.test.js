@@ -1,9 +1,20 @@
 import { describe, expect, it, beforeEach, vi } from 'vitest';
-import { getMimeTypeFromSrc, isAudioSourceSupported, clearAudioSupportCache } from '../media-utils.js';
+import { encodeMediaPath, getMimeTypeFromSrc, isAudioSourceSupported, clearAudioSupportCache } from '../media-utils.js';
 
 describe('media utils audio support', () => {
     beforeEach(() => {
         clearAudioSupportCache();
+    });
+
+    describe('encodeMediaPath', () => {
+        it('encodes spaces in local file names', () => {
+            expect(encodeMediaPath('./images/image (2).png')).toBe('./images/image%20(2).png');
+        });
+
+        it('keeps already encoded URLs stable', () => {
+            const encoded = 'https://daremon.nl/music/Daremon%20(213).mp3';
+            expect(encodeMediaPath(encoded)).toBe(encoded);
+        });
     });
 
     describe('getMimeTypeFromSrc', () => {

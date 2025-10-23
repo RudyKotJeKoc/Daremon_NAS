@@ -73,7 +73,14 @@ describe('MusicScanner', () => {
             ['HEAD https://cdn.example.com/audio-2.mp3', { status: 404 }],
         ]));
 
-        const scanner = new MusicScanner({ trackSource, fetchImpl: fetchMock });
+        // Create scanner with sequential strategy to test filtering behavior
+        const scanner = new MusicScanner({ 
+            trackSource, 
+            fetchImpl: fetchMock,
+            logger: { ...console, info: vi.fn() },
+            availabilityStrategy: 'sequential'
+        });
+        
         const tracks = await scanner.scanMusicFolder();
 
         expect(fetchMock).toHaveBeenCalledWith(trackSource, { method: 'GET' });
@@ -102,5 +109,23 @@ describe('MusicScanner', () => {
 
         expect(tracks).toEqual(scanner.getEmergencyPlaylist());
         expect(fetchMock).toHaveBeenCalledWith('./playlist.json');
+    });
+
+    it('normalizuje ścieżki utworów z odstępami w nazwie', async () => {
+        const scanner = new MusicScanner();
+        const normalized = await scanner.normalizeTrack({
+            id: 'spaced-track',
+            src: 'https://daremon.nl/music/Daremon (213).mp3'
+        }, 0);
+
+        expect(normalized?.src).toBe('https://daremon.nl/music/Daremon%20(213).mp3');
+        expect(normalized?.title).toBe('Daremon (213)');
+    });
+
+    it('extractTitle usuwa rozszerzenie i parametry zapytań bez utraty spacji', async () => {
+        const scanner = new MusicScanner();
+        const title = await scanner.extractTitle('https://cdn.example.com/audio/Najlepszy utwór.MP3?download=1#fragment');
+
+        expect(title).toBe('Najlepszy utwór');
     });
 });

@@ -1,3 +1,5 @@
+import { encodeMediaPath } from './media-utils.js';
+
 export function normalizeRealTracks(tracks) {
     if (!Array.isArray(tracks)) {
         return [];
@@ -22,7 +24,8 @@ export async function fetchPlaylist({
     scanner,
     filterUnavailableTracks,
     reviews = {},
-    skipAvailabilityCheck = true  // Changed to true - skip by default for production
+
+    skipAvailabilityCheck = false
 }) {
     if (!scanner || typeof scanner.scanMusicFolder !== 'function') {
         return { playlist: [], failedTrackIds: [] };
@@ -32,8 +35,7 @@ export async function fetchPlaylist({
     const normalizedPrimary = normalizeRealTracks(primaryTracks);
     const weightedPrimary = applyRatingWeights(scanner, normalizedPrimary, reviews);
 
-    // Skip availability check for large local libraries OR if explicitly requested
-    // Performance optimization: avoid 500 HEAD requests on page load
+
     let playlist, failedIds;
     if (skipAvailabilityCheck || weightedPrimary.length > 100) {
         console.log(`⚡ Pominięto sprawdzanie dostępności ${weightedPrimary.length} utworów (optymalizacja wydajności)`);
@@ -68,7 +70,9 @@ export async function fetchPlaylist({
         // Don't filter emergency playlist or large playlists for availability - it's a last resort
         if (isEmergencyPlaylist || weightedFallback.length > 100) {
             if (isEmergencyPlaylist) {
-                // console.warn('⚠️ Używam playlisty awaryjnej - pominięto sprawdzanie dostępności plików'); // Removed: users don't need to see this
+
+                console.warn('⚠️ Używam playlisty awaryjnej - pominięto sprawdzanie dostępności plików');
+
             } else {
                 console.log(`⚡ Pominięto sprawdzanie dostępności ${weightedFallback.length} utworów fallback (optymalizacja wydajności)`);
             }
@@ -98,7 +102,7 @@ function normalizeTrackSrc(src) {
 
     // URLs are already encoded, return as-is
     if (/^https?:\/\//i.test(trimmed)) {
-        return trimmed;
+        return encodeMediaPath(trimmed);
     }
 
     let normalized = trimmed.replace(/\\/g, '/');
@@ -107,19 +111,16 @@ function normalizeTrackSrc(src) {
     const isAlreadyEncoded = /%[0-9A-F]{2}/i.test(normalized);
 
     if (normalized.startsWith('./') || normalized.startsWith('../')) {
-        // Only encode if not already encoded
-        return isAlreadyEncoded ? normalized : encodeURI(normalized);
+
+
+        return encodeMediaPath(normalized);
     }
 
     if (normalized.startsWith('/')) {
-        // Prepend ./ and only encode if not already encoded
-        const withDot = `.${normalized}`;
-        return isAlreadyEncoded ? withDot : encodeURI(withDot);
+        return encodeMediaPath(`.${normalized}`);
     }
 
-    // Default case
-    const withDot = `./${normalized}`;
-    return isAlreadyEncoded ? withDot : encodeURI(withDot);
+    return encodeMediaPath(`./${normalized}`);
 }
 
 function applyRatingWeights(scanner, tracks, reviews) {
