@@ -20,14 +20,15 @@ describe('now playing layout', () => {
     expect(sectionMatch?.[1]).toContain('<div id="player-ui">');
   });
 
-  it('positions the Daremon logo and countdown inside the visualizer showcase', () => {
-    const visualizerMatch = html.match(
-      /<section id="visualizer-showcase"[\s\S]*?<\/section>/
-    );
+  it('places the slideshow container directly after the now playing section', () => {
+    expect(html).not.toContain('id="visualizer-showcase"');
 
-    expect(visualizerMatch).toBeTruthy();
-    expect(visualizerMatch?.[0]).toContain('<img id="daremon-logo"');
-    expect(visualizerMatch?.[0]).toContain('id="countdown-display"');
+    const nowPlayingIndex = html.indexOf('<section id="now-playing-section"');
+    const slideshowIndex = html.indexOf('<div id="slideshow-container"');
+
+    expect(nowPlayingIndex).toBeGreaterThan(-1);
+    expect(slideshowIndex).toBeGreaterThan(-1);
+    expect(slideshowIndex).toBeGreaterThan(nowPlayingIndex);
   });
 
 });

@@ -208,8 +208,12 @@
             let breakEvenMonth = null;
             timelineBody.innerHTML = '';
 
+            const safeGrowthRate = Math.min(Math.max(growthRate, -0.95), 0.5);
+            const revenueCap = Math.max(monthlyRevenue * 10, 0);
+
             for (let month = 1; month <= 12; month += 1) {
-                const monthRevenue = monthlyRevenue * Math.pow(1 + growthRate, month - 1);
+                const projectedRevenue = monthlyRevenue * Math.pow(1 + safeGrowthRate, month - 1);
+                const monthRevenue = Math.min(Math.max(projectedRevenue, 0), revenueCap);
                 const monthProfit = monthRevenue - fixedCosts;
                 cumulative += monthProfit;
 

@@ -1,8 +1,12 @@
-import { waitForMediaReady } from './media-utils.js';
+import { waitForMediaReady, shouldIgnorePlaybackError, isAudioSourceSupported } from './media-utils.js';
 import { createInitialState } from './state.js';
 import { createTrackListItem } from './ui-utils.js';
 import { PollSystem } from './poll-system.js';
-import { AudioVisualizerSwitch } from './visualizer/AudioVisualizerSwitch.js';
+
+import { filterUnavailableTracks } from './media-availability.js';
+import { fetchPlaylist, normalizeRealTracks } from './playlist-service.js';
+import { loadTrackMetadata, applyMetadataToPlaylist } from './track-metadata.js';
+import { CONFIG } from './config.js';
 // strategic/machine docs imports removed in simplified build
 
 /**
@@ -53,6 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
             messagesList: document.getElementById('messages-list'),
             djMessageForm: document.getElementById('dj-message-form'),
             djMessageInput: document.getElementById('dj-message-input'),
+        },
+        liveTalk: {
+            btn: document.getElementById('live-talk-btn'),
+            status: document.getElementById('live-talk-status'),
+            feedback: document.getElementById('live-talk-feedback'),
         },
         polls: {
             container: document.getElementById('polls-container'),
@@ -155,10 +164,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let visualizerAnimationId = null;
     let visualizerSwitch = null;
 
+    let trackMetadataMap = new Map();
+
     const state = createInitialState();
 
-    // Ensure fresh start; on first load, perform reset then reload
-    (async () => { if (await resetAppStorageOnce()) return; })();
+    // Ensure fresh start; on first load, perform reset then reload (development only)
+    const isDevelopment = window.location.hostname === 'localhost';
+    if (isDevelopment) {
+        (async () => { if (await resetAppStorageOnce()) return; })();
+    }
 
     // --- INTERNATIONALISATIE (i18n) ---
     async function i18n_init() {
@@ -344,6 +358,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function initializePolls() {
+        // Polls disabled for TV display optimization
+        return;
+
         if (!dom.polls || !dom.polls.container) {
             console.warn('Brak kontenera dla ankiet');
             return;
@@ -436,6 +453,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function checkMilestoneAndAddPoll() {
+        // Polls disabled for TV display optimization
+        return;
+
         if (state.history.length === 10 && state.pollSystem && dom.polls?.container) {
             const newPoll = state.pollSystem.addPoll({
                 question: 'Gratulacje! Posłuchałeś 10 utworów. Jak Ci się podoba radio?',
@@ -544,10 +564,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function loadPlaylist() {
-        const TIMEOUT_MS = 15000; // Zwiększony timeout do 15s
-        
-        const timeoutPromise = new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('Przekroczono czas ładowania playlisty (15s)')), TIMEOUT_MS)
+        const TIMEOUT_MS = 60000; // Zwiększony timeout do 60s dla dużych bibliotek muzycznych
+
+        const timeoutPromise = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Przekroczono czas ładowania playlisty (60s)')), TIMEOUT_MS)
         );
         
         try {
@@ -555,151 +575,66 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Użyj music-scanner do automatycznego skanowania folderu music
             let scanner;
-            let generatedDaremon = false;
-            // Dutch-themed titles (beavers, ships, sinking)
-            const makeDutchTitle = (n) => {
-                const themes = [
-                    'Beverdam bij de Rivier',
-                    'Bevers aan Boord',
-                    'Schip in de Storm',
-                    'Noodsignaal op Zee',
-                    'Onder de Waterlijn',
-                    'Kapitein Bever',
-                    'Zinkende Schemering',
-                    'Scheepswrak in de Diepte',
-                    'Zeegang en Houten Dam',
-                    'Rivierdelta en Dammen',
-                    'Schipbreuk bij de Dam',
-                    'Stille Haven, Zware Golf',
-                    'Bevers en de Oostzee',
-                    'Romp en Ratelstaart',
-                    'Kielwater van de Bever',
-                    'Ondergaande Zon, Ondergaand Schip',
-                    'Drijvend Hout en Burcht',
-                    'Muiterij op de Beverboot',
-                    'Noorderwind en Natte Vacht',
-                    'Sirenes over de Zuidpier',
-                    'Damwachter aan Dek',
-                    'Golven tegen de Burcht',
-                    'Schroef en Staart',
-                    'Diepgang naar de Delta',
-                    'Zeilschip en Zinklijn',
-                    'Beverbrigade op Zee',
-                    'Scheepsklok in de Mist',
-                    'Stormvloed en Dam',
-                    'Riviermonding bij Nacht',
-                    'Bakboord Bever',
-                    'Havenlicht op de Burcht',
-                    'Kade van Kastor',
-                    'Redding in het Riet',
-                    'Anker bij de Beverdam',
-                    'Zeebranding en Burchtmuur',
-                    'Vloedlijn en Vacht',
-                    'Scheepstoeter en Stuwdam',
-                    'Planken, Peddels en Pels',
-                    'Middengolf voor de Burcht',
-                    'Zeeschuim en Zinkgat'
-                ];
-                const base = themes[(n - 1) % themes.length];
-                return `${base}`; // no number suffix in title for a natural look
-            };
-            const generateDaremonTracks = (max = 231) => {
-                const out = [];
-                const ensureCover = (n) => `https://placehold.co/120x120/222/fff?text=${n}`;
-                for (let n = 1; n <= max; n++) {
-                    out.push({
-                        id: `utwor-${n}`,
-                        title: makeDutchTitle(n),
-                        artist: 'Onbekend',
-                        src: `./music/Daremon (${n}).mp3`,
-                        cover: ensureCover(n),
-                        tags: ['bever', 'schip', 'zinken'],
-                        weight: 3,
-                        type: 'song',
-                        golden: false
-                    });
-                }
-                return out;
-            };
             if (window.MusicScanner) {
                 scanner = new window.MusicScanner();
             } else {
                 // Fallback jeśli moduł nie jest dostępny
                 console.warn('⚠️ MusicScanner nie jest dostępny, używam playlist.json');
-                scanner = { 
-                    scanMusicFolder: async () => {
-                        // Generuj listę utworów w schemacie Daremon (1..231)
-                        generatedDaremon = true;
-                        return generateDaremonTracks(231);
+                scanner = {
+                    async scanMusicFolder() {
+                        return await this.loadFallbackPlaylist();
+                    },
+                    async loadFallbackPlaylist() {
+                        try {
+                            const response = await fetch('./playlist.json');
+                            if (!response.ok) {
+                                return [];
+                            }
+                            const data = await response.json();
+                            return Array.isArray(data.tracks) ? data.tracks : [];
+                        } catch (error) {
+                            console.warn('Nie można załadować playlisty fallback:', error);
+                            return [];
+                        }
+                    },
+                    getEmergencyPlaylist() {
+                        return [];
                     }
                 };
             }
-            
-            // Skanuj muzykę z uwzględnieniem ocen
-            const tracks = await scanner.scanMusicFolder();
 
-            // Mapuj tylko gdy źródło pochodzi z playlist.json (Utwor -> Daremon)
-            const mapUtworToDaremonSrc = (src) => {
-                if (typeof src !== 'string') return src;
-                const m = src.match(/^(?:\.\/|\/)music\/Utwor \((\d+)\)\.mp3$/i);
-                if (m) {
-                    const n = m[1];
-                    return `./music/Daremon (${n}).mp3`;
-                }
-                return src;
-            };
-
-            const normalizedTracks = generatedDaremon
-                ? tracks
-                : tracks.map(t => ({
-                    ...t,
-                    src: t.type === 'song' ? mapUtworToDaremonSrc(t.src) : t.src
-                }));
-
-            // Dodaj brakujące utwory, jeśli folder zawiera pliki Daremon (1..231)
-            // Zachowaj spójny schemat ID jak istniejące: utwor-N dla zwykłych piosenek
-            const MAX_NUM = 231;
-            const canonicalize = (s) => typeof s === 'string' ? s.replace(/^\/music\//i, './music/').toLowerCase() : '';
-            const hasSrcFor = new Set(normalizedTracks.map(t => canonicalize(t.src)));
-            const hasId = new Set(normalizedTracks.map(t => t.id));
-            const ensureCover = (n) => `https://placehold.co/120x120/222/fff?text=${n}`;
-
-            if (!generatedDaremon) {
-                for (let n = 1; n <= MAX_NUM; n++) {
-                    const daremonSrc = `./music/Daremon (${n}).mp3`;
-                    if (!hasSrcFor.has(canonicalize(daremonSrc))) {
-                        // Nie dubluj istniejących specjalnych ID (np. kaput/bmw-kut/jingle-*)
-                        const newId = `utwor-${n}`;
-                        if (hasId.has(newId)) continue;
-                        normalizedTracks.push({
-                            id: newId,
-                            title: makeDutchTitle(n),
-                            artist: 'Onbekend',
-                            src: daremonSrc,
-                            cover: ensureCover(n),
-                            tags: ['bever', 'schip', 'zinken'],
-                            weight: 3,
-                            type: 'song',
-                            golden: false
-                        });
-                        hasSrcFor.add(canonicalize(daremonSrc));
-                        hasId.add(newId);
-                    }
-                }
-            }
-            
-            // Zastosuj wagi na podstawie ocen użytkowników
-            // Use STORAGE_PREFIX safely with fallback
             const STORAGE_PREFIX = (window.CONFIG && window.CONFIG.STORAGE_PREFIX) || 'daremon';
             const reviews = JSON.parse(window.localStorage.getItem(`${STORAGE_PREFIX}_reviews`) || '{}');
-            
-            let processedTracks = normalizedTracks;
-            if (scanner.applyRatingWeights && Object.keys(reviews).length > 0) {
-                processedTracks = scanner.applyRatingWeights(normalizedTracks, reviews);
-                console.log(`🎵 Zastosowano wagi na podstawie ${Object.keys(reviews).length} ocen`);
+
+            // Create configured wrapper for filterUnavailableTracks
+            const configuredFilter = async (tracks, options = {}) => {
+                return filterUnavailableTracks(tracks, {
+                    ...options,
+                    strategy: CONFIG.MEDIA_AVAILABILITY_STRATEGY || 'lazy',
+                    chunkSize: CONFIG.MEDIA_AVAILABILITY_CHUNK_SIZE || 50,
+                });
+            };
+
+            const { playlist, failedTrackIds } = await fetchPlaylist({
+                scanner,
+                filterUnavailableTracks: configuredFilter,
+                reviews
+            });
+
+            try {
+                trackMetadataMap = await loadTrackMetadata();
+            } catch (metadataError) {
+                console.warn('Nie udało się załadować metadanych z tracks.json:', metadataError);
+                trackMetadataMap = new Map();
             }
-            
-            state.playlist = processedTracks;
+
+            state.playlist = applyMetadataToPlaylist(playlist, trackMetadataMap);
+
+            if (failedTrackIds.length > 0) {
+                const failedSet = new Set(state.failedTracks);
+                failedTrackIds.forEach(id => failedSet.add(id));
+                state.failedTracks = Array.from(failedSet);
+            }
 
             // Załaduj konfigurację z playlist.json (bez utworów)
             try {
@@ -744,43 +679,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     const cachedResponse = await caches.match('./playlist.json');
                     if (cachedResponse) {
                         const data = await cachedResponse.json();
-                        // Map cached playlist to nowe ścieżki Daremon oraz uzupełnij brakujące pozycje
-                        const mapUtworToDaremonSrc = (src) => {
-                            if (typeof src !== 'string') return src;
-                            const m = src.match(/^(?:\.\/|\/)music\/Utwor \((\d+)\)\.mp3$/i);
-                            if (m) {
-                                const n = m[1];
-                                return `./music/Daremon (${n}).mp3`;
-                            }
-                            return src;
-                        };
-                        const canonicalize = (s) => typeof s === 'string' ? s.replace(/^\/music\//i, './music/').toLowerCase() : '';
-                        const normalized = (data.tracks || []).map(t => ({ ...t, src: mapUtworToDaremonSrc(t.src) }));
-                        const hasSrcFor = new Set(normalized.map(t => canonicalize(t.src)));
-                        const hasId = new Set(normalized.map(t => t.id));
-                        const ensureCover = (n) => `https://placehold.co/120x120/222/fff?text=${n}`;
-                        for (let n = 1; n <= 231; n++) {
-                            const daremonSrc = `./music/Daremon (${n}).mp3`;
-                            if (!hasSrcFor.has(canonicalize(daremonSrc))) {
-                                const newId = `utwor-${n}`;
-                                if (!hasId.has(newId)) {
-                                    normalized.push({
-                                        id: newId,
-                                        title: `Utwór ${n}`,
-                                        artist: 'Nieznany',
-                                        src: daremonSrc,
-                                        cover: ensureCover(n),
-                                        tags: [],
-                                        weight: 3,
-                                        type: 'song',
-                                        golden: false
-                                    });
-                                    hasSrcFor.add(canonicalize(daremonSrc));
-                                    hasId.add(newId);
-                                }
-                            }
+                        const normalized = normalizeRealTracks(data.tracks || []);
+                        try {
+                            trackMetadataMap = await loadTrackMetadata();
+                        } catch (metadataError) {
+                            console.warn('Nie udało się załadować metadanych z tracks.json:', metadataError);
+                            trackMetadataMap = new Map();
                         }
-                        state.playlist = normalized;
+                        state.playlist = applyMetadataToPlaylist(normalized, trackMetadataMap);
                         state.config = data.config || {};
                         prepareRecentRotation();
                         console.log(`✅ Załadowano z cache: ${state.playlist.length} utworów`);
@@ -943,6 +849,45 @@ document.addEventListener('DOMContentLoaded', () => {
         return src;
     }
 
+    function getTrackLabel(track) {
+        if (!track || typeof track !== 'object') {
+            return 'Onbekend nummer';
+        }
+        return track.title || track.id || 'Onbekend nummer';
+    }
+
+    function markTrackAsFailed(track) {
+        if (!track || !track.id) return;
+        if (!state.failedTracks.includes(track.id)) {
+            state.failedTracks.push(track.id);
+        }
+    }
+
+    function getPlayableSource(track, audioElement, { showError = true } = {}) {
+        if (!track) {
+            return null;
+        }
+
+        const normalizedSrc = normalizeTrackSrc(track.src);
+        if (!normalizedSrc) {
+            return null;
+        }
+
+        const supported = isAudioSourceSupported(normalizedSrc, { audioElement });
+        if (!supported) {
+            markTrackAsFailed(track);
+            const trackLabel = getTrackLabel(track);
+            const message = `Nieobsługiwany format audio: ${trackLabel}`;
+            console.warn(`${message} (${normalizedSrc})`);
+            if (showError) {
+                displayError(message);
+            }
+            return null;
+        }
+
+        return normalizedSrc;
+    }
+
     function playNextTrack() {
         const nextTrack = state.nextTrack || selectNextTrack();
         if (!nextTrack) {
@@ -970,12 +915,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        const activePlayer = players[activePlayerIndex];
+        const playableSrc = getPlayableSource(nextTrack, activePlayer);
+        if (!playableSrc) {
+            state.nextTrack = null;
+            state.nextTrackReady = false;
+            state.currentTrack = null;
+            state.isPlaying = false;
+            updatePlayPauseButtons();
+            setTimeout(playNextTrack, 0);
+            return;
+        }
+
         state.currentTrack = nextTrack;
         state.nextTrack = null;
         state.nextTrackReady = false;
 
-        const activePlayer = players[activePlayerIndex];
-        activePlayer.src = normalizeTrackSrc(state.currentTrack.src);
+        activePlayer.src = playableSrc;
         const baseVolume = dom.player.volumeSlider ? parseFloat(dom.player.volumeSlider.value) : 0.5;
         activePlayer.volume = isQuietHour() ? baseVolume * 0.5 : baseVolume;
 
@@ -998,6 +954,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                         state.isPlaying = false;
                         console.log('💡 Czekam na interakcję użytkownika...');
+                    } else if (shouldIgnorePlaybackError(error)) {
+                        state.isPlaying = false;
+                        updatePlayPauseButtons();
+                        console.info('ℹ️ Żądanie odtwarzania zostało przerwane przed startem.');
                     } else {
                         handleAudioError(error);
                     }
@@ -1013,6 +973,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const inactivePlayerIndex = 1 - activePlayerIndex;
             const inactivePlayer = players[inactivePlayerIndex];
 
+            const playableSrc = getPlayableSource(state.nextTrack, inactivePlayer, { showError: false });
+            if (!playableSrc) {
+                state.nextTrack = null;
+                state.nextTrackReady = false;
+                setTimeout(preloadNextTrack, 0);
+                return;
+            }
+
             const markReady = () => {
                 state.nextTrackReady = true;
                 cleanupListeners();
@@ -1021,8 +989,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const handlePreloadError = (event) => {
                 cleanupListeners();
                 const failedTrack = state.nextTrack;
-                if (failedTrack && !state.failedTracks.includes(failedTrack.id)) {
-                    state.failedTracks.push(failedTrack.id);
+                if (failedTrack) {
+                    markTrackAsFailed(failedTrack);
                 }
 
                 const trackLabel = failedTrack?.title || failedTrack?.id || 'Onbekend nummer';
@@ -1049,7 +1017,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             inactivePlayer.addEventListener('canplaythrough', markReady, { once: true });
             inactivePlayer.addEventListener('error', handlePreloadError, { once: true });
-            inactivePlayer.src = normalizeTrackSrc(state.nextTrack.src);
+            inactivePlayer.src = playableSrc;
         }
     }
 
@@ -1123,6 +1091,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     async function handleAudioError(error) {
+        if (shouldIgnorePlaybackError(error)) {
+            console.info('ℹ️ Pomijam przerwane żądanie odtwarzania.');
+            return;
+        }
+
         console.error('Audio afspeelfout:', error);
 
         const isHtmlMediaElement = typeof HTMLMediaElement !== 'undefined';
@@ -1130,6 +1103,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const activePlayer = players[activePlayerIndex];
         const player = mediaTarget || activePlayer;
         const failingTrack = mediaTarget === activePlayer ? state.currentTrack : state.nextTrack || state.currentTrack;
+
+        if (error && error.name === 'NotSupportedError' && failingTrack) {
+            markTrackAsFailed(failingTrack);
+            const message = `Nieobsługiwany format audio: ${getTrackLabel(failingTrack)}`;
+            console.error(message);
+            displayError(message);
+            setTimeout(playNextTrack, 0);
+            return;
+        }
 
         let source = player?.currentSrc || player?.src || failingTrack?.src;
         if (source) {
@@ -1202,17 +1184,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!state.currentTrack) return;
         const { title, artist, cover, id } = state.currentTrack;
         const elementsToFade = [dom.player.trackInfo, dom.player.cover].filter(Boolean);
-        
+
         elementsToFade.forEach(el => el.classList.add('fade-out'));
-        
+
         setTimeout(() => {
             if (dom.player.title) dom.player.title.textContent = title;
             if (dom.player.artist) dom.player.artist.textContent = artist;
-            if (dom.player.cover) dom.player.cover.src = cover;
+            // Track cover is now handled by slideshow.js (images/videos from /images and /video)
+            // if (dom.player.cover) dom.player.cover.src = cover;
             if (dom.stickyPlayer.title) dom.stickyPlayer.title.textContent = title;
             if (dom.stickyPlayer.cover) dom.stickyPlayer.cover.src = cover;
             document.title = `${title} - Radio`;
-            
+
             renderRatingUI(id);
             elementsToFade.forEach(el => el.classList.remove('fade-out'));
 
@@ -1601,6 +1584,94 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // song dedications feature removed in simplified build
 
+    // --- Live Talk Feature ---
+    let liveTalkStream = null;
+    let liveTalkRecording = false;
+    let liveTalkAudioContext = null;
+    let liveTalkSource = null;
+    let liveTalkDestination = null;
+
+    async function toggleLiveTalk() {
+        if (!dom.liveTalk.btn || !dom.liveTalk.status || !dom.liveTalk.feedback) {
+            console.warn('Live Talk DOM elements not found');
+            return;
+        }
+
+        if (!liveTalkRecording) {
+            // Start recording
+            try {
+                if (dom.liveTalk.feedback) {
+                    dom.liveTalk.feedback.textContent = 'Proszę zezwolić na dostęp do mikrofonu...';
+                }
+
+                liveTalkStream = await navigator.mediaDevices.getUserMedia({
+                    audio: {
+                        echoCancellation: true,
+                        noiseSuppression: true,
+                        autoGainControl: true
+                    }
+                });
+
+                // Create audio context for live playback
+                if (!liveTalkAudioContext) {
+                    liveTalkAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+                }
+
+                liveTalkSource = liveTalkAudioContext.createMediaStreamSource(liveTalkStream);
+                liveTalkDestination = liveTalkAudioContext.createMediaStreamDestination();
+
+                // Connect microphone to speakers (live monitoring)
+                liveTalkSource.connect(liveTalkAudioContext.destination);
+
+                liveTalkRecording = true;
+
+                if (dom.liveTalk.status) {
+                    dom.liveTalk.status.textContent = 'NA ŻYWO - Mówisz do radia!';
+                }
+                if (dom.liveTalk.feedback) {
+                    dom.liveTalk.feedback.textContent = '🔴 Transmisja LIVE - Wszyscy Cię słyszą!';
+                    dom.liveTalk.feedback.style.color = '#ff4444';
+                }
+                if (dom.liveTalk.btn) {
+                    dom.liveTalk.btn.style.backgroundColor = '#ff4444';
+                    dom.liveTalk.btn.style.animation = 'pulse 1s infinite';
+                }
+
+            } catch (error) {
+                console.error('Błąd dostępu do mikrofonu:', error);
+                if (dom.liveTalk.feedback) {
+                    dom.liveTalk.feedback.textContent = 'Błąd: Brak dostępu do mikrofonu. Sprawdź uprawnienia.';
+                    dom.liveTalk.feedback.style.color = '#ff6b6b';
+                }
+            }
+        } else {
+            // Stop recording
+            if (liveTalkStream) {
+                liveTalkStream.getTracks().forEach(track => track.stop());
+                liveTalkStream = null;
+            }
+
+            if (liveTalkSource) {
+                liveTalkSource.disconnect();
+                liveTalkSource = null;
+            }
+
+            liveTalkRecording = false;
+
+            if (dom.liveTalk.status) {
+                dom.liveTalk.status.textContent = 'Naciśnij aby mówić';
+            }
+            if (dom.liveTalk.feedback) {
+                dom.liveTalk.feedback.textContent = 'Transmisja zakończona.';
+                dom.liveTalk.feedback.style.color = '#18a0c7';
+            }
+            if (dom.liveTalk.btn) {
+                dom.liveTalk.btn.style.backgroundColor = '';
+                dom.liveTalk.btn.style.animation = '';
+            }
+        }
+    }
+
     // --- Visualizer & Hulpprogramma's ---
     function scheduleVisualizerFrame() {
         if (visualizerAnimationId !== null) return;
@@ -1836,6 +1907,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     if (dom.sidePanel.djMessageForm) dom.sidePanel.djMessageForm.addEventListener('submit', handleMessageSubmit);
+
+        // Live Talk
+        if (dom.liveTalk.btn) {
+            dom.liveTalk.btn.addEventListener('click', toggleLiveTalk);
+        }
+
         if (dom.errorCloseBtn) dom.errorCloseBtn.addEventListener('click', () => {
             if (dom.errorOverlay) dom.errorOverlay.classList.add('hidden');
         });
@@ -1966,9 +2043,104 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    class DJArburg {
+        constructor({ languageResolver = () => document.documentElement?.lang || 'nl', logger = console } = {}) {
+            this.languageResolver = languageResolver;
+            this.logger = logger;
+            this.voice = null;
+            this.isSpeechSupported = typeof window === 'object'
+                && 'speechSynthesis' in window
+                && typeof window.SpeechSynthesisUtterance === 'function';
+
+            if (this.isSpeechSupported) {
+                this.logger.log('🎙️ DJ Arburg ready to announce with speech synthesis.');
+                this.bindVoiceSelection();
+            } else {
+                this.logger.warn('🔇 Speech synthesis unavailable, DJ Arburg will log announcements.');
+            }
+        }
+
+        bindVoiceSelection() {
+            this.selectVoice();
+            const synth = window.speechSynthesis;
+            const handler = () => this.selectVoice();
+            if (synth && typeof synth.addEventListener === 'function') {
+                synth.addEventListener('voiceschanged', handler);
+            } else if (synth) {
+                synth.onvoiceschanged = handler;
+            }
+        }
+
+        selectVoice() {
+            if (!this.isSpeechSupported) return;
+            const synth = window.speechSynthesis;
+            if (!synth) return;
+            const voices = synth.getVoices();
+            if (!voices || voices.length === 0) {
+                this.logger.warn('🎙️ Geen beschikbare stemmen voor speechSynthesis.');
+                return;
+            }
+
+            const lang = (this.languageResolver?.() || 'nl').toLowerCase();
+            const primary = lang.split('-')[0];
+
+            const exactMatch = voices.find(voice => voice.lang?.toLowerCase() === lang);
+            const partialMatch = voices.find(voice => voice.lang?.toLowerCase().startsWith(primary));
+
+            this.voice = exactMatch || partialMatch || voices[0];
+            if (this.voice) {
+                this.logger.log(`🎙️ DJ Arburg gebruikt stem: ${this.voice.name} (${this.voice.lang}).`);
+            }
+        }
+
+        announce(message, options = {}) {
+            const text = typeof message === 'string' ? message.trim() : '';
+            if (!text) {
+                this.logger.warn('🎙️ DJ Arburg ontving leeg bericht en heeft niets aangekondigd.');
+                return;
+            }
+
+            const lang = options.lang || this.languageResolver?.() || 'nl';
+            this.logger.log(`📣 DJ Arburg kondigt aan (${lang}): ${text}`);
+
+            if (!this.isSpeechSupported) {
+                this.logger.info('🔁 Console fallback geactiveerd voor DJ Arburg aankondiging.');
+                return;
+            }
+
+            try {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = lang;
+                utterance.rate = options.rate || 1;
+                utterance.pitch = options.pitch || 1;
+
+                if (this.voice) {
+                    utterance.voice = this.voice;
+                }
+
+                window.speechSynthesis.cancel();
+                window.speechSynthesis.speak(utterance);
+            } catch (error) {
+                this.logger.error('🎙️ DJ Arburg kon de aankondiging niet uitspreken:', error);
+            }
+        }
+
+        testAnnounce() {
+            const lang = this.languageResolver?.() || 'nl';
+            const sampleText = lang.startsWith('pl')
+                ? 'To jest testowe ogłoszenie DJ Arburg.'
+                : 'Dit is een testbericht van DJ Arburg.';
+            this.announce(sampleText, { lang });
+        }
+    }
+
+    const djArburg = new DJArburg({ languageResolver: () => state.language, logger: console });
+
     if (typeof window === 'object') {
         window.createQuickPoll = createQuickPoll;
         window.exportPollStats = exportPollStats;
+        window.DJArburg = DJArburg;
+        window.djArburg = djArburg;
     }
 
     initialize();

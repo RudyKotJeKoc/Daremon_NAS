@@ -1,3 +1,25 @@
+export function encodeMediaPath(input) {
+    if (typeof input !== 'string') {
+        return input;
+    }
+
+    const trimmed = input.trim();
+    if (trimmed === '') {
+        return '';
+    }
+
+    if (trimmed.startsWith('data:')) {
+        return trimmed;
+    }
+
+    try {
+        return encodeURI(decodeURI(trimmed));
+    } catch (error) {
+        const safeValue = trimmed.replace(/%(?![0-9a-fA-F]{2})/g, '%25');
+        return encodeURI(safeValue);
+    }
+}
+
 export function waitForMediaReady(mediaElement, { timeout = 5000 } = {}) {
     if (!mediaElement) {
         return Promise.reject(new Error('Media element is required'));
@@ -39,4 +61,97 @@ export function waitForMediaReady(mediaElement, { timeout = 5000 } = {}) {
             timerId = setTimeout(onTimeout, timeout);
         }
     });
+}
+
+const INTERRUPTED_MESSAGES = [
+    'The play() request was interrupted by a call to pause()',
+    'The play() request was interrupted by a new load request'
+];
+
+const EXTENSION_TO_MIME = {
+    mp3: 'audio/mpeg',
+    mpeg: 'audio/mpeg',
+    mpga: 'audio/mpeg',
+    wav: 'audio/wav',
+    wave: 'audio/wav',
+    ogg: 'audio/ogg',
+    oga: 'audio/ogg',
+    webm: 'audio/webm',
+    m4a: 'audio/mp4',
+    mp4: 'audio/mp4',
+    aac: 'audio/aac',
+    flac: 'audio/flac'
+};
+
+const supportCache = new Map();
+
+export function shouldIgnorePlaybackError(error) {
+    if (!error) {
+        return false;
+    }
+
+    const name = typeof error === 'object' && error !== null && 'name' in error ? error.name : undefined;
+    if (name === 'AbortError') {
+        return true;
+    }
+
+    const code = typeof error === 'object' && error !== null && 'code' in error ? error.code : undefined;
+    if (code === 20) { // DOMException.ABORT_ERR legacy code
+        return true;
+    }
+
+    const message = typeof error === 'object' && error !== null && 'message' in error
+        ? error.message
+        : typeof error === 'string'
+            ? error
+            : undefined;
+
+    if (typeof message === 'string') {
+        return INTERRUPTED_MESSAGES.some(fragment => message.includes(fragment));
+    }
+
+    return false;
+}
+
+export function getMimeTypeFromSrc(src) {
+    if (typeof src !== 'string') {
+        return null;
+    }
+
+    const match = src.match(/\.([a-z0-9]+)(?:\?.*)?$/i);
+    if (!match) {
+        return null;
+    }
+
+    const extension = match[1].toLowerCase();
+    return EXTENSION_TO_MIME[extension] || null;
+}
+
+export function isAudioSourceSupported(src, { audioElement } = {}) {
+    if (typeof src !== 'string' || src.trim() === '') {
+        return false;
+    }
+
+    const mime = getMimeTypeFromSrc(src);
+    if (!mime) {
+        return true;
+    }
+
+    if (supportCache.has(mime)) {
+        return supportCache.get(mime);
+    }
+
+    const element = audioElement || (typeof Audio !== 'undefined' ? new Audio() : null);
+    if (!element || typeof element.canPlayType !== 'function') {
+        return true;
+    }
+
+    const result = element.canPlayType(mime);
+    const isSupported = result === 'probably' || result === 'maybe';
+    supportCache.set(mime, isSupported);
+    return isSupported;
+}
+
+export function clearAudioSupportCache() {
+    supportCache.clear();
 }

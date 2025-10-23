@@ -32,102 +32,7 @@
 </head>
 <body data-theme="arburg">
     
-    <canvas id="visualizer-canvas"></canvas>
-    <canvas id="visualizer-3d" style="display: none;"></canvas>
-    <!-- Dodatkowa warstwa efektów -->
-    <div class="visualizer-overlay" style="
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      background: radial-gradient(
-        ellipse at 50% 50%,
-        transparent 0%,
-        transparent 40%,
-        rgba(4, 19, 43, 0.6) 100%
-      );
-    "></div>
     <div id="offline-indicator" class="hidden" aria-live="assertive" data-i18n-key="offlineMessage"></div>
-
-    <section id="visualizer-showcase" aria-label="Audio visualizer">
-        <div class="visualizer-glow" aria-hidden="true">
-            <div class="visualizer-burst"></div>
-            <div class="visualizer-rays"></div>
-        </div>
-    <div class="visualizer-content" role="group" aria-labelledby="countdown-heading">
-            <img id="daremon-logo" src="images/icons/logo.png" alt="Logo projektu" role="img" aria-label="Logo projektu">
-            <div class="countdown-card" aria-live="polite">
-
-        <p id="countdown-heading">Odliczanie</p>
-
-                <div id="countdown-display" role="timer" aria-live="polite" aria-atomic="true">
-                    <span class="countdown-part">
-                        <span id="countdown-days" class="countdown-value">0</span>
-                        <span class="countdown-unit">dni</span>
-                    </span>
-                    <span class="countdown-part">
-                        <span id="countdown-hours" class="countdown-value">0</span>
-                        <span class="countdown-unit">godz.</span>
-                    </span>
-                    <span class="countdown-part">
-                        <span id="countdown-minutes" class="countdown-value">0</span>
-                        <span class="countdown-unit">min</span>
-                    </span>
-                    <span class="countdown-part">
-                        <span id="countdown-seconds" class="countdown-value">0</span>
-                        <span class="countdown-unit">sek</span>
-                    </span>
-                </div>
-
-            </div>
-        </div>
-        <div class="visualizer-bars" aria-hidden="true">
-            <span class="bar" style="--i:0"></span>
-            <span class="bar" style="--i:1"></span>
-            <span class="bar" style="--i:2"></span>
-            <span class="bar" style="--i:3"></span>
-            <span class="bar" style="--i:4"></span>
-            <span class="bar" style="--i:5"></span>
-            <span class="bar" style="--i:6"></span>
-            <span class="bar" style="--i:7"></span>
-            <span class="bar" style="--i:8"></span>
-            <span class="bar" style="--i:9"></span>
-            <span class="bar" style="--i:10"></span>
-            <span class="bar" style="--i:11"></span>
-            <span class="bar" style="--i:12"></span>
-            <span class="bar" style="--i:13"></span>
-            <span class="bar" style="--i:14"></span>
-            <span class="bar" style="--i:15"></span>
-            <span class="bar" style="--i:16"></span>
-            <span class="bar" style="--i:17"></span>
-            <span class="bar" style="--i:18"></span>
-            <span class="bar" style="--i:19"></span>
-            <span class="bar" style="--i:20"></span>
-            <span class="bar" style="--i:21"></span>
-            <span class="bar" style="--i:22"></span>
-            <span class="bar" style="--i:23"></span>
-            <span class="bar" style="--i:24"></span>
-            <span class="bar" style="--i:25"></span>
-            <span class="bar" style="--i:26"></span>
-            <span class="bar" style="--i:27"></span>
-            <span class="bar" style="--i:28"></span>
-            <span class="bar" style="--i:29"></span>
-            <span class="bar" style="--i:30"></span>
-            <span class="bar" style="--i:31"></span>
-        </div>
-        <figure class="photo-frame hero-left" aria-labelledby="hero-photo-left-caption">
-            <img src="https://placehold.co/220x300/04132B/18A0C7?text=Live+Show" alt="Teamlid presenteert live-uitzending">
-            <figcaption id="hero-photo-left-caption" data-i18n-key="heroPhotoLeftCaption"></figcaption>
-        </figure>
-        <figure class="photo-frame hero-right" aria-labelledby="hero-photo-right-caption">
-            <img src="https://placehold.co/220x300/082552/9BD6FF?text=Studio" alt="Studioverlichting en mengpaneel">
-            <figcaption id="hero-photo-right-caption" data-i18n-key="heroPhotoRightCaption"></figcaption>
-        </figure>
-    </section>
-
     <div id="app-container">
         <!-- Main Radio Player View -->
         <div id="radio-view">
@@ -165,6 +70,15 @@
 
                     <!-- Song Dedications section removed - aplikacja uproszczona do core radio -->
 
+                    <section class="content-box" id="live-talk-section">
+                        <h3>Live Talk - Mów do radia</h3>
+                        <p class="section-intro">Naciśnij przycisk, powiedz coś i wszyscy Cię usłyszą!</p>
+                        <button id="live-talk-btn" class="cta-button primary">
+                            🎙️ <span id="live-talk-status">Naciśnij aby mówić</span>
+                        </button>
+                        <p id="live-talk-feedback" class="form-feedback"></p>
+                    </section>
+
                     <section class="content-box">
                         <h3 data-i18n-key="changeTheme"></h3>
                         <div class="theme-switcher">
@@ -177,11 +91,7 @@
                     <!-- Machine documentation section removed -->
                     <!-- Strategic polls section removed - aplikacja uproszczona do core radio -->
                     <!-- VSO Calculator section removed - aplikacja uproszczona do core radio -->
-
-                    <section class="content-box" id="polls-section" aria-label="Ankiety słuchaczy" data-i18n-aria-label="pollsAriaLabel">
-                        <h3 data-i18n-key="pollsTitle">Ankiety</h3>
-                        <div id="polls-container" class="polls-container" aria-live="polite"></div>
-                    </section>
+                    <!-- Polls section removed - optymalizacja dla wyświetlania TV -->
 
                     <!-- Photo Gallery usunięta - aplikacja uproszczona do core radio -->
                 </div>
@@ -197,7 +107,9 @@
                 <section id="now-playing-section" class="content-box">
                     <div class="now-playing-layout">
                         <div id="player-ui">
-                            <img id="track-cover" src="https://placehold.co/120x120/04132B/18A0C7?text=ETS" alt="Okładka aktualnego utworu">
+                            <div id="track-cover" class="track-cover-container">
+                                <!-- Slideshow images/videos will be rendered here -->
+                            </div>
                             <div id="track-info">
                                 <h2 id="track-title" aria-live="polite" data-i18n-key="trackTitleDefault"></h2>
                             <h3 id="track-artist" data-i18n-key="trackArtistDefault"></h3>
@@ -230,14 +142,11 @@
                     </div>
                 </section>
 
-                <!-- DAREMON HUB USUNIĘTY - UPROSZCZENIE APLIKACJI -->
-                
-                <section id="team-moments" class="content-box photo-collage" aria-labelledby="team-moments-title">
-                    </div>
-                </section>
-                
+                <!-- Slideshow container removed - now integrated into track-cover -->
 
-                <!-- Team moments i video library usunięte - aplikacja uproszczona do core radio -->
+                <!-- DAREMON HUB USUNIĘTY - UPROSZCZENIE APLIKACJI -->
+                <!-- Team moments removed - optymalizacja dla TV display -->
+                <!-- Video library removed - optymalizacja dla TV display -->
                 
                 <div id="hotkeys-info" data-i18n-key="hotkeysInfo"></div>
                 <div id="install-banner" class="hidden" role="region" aria-live="polite">
@@ -289,6 +198,7 @@
     </footer>
 
     <script type="module" src="music-scanner.js"></script>
+    <script type="module" src="slideshow.js"></script>
     <script type="module" src="script.js"></script>
     <script type="module" src="app.js"></script>
 </body>
