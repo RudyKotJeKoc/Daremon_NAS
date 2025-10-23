@@ -1160,17 +1160,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!state.currentTrack) return;
         const { title, artist, cover, id } = state.currentTrack;
         const elementsToFade = [dom.player.trackInfo, dom.player.cover].filter(Boolean);
-        
+
         elementsToFade.forEach(el => el.classList.add('fade-out'));
-        
+
         setTimeout(() => {
             if (dom.player.title) dom.player.title.textContent = title;
             if (dom.player.artist) dom.player.artist.textContent = artist;
-            if (dom.player.cover) dom.player.cover.src = cover;
+            // Track cover is now handled by slideshow.js (images/videos from /images and /video)
+            // if (dom.player.cover) dom.player.cover.src = cover;
             if (dom.stickyPlayer.title) dom.stickyPlayer.title.textContent = title;
             if (dom.stickyPlayer.cover) dom.stickyPlayer.cover.src = cover;
             document.title = `${title} - Radio`;
-            
+
             renderRatingUI(id);
             elementsToFade.forEach(el => el.classList.remove('fade-out'));
 

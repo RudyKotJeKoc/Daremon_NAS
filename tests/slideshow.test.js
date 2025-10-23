@@ -83,11 +83,11 @@ describe('updateSlideshow', () => {
 
     beforeEach(() => {
         container = new MockElement('div');
-        container.id = 'slideshow-container';
+        container.id = 'track-cover';
 
         const mockDocument = {
             createElement: (tag) => new MockElement(tag),
-            getElementById: (id) => (id === 'slideshow-container' ? container : null),
+            getElementById: (id) => (id === 'track-cover' ? container : null),
             body: {
                 appendChild: () => {},
             },

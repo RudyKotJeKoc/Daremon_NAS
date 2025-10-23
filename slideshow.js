@@ -31,7 +31,8 @@ function updateSlideshow(files = mediaFiles) {
         return;
     }
 
-    const container = document.getElementById('slideshow-container');
+    // Render to track-cover instead of slideshow-container
+    const container = document.getElementById('track-cover');
     if (!container || !Array.isArray(files) || files.length === 0) {
         return;
     }
@@ -48,9 +49,10 @@ function updateSlideshow(files = mediaFiles) {
     if (['jpg', 'jpeg', 'png', 'webp'].includes(fileExtension)) {
         mediaElement = document.createElement('img');
         mediaElement.src = mediaPath;
-        mediaElement.alt = 'Multimedialny slajd radia ETS';
+        mediaElement.alt = 'Okładka utworu - obraz z pokazu slajdów';
+        mediaElement.className = 'track-cover-media';
         mediaElement.setAttribute('role', 'img');
-        mediaElement.setAttribute('aria-label', 'Grafika z pokazu slajdów radia ETS');
+        mediaElement.setAttribute('aria-label', 'Grafika wyświetlana jako okładka utworu');
     } else if (['mp4'].includes(fileExtension)) {
         mediaElement = document.createElement('video');
         mediaElement.src = mediaPath;
@@ -58,7 +60,8 @@ function updateSlideshow(files = mediaFiles) {
         mediaElement.muted = true;
         mediaElement.loop = true;
         mediaElement.playsInline = true;
-        mediaElement.setAttribute('aria-label', 'Materiały wideo z pokazu slajdów radia ETS');
+        mediaElement.className = 'track-cover-media';
+        mediaElement.setAttribute('aria-label', 'Wideo wyświetlane jako okładka utworu');
         mediaElement.setAttribute('role', 'img');
     }
 
