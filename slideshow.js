@@ -5,10 +5,10 @@ const createNumberedMediaList = (basePath, prefix, count, extension) => Array.fr
 
 const mediaFiles = [
 
-    ...createNumberedMediaList('https://daremon.nl/images', 'image', 61, 'png'),
+    ...createNumberedMediaList('https://daremon.nl/images', 'image', 64, 'png'),
     'https://daremon.nl/images/logo.png',
 
-    ...createNumberedMediaList('https://daremon.nl/video', 'video', 47, 'mp4'),
+    ...createNumberedMediaList('https://daremon.nl/video', 'video', 50, 'mp4'),
 ];
 
 function getRandomMedia(files = mediaFiles) {
