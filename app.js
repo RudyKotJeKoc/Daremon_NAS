@@ -5,6 +5,7 @@ import { PollSystem } from './poll-system.js';
 import { filterUnavailableTracks } from './media-availability.js';
 import { fetchPlaylist, normalizeRealTracks } from './playlist-service.js';
 import { loadTrackMetadata, applyMetadataToPlaylist } from './track-metadata.js';
+import { initializeSurvey } from './survey.js';
 // strategic/machine docs imports removed in simplified build
 
 /**
@@ -2106,6 +2107,11 @@ document.addEventListener('DOMContentLoaded', () => {
         window.exportPollStats = exportPollStats;
         window.DJArburg = DJArburg;
         window.djArburg = djArburg;
+    }
+
+    // Initialize survey system
+    if (typeof initializeSurvey === 'function') {
+        initializeSurvey();
     }
 
     initialize();
