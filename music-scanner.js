@@ -95,12 +95,13 @@ export class MusicScanner {
             return null;
         }
 
+
         const src = encodeMediaPath(rawSrc);
 
         const fallbackTitle = await this.extractTitle(src);
         const id = track.id ?? `remote-track-${index + 1}`;
         const title = track.title ?? fallbackTitle ?? `Utwór ${index + 1}`;
-        const artist = track.artist ?? (typeof track.performer === 'string' ? track.performer : await this.extractArtist(src));
+        const artist = track.artist ?? (typeof track.performer === 'string' ? track.performer : await this.extractArtist(rawSrc));
         const weight = typeof track.weight === 'number' && Number.isFinite(track.weight) ? track.weight : 1;
         const tags = Array.isArray(track.tags)
             ? track.tags

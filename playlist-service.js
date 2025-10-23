@@ -97,13 +97,18 @@ function normalizeTrackSrc(src) {
         return '';
     }
 
+    // URLs are already encoded, return as-is
     if (/^https?:\/\//i.test(trimmed)) {
         return encodeMediaPath(trimmed);
     }
 
     let normalized = trimmed.replace(/\\/g, '/');
 
+    // Check if already encoded (contains %20 or other percent-encoded chars)
+    const isAlreadyEncoded = /%[0-9A-F]{2}/i.test(normalized);
+
     if (normalized.startsWith('./') || normalized.startsWith('../')) {
+
         return encodeMediaPath(normalized);
     }
 
