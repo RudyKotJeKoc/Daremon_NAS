@@ -102,16 +102,23 @@ function normalizeTrackSrc(src) {
 
     let normalized = trimmed.replace(/\\/g, '/');
 
+    // Check if already encoded (contains %20 or other percent-encoded chars)
+    const isAlreadyEncoded = /%[0-9A-F]{2}/i.test(normalized);
+
     if (normalized.startsWith('./') || normalized.startsWith('../')) {
-        // Encode spaces and special characters (e.g., "Daremon (213).mp3" → "Daremon%20(213).mp3")
-        return encodeURI(normalized);
+        // Only encode if not already encoded
+        return isAlreadyEncoded ? normalized : encodeURI(normalized);
     }
 
     if (normalized.startsWith('/')) {
-        return encodeURI(`.${normalized}`);
+        // Prepend ./ and only encode if not already encoded
+        const withDot = `.${normalized}`;
+        return isAlreadyEncoded ? withDot : encodeURI(withDot);
     }
 
-    return encodeURI(`./${normalized}`);
+    // Default case
+    const withDot = `./${normalized}`;
+    return isAlreadyEncoded ? withDot : encodeURI(withDot);
 }
 
 function applyRatingWeights(scanner, tracks, reviews) {

@@ -22,6 +22,28 @@ describe('URL encoding for music files', () => {
         expect(normalized[0].src).toBe('./music/Utwor%20(1).mp3');
     });
 
+    it('does NOT double-encode already encoded paths', () => {
+        const tracks = [
+            { id: 'track-1', src: '/music/Utwor%20(200).mp3', title: 'Test Track' }
+        ];
+
+        const normalized = normalizeRealTracks(tracks);
+
+        // Should NOT become ./music/Utwor%2520(200).mp3
+        expect(normalized[0].src).toBe('./music/Utwor%20(200).mp3');
+    });
+
+    it('handles already encoded paths with ./', () => {
+        const tracks = [
+            { id: 'track-1', src: './music/Utwor%20(100).mp3', title: 'Test Track' }
+        ];
+
+        const normalized = normalizeRealTracks(tracks);
+
+        // Should stay as-is, no double encoding
+        expect(normalized[0].src).toBe('./music/Utwor%20(100).mp3');
+    });
+
     it('handles remote URLs without double-encoding', () => {
         const tracks = [
             { id: 'track-1', src: 'https://daremon.nl/music/Daremon (213).mp3', title: 'Test Track' }
@@ -66,5 +88,19 @@ describe('URL encoding for music files', () => {
         expect(normalized[0].src).toBe('./music/Daremon%20(1).mp3');
         expect(normalized[1].src).toBe('./music/Daremon%20(2).mp3');
         expect(normalized[2].src).toBe('./music/Daremon%20(213).mp3');
+    });
+
+    it('handles playlist.json format with already encoded paths', () => {
+        const tracks = [
+            { id: 'track-1', src: '/music/Utwor%20(1).mp3', title: 'Utwór 1' },
+            { id: 'track-200', src: '/music/Utwor%20(200).mp3', title: 'Utwór 200' },
+            { id: 'track-500', src: '/music/Utwor%20(500).mp3', title: 'Utwór 500' }
+        ];
+
+        const normalized = normalizeRealTracks(tracks);
+
+        expect(normalized[0].src).toBe('./music/Utwor%20(1).mp3');
+        expect(normalized[1].src).toBe('./music/Utwor%20(200).mp3');
+        expect(normalized[2].src).toBe('./music/Utwor%20(500).mp3');
     });
 });

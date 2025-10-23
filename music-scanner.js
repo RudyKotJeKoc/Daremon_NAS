@@ -90,8 +90,12 @@ export class MusicScanner {
             return null;
         }
 
-        // Encode spaces and special characters in file paths (e.g., "Daremon (213).mp3" → "Daremon%20(213).mp3")
-        const src = encodeURI(rawSrc);
+        // Check if already encoded (contains %20 or other percent-encoded chars)
+        const isAlreadyEncoded = /%[0-9A-F]{2}/i.test(rawSrc);
+
+        // Encode spaces and special characters only if not already encoded
+        // (e.g., "Daremon (213).mp3" → "Daremon%20(213).mp3")
+        const src = isAlreadyEncoded ? rawSrc : encodeURI(rawSrc);
 
         const fallbackTitle = await this.extractTitle(rawSrc);
         const id = track.id ?? `remote-track-${index + 1}`;
