@@ -2,6 +2,7 @@ import { waitForMediaReady, shouldIgnorePlaybackError, isAudioSourceSupported } 
 import { createInitialState } from './state.js';
 import { createTrackListItem } from './ui-utils.js';
 import { PollSystem } from './poll-system.js';
+
 import { filterUnavailableTracks } from './media-availability.js';
 import { fetchPlaylist, normalizeRealTracks } from './playlist-service.js';
 import { loadTrackMetadata, applyMetadataToPlaylist } from './track-metadata.js';
@@ -75,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         introVideo: document.getElementById('intro-video'),
         welcomeGreeting: document.getElementById('welcome-greeting'),
         visualizerCanvas: document.getElementById('visualizer-canvas'),
+        visualizer3DCanvas: document.getElementById('visualizer-3d'),
         offlineIndicator: document.getElementById('offline-indicator'),
         errorOverlay: document.getElementById('error-overlay'),
         errorMessage: document.getElementById('error-message'),
@@ -160,6 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
     players.forEach(p => { p.crossOrigin = "anonymous"; p.preload = "auto"; });
 
     let visualizerAnimationId = null;
+    let visualizerSwitch = null;
 
     let trackMetadataMap = new Map();
 
@@ -740,6 +743,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 source.connect(analyser);
             });
             analyser.connect(audioContext.destination);
+            
+            // Initialize visualizer switch after audio context is ready
+            if (!visualizerSwitch && dom.visualizerCanvas && dom.visualizer3DCanvas) {
+                visualizerSwitch = new AudioVisualizerSwitch(
+                    dom.visualizerCanvas,
+                    dom.visualizer3DCanvas,
+                    analyser,
+                    drawVisualizer
+                );
+            }
+            
             scheduleVisualizerFrame();
         } catch (e) {
             console.error("Audio context setup failed:", e);
@@ -1692,6 +1706,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             return;
         }
+        
+        // Skip 2D rendering if 3D visualizer is active
+        if (visualizerSwitch && visualizerSwitch.mode === '3d') {
+            return;
+        }
 
         const bufferLength = analyser.frequencyBinCount;
         const dataArray = new Uint8Array(bufferLength);
@@ -1861,10 +1880,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (player === players[activePlayerIndex]) playNextTrack(); 
             }); 
             player.addEventListener('pause', () => { 
-                if (player === players[activePlayerIndex]) updatePlayPauseButtons(); 
+                if (player === players[activePlayerIndex]) {
+                    updatePlayPauseButtons();
+                    if (visualizerSwitch) visualizerSwitch.stop();
+                }
             }); 
             player.addEventListener('play', () => { 
-                if (player === players[activePlayerIndex]) updatePlayPauseButtons(); 
+                if (player === players[activePlayerIndex]) {
+                    updatePlayPauseButtons();
+                    if (visualizerSwitch) visualizerSwitch.start();
+                }
             }); 
             player.addEventListener('error', handleAudioError); 
         });

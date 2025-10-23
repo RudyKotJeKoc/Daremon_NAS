@@ -169,3 +169,115 @@ User experience:
 Notes:
 
 - On iOS Safari, `beforeinstallprompt` is not available; users must use the Share → Add to Home Screen flow. The app remains fully functional.
+
+## 🌐 3D Audio Visualizer (Wizualizacja 3D) - NOWE!
+
+### Zaimplementowane Funkcje
+
+#### 1. Three.js Integration
+- ✅ **Dodano Three.js 0.170.0** jako zależność projektu
+- ✅ **Utworzono katalog `/visualizer`** z modułami wizualizacji 3D
+- ✅ **Visualizer3D.js** - główna klasa wizualizatora 3D
+- ✅ **AudioVisualizerSwitch.js** - komponent przełączania między 2D/3D
+
+#### 2. Scena 3D i Obiekty
+- ✅ **Kamera perspektywiczna** z aspect ratio dostosowanym do okna
+- ✅ **Oświetlenie**:
+  - Ambient light dla podstawowego oświetlenia
+  - Directional light dla głębi
+  - Dwa point lights (pomarańczowy i niebieski) dla efektów dynamicznych
+- ✅ **Centralna kula** (SphereGeometry 64x64):
+  - Skaluje się w rytm basu (niskie częstotliwości)
+  - Emissive intensity reaguje na głośność
+  - Automatyczna rotacja
+- ✅ **System cząsteczek** (300 particles):
+  - Rozmieszczone w sferze wokół centrum
+  - Kolorowane według zakresu częstotliwości:
+    - Bas (0-33%): czerwony/pomarańczowy
+    - Środek (33-66%): żółty/pomarańczowy
+    - Wysokie (66-100%): niebieski/cyjan
+  - Animowane w czasie rzeczywistym na podstawie amplitudy
+
+#### 3. Interaktywność
+- ✅ **OrbitControls**:
+  - Obracanie kamerą myszą/touch
+  - Zoom scrollem/pinch
+  - Damping dla płynności
+  - Min/max distance (5-50 jednostek)
+- ✅ **Auto-rotate**:
+  - Włącza się po 5 sekundach bezczynności
+  - Wyłącza się przy interakcji użytkownika
+  - Prędkość: 0.5
+
+#### 4. Integracja z Web Audio API
+- ✅ **Połączenie z istniejącym AnalyserNode**
+- ✅ **Odczyt danych częstotliwości** w pętli renderowania
+- ✅ **Analiza zakresów**:
+  - Bass average (0-33% bufferLength)
+  - Mid average (33-66% bufferLength)
+  - Treble average (66-100% bufferLength)
+- ✅ **Synchronizacja z odtwarzaniem**:
+  - Start wizualizatora przy play
+  - Stop wizualizatora przy pause
+
+#### 5. Progressive Enhancement
+- ✅ **Detekcja WebGL** (static method `isWebGLAvailable()`)
+- ✅ **Fallback do 2D** gdy WebGL niedostępny
+- ✅ **Przycisk przełączania** 2D/3D:
+  - Wstrzyknięty do kontrolek odtwarzacza
+  - Disabled gdy WebGL niedostępny
+  - Tooltip informacyjny
+- ✅ **Zapisywanie preferencji** w localStorage
+
+#### 6. Optymalizacja
+- ✅ **devicePixelRatio** ograniczony do 2
+- ✅ **Antyaliasing** włączony dla lepszej jakości
+- ✅ **Mgła sceny** dla efektu głębi
+- ✅ **RequestAnimationFrame** dla płynnej animacji
+- ✅ **Cleanup resources** w metodzie dispose()
+
+#### 7. Testy
+- ✅ **Utworzono tests/visualizer-3d.test.js**
+- ✅ **Testy sprawdzają**:
+  - Dostępność metod statycznych
+  - Strukturę klas i metod
+  - Obsługę localStorage
+- ✅ **Wszystkie testy przechodzą** (35/35 passed)
+
+#### 8. Dokumentacja
+- ✅ **visualizer/README.md** - szczegółowa dokumentacja implementacji
+- ✅ **Aktualizacja głównego README.md** z informacjami o 3D visualizer
+- ✅ **Komentarze w kodzie** (JSDoc style)
+
+### Struktura Plików
+
+```
+visualizer/
+├── Visualizer3D.js           # Główna klasa wizualizatora 3D (383 linii)
+├── AudioVisualizerSwitch.js  # Komponent przełączania (240 linii)
+└── README.md                 # Dokumentacja
+
+tests/
+└── visualizer-3d.test.js     # Testy jednostkowe (64 linie)
+```
+
+### Jak Używać
+
+1. **Automatyczne uruchomienie**: Wizualizator inicjalizuje się automatycznie po starcie audio
+2. **Przełączanie 2D/3D**: Przycisk "🎨 2D" / "🌐 3D" w kontrolkach odtwarzacza
+3. **Kontrola kamery** (tryb 3D):
+   - Lewy przycisk myszy + przeciągnięcie = obrót
+   - Scroll = zoom
+   - Po 5 sekundach bezczynności = auto-rotate
+4. **Preferencje**: Tryb wizualizatora jest zapamiętywany w localStorage
+
+### Dalszy Rozwój (Opcjonalnie)
+
+Zgodnie z planem wdrożenia, możliwe rozszerzenia:
+
+1. **Bloom Effect** - UnrealBloomPass dla efektu świecenia
+2. **Custom Shaders** - ShaderMaterial dla neonowych efektów
+3. **Więcej geometrii** - dodatkowe obiekty 3D
+4. **Adaptive quality** - dostosowanie detali na podstawie FPS
+5. **Gesture Control** - MediaPipe Hands (następna faza)
+6. **Voice Commands** - Web Speech API (następna faza)

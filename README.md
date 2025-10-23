@@ -60,7 +60,17 @@
 - **Ankiety słuchaczy** - dynamiczne głosowania z różnymi typami pytań
 
 ### Wizualizacje
-- Canvas-based audio visualizer w czasie rzeczywistym
+- **2D Canvas visualizer** - wizualizacja audio w czasie rzeczywistym z efektami:
+  - Promienie sunburst z centrum
+  - Słupki equalizera na dole ekranu
+  - Spadające cząsteczki
+- **3D Three.js visualizer** (NOWE!) - zaawansowana wizualizacja 3D:
+  - Centralna kula reagująca na bas
+  - 300 interaktywnych cząsteczek reprezentujących zakresy częstotliwości
+  - OrbitControls dla interaktywnej kontroli kamery
+  - Automatyczna rotacja po bezczynności
+  - Progressive enhancement z fallback do 2D
+- Przełącznik 2D/3D w kontrolkach odtwarzacza
 - Animowane efekty świetlne (glow, burst, rays)
 - Dynamiczne logo z efektami GSAP
 - Pulsujące animacje like i przycisków
@@ -87,6 +97,7 @@ Lub zaktualizować ścieżki w `manifest.json` i `sw.js` do istniejących ikon.
 - **JavaScript (ES6+)** - moduły, async/await, Web Audio API
 
 ### Biblioteki i narzędzia
+- **Three.js 0.170.0** - biblioteka 3D dla zaawansowanych wizualizacji audio
 - **GSAP 3.12.2** - zaawansowane animacje (Draggable, MotionPath)
 - **Vite 6.3.5** - szybki build tool i dev server
 - **Vitest 1.6.0** - framework testowy
