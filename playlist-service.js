@@ -22,7 +22,7 @@ export async function fetchPlaylist({
     scanner,
     filterUnavailableTracks,
     reviews = {},
-    skipAvailabilityCheck = false
+    skipAvailabilityCheck = true  // Changed to true - skip by default for production
 }) {
     if (!scanner || typeof scanner.scanMusicFolder !== 'function') {
         return { playlist: [], failedTrackIds: [] };
@@ -32,7 +32,8 @@ export async function fetchPlaylist({
     const normalizedPrimary = normalizeRealTracks(primaryTracks);
     const weightedPrimary = applyRatingWeights(scanner, normalizedPrimary, reviews);
 
-    // Skip availability check for large local libraries (performance optimization)
+    // Skip availability check for large local libraries OR if explicitly requested
+    // Performance optimization: avoid 500 HEAD requests on page load
     let playlist, failedIds;
     if (skipAvailabilityCheck || weightedPrimary.length > 100) {
         console.log(`⚡ Pominięto sprawdzanie dostępności ${weightedPrimary.length} utworów (optymalizacja wydajności)`);
