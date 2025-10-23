@@ -1,15 +1,19 @@
+import { encodeMediaPath } from './media-utils.js';
+import { mediaFiles as generatedMediaFiles } from './slideshow-media.js';
+
 const createNumberedMediaList = (basePath, prefix, count, extension) => Array.from(
     { length: count },
     (_, index) => `${basePath}/${prefix} (${index + 1}).${extension}`
 );
 
-const mediaFiles = [
-
+const externalMediaFiles = [
     ...createNumberedMediaList('https://daremon.nl/images', 'image', 61, 'png'),
     'https://daremon.nl/images/logo.png',
-
     ...createNumberedMediaList('https://daremon.nl/video', 'video', 47, 'mp4'),
 ];
+
+// Use locally generated media files if available, otherwise fall back to external URLs
+const mediaFiles = generatedMediaFiles.length > 0 ? generatedMediaFiles : externalMediaFiles;
 
 function getRandomMedia(files = mediaFiles) {
     if (!Array.isArray(files) || files.length === 0) {
@@ -23,7 +27,7 @@ function getRandomMedia(files = mediaFiles) {
         return filePath;
     }
 
-    return encodeURI(filePath);
+    return encodeMediaPath(filePath);
 }
 
 function updateSlideshow(files = mediaFiles) {
@@ -52,8 +56,16 @@ function updateSlideshow(files = mediaFiles) {
         mediaElement.alt = 'Okładka utworu - obraz z pokazu slajdów';
         mediaElement.className = 'track-cover-media';
         mediaElement.setAttribute('role', 'img');
-        mediaElement.setAttribute('aria-label', 'Grafika wyświetlana jako okładka utworu');
-    } else if (['mp4'].includes(fileExtension)) {
+
+        mediaElement.setAttribute('aria-label', 'Grafika z pokazu slajdów radia ETS');
+        
+        // Add error handler for images
+        mediaElement.addEventListener('error', () => {
+            console.warn(`Failed to load image: ${mediaPath}`);
+            // Try to load another media on error
+            setTimeout(() => updateSlideshow(files), 1000);
+        });
+    } else if (['mp4', 'webm', 'ogg', 'mov'].includes(fileExtension)) {
         mediaElement = document.createElement('video');
         mediaElement.src = mediaPath;
         mediaElement.autoplay = true;
@@ -63,6 +75,13 @@ function updateSlideshow(files = mediaFiles) {
         mediaElement.className = 'track-cover-media';
         mediaElement.setAttribute('aria-label', 'Wideo wyświetlane jako okładka utworu');
         mediaElement.setAttribute('role', 'img');
+        
+        // Add error handler for videos
+        mediaElement.addEventListener('error', () => {
+            console.warn(`Failed to load video: ${mediaPath}`);
+            // Try to load another media on error
+            setTimeout(() => updateSlideshow(files), 1000);
+        });
     }
 
     if (mediaElement) {

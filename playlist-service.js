@@ -1,3 +1,5 @@
+import { encodeMediaPath } from './media-utils.js';
+
 export function normalizeRealTracks(tracks) {
     if (!Array.isArray(tracks)) {
         return [];
@@ -97,7 +99,7 @@ function normalizeTrackSrc(src) {
 
     // URLs are already encoded, return as-is
     if (/^https?:\/\//i.test(trimmed)) {
-        return trimmed;
+        return encodeMediaPath(trimmed);
     }
 
     let normalized = trimmed.replace(/\\/g, '/');
@@ -106,19 +108,15 @@ function normalizeTrackSrc(src) {
     const isAlreadyEncoded = /%[0-9A-F]{2}/i.test(normalized);
 
     if (normalized.startsWith('./') || normalized.startsWith('../')) {
-        // Only encode if not already encoded
-        return isAlreadyEncoded ? normalized : encodeURI(normalized);
+
+        return encodeMediaPath(normalized);
     }
 
     if (normalized.startsWith('/')) {
-        // Prepend ./ and only encode if not already encoded
-        const withDot = `.${normalized}`;
-        return isAlreadyEncoded ? withDot : encodeURI(withDot);
+        return encodeMediaPath(`.${normalized}`);
     }
 
-    // Default case
-    const withDot = `./${normalized}`;
-    return isAlreadyEncoded ? withDot : encodeURI(withDot);
+    return encodeMediaPath(`./${normalized}`);
 }
 
 function applyRatingWeights(scanner, tracks, reviews) {

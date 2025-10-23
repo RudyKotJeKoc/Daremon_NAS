@@ -1,5 +1,6 @@
 import { filterUnavailableTracks } from './media-availability.js';
 import { CONFIG } from './config.js';
+import { encodeMediaPath } from './media-utils.js';
 
 /**
  * Music Scanner - Automatyczne tworzenie playlisty z folderu music
@@ -13,6 +14,8 @@ export class MusicScanner {
         this.trackSource = options.trackSource ?? CONFIG.MUSIC_TRACKS_ENDPOINT ?? null;
         this.fetchImpl = options.fetchImpl ?? (typeof fetch === 'function' ? fetch : null);
         this.logger = options.logger ?? console;
+        this.availabilityStrategy = options.availabilityStrategy ?? CONFIG.MEDIA_AVAILABILITY_STRATEGY ?? 'lazy';
+        this.availabilityChunkSize = options.availabilityChunkSize ?? CONFIG.MEDIA_AVAILABILITY_CHUNK_SIZE ?? 50;
     }
 
     /**
@@ -70,6 +73,8 @@ export class MusicScanner {
             const availability = await filterUnavailableTracks(normalizedTracks, {
                 fetchImpl: this.fetchImpl,
                 logger: this.logger,
+                strategy: this.availabilityStrategy,
+                chunkSize: this.availabilityChunkSize,
             });
 
             return availability.playableTracks || [];
@@ -90,14 +95,10 @@ export class MusicScanner {
             return null;
         }
 
-        // Check if already encoded (contains %20 or other percent-encoded chars)
-        const isAlreadyEncoded = /%[0-9A-F]{2}/i.test(rawSrc);
 
-        // Encode spaces and special characters only if not already encoded
-        // (e.g., "Daremon (213).mp3" → "Daremon%20(213).mp3")
-        const src = isAlreadyEncoded ? rawSrc : encodeURI(rawSrc);
+        const src = encodeMediaPath(rawSrc);
 
-        const fallbackTitle = await this.extractTitle(rawSrc);
+        const fallbackTitle = await this.extractTitle(src);
         const id = track.id ?? `remote-track-${index + 1}`;
         const title = track.title ?? fallbackTitle ?? `Utwór ${index + 1}`;
         const artist = track.artist ?? (typeof track.performer === 'string' ? track.performer : await this.extractArtist(rawSrc));
@@ -130,7 +131,33 @@ export class MusicScanner {
      */
     async extractTitle(src) {
         // W przyszłości można dodać Web Audio API do odczytu metadanych
-        const filename = src.split('/').pop().replace('.mp3', '');
+        const lastSegment = src.split('/').pop() || '';
+        let decoded = lastSegment;
+
+        try {
+            decoded = decodeURI(lastSegment);
+        } catch (error) {
+            // If decoding fails, use the original segment
+        }
+
+        const withoutParams = decoded.split(/[?#]/)[0];
+
+        const supportedExtensions = Array.isArray(this.supportedFormats)
+            ? this.supportedFormats
+            : ['.mp3'];
+
+        const extensionAlternatives = supportedExtensions
+            .map(ext => typeof ext === 'string' ? ext.trim() : '')
+            .filter(Boolean)
+            .map(ext => ext.replace(/^\./, ''))
+            .filter(Boolean)
+            .map(ext => ext.toLowerCase());
+
+        const extensionPattern = extensionAlternatives.length > 0
+            ? new RegExp(`\\.(${extensionAlternatives.join('|')})$`, 'i')
+            : /\.mp3$/i;
+
+        const filename = withoutParams.replace(extensionPattern, '');
         return this.cleanupTitle(filename);
     }
 
@@ -167,7 +194,10 @@ export class MusicScanner {
             const response = await fetcher('./playlist.json');
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const data = await response.json();
-            return data.tracks || [];
+            return (data.tracks || []).map(track => ({
+                ...track,
+                src: typeof track?.src === 'string' ? encodeMediaPath(track.src) : track?.src
+            }));
         } catch (error) {
             this.logger.error('❌ Nie można załadować playlist.json:', error);
             return this.getEmergencyPlaylist();
@@ -183,7 +213,7 @@ export class MusicScanner {
                 id: 'emergency-1',
                 title: 'Utwór 1',
                 artist: 'DAREMON Radio',
-                src: './music/Utwor (1).mp3',
+                src: encodeMediaPath('./music/Utwor (1).mp3'),
                 cover: 'https://placehold.co/120x120/333/fff?text=1',
                 tags: ['emergency'],
                 weight: 1,

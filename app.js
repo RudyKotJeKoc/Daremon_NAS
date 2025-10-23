@@ -5,6 +5,7 @@ import { PollSystem } from './poll-system.js';
 import { filterUnavailableTracks } from './media-availability.js';
 import { fetchPlaylist, normalizeRealTracks } from './playlist-service.js';
 import { loadTrackMetadata, applyMetadataToPlaylist } from './track-metadata.js';
+import { CONFIG } from './config.js';
 // strategic/machine docs imports removed in simplified build
 
 /**
@@ -602,9 +603,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const STORAGE_PREFIX = (window.CONFIG && window.CONFIG.STORAGE_PREFIX) || 'daremon';
             const reviews = JSON.parse(window.localStorage.getItem(`${STORAGE_PREFIX}_reviews`) || '{}');
 
+            // Create configured wrapper for filterUnavailableTracks
+            const configuredFilter = async (tracks, options = {}) => {
+                return filterUnavailableTracks(tracks, {
+                    ...options,
+                    strategy: CONFIG.MEDIA_AVAILABILITY_STRATEGY || 'lazy',
+                    chunkSize: CONFIG.MEDIA_AVAILABILITY_CHUNK_SIZE || 50,
+                });
+            };
+
             const { playlist, failedTrackIds } = await fetchPlaylist({
                 scanner,
-                filterUnavailableTracks,
+                filterUnavailableTracks: configuredFilter,
                 reviews
             });
 
