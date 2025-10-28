@@ -1414,21 +1414,56 @@ body, #app-container, #main-content, #player-ui, #player-controls, #side-panel {
     }
 
     #menu-toggle {
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        position: fixed; 
-        top: 15px; 
-        right: 15px; 
-        z-index: 1001; 
-        background: var(--box-bg); 
-        border: 1px solid var(--primary-accent); 
-        color: var(--primary-accent); 
-        width: 50px; 
-        height: 50px; 
-        border-radius: 50%; 
-        font-size: 24px; 
-        cursor: pointer; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        z-index: 1001;
+        background: var(--box-bg);
+        border: 1px solid var(--primary-accent);
+        color: var(--primary-accent);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    /* Responsywność przycisków odtwarzacza */
+    #player-controls {
+        gap: 0.8rem;
+    }
+
+    .control-btn {
+        width: 48px;
+        height: 48px;
+        font-size: 1.3rem;
+    }
+
+    #play-pause-btn {
+        width: 64px;
+        height: 64px;
+        font-size: 1.8rem;
+    }
+
+    #next-btn {
+        width: 54px;
+        height: 54px;
+        font-size: 1.5rem;
+    }
+
+    #like-btn {
+        min-width: 70px;
+        padding: 0.5rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    .visualizer-switch {
+        min-width: 90px;
+        padding: 0.5rem 0.9rem;
+        font-size: 0.85rem;
     }
 }
 
@@ -1485,6 +1520,43 @@ body, #app-container, #main-content, #player-ui, #player-controls, #side-panel {
     .newsletter-section button {
         align-self: stretch;
     }
+
+    /* Responsywność przycisków dla małych ekranów */
+    #player-controls {
+        gap: 0.6rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .control-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 1.2rem;
+    }
+
+    #play-pause-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 1.7rem;
+    }
+
+    #next-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.4rem;
+    }
+
+    #like-btn {
+        min-width: 65px;
+        padding: 0.45rem 0.9rem;
+        font-size: 0.9rem;
+    }
+
+    .visualizer-switch {
+        min-width: 85px;
+        padding: 0.45rem 0.8rem;
+        font-size: 0.8rem;
+    }
 }
 
 @media (max-width: 400px) {
@@ -1509,6 +1581,46 @@ body, #app-container, #main-content, #player-ui, #player-controls, #side-panel {
     #menu-toggle {
         top: 10px;
         right: 10px;
+    }
+
+    /* Responsywność przycisków dla bardzo małych ekranów */
+    #player-controls {
+        gap: 0.5rem;
+    }
+
+    .control-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+        border-radius: 10px;
+    }
+
+    #play-pause-btn {
+        width: 56px;
+        height: 56px;
+        font-size: 1.5rem;
+    }
+
+    #next-btn {
+        width: 46px;
+        height: 46px;
+        font-size: 1.3rem;
+    }
+
+    #like-btn {
+        min-width: 60px;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+    }
+
+    .visualizer-switch {
+        min-width: 80px;
+        padding: 0.4rem 0.7rem;
+        font-size: 0.75rem;
+    }
+
+    #volume-control {
+        max-width: 100px;
     }
 }
 /* === VISUALIZER ENHANCEMENTS === */

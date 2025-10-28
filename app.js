@@ -1207,7 +1207,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function updatePlayPauseButtons() {
         state.isPlaying = !players[activePlayerIndex].paused;
-        const icon = state.isPlaying ? '⸸️' : '▶️';
+        const icon = state.isPlaying ? '⏸' : '▶';
         if (dom.player.playPauseBtn) dom.player.playPauseBtn.textContent = icon;
         if (dom.stickyPlayer.playPauseBtn) dom.stickyPlayer.playPauseBtn.textContent = icon;
 
