@@ -534,6 +534,51 @@ header p {
     transform: scale(1.08);
 }
 
+/* Enhanced Play/Pause Button */
+#play-pause-btn {
+    width: 70px;
+    height: 70px;
+    font-size: 2rem;
+    background: linear-gradient(135deg, rgba(24, 160, 199, 0.3) 0%, rgba(9, 33, 66, 0.8) 100%);
+    border: 3px solid rgba(24, 160, 199, 0.6);
+    box-shadow: 0 0 20px rgba(24, 160, 199, 0.4);
+    position: relative;
+}
+
+#play-pause-btn::before {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(24, 160, 199, 0.2), transparent);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#play-pause-btn:hover::before {
+    opacity: 1;
+}
+
+#play-pause-btn:hover {
+    background: linear-gradient(135deg, rgba(24, 160, 199, 0.5) 0%, rgba(9, 33, 66, 0.9) 100%);
+    border-color: rgba(24, 160, 199, 0.9);
+    box-shadow: 0 0 30px rgba(24, 160, 199, 0.7);
+    transform: scale(1.1);
+}
+
+#play-pause-btn:active {
+    transform: scale(0.95);
+}
+
+/* Enhanced Next Button */
+#next-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 1.75rem;
+    border-width: 2.5px;
+}
+
 #like-btn {
     border-color: var(--primary-accent);
     width: auto;
@@ -817,9 +862,97 @@ header p {
 .hidden { display: none !important; }
 body, #app-container, #main-content, #player-ui, #player-controls, #side-panel { transition: all 0.3s ease-in-out; }
 #listener-count-display { color: var(--tertiary-accent); text-shadow: 0 0 4px var(--tertiary-accent); margin: -0.5rem 0 1rem; font-size: 1rem; }
-#volume-control { display: flex; align-items: center; }
-#volume-slider { -webkit-appearance: none; appearance: none; width: 100px; height: 5px; background: #333; outline: none; border-radius: 5px; cursor: pointer; transition: 0.2s; }
-#volume-slider:hover { opacity: 1; }
+/* Enhanced Volume Control */
+#volume-control {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(9, 33, 66, 0.4);
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    border: 2px solid rgba(24, 160, 199, 0.3);
+    transition: all 0.3s ease;
+}
+
+#volume-control:hover {
+    background: rgba(9, 33, 66, 0.6);
+    border-color: rgba(24, 160, 199, 0.6);
+    box-shadow: 0 0 15px rgba(24, 160, 199, 0.3);
+}
+
+.volume-icon {
+    font-size: 1.5rem;
+    transition: transform 0.2s ease;
+}
+
+#volume-control:hover .volume-icon {
+    transform: scale(1.1);
+}
+
+#volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 150px;
+    height: 8px;
+    background: linear-gradient(to right,
+        rgba(24, 160, 199, 0.3) 0%,
+        rgba(24, 160, 199, 0.3) 50%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.1) 100%);
+    outline: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(24, 160, 199, 0.4);
+}
+
+#volume-slider:hover {
+    height: 10px;
+    box-shadow: 0 0 10px rgba(24, 160, 199, 0.4);
+}
+
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, #18A0C7 0%, #008878 100%);
+    cursor: pointer;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 8px rgba(24, 160, 199, 0.6);
+    transition: all 0.2s ease;
+}
+
+#volume-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 12px rgba(24, 160, 199, 0.8);
+}
+
+#volume-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, #18A0C7 0%, #008878 100%);
+    cursor: pointer;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 8px rgba(24, 160, 199, 0.6);
+    transition: all 0.2s ease;
+}
+
+#volume-slider::-moz-range-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 12px rgba(24, 160, 199, 0.8);
+}
+
+.volume-percentage {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #18A0C7;
+    min-width: 45px;
+    text-align: center;
+    text-shadow: 0 0 5px rgba(24, 160, 199, 0.5);
+}
 #rating-section { margin-top: 1rem; padding-top: 0.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1); }
 #average-rating-display { font-size: 0.8em; color: #aaa; margin-bottom: 5px; min-height: 1.2em; }
 .star-rating { display: flex; gap: 4px; cursor: pointer; color: #555; width: fit-content; }
