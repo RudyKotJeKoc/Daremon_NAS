@@ -1858,6 +1858,41 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.dataset.theme = theme; 
     }
 
+    // --- Volume Display Update Function ---
+    function updateVolumeDisplay(volume) {
+        const percentage = Math.round(volume * 100);
+        const volumePercentageEl = document.getElementById('volume-percentage');
+        const volumeIconEl = document.getElementById('volume-icon');
+
+        if (volumePercentageEl) {
+            volumePercentageEl.textContent = `${percentage}%`;
+        }
+
+        if (volumeIconEl) {
+            // Update icon based on volume level
+            if (volume === 0 || volume === '0') {
+                volumeIconEl.textContent = '🔇';
+            } else if (volume < 0.33) {
+                volumeIconEl.textContent = '🔈';
+            } else if (volume < 0.66) {
+                volumeIconEl.textContent = '🔉';
+            } else {
+                volumeIconEl.textContent = '🔊';
+            }
+        }
+
+        // Update slider background gradient to show fill
+        const slider = dom.player.volumeSlider;
+        if (slider) {
+            const fillPercent = percentage;
+            slider.style.background = `linear-gradient(to right,
+                rgba(24, 160, 199, 0.6) 0%,
+                rgba(24, 160, 199, 0.6) ${fillPercent}%,
+                rgba(255, 255, 255, 0.1) ${fillPercent}%,
+                rgba(255, 255, 255, 0.1) 100%)`;
+        }
+    }
+
     // --- Event Listeners Instellen ---
     function setupEventListeners() {
         // Speler & Audio
@@ -1865,9 +1900,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dom.player.nextBtn) dom.player.nextBtn.addEventListener('click', playNextTrack);
         if (dom.player.likeBtn) dom.player.likeBtn.addEventListener('click', handleLike);
         if (dom.player.volumeSlider) {
-            dom.player.volumeSlider.addEventListener('input', (e) => { 
-                const newVolume = isQuietHour() ? e.target.value * 0.5 : e.target.value; 
-                players.forEach(p => p.volume = newVolume); 
+            // Update volume percentage display on load
+            updateVolumeDisplay(dom.player.volumeSlider.value);
+
+            dom.player.volumeSlider.addEventListener('input', (e) => {
+                const newVolume = isQuietHour() ? e.target.value * 0.5 : e.target.value;
+                players.forEach(p => p.volume = newVolume);
+                updateVolumeDisplay(e.target.value);
             });
         }
         if (dom.player.progressContainer) dom.player.progressContainer.addEventListener('click', seekTrack);
@@ -1944,15 +1983,17 @@ document.addEventListener('DOMContentLoaded', () => {
             } 
             if (e.code === 'KeyN') playNextTrack(); 
             if (e.code === 'KeyL') handleLike(); 
-            if (e.code === 'ArrowUp' && dom.player.volumeSlider) { 
-                e.preventDefault(); 
-                dom.player.volumeSlider.value = Math.min(1, parseFloat(dom.player.volumeSlider.value) + 0.05).toFixed(2); 
-                players.forEach(p=>p.volume = dom.player.volumeSlider.value); 
-            } 
-            if (e.code === 'ArrowDown' && dom.player.volumeSlider) { 
-                e.preventDefault(); 
-                dom.player.volumeSlider.value = Math.max(0, parseFloat(dom.player.volumeSlider.value) - 0.05).toFixed(2); 
-                players.forEach(p=>p.volume = dom.player.volumeSlider.value); 
+            if (e.code === 'ArrowUp' && dom.player.volumeSlider) {
+                e.preventDefault();
+                dom.player.volumeSlider.value = Math.min(1, parseFloat(dom.player.volumeSlider.value) + 0.05).toFixed(2);
+                players.forEach(p=>p.volume = dom.player.volumeSlider.value);
+                updateVolumeDisplay(dom.player.volumeSlider.value);
+            }
+            if (e.code === 'ArrowDown' && dom.player.volumeSlider) {
+                e.preventDefault();
+                dom.player.volumeSlider.value = Math.max(0, parseFloat(dom.player.volumeSlider.value) - 0.05).toFixed(2);
+                players.forEach(p=>p.volume = dom.player.volumeSlider.value);
+                updateVolumeDisplay(dom.player.volumeSlider.value);
             } 
         });
         
@@ -2147,6 +2188,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize survey system
     if (typeof initializeSurvey === 'function') {
         initializeSurvey();
+    }
+
+    // Initialize employee survey system
+    if (typeof initializeEmployeeSurvey === 'function') {
+        initializeEmployeeSurvey();
     }
 
     initialize();

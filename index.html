@@ -88,6 +88,159 @@
                         </div>
                     </section>
 
+                    <!-- Employee Survey Section -->
+                    <section class="content-box survey-box">
+                        <h3 class="survey-title">📋 Ankieta Zespołu</h3>
+                        <div class="survey-intro">
+                            <p><strong>Drodzy pracownicy!</strong></p>
+                            <p>Chcielibyśmy poznać Wasze zdanie na temat kontynuacji naszego projektu w okrojonym zespole oraz zebrać pomysły na rozwój Daremon.</p>
+                            <p class="survey-note">Ankieta jest anonimowa (imię opcjonalne) i pomoże nam lepiej zaplanować przyszłość.</p>
+                        </div>
+
+                        <!-- Survey Form -->
+                        <form id="employee-survey-form" class="survey-form">
+                            <div class="form-group">
+                                <label for="emp-name">Imię (opcjonalne):</label>
+                                <input type="text" id="emp-name" name="name" placeholder="Twoje imię lub pseudonim">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Czy chciałbyś/chciałabyś kontynuować pracę w okrojonym zespole?</label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="team-continuation" value="yes" required>
+                                        <span>Tak, jestem zainteresowany/a</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="team-continuation" value="maybe" required>
+                                        <span>Może, w zależności od warunków</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="team-continuation" value="no" required>
+                                        <span>Nie, dziękuję</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Które funkcje Daremon uważasz za najbardziej przydatne? (wybierz wszystkie pasujące)</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="daremon-features" value="radio">
+                                        <span>🎵 Radio / Odtwarzacz muzyki</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="daremon-features" value="visualizer">
+                                        <span>🌀 Wizualizator audio (2D/3D)</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="daremon-features" value="surveys">
+                                        <span>📊 Ankiety i głosowania</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="daremon-features" value="messaging">
+                                        <span>💬 Wiadomości do DJ / Live Talk</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="daremon-features" value="themes">
+                                        <span>🎨 Motywy wizualne</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="daremon-features" value="ratings">
+                                        <span>⭐ System ocen utworów</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Jakie nowe funkcje chciałbyś/chciałabyś zobaczyć w Daremon?</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="new-features" value="playlist-editor">
+                                        <span>🎧 Edytor playlist / kolejki utworów</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="new-features" value="podcast">
+                                        <span>🎙️ Podcasty / nagrania audio</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="new-features" value="chat">
+                                        <span>💭 Czat na żywo</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="new-features" value="calendar">
+                                        <span>📅 Kalendarz wydarzeń / zmian</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="new-features" value="news">
+                                        <span>📰 Tablica ogłoszeń</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="new-features" value="games">
+                                        <span>🎮 Mini gry / zabawy</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="new-features" value="other">
+                                        <span>Inne:</span>
+                                        <input type="text" class="inline-input" name="new-features-other" placeholder="Opisz...">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>W jakich obszarach mógłbyś/mogłabyś pomóc przy rozwoju Daremon?</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="help-areas" value="programming">
+                                        <span>💻 Programowanie / kod</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="help-areas" value="design">
+                                        <span>🎨 Projektowanie / grafika</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="help-areas" value="music">
+                                        <span>🎵 Muzyka / audio</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="help-areas" value="testing">
+                                        <span>🔍 Testowanie / feedback</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="help-areas" value="content">
+                                        <span>✍️ Tworzenie treści</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="help-areas" value="ideas">
+                                        <span>💡 Pomysły / koncepcje</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="emp-ideas">Twoje pomysły, uwagi lub sugestie:</label>
+                                <textarea id="emp-ideas" name="ideas" rows="4" placeholder="Podziel się swoimi pomysłami na ulepszenie Daremon lub inne projekty..."></textarea>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="survey-submit-btn">📤 Wyślij ankietę</button>
+                                <button type="button" id="employee-survey-results-btn" class="survey-results-btn">📊 Zobacz wyniki</button>
+                            </div>
+                        </form>
+
+                        <!-- Success Message -->
+                        <div id="employee-survey-success" class="survey-message success-message hidden">
+                            <p><strong>✅ Dziękujemy za wypełnienie ankiety!</strong></p>
+                            <p>Twoja opinia jest dla nas bardzo ważna.</p>
+                        </div>
+
+                        <!-- Results Section -->
+                        <div id="employee-survey-results" class="survey-results hidden">
+                            <h3>📊 Wyniki Ankiety Zespołu</h3>
+                            <div id="employee-survey-results-content"></div>
+                            <button id="close-employee-results-btn" class="close-results-btn">Zamknij wyniki</button>
+                        </div>
+                    </section>
 
                     <!-- Machine documentation section removed -->
                     <!-- Strategic polls section removed - aplikacja uproszczona do core radio -->
@@ -137,7 +290,9 @@
                         <button id="next-btn" class="control-btn" data-i18n-title="nextTooltip" data-i18n-aria-label="nextLabel">⏭️</button>
                         <button id="like-btn" class="control-btn" data-i18n-title="likeTooltip" data-i18n-aria-label="likeLabel">👍 <span id="like-count">0</span></button>
                         <div id="volume-control" data-i18n-title="volumeTooltip">
+                            <span id="volume-icon" class="volume-icon">🔊</span>
                             <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" data-i18n-aria-label="volumeLabel">
+                            <span id="volume-percentage" class="volume-percentage">50%</span>
                         </div>
                                                 <button id="tv-mode-btn" class="control-btn" data-i18n-title="fullscreenTooltip" data-i18n-aria-label="fullscreenLabel" disabled>📺</button>
                     </div>
@@ -202,6 +357,7 @@
     <script type="module" src="music-scanner.js"></script>
     <script type="module" src="slideshow.js"></script>
     <script type="module" src="survey.js"></script>
+    <script type="module" src="employee-survey.js"></script>
     <script type="module" src="script.js"></script>
     <script type="module" src="app.js"></script>
 </body>
