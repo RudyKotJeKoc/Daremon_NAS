@@ -338,9 +338,16 @@ body {
 }
 
 @keyframes liked-pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); box-shadow: 0 0 20px var(--primary-accent); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+        box-shadow: 0 6px 20px rgba(24, 160, 199, 0.5);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 @keyframes pulse {
@@ -514,102 +521,124 @@ header p {
 
 }
 
+/* === PROFESJONALNY DESIGN PRZYCISKÓW === */
+
 .control-btn {
-    background: rgba(9, 33, 66, 0.6);
-    border: 2px solid rgba(24, 160, 199, 0.45);
+    position: relative;
+    background: rgba(24, 160, 199, 0.12);
+    border: 2px solid rgba(24, 160, 199, 0.4);
     color: var(--text-color);
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 1.5rem;
+    border-radius: 12px;
+    width: 52px;
+    height: 52px;
+    font-size: 1.4rem;
     cursor: pointer;
-    transition: all 0.25s ease;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .control-btn:hover,
 .control-btn:focus-visible {
-    background: rgba(24, 160, 199, 0.35);
-    color: var(--text-color);
-    box-shadow: 0 0 22px rgba(24, 160, 199, 0.45);
-    transform: scale(1.08);
+    background: rgba(24, 160, 199, 0.25);
+    border-color: rgba(24, 160, 199, 0.7);
+    box-shadow: 0 4px 12px rgba(24, 160, 199, 0.3);
+    transform: translateY(-2px);
 }
 
-/* Enhanced Play/Pause Button */
+.control-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* === GŁÓWNY PRZYCISK PLAY/PAUSE === */
 #play-pause-btn {
-    width: 70px;
-    height: 70px;
+    width: 72px;
+    height: 72px;
     font-size: 2rem;
-    background: linear-gradient(135deg, rgba(24, 160, 199, 0.3) 0%, rgba(9, 33, 66, 0.8) 100%);
-    border: 3px solid rgba(24, 160, 199, 0.6);
-    box-shadow: 0 0 20px rgba(24, 160, 199, 0.4);
-    position: relative;
-}
-
-#play-pause-btn::before {
-    content: '';
-    position: absolute;
-    inset: -5px;
+    background: rgba(24, 160, 199, 0.18);
+    border: 3px solid rgba(24, 160, 199, 0.5);
     border-radius: 50%;
-    background: linear-gradient(135deg, rgba(24, 160, 199, 0.2), transparent);
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-#play-pause-btn:hover::before {
-    opacity: 1;
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.4),
+        inset 0 2px 6px rgba(24, 160, 199, 0.2);
 }
 
 #play-pause-btn:hover {
-    background: linear-gradient(135deg, rgba(24, 160, 199, 0.5) 0%, rgba(9, 33, 66, 0.9) 100%);
-    border-color: rgba(24, 160, 199, 0.9);
-    box-shadow: 0 0 30px rgba(24, 160, 199, 0.7);
-    transform: scale(1.1);
+    background: rgba(24, 160, 199, 0.3);
+    border-color: rgba(24, 160, 199, 0.8);
+    box-shadow:
+        0 6px 16px rgba(24, 160, 199, 0.4),
+        inset 0 2px 8px rgba(24, 160, 199, 0.3);
+    transform: translateY(-3px);
 }
 
 #play-pause-btn:active {
-    transform: scale(0.95);
+    transform: translateY(-1px);
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.5),
+        inset 0 1px 4px rgba(24, 160, 199, 0.2);
 }
 
-/* Enhanced Next Button */
+/* === PRZYCISK NEXT === */
 #next-btn {
-    width: 60px;
-    height: 60px;
-    font-size: 1.75rem;
+    width: 58px;
+    height: 58px;
+    font-size: 1.6rem;
     border-width: 2.5px;
 }
 
-#like-btn {
-    border-color: var(--primary-accent);
-    width: auto;
-    border-radius: 25px;
-    padding: 0 1rem;
+#next-btn:hover {
+    transform: translateY(-2px) translateX(2px);
 }
 
+/* === PRZYCISK LIKE === */
+#like-btn {
+    width: auto;
+    min-width: 80px;
+    border-radius: 24px;
+    padding: 0.6rem 1.2rem;
+    border: 2px solid rgba(24, 160, 199, 0.4);
+    background: rgba(24, 160, 199, 0.12);
+    gap: 0.3rem;
+}
+
+#like-btn:hover {
+    background: rgba(24, 160, 199, 0.25);
+    border-color: rgba(24, 160, 199, 0.7);
+}
+
+/* === VISUALIZER SWITCH === */
 .visualizer-switch {
     font-size: 0.9rem;
     width: auto;
-    border-radius: 25px;
-    padding: 0 0.8rem;
+    min-width: 100px;
+    border-radius: 24px;
+    padding: 0.55rem 1.1rem;
     white-space: nowrap;
+    background: rgba(24, 160, 199, 0.12);
+    border: 2px solid rgba(24, 160, 199, 0.4);
+}
+
+.visualizer-switch:hover {
+    background: rgba(24, 160, 199, 0.25);
+    border-color: rgba(24, 160, 199, 0.7);
 }
 
 .visualizer-switch:disabled {
-    opacity: 0.3;
+    opacity: 0.4;
     cursor: not-allowed;
+    filter: grayscale(70%);
 }
 
 .visualizer-switch:disabled:hover {
     transform: none;
-    box-shadow: none;
-}
-    font-size: 1rem;
-}
-
-#like-btn:hover,
-#like-btn:focus-visible {
-    background: rgba(24, 160, 199, 0.45);
-    color: var(--text-color);
+    background: rgba(24, 160, 199, 0.12);
+    border-color: rgba(24, 160, 199, 0.4);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 #like-btn.liked-animation {
@@ -1098,7 +1127,28 @@ body, #app-container, #main-content, #player-ui, #player-controls, #side-panel {
 #sticky-player-info { text-align: left; flex-grow: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #sticky-player-info h5 { margin: 0; font-size: 1rem; color: var(--text-color); }
 #sticky-track-cover { width: 40px; height: 40px; border-radius: 4px; }
-#sticky-player-controls .control-btn { width: 40px; height: 40px; font-size: 1rem; }
+/* Sticky player buttons - profesjonalne mniejsze wersje */
+#sticky-player-controls .control-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    border-width: 2px;
+}
+
+#sticky-player-controls #sticky-play-pause-btn {
+    width: 52px;
+    height: 52px;
+    font-size: 1.4rem;
+    border-radius: 50%;
+    border-width: 2.5px;
+}
+
+#sticky-player-controls #sticky-next-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 1.2rem;
+}
 #sticky-progress-container { background: #333; border-radius: 5px; height: 4px; width: 100%; margin-top: 5px; overflow: hidden; }
 #error-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 20px; box-sizing: border-box; text-align: center; opacity: 1; transition: opacity 0.3s; }
 #error-overlay.hidden { opacity: 0; pointer-events: none; }
