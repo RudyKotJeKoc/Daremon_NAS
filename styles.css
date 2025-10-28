@@ -338,9 +338,20 @@ body {
 }
 
 @keyframes liked-pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); box-shadow: 0 0 20px var(--primary-accent); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(255, 90, 177, 0.3);
+    }
+    50% {
+        transform: scale(1.25);
+        box-shadow:
+            0 0 50px rgba(255, 90, 177, 0.9),
+            0 0 80px rgba(255, 90, 177, 0.6);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(255, 90, 177, 0.3);
+    }
 }
 
 @keyframes pulse {
@@ -514,102 +525,299 @@ header p {
 
 }
 
+/* === NOWY FUTURYSTYCZNY DESIGN PRZYCISKÓW === */
+
 .control-btn {
-    background: rgba(9, 33, 66, 0.6);
-    border: 2px solid rgba(24, 160, 199, 0.45);
+    position: relative;
+    background: linear-gradient(145deg, rgba(24, 160, 199, 0.15), rgba(4, 19, 43, 0.9));
+    border: none;
     color: var(--text-color);
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+    width: 55px;
+    height: 55px;
     font-size: 1.5rem;
     cursor: pointer;
-    transition: all 0.25s ease;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow:
+        0 0 15px rgba(24, 160, 199, 0.3),
+        inset 0 0 20px rgba(24, 160, 199, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.control-btn::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+    background: linear-gradient(145deg, rgba(155, 214, 255, 0.1), transparent);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.control-btn::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+    background: linear-gradient(90deg,
+        rgba(24, 160, 199, 0.4),
+        rgba(155, 214, 255, 0.6),
+        rgba(24, 160, 199, 0.4)
+    );
+    filter: blur(8px);
+    opacity: 0;
+    z-index: -2;
+    transition: opacity 0.4s ease;
+    animation: glow-pulse 3s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.3; }
 }
 
 .control-btn:hover,
 .control-btn:focus-visible {
-    background: rgba(24, 160, 199, 0.35);
-    color: var(--text-color);
-    box-shadow: 0 0 22px rgba(24, 160, 199, 0.45);
-    transform: scale(1.08);
+    background: linear-gradient(145deg, rgba(24, 160, 199, 0.4), rgba(4, 19, 43, 0.95));
+    color: var(--brand-sunrise);
+    box-shadow:
+        0 0 30px rgba(24, 160, 199, 0.6),
+        0 0 50px rgba(155, 214, 255, 0.4),
+        inset 0 0 30px rgba(24, 160, 199, 0.2);
+    transform: scale(1.15) rotate(45deg);
+    filter: brightness(1.3);
 }
 
-/* Enhanced Play/Pause Button */
+.control-btn:hover::before {
+    opacity: 1;
+}
+
+.control-btn:hover::after {
+    opacity: 1;
+    animation: glow-pulse 1.5s ease-in-out infinite;
+}
+
+/* === GŁÓWNY PRZYCISK PLAY/PAUSE - DIAMENTOWY KSZTAŁT === */
 #play-pause-btn {
-    width: 70px;
-    height: 70px;
-    font-size: 2rem;
-    background: linear-gradient(135deg, rgba(24, 160, 199, 0.3) 0%, rgba(9, 33, 66, 0.8) 100%);
-    border: 3px solid rgba(24, 160, 199, 0.6);
-    box-shadow: 0 0 20px rgba(24, 160, 199, 0.4);
+    width: 85px;
+    height: 85px;
+    font-size: 2.2rem;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    background:
+        linear-gradient(135deg, rgba(24, 160, 199, 0.3) 0%, rgba(155, 214, 255, 0.2) 50%, rgba(4, 19, 43, 0.9) 100%);
+    box-shadow:
+        0 0 25px rgba(24, 160, 199, 0.5),
+        0 0 50px rgba(155, 214, 255, 0.3),
+        inset 0 0 30px rgba(24, 160, 199, 0.15);
+    border: 2px solid rgba(24, 160, 199, 0.6);
     position: relative;
+    animation: play-btn-breathe 4s ease-in-out infinite;
+}
+
+@keyframes play-btn-breathe {
+    0%, 100% {
+        box-shadow:
+            0 0 25px rgba(24, 160, 199, 0.5),
+            0 0 50px rgba(155, 214, 255, 0.3);
+    }
+    50% {
+        box-shadow:
+            0 0 40px rgba(24, 160, 199, 0.7),
+            0 0 80px rgba(155, 214, 255, 0.5);
+    }
 }
 
 #play-pause-btn::before {
     content: '';
     position: absolute;
-    inset: -5px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, rgba(24, 160, 199, 0.2), transparent);
+    inset: 3px;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    background: linear-gradient(135deg, rgba(155, 214, 255, 0.15), transparent);
     z-index: -1;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
+}
+
+#play-pause-btn::after {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    background:
+        conic-gradient(
+            from 0deg at 50% 50%,
+            rgba(24, 160, 199, 0.6),
+            rgba(155, 214, 255, 0.8),
+            rgba(24, 160, 199, 0.6)
+        );
+    filter: blur(15px);
+    opacity: 0;
+    z-index: -2;
+    transition: opacity 0.4s ease;
+    animation: spin-glow 8s linear infinite;
+}
+
+@keyframes spin-glow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#play-pause-btn:hover {
+    background:
+        linear-gradient(135deg, rgba(24, 160, 199, 0.6) 0%, rgba(155, 214, 255, 0.4) 50%, rgba(4, 19, 43, 0.95) 100%);
+    border-color: rgba(155, 214, 255, 0.9);
+    box-shadow:
+        0 0 45px rgba(24, 160, 199, 0.9),
+        0 0 90px rgba(155, 214, 255, 0.6),
+        inset 0 0 40px rgba(24, 160, 199, 0.3);
+    transform: scale(1.2) rotate(180deg);
+    animation: play-btn-breathe 2s ease-in-out infinite;
 }
 
 #play-pause-btn:hover::before {
     opacity: 1;
 }
 
-#play-pause-btn:hover {
-    background: linear-gradient(135deg, rgba(24, 160, 199, 0.5) 0%, rgba(9, 33, 66, 0.9) 100%);
-    border-color: rgba(24, 160, 199, 0.9);
-    box-shadow: 0 0 30px rgba(24, 160, 199, 0.7);
-    transform: scale(1.1);
+#play-pause-btn:hover::after {
+    opacity: 1;
 }
 
 #play-pause-btn:active {
-    transform: scale(0.95);
+    transform: scale(1.05) rotate(180deg);
+    box-shadow:
+        0 0 60px rgba(24, 160, 199, 1),
+        0 0 120px rgba(155, 214, 255, 0.8),
+        inset 0 0 50px rgba(24, 160, 199, 0.5);
 }
 
-/* Enhanced Next Button */
+/* === PRZYCISK NEXT - HEXAGON === */
 #next-btn {
-    width: 60px;
-    height: 60px;
-    font-size: 1.75rem;
-    border-width: 2.5px;
+    width: 65px;
+    height: 65px;
+    font-size: 1.85rem;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    background: linear-gradient(120deg, rgba(24, 160, 199, 0.2), rgba(4, 19, 43, 0.85));
+    box-shadow:
+        0 0 20px rgba(24, 160, 199, 0.4),
+        inset 0 0 20px rgba(24, 160, 199, 0.1);
 }
 
+#next-btn::before {
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+
+#next-btn::after {
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+
+#next-btn:hover {
+    transform: scale(1.15) translateX(8px);
+    box-shadow:
+        0 0 35px rgba(24, 160, 199, 0.7),
+        0 0 60px rgba(155, 214, 255, 0.5);
+}
+
+/* === PRZYCISK LIKE - SERCE === */
 #like-btn {
-    border-color: var(--primary-accent);
     width: auto;
-    border-radius: 25px;
-    padding: 0 1rem;
+    min-width: 75px;
+    clip-path: polygon(
+        50% 15%, 65% 0%, 85% 0%, 100% 15%, 100% 40%,
+        50% 100%,
+        0% 40%, 0% 15%, 15% 0%, 35% 0%
+    );
+    background: linear-gradient(145deg, rgba(255, 90, 177, 0.2), rgba(4, 19, 43, 0.85));
+    padding: 0.6rem 1.2rem;
+    box-shadow:
+        0 0 20px rgba(255, 90, 177, 0.3),
+        inset 0 0 20px rgba(255, 90, 177, 0.1);
+    border: 2px solid rgba(255, 90, 177, 0.4);
 }
 
+#like-btn::before {
+    clip-path: polygon(
+        50% 15%, 65% 0%, 85% 0%, 100% 15%, 100% 40%,
+        50% 100%,
+        0% 40%, 0% 15%, 15% 0%, 35% 0%
+    );
+}
+
+#like-btn::after {
+    clip-path: polygon(
+        50% 15%, 65% 0%, 85% 0%, 100% 15%, 100% 40%,
+        50% 100%,
+        0% 40%, 0% 15%, 15% 0%, 35% 0%
+    );
+    background: linear-gradient(90deg,
+        rgba(255, 90, 177, 0.5),
+        rgba(24, 160, 199, 0.5),
+        rgba(255, 90, 177, 0.5)
+    );
+}
+
+#like-btn:hover {
+    background: linear-gradient(145deg, rgba(255, 90, 177, 0.4), rgba(4, 19, 43, 0.95));
+    border-color: rgba(255, 90, 177, 0.8);
+    box-shadow:
+        0 0 35px rgba(255, 90, 177, 0.6),
+        0 0 60px rgba(255, 90, 177, 0.4);
+    transform: scale(1.15);
+}
+
+/* === VISUALIZER SWITCH - PROSTOKĄT Z ZAOKRĄGLONYMI ROGAMI === */
 .visualizer-switch {
     font-size: 0.9rem;
     width: auto;
-    border-radius: 25px;
-    padding: 0 0.8rem;
+    min-width: 90px;
+    clip-path: polygon(
+        8% 0%, 92% 0%,
+        100% 15%, 100% 85%,
+        92% 100%, 8% 100%,
+        0% 85%, 0% 15%
+    );
+    padding: 0.5rem 1rem;
     white-space: nowrap;
+    background: linear-gradient(145deg, rgba(24, 160, 199, 0.15), rgba(4, 19, 43, 0.85));
+    box-shadow:
+        0 0 15px rgba(24, 160, 199, 0.2),
+        inset 0 0 20px rgba(24, 160, 199, 0.1);
+}
+
+.visualizer-switch::before {
+    clip-path: polygon(
+        8% 0%, 92% 0%,
+        100% 15%, 100% 85%,
+        92% 100%, 8% 100%,
+        0% 85%, 0% 15%
+    );
+}
+
+.visualizer-switch::after {
+    clip-path: polygon(
+        8% 0%, 92% 0%,
+        100% 15%, 100% 85%,
+        92% 100%, 8% 100%,
+        0% 85%, 0% 15%
+    );
+}
+
+.visualizer-switch:hover {
+    background: linear-gradient(145deg, rgba(24, 160, 199, 0.3), rgba(4, 19, 43, 0.9));
 }
 
 .visualizer-switch:disabled {
     opacity: 0.3;
     cursor: not-allowed;
+    filter: grayscale(80%);
 }
 
 .visualizer-switch:disabled:hover {
     transform: none;
-    box-shadow: none;
-}
-    font-size: 1rem;
-}
-
-#like-btn:hover,
-#like-btn:focus-visible {
-    background: rgba(24, 160, 199, 0.45);
-    color: var(--text-color);
+    box-shadow:
+        0 0 15px rgba(24, 160, 199, 0.2),
+        inset 0 0 20px rgba(24, 160, 199, 0.1);
+    background: linear-gradient(145deg, rgba(24, 160, 199, 0.15), rgba(4, 19, 43, 0.85));
 }
 
 #like-btn.liked-animation {
@@ -1098,7 +1306,24 @@ body, #app-container, #main-content, #player-ui, #player-controls, #side-panel {
 #sticky-player-info { text-align: left; flex-grow: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #sticky-player-info h5 { margin: 0; font-size: 1rem; color: var(--text-color); }
 #sticky-track-cover { width: 40px; height: 40px; border-radius: 4px; }
-#sticky-player-controls .control-btn { width: 40px; height: 40px; font-size: 1rem; }
+/* Sticky player buttons - mniejsze wersje geometrycznych przycisków */
+#sticky-player-controls .control-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 1.1rem;
+}
+
+#sticky-player-controls #sticky-play-pause-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 1.4rem;
+}
+
+#sticky-player-controls #sticky-next-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+}
 #sticky-progress-container { background: #333; border-radius: 5px; height: 4px; width: 100%; margin-top: 5px; overflow: hidden; }
 #error-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 20px; box-sizing: border-box; text-align: center; opacity: 1; transition: opacity 0.3s; }
 #error-overlay.hidden { opacity: 0; pointer-events: none; }
