@@ -406,6 +406,23 @@
     }
 }
 
+/* Listener Polls Wrapper */
+.polls-wrapper {
+    margin-top: 1rem;
+}
+
+.poll-container {
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(4, 19, 43, 0.6);
+    border: 1px solid rgba(24, 160, 199, 0.2);
+    border-radius: 0.5rem;
+}
+
+.poll-container:last-child {
+    margin-bottom: 0;
+}
+
 /* Hidden class */
 .hidden {
     display: none !important;

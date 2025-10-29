@@ -12,13 +12,17 @@ export function initializeEmployeeSurvey() {
     const closeResultsBtn = document.getElementById('close-employee-results-btn');
     const toggleBtn = document.getElementById('survey-toggle');
     const content = document.getElementById('survey-content');
+    
+    // Also handle polls toggle
+    const pollsToggleBtn = document.getElementById('polls-toggle');
+    const pollsContent = document.getElementById('polls-collapsible-content');
 
     if (!form) {
         console.warn('Employee survey form not found');
         return;
     }
 
-    // Handle toggle button
+    // Handle toggle button for employee survey
     if (toggleBtn && content) {
         toggleBtn.addEventListener('click', () => {
             const isExpanded = content.classList.contains('expanded');
@@ -28,6 +32,20 @@ export function initializeEmployeeSurvey() {
             } else {
                 content.classList.add('expanded');
                 toggleBtn.classList.add('active');
+            }
+        });
+    }
+    
+    // Handle toggle button for listener polls
+    if (pollsToggleBtn && pollsContent) {
+        pollsToggleBtn.addEventListener('click', () => {
+            const isExpanded = pollsContent.classList.contains('expanded');
+            if (isExpanded) {
+                pollsContent.classList.remove('expanded');
+                pollsToggleBtn.classList.remove('active');
+            } else {
+                pollsContent.classList.add('expanded');
+                pollsToggleBtn.classList.add('active');
             }
         });
     }

@@ -359,9 +359,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function initializePolls() {
-        // Polls disabled for TV display optimization
-        return;
-
         if (!dom.polls || !dom.polls.container) {
             console.warn('Brak kontenera dla ankiet');
             return;
@@ -454,9 +451,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function checkMilestoneAndAddPoll() {
-        // Polls disabled for TV display optimization
-        return;
-
         if (state.history.length === 10 && state.pollSystem && dom.polls?.container) {
             const newPoll = state.pollSystem.addPoll({
                 question: 'Gratulacje! Posłuchałeś 10 utworów. Jak Ci się podoba radio?',
