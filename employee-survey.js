@@ -10,10 +10,26 @@ export function initializeEmployeeSurvey() {
     const form = document.getElementById('employee-survey-form');
     const resultsBtn = document.getElementById('employee-survey-results-btn');
     const closeResultsBtn = document.getElementById('close-employee-results-btn');
+    const toggleBtn = document.getElementById('survey-toggle');
+    const content = document.getElementById('survey-content');
 
     if (!form) {
         console.warn('Employee survey form not found');
         return;
+    }
+
+    // Handle toggle button
+    if (toggleBtn && content) {
+        toggleBtn.addEventListener('click', () => {
+            const isExpanded = content.classList.contains('expanded');
+            if (isExpanded) {
+                content.classList.remove('expanded');
+                toggleBtn.classList.remove('active');
+            } else {
+                content.classList.add('expanded');
+                toggleBtn.classList.add('active');
+            }
+        });
     }
 
     // Handle form submission

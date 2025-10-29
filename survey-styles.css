@@ -8,15 +8,58 @@
     margin-top: 2rem;
     background: linear-gradient(135deg, rgba(24, 160, 199, 0.1) 0%, rgba(4, 19, 43, 0.8) 100%);
     border: 1px solid rgba(24, 160, 199, 0.3);
-    padding: 2rem;
+    padding: 0;
     border-radius: 0.75rem;
+    overflow: hidden;
+}
+
+/* Survey Toggle Button */
+.survey-toggle-btn {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.3s ease;
+    color: #18A0C7;
+}
+
+.survey-toggle-btn:hover {
+    background: rgba(24, 160, 199, 0.1);
+}
+
+.survey-toggle-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+    color: #18A0C7;
+}
+
+.survey-toggle-btn.active .survey-toggle-icon {
+    transform: rotate(180deg);
 }
 
 .survey-title {
     color: #18A0C7;
     font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
+    margin: 0;
+    text-align: left;
+}
+
+/* Collapsible Content */
+.survey-collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0 2rem;
+}
+
+.survey-collapsible-content.expanded {
+    max-height: 5000px;
+    padding: 0 2rem 2rem;
+    transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Survey Introduction Text */
@@ -330,11 +373,19 @@
 /* Responsive Design */
 @media (max-width: 768px) {
     .survey-box {
-        padding: 1.5rem 1rem;
+        margin-top: 1.5rem;
+    }
+    
+    .survey-toggle-btn {
+        padding: 1.25rem 1.5rem;
     }
 
     .survey-title {
         font-size: 1.25rem;
+    }
+    
+    .survey-collapsible-content.expanded {
+        padding: 0 1.5rem 1.5rem;
     }
 
     .form-actions {
