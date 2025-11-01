@@ -1,6 +1,6 @@
 import { waitForMediaReady, shouldIgnorePlaybackError, isAudioSourceSupported } from './media-utils.js';
 import { createInitialState } from './state.js';
-import { createTrackListItem } from './ui-utils.js';
+import { createTrackListItem, updatePlayStateVisuals } from './ui-utils.js';
 import { PollSystem } from './poll-system.js';
 
 import { filterUnavailableTracks } from './media-availability.js';
@@ -32,8 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
             currentTime: document.getElementById('current-time'),
             timeRemaining: document.getElementById('time-remaining'),
             playPauseBtn: document.getElementById('play-pause-btn'),
+            playPauseIconUse: document.querySelector('#play-pause-btn use'),
             nextBtn: document.getElementById('next-btn'),
+            nextIconUse: document.querySelector('#next-btn use'),
             likeBtn: document.getElementById('like-btn'),
+            likeIconUse: document.querySelector('#like-btn use'),
             likeCount: document.getElementById('like-count'),
             volumeSlider: document.getElementById('volume-slider'),
             ratingSection: document.getElementById('rating-section'),
@@ -47,7 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
             cover: document.getElementById('sticky-track-cover'),
             title: document.getElementById('sticky-track-title'),
             playPauseBtn: document.getElementById('sticky-play-pause-btn'),
+            playPauseIconUse: document.querySelector('#sticky-play-pause-btn use'),
             nextBtn: document.getElementById('sticky-next-btn'),
+            nextIconUse: document.querySelector('#sticky-next-btn use'),
         },
         sidePanel: {
             panel: document.getElementById('side-panel'),
@@ -1207,13 +1212,20 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function updatePlayPauseButtons() {
         state.isPlaying = !players[activePlayerIndex].paused;
-        const icon = state.isPlaying ? '⸸️' : '▶️';
-        if (dom.player.playPauseBtn) dom.player.playPauseBtn.textContent = icon;
-        if (dom.stickyPlayer.playPauseBtn) dom.stickyPlayer.playPauseBtn.textContent = icon;
+        const iconIds = { play: '#icon-play', pause: '#icon-pause' };
+
+        updatePlayStateVisuals({ button: dom.player.playPauseBtn, iconUse: dom.player.playPauseIconUse }, state.isPlaying, iconIds);
+        updatePlayStateVisuals({ button: dom.stickyPlayer.playPauseBtn, iconUse: dom.stickyPlayer.playPauseIconUse }, state.isPlaying, iconIds);
 
         const label = t(state.isPlaying ? 'playPauseLabel_pause' : 'playPauseLabel_play');
-        if (dom.player.playPauseBtn) dom.player.playPauseBtn.setAttribute("aria-label", label);
-        if (dom.stickyPlayer.playPauseBtn) dom.stickyPlayer.playPauseBtn.setAttribute("aria-label", label);
+        if (dom.player.playPauseBtn) {
+            dom.player.playPauseBtn.setAttribute('aria-label', label);
+            dom.player.playPauseBtn.setAttribute('aria-pressed', state.isPlaying ? 'true' : 'false');
+        }
+        if (dom.stickyPlayer.playPauseBtn) {
+            dom.stickyPlayer.playPauseBtn.setAttribute('aria-label', label);
+            dom.stickyPlayer.playPauseBtn.setAttribute('aria-pressed', state.isPlaying ? 'true' : 'false');
+        }
 
         document.body.classList.toggle('playing', state.isPlaying);
 
