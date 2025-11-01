@@ -8,6 +8,7 @@ import { fetchPlaylist, normalizeRealTracks } from './playlist-service.js';
 import { loadTrackMetadata, applyMetadataToPlaylist } from './track-metadata.js';
 
 import { CONFIG } from './config.js';
+import { createListenerCountController } from './listener-count.js';
 // strategic/machine docs imports removed in simplified build
 
 /**
@@ -85,6 +86,25 @@ document.addEventListener('DOMContentLoaded', () => {
         errorRetryBtn: document.getElementById('error-retry-btn'),
         themeSwitcher: document.querySelector('.theme-switcher'),
     };
+
+    if (dom.header.listenerCount) {
+        dom.header.listenerCount.setAttribute('aria-live', 'polite');
+    }
+
+    const listenerCountController = dom.header.listenerCount
+        ? createListenerCountController({
+            element: dom.header.listenerCount,
+            endpoint: CONFIG.LISTENER_COUNT_ENDPOINT,
+            websocketUrl: CONFIG.LISTENER_COUNT_WS,
+            navigatorRef: typeof navigator !== 'undefined' ? navigator : { onLine: true },
+            documentRef: typeof document !== 'undefined' ? document : undefined,
+            visibilityEventTarget: typeof document !== 'undefined' ? document : undefined,
+            onlineEventTarget: typeof window !== 'undefined' ? window : undefined,
+            logger: console,
+        })
+        : null;
+
+    let listenerCountStarted = false;
 
     // --- One-time Reset: clear storage, caches, SW, and IndexedDB ---
     async function resetAppStorageOnce() {
@@ -533,27 +553,26 @@ document.addEventListener('DOMContentLoaded', () => {
             renderGoldenRecords();
             renderTopRated();
             // calendar and machine select removed
-            function safeUpdateListenerCount() {
-                try {
-                    if (state && state.isInitialized && dom.header?.listenerCount) {
-                        updateListenerCount();
+            if (listenerCountController) {
+                const startListenerCount = () => {
+                    if (listenerCountStarted) return;
+                    listenerCountStarted = true;
+                    try {
+                        listenerCountController.start();
+                    } catch (err) {
+                        console.error('Błąd uruchamiania listenerCountController:', err);
                     }
-                } catch (err) {
-                    console.error('Błąd updateListenerCount:', err);
+                };
+                if (state.isInitialized) {
+                    startListenerCount();
+                } else {
+                    const readyCheck = setInterval(() => {
+                        if (state.isInitialized) {
+                            clearInterval(readyCheck);
+                            startListenerCount();
+                        }
+                    }, 500);
                 }
-            }
-            if (state.isInitialized) {
-                safeUpdateListenerCount();
-                setInterval(safeUpdateListenerCount, 15000);
-            } else {
-                // jednorazowy trigger po inicjalizacji
-                const readyCheck = setInterval(() => {
-                    if (state.isInitialized) {
-                        clearInterval(readyCheck);
-                        safeUpdateListenerCount();
-                        setInterval(safeUpdateListenerCount, 15000);
-                    }
-                }, 500);
             }
             // GO/NO-GO analysis removed
 
@@ -1489,20 +1508,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Luisteraarstelsimulatie ---
-    function updateListenerCount() {
-        if (!dom.header.listenerCount) return;
-        const isOnline = typeof navigator === 'object' ? navigator.onLine : true;
-        if (!isOnline) {
-            dom.header.listenerCount.textContent = 'Offline';
-            return;
-        }
-        const base = 5 + (Object.keys(state.likes).length % 10);
-        const avgRating = state.currentTrack ? calculateAverageRating(state.currentTrack.id) : 0;
-        const ratingBonus = Math.floor(avgRating * 2);
-        const variance = Math.floor(Math.random() * 7) - 3;
-        dom.header.listenerCount.textContent = `${base + ratingBonus + variance}`;
-    }
-
     // --- Gouden Platen & Berichten ---
     function renderGoldenRecords() { 
         if (!dom.sidePanel.goldenRecordsList) return;
@@ -2193,6 +2198,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize employee survey system
     if (typeof initializeEmployeeSurvey === 'function') {
         initializeEmployeeSurvey();
+    }
+
+    if (listenerCountController && typeof window === 'object') {
+        window.addEventListener('beforeunload', () => listenerCountController.dispose());
     }
 
     initialize();
