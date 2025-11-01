@@ -740,6 +740,13 @@ Projekt zawiera szczegółową dokumentację w osobnych plikach:
   - Konfiguracja i najlepsze praktyki
   - Testy wydajnościowe
 
+- **[MEDIA_INSTRUKCJA.md](MEDIA_INSTRUKCJA.md)** - Instrukcja dodawania obrazów i filmów:
+  - Jak działa system automatycznego wykrywania
+  - Krok po kroku dodawanie plików
+  - Obsługiwane formaty
+  - Generowanie manifestu mediów
+  - Obsługa podfolderów
+
 - **[VISUALIZER-GUIDE.md](VISUALIZER-GUIDE.md)** - Quick Start Guide dla wizualizatora 3D:
   - Jak używać wizualizatora
   - Kontrola kamery
