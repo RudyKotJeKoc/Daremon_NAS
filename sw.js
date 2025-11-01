@@ -1,5 +1,5 @@
 // ===================================================================================
-// DAREMON Radio ETS - Service Worker v10
+// DAREMON Radio ETS - Service Worker v11
 //
 // Strategie:
 // - Zwiększono wersję cache do v9, aby wymusić aktualizację wszystkich zasobów,
@@ -7,13 +7,17 @@
 // - Dodano lokalne ikony do pamięci podręcznej dla pełnej funkcjonalności offline.
 // ===================================================================================
 
-const CACHE_NAME = 'daremon-radio-v10'; // WAŻNE: Zmiana wersji cache
+const CACHE_NAME = 'daremon-radio-v11'; // WAŻNE: Zmiana wersji cache
 
 // Basis app-resources (App Shell) z dodanymi ikonami
 const APP_SHELL_ASSETS = [
     './',
     './index.html',
     './app.js',
+    './polls.html',
+    './polls-page.js',
+    './polls.css',
+    './poll-system.js',
     './config.js',
     './styles.css',
     './manifest.json',
