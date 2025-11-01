@@ -1,5 +1,6 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import { MusicScanner } from '../music-scanner.js';
+import { resetTrackMetadataCache } from '../track-metadata.js';
 
 function createFetchMock(responses) {
     return vi.fn(async (url, options = {}) => {
@@ -32,6 +33,7 @@ describe('MusicScanner', () => {
 
     beforeEach(() => {
         originalFetch = globalThis.fetch;
+        resetTrackMetadataCache();
     });
 
     afterEach(() => {
@@ -40,6 +42,7 @@ describe('MusicScanner', () => {
         } else {
             delete globalThis.fetch;
         }
+        resetTrackMetadataCache();
         vi.restoreAllMocks();
     });
 
@@ -127,5 +130,46 @@ describe('MusicScanner', () => {
         const title = await scanner.extractTitle('https://cdn.example.com/audio/Najlepszy utwór.MP3?download=1#fragment');
 
         expect(title).toBe('Najlepszy utwór');
+    });
+
+    it('sanityzuje fallbackowe tytuły wykorzystując metadane z tracks.json', async () => {
+        const fetchMock = createFetchMock(new Map([
+            ['GET ./tracks.json', {
+                status: 200,
+                body: {
+                    tracks: [
+                        { file: 'Utwor (1).mp3', title: 'Poranny Start', artist: 'Daremon Collective' }
+                    ]
+                }
+            }]
+        ]));
+
+        const scanner = new MusicScanner({ fetchImpl: fetchMock });
+        const normalized = await scanner.normalizeTrack({
+            src: './music/Utwor (1).mp3',
+            title: 'Utwór 1 🎧'
+        }, 0);
+
+        expect(fetchMock).toHaveBeenCalledWith('./tracks.json', { cache: 'no-store' });
+        expect(normalized?.title).toBe('Poranny Start');
+        expect(normalized?.title).not.toMatch(/Utwór\s*1/);
+    });
+
+    it('usuwa numerację i emoji gdy brak metadanych', async () => {
+        const fetchMock = createFetchMock(new Map([
+            ['GET ./tracks.json', {
+                status: 200,
+                body: { tracks: [] }
+            }]
+        ]));
+
+        const scanner = new MusicScanner({ fetchImpl: fetchMock });
+        const normalized = await scanner.normalizeTrack({
+            src: './music/Utwor (42).mp3',
+            title: 'Utwór 42 😎'
+        }, 41);
+
+        expect(normalized?.title).toBe('Nieznany utwór');
+        expect(normalized?.title).not.toMatch(/42/);
     });
 });

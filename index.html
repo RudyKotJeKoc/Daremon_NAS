@@ -32,6 +32,26 @@
     <script type="module" src="config.js"></script>
 </head>
 <body data-theme="arburg">
+
+    <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true">
+        <defs>
+            <symbol id="icon-play" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7-11-7z" />
+            </symbol>
+            <symbol id="icon-pause" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 5h4v14H6zM14 5h4v14h-4z" />
+            </symbol>
+            <symbol id="icon-stop" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 6h12v12H6z" />
+            </symbol>
+            <symbol id="icon-next" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M5 5v14l9-7-9-7zm10 0h2v14h-2z" />
+            </symbol>
+            <symbol id="icon-like" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6 4 4 6.5 4c1.74 0 3.41 1.01 4.22 2.61C11.09 5.01 12.76 4 14.5 4 17 4 19 6 19 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </symbol>
+        </defs>
+    </svg>
     
     <div id="offline-indicator" class="hidden" aria-live="assertive" data-i18n-key="offlineMessage"></div>
     <header id="app-header" class="app-header" role="banner">
@@ -260,8 +280,41 @@
                 <header>
                     <h1>Radio ETS</h1>
                     <p data-i18n-key="headerSubtitle"></p>
-                    <p id="listener-count-display"><span data-i18n-key="listenersLabel"></span> <span id="listener-count">...</span></p>
+                    <p id="listener-count-display"><span data-i18n-key="listenersLabel"></span> <span id="listener-count" aria-live="polite" role="status">...</span></p>
                 </header>
+
+                <section id="deadlines-section" class="content-box deadlines-section" aria-labelledby="deadlines-heading">
+                    <h2 id="deadlines-heading">Deadlines</h2>
+                    <div class="deadlines-grid">
+                        <article class="deadline-card" data-deadline-id="year-end-2025">
+                            <header class="deadline-header">
+                                <h3 class="deadline-title">Zamknięcie roku 2025</h3>
+                                <p class="deadline-date">31.12.2025</p>
+                            </header>
+                            <p class="deadline-description">Finalizacja działań operacyjnych przed końcem roku.</p>
+                            <div class="timer-display" role="timer" aria-live="polite" aria-label="Pozostało 00 dni">
+                                <span class="timer-value" data-time-remaining>00:00:00:00</span>
+                            </div>
+                            <div class="timer-bar" aria-hidden="true">
+                                <div class="timer-fill"></div>
+                            </div>
+                        </article>
+
+                        <article class="deadline-card" data-deadline-id="april-2026">
+                            <header class="deadline-header">
+                                <h3 class="deadline-title">Raport kwartalny 2026</h3>
+                                <p class="deadline-date">30.04.2026</p>
+                            </header>
+                            <p class="deadline-description">Przygotowanie raportu zamykającego pierwszy okres 2026.</p>
+                            <div class="timer-display" role="timer" aria-live="polite" aria-label="Pozostało 00 dni">
+                                <span class="timer-value" data-time-remaining>00:00:00:00</span>
+                            </div>
+                            <div class="timer-bar" aria-hidden="true">
+                                <div class="timer-fill"></div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
 
                 <section id="now-playing-section" class="content-box">
                     <div class="now-playing-layout">
@@ -291,9 +344,22 @@
                         </div>
                     </div>
                     <div id="player-controls">
-                        <button id="play-pause-btn" class="control-btn" data-i18n-title="playPauseTooltip" data-i18n-aria-label="playPauseLabel">▶️</button>
-                        <button id="next-btn" class="control-btn" data-i18n-title="nextTooltip" data-i18n-aria-label="nextLabel">⏭️</button>
-                        <button id="like-btn" class="control-btn" data-i18n-title="likeTooltip" data-i18n-aria-label="likeLabel">👍 <span id="like-count">0</span></button>
+                        <button id="play-pause-btn" class="control-btn control-btn--large" data-i18n-title="playPauseTooltip" data-i18n-aria-label="playPauseLabel">
+                            <svg class="control-btn__icon" aria-hidden="true" focusable="false">
+                                <use href="#icon-play"></use>
+                            </svg>
+                        </button>
+                        <button id="next-btn" class="control-btn control-btn--icon-only" data-i18n-title="nextTooltip" data-i18n-aria-label="nextLabel">
+                            <svg class="control-btn__icon" aria-hidden="true" focusable="false">
+                                <use href="#icon-next"></use>
+                            </svg>
+                        </button>
+                        <button id="like-btn" class="control-btn control-btn--with-label" data-i18n-title="likeTooltip" data-i18n-aria-label="likeLabel">
+                            <svg class="control-btn__icon" aria-hidden="true" focusable="false">
+                                <use href="#icon-like"></use>
+                            </svg>
+                            <span id="like-count" class="control-btn__label">0</span>
+                        </button>
                         <div id="volume-control" data-i18n-title="volumeTooltip">
                             <span id="volume-icon" class="volume-icon">🔊</span>
                             <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" data-i18n-aria-label="volumeLabel">
@@ -305,6 +371,7 @@
 
 
                 <!-- Slideshow container removed - now integrated into track-cover -->
+                <div id="slideshow-container" class="visually-hidden" aria-hidden="true"></div>
 
                 <!-- DAREMON HUB USUNIĘTY - UPROSZCZENIE APLIKACJI -->
                 <!-- Team moments removed - optymalizacja dla TV display -->
@@ -330,8 +397,16 @@
             </div>
         </div>
         <div id="sticky-player-controls">
-            <button id="sticky-play-pause-btn" class="control-btn" data-i18n-aria-label="playPauseLabel">▶️</button>
-            <button id="sticky-next-btn" class="control-btn" data-i18n-aria-label="nextLabel">⏭️</button>
+            <button id="sticky-play-pause-btn" class="control-btn control-btn--sticky control-btn--icon-only" data-i18n-aria-label="playPauseLabel">
+                <svg class="control-btn__icon" aria-hidden="true" focusable="false">
+                    <use href="#icon-play"></use>
+                </svg>
+            </button>
+            <button id="sticky-next-btn" class="control-btn control-btn--sticky control-btn--icon-only" data-i18n-aria-label="nextLabel">
+                <svg class="control-btn__icon" aria-hidden="true" focusable="false">
+                    <use href="#icon-next"></use>
+                </svg>
+            </button>
         </div>
     </div>
     
@@ -364,6 +439,7 @@
     <script type="module" src="slideshow.js"></script>
     <script type="module" src="survey.js"></script>
     <script type="module" src="employee-survey.js"></script>
+    <script type="module" src="countdown-timers.js"></script>
     <script type="module" src="script.js"></script>
     <script type="module" src="app.js"></script>
 </body>

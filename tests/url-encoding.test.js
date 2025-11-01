@@ -51,8 +51,8 @@ describe('URL encoding for music files', () => {
 
         const normalized = normalizeRealTracks(tracks);
 
-        // Should keep remote URLs as-is (they should already be encoded by the server)
-        expect(normalized[0].src).toBe('https://daremon.nl/music/Daremon (213).mp3');
+        // Should encode only once and keep protocol/host intact
+        expect(normalized[0].src).toBe('https://daremon.nl/music/Daremon%20(213).mp3');
     });
 
     it('handles paths without spaces', () => {

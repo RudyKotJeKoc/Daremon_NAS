@@ -100,7 +100,7 @@ function normalizeTrackSrc(src) {
         return '';
     }
 
-    // URLs are already encoded, return as-is
+    // URLs są zarządzane przez serwer – zwracamy je bez dodatkowego kodowania
     if (/^https?:\/\//i.test(trimmed)) {
         return trimmed;
     }
