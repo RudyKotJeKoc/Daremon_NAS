@@ -20,7 +20,9 @@ export function createTrackListItem(track, options = {}) {
     const cover = document.createElement('img');
     cover.classList.add('track-list-cover');
     cover.src = track.cover || FALLBACK_COVER;
-    cover.alt = `${track.artist} – ${track.title}`;
+    const coverTitle = typeof track.title === 'string' && track.title.trim() ? track.title.trim() : 'Nieznany utwór';
+    const coverArtist = typeof track.artist === 'string' && track.artist.trim() ? track.artist.trim() : '';
+    cover.alt = coverArtist ? `Okładka utworu ${coverTitle} – ${coverArtist}` : `Okładka utworu ${coverTitle}`;
     cover.loading = 'lazy';
     cover.decoding = 'async';
 
@@ -29,14 +31,24 @@ export function createTrackListItem(track, options = {}) {
 
     const title = document.createElement('span');
     title.classList.add('track-list-title');
-    title.textContent = `${track.artist} - ${track.title}`;
+    title.textContent = coverTitle;
     infoWrapper.appendChild(title);
 
     const subtitleText = buildSubtitle(subtitle);
+    const subtitleParts = [];
+
+    if (coverArtist) {
+        subtitleParts.push(coverArtist);
+    }
+
     if (subtitleText) {
+        subtitleParts.push(subtitleText);
+    }
+
+    if (subtitleParts.length > 0) {
         const meta = document.createElement('span');
         meta.classList.add('track-list-meta');
-        meta.textContent = subtitleText;
+        meta.textContent = subtitleParts.join(' • ');
         infoWrapper.appendChild(meta);
     }
 
