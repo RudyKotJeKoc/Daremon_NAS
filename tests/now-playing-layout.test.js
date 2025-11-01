@@ -20,15 +20,15 @@ describe('now playing layout', () => {
     expect(sectionMatch?.[1]).toContain('<div id="player-ui">');
   });
 
-  it('places the slideshow container directly after the now playing section', () => {
+  it('renders the track cover container inside the now playing section', () => {
     expect(html).not.toContain('id="visualizer-showcase"');
 
     const nowPlayingIndex = html.indexOf('<section id="now-playing-section"');
-    const slideshowIndex = html.indexOf('<div id="slideshow-container"');
+    const trackCoverIndex = html.indexOf('<div id="track-cover"');
 
     expect(nowPlayingIndex).toBeGreaterThan(-1);
-    expect(slideshowIndex).toBeGreaterThan(-1);
-    expect(slideshowIndex).toBeGreaterThan(nowPlayingIndex);
+    expect(trackCoverIndex).toBeGreaterThan(-1);
+    expect(trackCoverIndex).toBeGreaterThan(nowPlayingIndex);
   });
 
 });
