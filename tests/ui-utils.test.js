@@ -57,7 +57,7 @@ describe('createTrackListItem', () => {
         globalThis.document = originalDocument;
     });
 
-    it('renders a list item with cover art and optional subtitle', () => {
+    it('renders a list item with cover art and neutral metadata layout', () => {
         const track = { id: 'track-1', artist: 'DJ Test', title: 'Sample', cover: 'cover.png' };
 
         const item = createTrackListItem(track, { subtitle: '4.5 ⭐ · 3' });
@@ -68,11 +68,34 @@ describe('createTrackListItem', () => {
         const [cover, infoWrapper] = item.children;
         expect(cover.tagName).toBe('IMG');
         expect(cover.src).toBe('cover.png');
-        expect(cover.alt).toBe('DJ Test – Sample');
+        expect(cover.alt).toBe('Okładka utworu Sample – DJ Test');
 
         expect(infoWrapper.children).toHaveLength(2);
-        expect(infoWrapper.children[0].textContent).toBe('DJ Test - Sample');
-        expect(infoWrapper.children[1].textContent).toBe('4.5 ⭐ · 3');
+        expect(infoWrapper.children[0].textContent).toBe('Sample');
+        expect(infoWrapper.children[1].textContent).toBe('DJ Test • 4.5 ⭐ · 3');
+    });
+
+    it('wyświetla artystę w opisie gdy brak dodatkowego podtytułu', () => {
+        const track = { id: 'track-artist', artist: 'Daremon Collective', title: 'Poranny Start', cover: 'cover.png' };
+
+        const item = createTrackListItem(track);
+
+        const infoWrapper = item.children[1];
+        expect(infoWrapper.children).toHaveLength(2);
+        expect(infoWrapper.children[0].textContent).toBe('Poranny Start');
+        expect(infoWrapper.children[1].textContent).toBe('Daremon Collective');
+    });
+
+    it('zapewnia neutralny tytuł fallbackowy bez numeracji', () => {
+        const track = { id: 'track-fallback', artist: '', title: '', cover: '' };
+
+        const item = createTrackListItem(track);
+
+        const [cover, infoWrapper] = item.children;
+        expect(cover.alt).toBe('Okładka utworu Nieznany utwór');
+        expect(infoWrapper.children[0].textContent).toBe('Nieznany utwór');
+        expect(infoWrapper.children[0].textContent).not.toMatch(/\d/);
+        expect(infoWrapper.children).toHaveLength(1);
     });
 
     it('creates interactive list items that respond to click and keyboard', () => {

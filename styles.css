@@ -698,12 +698,15 @@ header p {
     gap: 2px;
 }
 .track-list-title {
-    font-weight: 600;
+    font-weight: 500;
+    color: var(--text-color);
+    line-height: 1.3;
+    letter-spacing: 0.01em;
 }
 .track-list-meta {
     font-size: 0.7rem;
-    letter-spacing: 0.02em;
-    color: rgba(244, 247, 251, 0.7);
+    letter-spacing: 0.01em;
+    color: rgba(244, 247, 251, 0.65);
 }
 .interactive-list li { cursor: pointer; }
 .interactive-list li:hover { background-color: rgba(0, 136, 120, 0.2); transform: translateX(4px); }
@@ -712,13 +715,11 @@ header p {
     outline-offset: 2px;
     background-color: rgba(0, 136, 120, 0.25);
 }
-#golden-records-list .track-list-title {
-    color: #ffd700;
-    text-shadow: 0 0 5px #ffd700;
-}
-#top-rated-list .track-list-title {
-    color: var(--primary-accent);
-    text-shadow: 0 0 5px var(--primary-accent);
+#golden-records-list .track-list-title,
+#top-rated-list .track-list-title,
+#history-list .track-list-title {
+    color: var(--text-color);
+    text-shadow: none;
 }
 
 /* --- Berichtenmodule --- */
@@ -1620,9 +1621,8 @@ body.playing #track-cover {
 }
 
 /* Dodatkowy efekt dla złotych płyt */
-#golden-records-list li,
 [data-track-top="true"] #track-title {
-  text-shadow: 
+  text-shadow:
     0 0 10px rgba(255, 215, 0, 0.8),
     0 0 20px rgba(255, 165, 0, 0.6),
     0 0 30px rgba(255, 140, 0, 0.4);
