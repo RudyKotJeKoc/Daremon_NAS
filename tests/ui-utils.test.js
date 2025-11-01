@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { createTrackListItem } from '../ui-utils.js';
+import { createTrackListItem, updatePlayStateVisuals } from '../ui-utils.js';
 
 class FakeElement extends EventTarget {
     constructor(tagName) {
@@ -91,5 +91,71 @@ describe('createTrackListItem', () => {
         item.dispatchEvent(keyEvent);
 
         expect(onActivate).toHaveBeenCalledTimes(2);
+    });
+});
+
+describe('updatePlayStateVisuals', () => {
+    const createStubButton = () => {
+        const classes = new Set();
+        return {
+            classList: {
+                toggle: (cls, force) => {
+                    if (force === undefined) {
+                        if (classes.has(cls)) {
+                            classes.delete(cls);
+                            return false;
+                        }
+                        classes.add(cls);
+                        return true;
+                    }
+
+                    if (force) {
+                        classes.add(cls);
+                    } else {
+                        classes.delete(cls);
+                    }
+                    return classes.has(cls);
+                }
+            },
+            getClasses: () => Array.from(classes)
+        };
+    };
+
+    const createStubUse = () => {
+        const attrs = {};
+        return {
+            attributes: attrs,
+            setAttribute: (name, value) => {
+                attrs[name] = value;
+            }
+        };
+    };
+
+    it('applies pause icon and playing class when media is active', () => {
+        const button = createStubButton();
+        const iconUse = createStubUse();
+
+        updatePlayStateVisuals({ button, iconUse }, true, { play: '#icon-play', pause: '#icon-pause' });
+
+        expect(button.getClasses()).toContain('is-playing');
+        expect(iconUse.attributes.href).toBe('#icon-pause');
+        expect(iconUse.attributes['xlink:href']).toBe('#icon-pause');
+    });
+
+    it('reverts to play icon and removes playing class when paused', () => {
+        const button = createStubButton();
+        const iconUse = createStubUse();
+        const setAttributeNSSpy = vi.fn((ns, name, value) => {
+            iconUse.attributes[`${ns}:${name}`] = value;
+        });
+        iconUse.setAttributeNS = setAttributeNSSpy;
+
+        button.classList.toggle('is-playing', true);
+
+        updatePlayStateVisuals({ button, iconUse }, false, { play: '#icon-play', pause: '#icon-pause' });
+
+        expect(button.getClasses()).not.toContain('is-playing');
+        expect(iconUse.attributes.href).toBe('#icon-play');
+        expect(setAttributeNSSpy).toHaveBeenCalledWith('http://www.w3.org/1999/xlink', 'href', '#icon-play');
     });
 });

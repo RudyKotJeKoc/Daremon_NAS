@@ -63,3 +63,27 @@ export function createTrackListItem(track, options = {}) {
 
     return listItem;
 }
+
+export function updatePlayStateVisuals(target, isPlaying, icons = {}) {
+    if (!target || typeof target !== 'object') return;
+
+    const button = target.button;
+    const iconUse = target.iconUse;
+    const playing = Boolean(isPlaying);
+    const playIcon = icons.play || '#icon-play';
+    const pauseIcon = icons.pause || '#icon-pause';
+    const iconId = playing ? pauseIcon : playIcon;
+
+    if (button && button.classList && typeof button.classList.toggle === 'function') {
+        button.classList.toggle('is-playing', playing);
+    }
+
+    if (iconUse && typeof iconUse.setAttribute === 'function') {
+        iconUse.setAttribute('href', iconId);
+        if (typeof iconUse.setAttributeNS === 'function') {
+            iconUse.setAttributeNS('http://www.w3.org/1999/xlink', 'href', iconId);
+        } else {
+            iconUse.setAttribute('xlink:href', iconId);
+        }
+    }
+}
