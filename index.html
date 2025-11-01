@@ -31,7 +31,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
     <script type="module" src="config.js"></script>
 </head>
-<body data-theme="arburg">
+<body data-theme="arburg" id="page-top">
     
     <div id="offline-indicator" class="hidden" aria-live="assertive" data-i18n-key="offlineMessage"></div>
     <div id="app-container">
@@ -39,9 +39,9 @@
         <div id="radio-view">
             
             <!-- ZMIANA: Panel boczny przeniesiony na lewą stronę -->
-            <aside id="side-panel">
-                <button id="menu-toggle" data-i18n-aria-label="menuToggleLabel">☰</button>
-                <div id="drawer-menu">
+            <aside id="side-panel" role="complementary" data-i18n-aria-label="sidePanelLabel">
+                <button id="menu-toggle" type="button" data-i18n-aria-label="menuToggleLabel" aria-controls="drawer-menu" aria-expanded="false" aria-haspopup="true">☰</button>
+                <nav id="drawer-menu" role="navigation" data-i18n-aria-label="drawerMenuLabel" aria-hidden="true" tabindex="-1">
                     <section class="content-box">
                         <h3 data-i18n-key="recentlyPlayed"></h3>
                         <ul id="history-list" class="side-panel-list" aria-live="polite"></ul>
@@ -248,15 +248,45 @@
                     <!-- Polls section removed - optymalizacja dla wyświetlania TV -->
 
                     <!-- Photo Gallery usunięta - aplikacja uproszczona do core radio -->
-                </div>
+                </nav>
             </aside>
 
             <main id="main-content">
                 <header>
-                    <h1>Radio ETS</h1>
+                    <h1>
+                        <a id="site-logo-link" href="#page-top" data-i18n-aria-label="logoLinkLabel">
+                            <img src="icons/favicon.svg" alt="" aria-hidden="true">
+                            Radio ETS
+                        </a>
+                    </h1>
                     <p data-i18n-key="headerSubtitle"></p>
                     <p id="listener-count-display"><span data-i18n-key="listenersLabel"></span> <span id="listener-count">...</span></p>
                 </header>
+
+                <section id="countdown-section" class="content-box" aria-labelledby="countdown-heading">
+                    <div class="countdown-card" role="group" aria-live="polite">
+                        <h2 id="countdown-heading" data-i18n-key="countdownHeading"></h2>
+                        <div id="countdown-display" role="timer" aria-describedby="countdown-status" data-i18n-aria-label="countdownAriaLabel">
+                            <div class="countdown-part">
+                                <span id="countdown-days" class="countdown-value">0</span>
+                                <span class="countdown-unit" data-i18n-key="countdownDays"></span>
+                            </div>
+                            <div class="countdown-part">
+                                <span id="countdown-hours" class="countdown-value">00</span>
+                                <span class="countdown-unit" data-i18n-key="countdownHours"></span>
+                            </div>
+                            <div class="countdown-part">
+                                <span id="countdown-minutes" class="countdown-value">00</span>
+                                <span class="countdown-unit" data-i18n-key="countdownMinutes"></span>
+                            </div>
+                            <div class="countdown-part">
+                                <span id="countdown-seconds" class="countdown-value">00</span>
+                                <span class="countdown-unit" data-i18n-key="countdownSeconds"></span>
+                            </div>
+                        </div>
+                        <p id="countdown-status" data-i18n-key="countdownIntro" aria-live="polite"></p>
+                    </div>
+                </section>
 
                 <section id="now-playing-section" class="content-box">
                     <div class="now-playing-layout">
@@ -298,13 +328,23 @@
                     </div>
                 </section>
 
+                <div id="slideshow-container" class="visually-hidden" aria-hidden="true"></div>
 
                 <!-- Slideshow container removed - now integrated into track-cover -->
 
                 <!-- DAREMON HUB USUNIĘTY - UPROSZCZENIE APLIKACJI -->
                 <!-- Team moments removed - optymalizacja dla TV display -->
                 <!-- Video library removed - optymalizacja dla TV display -->
-                
+
+                <section id="polls-section" class="content-box" aria-labelledby="polls-heading">
+                    <div class="section-header">
+                        <h2 id="polls-heading" data-i18n-key="pollsHeading"></h2>
+                        <p data-i18n-key="pollsDescription"></p>
+                    </div>
+                    <button id="polls-cta" class="cta-button primary" type="button" data-i18n-key="pollsCta" data-i18n-aria-label="pollsCtaLabel"></button>
+                    <div id="polls-container" role="region" aria-live="polite" tabindex="-1" data-i18n-aria-label="pollsRegionLabel"></div>
+                </section>
+
                 <div id="hotkeys-info" data-i18n-key="hotkeysInfo"></div>
                 <div id="install-banner" class="hidden" role="region" aria-live="polite">
                     <button id="install-btn" class="control-btn">⬇️ Zainstaluj aplikację</button>

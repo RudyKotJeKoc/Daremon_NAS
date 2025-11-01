@@ -100,9 +100,9 @@ function normalizeTrackSrc(src) {
         return '';
     }
 
-    // URLs are already encoded, return as-is
+    // URLs są już zakodowane po stronie serwera - zwracamy bez zmian
     if (/^https?:\/\//i.test(trimmed)) {
-        return encodeMediaPath(trimmed);
+        return trimmed;
     }
 
     let normalized = trimmed.replace(/\\/g, '/');

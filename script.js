@@ -13,7 +13,40 @@ document.addEventListener('DOMContentLoaded', () => {
         minutes: document.getElementById('countdown-minutes'),
         seconds: document.getElementById('countdown-seconds')
     };
+    const unitLabels = {
+        days: countdownDisplay.querySelector('[data-i18n-key="countdownDays"]'),
+        hours: countdownDisplay.querySelector('[data-i18n-key="countdownHours"]'),
+        minutes: countdownDisplay.querySelector('[data-i18n-key="countdownMinutes"]'),
+        seconds: countdownDisplay.querySelector('[data-i18n-key="countdownSeconds"]')
+    };
     const countdownStatus = document.getElementById('countdown-status');
+    const countdownHeading = document.getElementById('countdown-heading');
+
+    const fallbackTranslations = {
+        countdownHeading: 'Odliczamy do 01.04.2026',
+        countdownIntro: 'Trzymamy rękę na pulsie – zobacz, ile zostało.',
+        countdownDays: 'dni',
+        countdownHours: 'godziny',
+        countdownMinutes: 'minuty',
+        countdownSeconds: 'sekundy',
+        countdownStatusTemplate: 'Do 01.04.2026 pozostało {{days}} dni, {{hours}} godzin, {{minutes}} minut i {{seconds}} sekund.',
+        countdownStatusComplete: '01.04.2026 — osiągnięto termin.',
+        countdownAriaLive: 'Pozostało {{days}} dni, {{hours}} godzin, {{minutes}} minut i {{seconds}} sekund do 01.04.2026.'
+    };
+
+    const translate = (key, replacements = {}) => {
+        let text = '';
+        if (typeof window.daremonTranslate === 'function') {
+            text = window.daremonTranslate(key, replacements);
+        }
+        if (!text || text.startsWith('[')) {
+            text = fallbackTranslations[key] || '';
+            Object.entries(replacements).forEach(([placeholder, value]) => {
+                text = text.replace(`{{${placeholder}}}`, value);
+            });
+        }
+        return text;
+    };
 
     const rompaDeadline = new Date(2026, 3, 1, 0, 0, 0);
 
@@ -21,6 +54,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (element) {
             element.textContent = value;
         }
+    };
+
+    const applyStaticLabels = () => {
+        if (countdownHeading && !countdownHeading.textContent.trim()) {
+            countdownHeading.textContent = translate('countdownHeading');
+        }
+        if (countdownStatus && !countdownStatus.textContent.trim()) {
+            countdownStatus.textContent = translate('countdownIntro');
+        }
+        Object.entries(unitLabels).forEach(([key, element]) => {
+            if (element) {
+                element.textContent = translate(`countdown${key.charAt(0).toUpperCase()}${key.slice(1)}`);
+            }
+        });
     };
 
     const formatDoubleDigit = (value) => value.toString().padStart(2, '0');
@@ -44,15 +91,24 @@ document.addEventListener('DOMContentLoaded', () => {
         updateElementText(countdownElements.minutes, formatDoubleDigit(minutes));
         updateElementText(countdownElements.seconds, formatDoubleDigit(seconds));
 
-        const ariaLabel = `Pozostało ${days} dni, ${hours} godzin, ${minutes} minut i ${seconds} sekund.`;
-        countdownDisplay.setAttribute('aria-label', ariaLabel);
+        const replacements = {
+            days: days.toString(),
+            hours: formatDoubleDigit(hours),
+            minutes: formatDoubleDigit(minutes),
+            seconds: formatDoubleDigit(seconds)
+        };
+
+        const ariaLabel = translate('countdownAriaLive', replacements);
+        if (ariaLabel) {
+            countdownDisplay.setAttribute('aria-label', ariaLabel);
+        }
 
 
         if (countdownStatus) {
             if (diff <= 0) {
-                countdownStatus.textContent = '01.04.2026 — osiągnięto termin.';
+                countdownStatus.textContent = translate('countdownStatusComplete');
             } else {
-                countdownStatus.textContent = `Do 01.04.2026 pozostało ${days} dni, ${hours} godzin, ${minutes} minut i ${seconds} sekund.`;
+                countdownStatus.textContent = translate('countdownStatusTemplate', replacements);
             }
         }
 
@@ -62,6 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    applyStaticLabels();
     updateCountdown();
     intervalId = window.setInterval(updateCountdown, 1000);
 });
