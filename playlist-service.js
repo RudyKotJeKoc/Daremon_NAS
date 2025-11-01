@@ -102,7 +102,7 @@ function normalizeTrackSrc(src) {
 
     // URLs are already encoded, return as-is
     if (/^https?:\/\//i.test(trimmed)) {
-        return encodeMediaPath(trimmed);
+        return trimmed;
     }
 
     let normalized = trimmed.replace(/\\/g, '/');

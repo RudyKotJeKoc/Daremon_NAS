@@ -20,15 +20,35 @@ describe('now playing layout', () => {
     expect(sectionMatch?.[1]).toContain('<div id="player-ui">');
   });
 
-  it('places the slideshow container directly after the now playing section', () => {
+  it('places the active artwork container directly after the now playing section', () => {
     expect(html).not.toContain('id="visualizer-showcase"');
 
     const nowPlayingIndex = html.indexOf('<section id="now-playing-section"');
     const slideshowIndex = html.indexOf('<div id="slideshow-container"');
+    const trackCoverIndex = html.indexOf('<div id="track-cover"');
 
     expect(nowPlayingIndex).toBeGreaterThan(-1);
-    expect(slideshowIndex).toBeGreaterThan(-1);
-    expect(slideshowIndex).toBeGreaterThan(nowPlayingIndex);
+    expect(trackCoverIndex).toBeGreaterThan(nowPlayingIndex);
+
+    if (slideshowIndex !== -1) {
+      expect(slideshowIndex).toBeGreaterThan(nowPlayingIndex);
+    }
+  });
+
+  it('includes the Radio ETS logo in the header and sticky player', () => {
+    const headerMatch = html.match(
+      /<header id="app-header"[\s\S]*?<img(?=[^>]+src="\/images\/logo\.png")(?=[^>]+class="app-logo")[^>]*>/
+    );
+
+    expect(headerMatch).toBeTruthy();
+    expect(headerMatch?.[0]).toContain('aria-hidden="true"');
+
+    const stickyMatch = html.match(
+      /<div id="sticky-player"[\s\S]*?<img(?=[^>]+src="\/images\/logo\.png")(?=[^>]+class="sticky-player-logo")[^>]*>/
+    );
+
+    expect(stickyMatch).toBeTruthy();
+    expect(stickyMatch?.[0]).toContain('aria-hidden="true"');
   });
 
 });

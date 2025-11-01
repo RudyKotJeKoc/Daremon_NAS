@@ -362,6 +362,34 @@ body {
 }
 
 /* --- Hoofdlayout --- */
+/* --- App Header --- */
+.app-header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: linear-gradient(180deg, rgba(4, 19, 43, 0.96), rgba(6, 25, 56, 0.9));
+    border-bottom: 2px solid rgba(24, 160, 199, 0.35);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 12px 30px rgba(4, 19, 43, 0.45);
+}
+
+.app-header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(12px, 3vw, 20px) clamp(16px, 4vw, 32px);
+    display: flex;
+    align-items: center;
+}
+
+.app-logo {
+    width: clamp(120px, 18vw, 200px);
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 0 18px rgba(24, 160, 199, 0.45));
+}
+
 #app-container {
     width: 100%;
     max-width: 1200px;
@@ -370,6 +398,7 @@ body {
     justify-content: center;
     align-items: flex-start;
     gap: clamp(16px, 3vw, 32px);
+    margin-top: clamp(12px, 3vw, 32px);
 }
 
 #radio-view {
@@ -868,23 +897,33 @@ header p {
     bottom: -100px; /* Ukryty na starcie */
     left: 0;
     width: 100%;
-    background: var(--box-bg);
+    background: rgba(6, 25, 56, 0.92);
     border-top: 2px solid var(--primary-accent);
-    padding: 10px 20px;
+    padding: clamp(10px, 2vw, 16px) clamp(16px, 4vw, 28px);
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: clamp(12px, 3vw, 24px);
+    flex-wrap: wrap;
     z-index: 999;
     transition: bottom 0.3s ease-in-out, visibility 0.3s;
     visibility: hidden;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 #sticky-player.visible {
     bottom: 0; /* Widoczny na dole */
     visibility: visible;
 }
-#sticky-progress-bar { 
-    background: var(--primary-accent); 
+#sticky-progress-bar {
+    background: var(--primary-accent);
+}
+
+.sticky-player-logo {
+    width: clamp(32px, 7vw, 48px);
+    height: auto;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 12px rgba(24, 160, 199, 0.35));
 }
 
 /* Pozostałe style bez zmian... */
