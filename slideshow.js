@@ -50,6 +50,17 @@ function updateSlideshow(files = mediaFiles) {
 
     const fileExtension = decodeURI(mediaPath).split('.').pop().toLowerCase();
 
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('media-wrapper');
+
+    const applyOrientation = (width, height) => {
+        wrapper.classList.remove('is-portrait', 'is-landscape');
+        if (!width || !height) {
+            return;
+        }
+        wrapper.classList.add(width >= height ? 'is-landscape' : 'is-portrait');
+    };
+
     let mediaElement = null;
     if (['jpg', 'jpeg', 'png', 'webp'].includes(fileExtension)) {
         mediaElement = document.createElement('img');
@@ -57,16 +68,25 @@ function updateSlideshow(files = mediaFiles) {
         mediaElement.alt = 'Okładka utworu - obraz z pokazu slajdów';
         mediaElement.className = 'track-cover-media';
         mediaElement.setAttribute('role', 'img');
-
-
+        mediaElement.loading = 'lazy';
         mediaElement.setAttribute('aria-label', 'Grafika z pokazu slajdów radia ETS');
-        
+
         // Add error handler for images
         mediaElement.addEventListener('error', () => {
             console.warn(`Failed to load image: ${mediaPath}`);
             // Try to load another media on error
             setTimeout(() => updateSlideshow(files), 1000);
         });
+
+        const handleImageOrientation = () => {
+            applyOrientation(mediaElement.naturalWidth, mediaElement.naturalHeight);
+        };
+
+        if (mediaElement.complete && mediaElement.naturalWidth && mediaElement.naturalHeight) {
+            handleImageOrientation();
+        } else {
+            mediaElement.addEventListener('load', handleImageOrientation);
+        }
     } else if (['mp4', 'webm', 'ogg', 'mov'].includes(fileExtension)) {
         mediaElement = document.createElement('video');
         mediaElement.src = mediaPath;
@@ -77,17 +97,28 @@ function updateSlideshow(files = mediaFiles) {
         mediaElement.className = 'track-cover-media';
         mediaElement.setAttribute('aria-label', 'Wideo wyświetlane jako okładka utworu');
         mediaElement.setAttribute('role', 'img');
-        
+
         // Add error handler for videos
         mediaElement.addEventListener('error', () => {
             console.warn(`Failed to load video: ${mediaPath}`);
             // Try to load another media on error
             setTimeout(() => updateSlideshow(files), 1000);
         });
+
+        const handleVideoOrientation = () => {
+            applyOrientation(mediaElement.videoWidth, mediaElement.videoHeight);
+        };
+
+        if (typeof mediaElement.readyState === 'number' && mediaElement.readyState >= 1) {
+            handleVideoOrientation();
+        } else {
+            mediaElement.addEventListener('loadedmetadata', handleVideoOrientation);
+        }
     }
 
     if (mediaElement) {
-        container.appendChild(mediaElement);
+        wrapper.appendChild(mediaElement);
+        container.appendChild(wrapper);
     }
 }
 

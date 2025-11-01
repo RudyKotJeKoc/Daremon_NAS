@@ -1,6 +1,7 @@
 import { filterUnavailableTracks } from './media-availability.js';
 import { CONFIG } from './config.js';
 import { encodeMediaPath } from './media-utils.js';
+import { loadTrackMetadata, normalizeTrackFileKey } from './track-metadata.js';
 
 /**
  * Music Scanner - Automatyczne tworzenie playlisty z folderu music
@@ -16,6 +17,8 @@ export class MusicScanner {
         this.logger = options.logger ?? console;
         this.availabilityStrategy = options.availabilityStrategy ?? CONFIG.MEDIA_AVAILABILITY_STRATEGY ?? 'lazy';
         this.availabilityChunkSize = options.availabilityChunkSize ?? CONFIG.MEDIA_AVAILABILITY_CHUNK_SIZE ?? 50;
+        this.trackMetadataMap = null;
+        this.trackMetadataPromise = null;
     }
 
     /**
@@ -101,7 +104,11 @@ export class MusicScanner {
 
         const fallbackTitle = await this.extractTitle(src);
         const id = track.id ?? `remote-track-${index + 1}`;
-        const title = track.title ?? fallbackTitle ?? `Utwór ${index + 1}`;
+        const title = await this.sanitizeTrackTitle({
+            trackTitle: track.title,
+            fallbackTitle,
+            srcReference: rawSrc || src,
+        });
         const artist = track.artist ?? (typeof track.performer === 'string' ? track.performer : await this.extractArtist(rawSrc));
         const weight = typeof track.weight === 'number' && Number.isFinite(track.weight) ? track.weight : 1;
         const tags = Array.isArray(track.tags)
@@ -178,6 +185,89 @@ export class MusicScanner {
             .replace(/^Utwór\s*\(\d+\)/, 'Utwór')
             .replace(/[-_]/g, ' ')
             .trim();
+    }
+
+    async getTrackMetadataMap() {
+        if (this.trackMetadataMap instanceof Map) {
+            return this.trackMetadataMap;
+        }
+
+        if (!this.trackMetadataPromise) {
+            this.trackMetadataPromise = loadTrackMetadata({ fetchImpl: this.fetchImpl })
+                .then(map => (map instanceof Map ? map : new Map()))
+                .catch(() => new Map());
+        }
+
+        try {
+            const map = await this.trackMetadataPromise;
+            this.trackMetadataMap = map;
+            return this.trackMetadataMap;
+        } finally {
+            this.trackMetadataPromise = null;
+        }
+    }
+
+    async lookupMetadataTitle(srcReference) {
+        if (!srcReference) {
+            return null;
+        }
+
+        const metadataMap = await this.getTrackMetadataMap();
+        if (!(metadataMap instanceof Map) || metadataMap.size === 0) {
+            return null;
+        }
+
+        const key = normalizeTrackFileKey(srcReference);
+        if (key && metadataMap.has(key)) {
+            const entry = metadataMap.get(key);
+            if (entry && typeof entry.title === 'string') {
+                const trimmed = entry.title.trim();
+                if (trimmed) {
+                    return trimmed;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    stripTitleDecorations(value) {
+        if (typeof value !== 'string') {
+            return '';
+        }
+
+        const withoutAnsi = value.replace(/\u001B\[[0-9;]*m/g, '');
+        const withoutEmoji = withoutAnsi.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '');
+        const withoutPrefix = withoutEmoji.replace(/^\s*(?:utw[oó]r)\s*(?:nr\s*)?(?:\(?\d+\)?)(?:[\s.:–-]*)/i, '');
+        const collapsed = withoutPrefix.replace(/\s{2,}/g, ' ').trim();
+
+        return collapsed;
+    }
+
+    async sanitizeTrackTitle({ trackTitle, fallbackTitle, srcReference }) {
+        const candidates = [];
+
+        const metadataTitle = await this.lookupMetadataTitle(srcReference);
+        if (metadataTitle) {
+            candidates.push(metadataTitle);
+        }
+
+        if (typeof trackTitle === 'string') {
+            candidates.push(trackTitle);
+        }
+
+        if (typeof fallbackTitle === 'string') {
+            candidates.push(fallbackTitle);
+        }
+
+        for (const candidate of candidates) {
+            const sanitized = this.stripTitleDecorations(candidate);
+            if (sanitized) {
+                return sanitized;
+            }
+        }
+
+        return 'Nieznany utwór';
     }
 
     /**

@@ -10,6 +10,8 @@ const DEFAULT_CONFIG = {
   MACHINE_DOCS_KEY: 'daremon_machine_docs_v1',
   ANALYSIS_SCHEDULE_KEY: 'daremon_analysis_scheduled',
   MUSIC_TRACKS_ENDPOINT: null,
+  LISTENER_COUNT_ENDPOINT: null,
+  LISTENER_COUNT_WS: null,
   // Media availability checking strategy
   // Options: 'lazy' (default), 'skip', 'parallel', 'sequential'
   MEDIA_AVAILABILITY_STRATEGY: 'lazy',

@@ -1,6 +1,40 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { getRandomMedia, updateSlideshow } from '../slideshow.js';
 
+class MockClassList {
+    constructor(element) {
+        this.element = element;
+        this.classes = new Set();
+    }
+
+    add(...tokens) {
+        tokens.filter(Boolean).forEach((token) => this.classes.add(token));
+        this._sync();
+    }
+
+    remove(...tokens) {
+        tokens.filter(Boolean).forEach((token) => this.classes.delete(token));
+        this._sync();
+    }
+
+    contains(token) {
+        return this.classes.has(token);
+    }
+
+    toString() {
+        return Array.from(this.classes).join(' ');
+    }
+
+    setFromString(value) {
+        this.classes = new Set((value ?? '').split(/\s+/).filter(Boolean));
+        this._sync();
+    }
+
+    _sync() {
+        this.element._className = this.toString();
+    }
+}
+
 class MockElement {
     constructor(tagName) {
         this.tagName = tagName.toUpperCase();
@@ -8,6 +42,8 @@ class MockElement {
         this.children = [];
         this._innerHTML = '';
         this._eventListeners = new Map();
+        this._className = '';
+        this.classList = new MockClassList(this);
     }
 
     setAttribute(name, value) {
@@ -24,7 +60,16 @@ class MockElement {
     }
 
     querySelector(tag) {
-        return this.children.find((child) => child.tagName.toLowerCase() === tag.toLowerCase()) ?? null;
+        for (const child of this.children) {
+            if (child.tagName.toLowerCase() === tag.toLowerCase()) {
+                return child;
+            }
+            const nested = child.querySelector(tag);
+            if (nested) {
+                return nested;
+            }
+        }
+        return null;
     }
 
     set innerHTML(value) {
@@ -60,6 +105,15 @@ class MockElement {
         return this._playsInline ?? false;
     }
 
+    set className(value) {
+        this._className = value ?? '';
+        this.classList.setFromString(this._className);
+    }
+
+    get className() {
+        return this._className;
+    }
+
     addEventListener(event, handler) {
         if (!this._eventListeners.has(event)) {
             this._eventListeners.set(event, []);
@@ -75,6 +129,11 @@ class MockElement {
                 handlers.splice(index, 1);
             }
         }
+    }
+
+    dispatchEvent(event) {
+        const handlers = this._eventListeners.get(event.type) ?? [];
+        handlers.forEach((handler) => handler(event));
     }
 }
 
@@ -147,6 +206,51 @@ describe('updateSlideshow', () => {
         const renderedImage = container.querySelector('img');
         expect(renderedImage).not.toBeNull();
         expect(renderedImage?.getAttribute('src')).toBe(encodedPath);
+        randomSpy.mockRestore();
+    });
+
+    it('wraps rendered media in a media-wrapper and applies orientation classes for images', () => {
+        const files = ['https://daremon.nl/images/image (1).png'];
+        const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0);
+
+        updateSlideshow(files);
+
+        const wrapper = container.children[0];
+        expect(wrapper?.classList.contains('media-wrapper')).toBe(true);
+
+        const renderedImage = wrapper?.children[0];
+        expect(renderedImage?.tagName).toBe('IMG');
+
+        renderedImage.naturalWidth = 1200;
+        renderedImage.naturalHeight = 800;
+        renderedImage.dispatchEvent({ type: 'load' });
+
+        expect(wrapper?.classList.contains('is-landscape')).toBe(true);
+        expect(wrapper?.classList.contains('is-portrait')).toBe(false);
+        expect(renderedImage.loading).toBe('lazy');
+
+        randomSpy.mockRestore();
+    });
+
+    it('applies orientation classes for video metadata', () => {
+        const files = ['https://daremon.nl/video/video (1).mp4'];
+        const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0);
+
+        updateSlideshow(files);
+
+        const wrapper = container.children[0];
+        expect(wrapper?.classList.contains('media-wrapper')).toBe(true);
+
+        const renderedVideo = wrapper?.children[0];
+        expect(renderedVideo?.tagName).toBe('VIDEO');
+
+        renderedVideo.videoWidth = 720;
+        renderedVideo.videoHeight = 1280;
+        renderedVideo.dispatchEvent({ type: 'loadedmetadata' });
+
+        expect(wrapper?.classList.contains('is-portrait')).toBe(true);
+        expect(wrapper?.classList.contains('is-landscape')).toBe(false);
+
         randomSpy.mockRestore();
     });
 });
