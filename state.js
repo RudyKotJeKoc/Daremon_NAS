@@ -22,7 +22,6 @@ export function createInitialState() {
         recentRotation: [],
         recentTrackSet: new Set(),
 
-        pollSystem: null,
         strategicPollSystem: null,
 
         // App State

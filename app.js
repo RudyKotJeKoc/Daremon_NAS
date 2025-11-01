@@ -1,7 +1,6 @@
 import { waitForMediaReady, shouldIgnorePlaybackError, isAudioSourceSupported } from './media-utils.js';
 import { createInitialState } from './state.js';
 import { createTrackListItem } from './ui-utils.js';
-import { PollSystem } from './poll-system.js';
 
 import { filterUnavailableTracks } from './media-availability.js';
 import { fetchPlaylist, normalizeRealTracks } from './playlist-service.js';
@@ -63,10 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
             btn: document.getElementById('live-talk-btn'),
             status: document.getElementById('live-talk-status'),
             feedback: document.getElementById('live-talk-feedback'),
-        },
-        polls: {
-            container: document.getElementById('polls-container'),
-            section: document.getElementById('polls-section'),
         },
         // strategic polls removed in simplified build
         // machineDocumentation section removed
@@ -357,166 +352,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('renderCalendar - not implemented');
     }
 
-
-    function initializePolls() {
-        // Polls disabled for TV display optimization
-        return;
-
-        if (!dom.polls || !dom.polls.container) {
-            console.warn('Brak kontenera dla ankiet');
-            return;
-        }
-
-        const translate = (key, fallback) => {
-            const value = t(key);
-            return typeof value === 'string' && !value.startsWith('[') ? value : fallback;
-        };
-
-        const pollSystem = new PollSystem({
-            strings: {
-                submit: translate('pollSubmit', 'Wyślij odpowiedź'),
-                success: translate('pollSuccess', 'Dziękujemy za głos!'),
-                selectOption: translate('pollSelectOption', 'Wybierz odpowiedź przed wysłaniem.'),
-                selectMultiple: translate('pollSelectMultiple', 'Zaznacz przynajmniej jedną odpowiedź.'),
-                textRequired: translate('pollTextRequired', 'Wpisz odpowiedź, zanim wyślesz.'),
-                resultsHeading: translate('pollResultsHeading', 'Wyniki'),
-                noVotes: translate('pollNoVotes', 'Brak głosów w tej ankiecie.'),
-                correctAnswer: translate('pollCorrectAnswer', 'Poprawna odpowiedź!'),
-                incorrectAnswer: translate('pollIncorrectAnswer', 'Dziękujemy za odpowiedź!'),
-                rangeLabel: translate('pollRangeLabel', 'Wybierz ocenę na skali'),
-                openTextPlaceholder: translate('pollOpenTextPlaceholder', 'Twoja odpowiedź...'),
-                totalVotesLabel: translate('pollTotalVotesLabel', 'Oddane głosy:'),
-            }
-        });
-        state.pollSystem = pollSystem;
-
-        dom.polls.container.innerHTML = '';
-
-        // Tylko 5 prostych ankiet związanych z radiem
-        const examplePolls = [
-            {
-                question: 'Który utwór był HITEM tego tygodnia?',
-                type: 'single-choice',
-                options: [
-                    'Retro (Live Edit)',
-                    'City Lights (Synthwave)',
-                    'Ocean Drive (Remix)',
-                    'Neon Nights (Club Mix)'
-                ],
-                duration: '7 dni'
-            },
-            {
-                question: 'Jaki gatunek muzyczny chcesz słyszeć częściej?',
-                type: 'multiple-choice',
-                options: ['Electro/Synth', 'Rock', 'Techno/House', 'Pop/Dance', 'Ambient']
-            },
-            {
-                question: 'Jak oceniasz DAREMON Radio ogólnie?',
-                type: 'rating',
-                scale: 5,
-                labels: ['Słabo', 'Średnio', 'Świetnie']
-            },
-            {
-                question: 'O której godzinie najczęściej słuchasz?',
-                type: 'single-choice',
-                options: [
-                    '6:00 - 9:00 (Rano)',
-                    '9:00 - 12:00 (Praca)',
-                    '12:00 - 14:00 (Lunch)',
-                    '14:00 - 18:00 (Popołudnie)',
-                    '18:00 - 22:00 (Wieczór)'
-                ]
-            },
-            {
-                question: 'Która funkcja najbardziej Ci się podoba?',
-                type: 'multiple-choice',
-                options: [
-                    'System ocen utworów',
-                    'Wizualizacja audio',
-                    'Złote Płyty',
-                    'Najwyżej ocenione',
-                    'Motywy kolorystyczne'
-                ]
-            }
-        ];
-
-        console.log('System ankiet zainicjalizowany z', examplePolls.length, 'ankietami');
-
-        // Renderuj ankiety w kontenerze
-        examplePolls.forEach(pollDef => {
-            const poll = pollSystem.addPoll(pollDef);
-            const pollContainer = document.createElement('div');
-            pollContainer.id = `poll-${poll.id}`;
-            pollContainer.className = 'poll-container';
-            dom.polls.container.appendChild(pollContainer);
-            pollSystem.renderPoll(poll, pollContainer);
-        });
-    }
-
-    function checkMilestoneAndAddPoll() {
-        // Polls disabled for TV display optimization
-        return;
-
-        if (state.history.length === 10 && state.pollSystem && dom.polls?.container) {
-            const newPoll = state.pollSystem.addPoll({
-                question: 'Gratulacje! Posłuchałeś 10 utworów. Jak Ci się podoba radio?',
-                type: 'emoji-rating',
-                options: ['😞', '😐', '🙂', '😊', '🤩']
-            });
-
-            const pollContainer = document.createElement('div');
-            pollContainer.id = `poll-${newPoll.id}`;
-            pollContainer.className = 'poll-container';
-            dom.polls.container.insertBefore(pollContainer, dom.polls.container.firstChild);
-
-            state.pollSystem.renderPoll(newPoll, pollContainer);
-            pollContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    }
-
-    function createQuickPoll(question, options, type = 'single-choice') {
-        if (!state.pollSystem) {
-            console.error('System ankiet nie jest zainicjalizowany');
-            return null;
-        }
-
-        const poll = state.pollSystem.addPoll({ question, options, type });
-        if (!dom.polls?.container) {
-            return poll;
-        }
-
-        const pollContainer = document.createElement('div');
-        pollContainer.id = `poll-${poll.id}`;
-        pollContainer.className = 'poll-container';
-        dom.polls.container.insertBefore(pollContainer, dom.polls.container.firstChild);
-        state.pollSystem.renderPoll(poll, pollContainer);
-        return poll;
-    }
-
-    function exportPollStats() {
-        if (!state.pollSystem) {
-            console.warn('System ankiet nie jest dostępny');
-            return null;
-        }
-
-        const stats = state.pollSystem.polls
-            .map(poll => {
-                const result = state.pollSystem.getResults(poll.id);
-                if (!result) return null;
-                return {
-                    question: poll.question,
-                    type: poll.type,
-                    totalVotes: result.totalVotes,
-                    results: result.results || result.responses,
-                };
-            })
-            .filter(Boolean);
-
-        console.table(stats.map(item => ({ question: item.question, totalVotes: item.totalVotes })));
-        return stats;
-    }
-
-
     // --- Initialisatie ---
     async function initialize() {
         await i18n_init();
@@ -525,7 +360,6 @@ document.addEventListener('DOMContentLoaded', () => {
             await loadPlaylist();
             loadStateFromLocalStorage();
             setupEventListeners();
-            initializePolls();
             // strategic polls and machine docs removed in simplified build
             updateWelcomeGreeting();
             updateOfflineStatus();
@@ -897,24 +731,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const previousTrack = state.currentTrack;
-        if (previousTrack?.golden && state.pollSystem && dom.polls?.container) {
-            const existingPoll = state.pollSystem.polls.find(poll => poll.question.includes(previousTrack.title));
-            if (!existingPoll) {
-                const goldPoll = state.pollSystem.addPoll({
-                    question: `Jak oceniasz "${previousTrack.title}"?`,
-                    type: 'rating',
-                    scale: 5,
-                    labels: ['Słabo', 'W porządku', 'Rewelacja!']
-                });
-
-                const pollContainer = document.createElement('div');
-                pollContainer.id = `poll-${goldPoll.id}`;
-                pollContainer.className = 'poll-container';
-                dom.polls.container.insertBefore(pollContainer, dom.polls.container.firstChild);
-
-                state.pollSystem.renderPoll(goldPoll, pollContainer);
-            }
-        }
 
         const activePlayer = players[activePlayerIndex];
         const playableSrc = getPlayableSource(nextTrack, activePlayer);
@@ -1248,7 +1064,6 @@ document.addEventListener('DOMContentLoaded', () => {
         state.history = state.history.slice(0, 15);
         saveHistory();
 
-        checkMilestoneAndAddPoll();
 
         if (dom.sidePanel.historyList) {
             dom.sidePanel.historyList.innerHTML = '';
@@ -2179,8 +1994,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const djArburg = new DJArburg({ languageResolver: () => state.language, logger: console });
 
     if (typeof window === 'object') {
-        window.createQuickPoll = createQuickPoll;
-        window.exportPollStats = exportPollStats;
         window.DJArburg = DJArburg;
         window.djArburg = djArburg;
     }
