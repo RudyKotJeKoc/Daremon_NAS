@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sidePanel: {
             panel: document.getElementById('side-panel'),
             menuToggle: document.getElementById('menu-toggle'),
+            drawer: document.getElementById('drawer-menu'),
             historyList: document.getElementById('history-list'),
             goldenRecordsList: document.getElementById('golden-records-list'),
             topRatedList: document.getElementById('top-rated-list'),
@@ -215,6 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
             state.translations = await response.json();
             try { window.localStorage && localStorage.setItem('daremon_language', state.language); } catch {}
             i18n_apply();
+            window.daremonTranslate = (key, replacements = {}) => t(key, replacements);
         } catch (error) {
             console.error("❌ Błąd ładowania tłumaczeń:", error);
             state.translations = {
@@ -245,6 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 hotkeysInfo: "Sneltoetsen: Spatie = Afspelen/Pauzeren, N = Volgende, L = Like, ↑↓ = Volume",
             };
             i18n_apply();
+            window.daremonTranslate = (key, replacements = {}) => t(key, replacements);
         }
     }
 
@@ -1832,29 +1835,89 @@ document.addEventListener('DOMContentLoaded', () => {
         
         let touchStartX = 0; 
         let touchEndX = 0; 
+        let setMenuState = null;
         if (dom.sidePanel.menuToggle && dom.sidePanel.panel) {
-            dom.sidePanel.menuToggle.addEventListener('click', () => dom.sidePanel.panel.classList.toggle('open')); 
+            const toggleButton = dom.sidePanel.menuToggle;
+            const drawerMenu = dom.sidePanel.drawer;
+            const focusableSelectors = 'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+
+            setMenuState = (open) => {
+                dom.sidePanel.panel.classList.toggle('open', open);
+                toggleButton.setAttribute('aria-expanded', String(open));
+                if (drawerMenu) {
+                    drawerMenu.setAttribute('aria-hidden', String(!open));
+                    drawerMenu.toggleAttribute('inert', !open);
+                    if (open) {
+                        const firstFocusable = drawerMenu.querySelector(focusableSelectors);
+                        (firstFocusable || drawerMenu).focus();
+                    }
+                }
+                if (!open) {
+                    toggleButton.focus();
+                }
+            };
+
+            toggleButton.addEventListener('click', () => {
+                const isOpen = !dom.sidePanel.panel.classList.contains('open');
+                setMenuState(isOpen);
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && dom.sidePanel.panel.classList.contains('open')) {
+                    setMenuState(false);
+                }
+            });
+
+            if (drawerMenu) {
+                drawerMenu.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape') {
+                        setMenuState(false);
+                    }
+                });
+            }
         }
         
         document.body.addEventListener('touchstart', e => { 
             touchStartX = e.changedTouches[0].screenX; 
         }, { passive: true }); 
         
-        document.body.addEventListener('touchend', e => { 
-            touchEndX = e.changedTouches[0].screenX; 
-            const deltaX = touchEndX - touchStartX; 
-            if (Math.abs(deltaX) > 50) { 
-                if (deltaX < 0) { 
-                    if(dom.sidePanel.panel && dom.sidePanel.panel.classList.contains('open')) { 
-                        dom.sidePanel.panel.classList.remove('open'); 
-                    } else { 
-                        playNextTrack(); 
-                    } 
-                } else { 
-                    if (dom.sidePanel.panel) dom.sidePanel.panel.classList.add('open'); 
-                } 
-            } 
+        document.body.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            const deltaX = touchEndX - touchStartX;
+            if (Math.abs(deltaX) > 50) {
+                if (deltaX < 0) {
+                    if(dom.sidePanel.panel && dom.sidePanel.panel.classList.contains('open')) {
+                        if (typeof setMenuState === 'function') {
+                            setMenuState(false);
+                        } else {
+                            dom.sidePanel.panel.classList.remove('open');
+                        }
+                    } else {
+                        playNextTrack();
+                    }
+                } else {
+                    if (typeof setMenuState === 'function') {
+                        setMenuState(true);
+                    } else if (dom.sidePanel.panel) {
+                        dom.sidePanel.panel.classList.add('open');
+                    }
+                }
+            }
         });
+
+        if (dom.polls?.cta && dom.polls?.container) {
+            dom.polls.cta.addEventListener('click', () => {
+                if (dom.polls.section) {
+                    dom.polls.section.classList.remove('hidden');
+                }
+                try {
+                    dom.polls.container.focus({ preventScroll: true });
+                } catch {
+                    dom.polls.container.focus();
+                }
+                dom.polls.container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+        }
     }
     
     // --- PWA Install Prompt & Service Worker ---
