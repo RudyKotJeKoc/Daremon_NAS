@@ -161,6 +161,40 @@
                     <p id="listener-count-display"><span data-i18n-key="listenersLabel"></span> <span id="listener-count" aria-live="polite" role="status">...</span></p>
                 </header>
 
+                <!-- CRITICAL: Countdown timers for company restructuring phases -->
+                <section id="deadlines-section" class="content-box deadlines-section" aria-labelledby="deadlines-heading">
+                    <h2 id="deadlines-heading">⚠️ Krytyczne Terminy</h2>
+                    <div class="deadlines-grid">
+                        <article class="deadline-card" data-deadline-id="year-end-2025">
+                            <header class="deadline-header">
+                                <h3 class="deadline-title">🔴 Faza 2 - Kolejne Zwolnienia</h3>
+                                <p class="deadline-date">31.12.2025</p>
+                            </header>
+                            <p class="deadline-description">Druga faza redukcji zespołu - zamknięcie roku 2025.</p>
+                            <div class="timer-display" role="timer" aria-live="polite" aria-label="Pozostało 00 dni">
+                                <span class="timer-value" data-time-remaining>00:00:00:00</span>
+                            </div>
+                            <div class="timer-bar" aria-hidden="true">
+                                <div class="timer-fill"></div>
+                            </div>
+                        </article>
+
+                        <article class="deadline-card deadline-card--critical" data-deadline-id="april-2026">
+                            <header class="deadline-header">
+                                <h3 class="deadline-title">💀 Faza 3 - GAME OVER</h3>
+                                <p class="deadline-date">30.04.2026</p>
+                            </header>
+                            <p class="deadline-description">Koniec istnienia fabryki. Final countdown.</p>
+                            <div class="timer-display" role="timer" aria-live="polite" aria-label="Pozostało 00 dni">
+                                <span class="timer-value" data-time-remaining>00:00:00:00</span>
+                            </div>
+                            <div class="timer-bar" aria-hidden="true">
+                                <div class="timer-fill"></div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
                 <section id="now-playing-section" class="content-box">
                     <div class="now-playing-layout">
                         <div id="player-ui">
@@ -449,7 +483,7 @@
     <script type="module" src="slideshow.js"></script>
     <script type="module" src="survey.js"></script>
     <script type="module" src="employee-survey.js"></script>
-    <!-- <script type="module" src="countdown-timers.js"></script> --> <!-- Removed: countdown section removed -->
+    <script type="module" src="countdown-timers.js"></script>
     <script type="module" src="script.js"></script>
     <script type="module" src="app.js"></script>
 </body>
