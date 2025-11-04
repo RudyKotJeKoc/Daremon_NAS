@@ -7,6 +7,30 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const TOTAL_TRACKS = 500;
+const DEFAULT_ARTIST = 'DAREMON Radio';
+const COVER_COLORS = [
+  '4CAF50',
+  '2196F3',
+  'FF9800',
+  'E91E63',
+  '9C27B0',
+  '673AB7',
+  '3F51B5',
+  '03A9F4',
+  '00BCD4',
+  '009688',
+  '8BC34A',
+  'CDDC39',
+  'FFEB3B',
+  'FFC107',
+  'FF5722',
+  '795548',
+  '9E9E9E',
+  '607D8B'
+];
+const COVER_COLOR_OFFSET = 1;
+
 // 500 Powiedzonek dla Radia DAREMON
 const mottos = [
   // NEDERLANDS (1-125)
@@ -518,21 +542,102 @@ const mottos = [
   "Passie > Salaris - authentieke kracht van DAREMON"
 ];
 
-// Read playlist.json
-const playlistPath = path.join(__dirname, 'playlist.json');
-const playlist = JSON.parse(fs.readFileSync(playlistPath, 'utf-8'));
+if (mottos.length !== TOTAL_TRACKS) {
+  throw new Error(
+    `Expected exactly ${TOTAL_TRACKS} mottos, but received ${mottos.length}.`
+  );
+}
 
-// Update track titles
-let updatedCount = 0;
-playlist.tracks.forEach((track, index) => {
-  if (index < mottos.length) {
-    track.title = mottos[index];
-    updatedCount++;
+function resolveCoverUrl(index) {
+  const paletteIndex = (index + COVER_COLOR_OFFSET) % COVER_COLORS.length;
+  const paletteColor = COVER_COLORS[paletteIndex];
+  const trackNumber = index + 1;
+  return `https://placehold.co/120x120/${paletteColor}/ffffff?text=${trackNumber}`;
+}
+
+function ensurePlaylistTracks(playlistData) {
+  const existingById = new Map(
+    Array.isArray(playlistData.tracks)
+      ? playlistData.tracks.map(track => [track.id, track])
+      : []
+  );
+
+  const normalizedTracks = [];
+
+  for (let index = 0; index < TOTAL_TRACKS; index++) {
+    const trackNumber = index + 1;
+    const motto = mottos[index];
+    const trackId = `track-${trackNumber}`;
+    const defaultTrack = {
+      id: trackId,
+      title: motto,
+      artist: DEFAULT_ARTIST,
+      src: `/music/Utwor%20(${trackNumber}).mp3`,
+      cover: resolveCoverUrl(index),
+      tags: ['music'],
+      weight: 1,
+      type: 'song',
+      golden: false
+    };
+
+    const existingTrack = existingById.get(trackId);
+    if (existingTrack) {
+      normalizedTracks.push({
+        ...defaultTrack,
+        ...existingTrack,
+        id: trackId,
+        title: motto
+      });
+    } else {
+      normalizedTracks.push(defaultTrack);
+    }
   }
-});
 
-// Write back to playlist.json
+  playlistData.tracks = normalizedTracks;
+  return normalizedTracks.length;
+}
+
+function ensureTrackMetadata(metadata) {
+  const existingByFile = new Map(
+    Array.isArray(metadata.tracks)
+      ? metadata.tracks.map(entry => [entry.file, entry])
+      : []
+  );
+
+  const normalizedMetadata = [];
+
+  for (let index = 0; index < TOTAL_TRACKS; index++) {
+    const trackNumber = index + 1;
+    const motto = mottos[index];
+    const fileName = `Utwor (${trackNumber}).mp3`;
+    const existingRecord = existingByFile.get(fileName);
+
+    const normalizedRecord = {
+      ...existingRecord,
+      file: fileName,
+      title: motto,
+      artist: existingRecord?.artist || DEFAULT_ARTIST
+    };
+
+    normalizedMetadata.push(normalizedRecord);
+  }
+
+  metadata.tracks = normalizedMetadata;
+  return normalizedMetadata.length;
+}
+
+const playlistPath = path.join(__dirname, 'playlist.json');
+const tracksPath = path.join(__dirname, 'tracks.json');
+
+const playlist = JSON.parse(fs.readFileSync(playlistPath, 'utf-8'));
+const tracksMetadata = JSON.parse(fs.readFileSync(tracksPath, 'utf-8'));
+
+const updatedPlaylistCount = ensurePlaylistTracks(playlist);
+const updatedMetadataCount = ensureTrackMetadata(tracksMetadata);
+
 fs.writeFileSync(playlistPath, JSON.stringify(playlist, null, 2), 'utf-8');
+fs.writeFileSync(tracksPath, JSON.stringify(tracksMetadata, null, 2), 'utf-8');
 
-console.log(`✅ Updated ${updatedCount} track titles in playlist.json`);
-console.log(`📻 Radio DAREMON now plays with motivational mottos!`);
+console.log(`✅ Updated ${updatedPlaylistCount} track titles in playlist.json`);
+console.log(`✅ Updated ${updatedMetadataCount} track titles in tracks.json`);
+console.log('📻 Radio DAREMON now plays with motivational mottos!');
