@@ -1,17 +1,39 @@
 const TIMER_DEFINITIONS = [
   {
-    id: 'year-end-2025',
-    label: '31.12.2025',
+    id: 'phase-l1',
+    phase: 'L1',
+    label: 'FAZA L1',
     description: 'Zamknięcie roku 2025',
+    voltage: '230V',
+    frequency: '50Hz',
+    icon: '⚡',
+    color: '#FF6B00', // Pomarańczowy - faza 1
     start: new Date(2025, 0, 1, 0, 0, 0),
     deadline: new Date(2025, 11, 31, 23, 59, 59),
   },
   {
-    id: 'april-2026',
-    label: '30.04.2026',
-    description: 'Raport kwartalny 2026',
+    id: 'phase-l2',
+    phase: 'L2',
+    label: 'FAZA L2',
+    description: 'Raport kwartalny Q1 2026',
+    voltage: '230V',
+    frequency: '50Hz',
+    icon: '⚡',
+    color: '#000000', // Czarny - faza 2
     start: new Date(2026, 0, 1, 0, 0, 0),
     deadline: new Date(2026, 3, 30, 23, 59, 59),
+  },
+  {
+    id: 'phase-l3',
+    phase: 'L3',
+    label: 'FAZA L3',
+    description: 'GAME OVER - Finalizacja',
+    voltage: '230V',
+    frequency: '50Hz',
+    icon: '⚡',
+    color: '#FF0000', // Czerwony - faza 3 (krytyczna)
+    start: new Date(2026, 4, 1, 0, 0, 0),
+    deadline: new Date(2026, 11, 31, 23, 59, 59),
   },
 ];
 
@@ -79,6 +101,9 @@ export const updateTimerElement = (element, config, now) => {
   const timerDisplay = element.querySelector('[data-time-remaining]');
   const timerContainer = element.querySelector('[role="timer"]');
   const progressFill = element.querySelector('.timer-fill');
+  const phaseLabel = element.querySelector('.phase-label');
+  const voltageDisplay = element.querySelector('.voltage-display');
+  const daysRemaining = element.querySelector('.days-remaining');
 
   if (!timerDisplay || !timerContainer || !progressFill) {
     return;
@@ -88,6 +113,21 @@ export const updateTimerElement = (element, config, now) => {
   const formatted = formatTimeParts(parts);
   timerDisplay.textContent = formatted;
 
+  // Aktualizuj dni pozostałe jeśli element istnieje
+  if (daysRemaining) {
+    daysRemaining.textContent = parts.days;
+  }
+
+  // Aktualizuj labelę fazy jeśli istnieje
+  if (phaseLabel) {
+    phaseLabel.textContent = `${config.icon} ${config.phase}`;
+  }
+
+  // Aktualizuj napięcie jeśli istnieje
+  if (voltageDisplay) {
+    voltageDisplay.textContent = `${config.voltage} ${config.frequency}`;
+  }
+
   const ariaLabel = buildAriaLabel(config.label, parts);
   timerContainer.setAttribute('aria-label', ariaLabel);
 
@@ -96,6 +136,12 @@ export const updateTimerElement = (element, config, now) => {
   progressFill.style.width = `${formattedProgress}%`;
   progressFill.style.setProperty('--progress', `${formattedProgress}%`);
   progressFill.dataset.progress = formattedProgress;
+
+  // Ustaw kolor fazy
+  if (config.color) {
+    progressFill.style.setProperty('--phase-color', config.color);
+    element.style.setProperty('--phase-color', config.color);
+  }
 };
 
 export const initCountdownTimers = (

@@ -664,118 +664,833 @@ header p {
     margin: 0.25rem 0; /* TV optimization: added smaller margin */
 }
 
-.deadlines-section {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+/* ============================================
+   SYSTEM ZASILANIA 3-FAZOWEGO
+   Czarno-pomarańczowy motyw z efektami 3D
+   ============================================ */
+
+.power-system-section {
+    background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+    border: 2px solid #FF6B00;
+    box-shadow:
+        0 0 20px rgba(255, 107, 0, 0.3),
+        0 0 40px rgba(255, 107, 0, 0.2),
+        inset 0 0 60px rgba(255, 107, 0, 0.05);
+    position: relative;
+    overflow: visible;
 }
 
-.deadlines-grid {
-    display: grid;
-    gap: clamp(0.75rem, 2vw, 1.5rem);
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+.power-system-section::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #FF6B00, #FFD700, #FF6B00, #000000);
+    background-size: 300% 300%;
+    animation: borderGlow 4s ease infinite;
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0.3;
 }
 
-.deadline-card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding: 1rem;
-    background: rgba(8, 25, 56, 0.6);
-    border-radius: 0.75rem;
-    border: 1px solid rgba(155, 214, 255, 0.18);
-    box-shadow: inset 0 0 0 1px rgba(24, 160, 199, 0.05);
+@keyframes borderGlow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
 }
 
-.deadline-card--critical {
-    background: rgba(56, 8, 8, 0.6);
-    border: 1px solid rgba(255, 100, 100, 0.35);
-    box-shadow: inset 0 0 0 1px rgba(199, 24, 24, 0.15), 0 0 20px rgba(199, 24, 24, 0.2);
+.power-system-header {
+    text-align: center;
+    padding: 1rem 0 1.5rem;
+    border-bottom: 2px solid #FF6B00;
+    margin-bottom: 2rem;
+    position: relative;
 }
 
-.deadline-card--critical .deadline-title {
-    color: #ff6b6b;
-    text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
-}
-
-.deadline-card--critical .timer-fill {
-    background: linear-gradient(90deg, #ff4444, #cc0000);
-}
-
-.deadline-header {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.5rem;
-}
-
-.deadline-title {
-    margin: 0;
-    font-size: clamp(1rem, 2.5vw, 1.2rem);
-    font-weight: 700;
-    letter-spacing: 0.04em;
-}
-
-.deadline-date {
-    margin: 0;
-    font-size: clamp(0.85rem, 2vw, 1rem);
-    color: rgba(244, 247, 251, 0.78);
-}
-
-.deadline-description {
-    margin: 0;
-    font-size: clamp(0.8rem, 2vw, 0.95rem);
-    color: rgba(244, 247, 251, 0.85);
-}
-
-.timer-display {
+.power-system-header h2 {
     font-family: 'Orbitron', sans-serif;
-    font-size: clamp(1.1rem, 4vw, 1.6rem);
-    font-weight: 700;
-    letter-spacing: 0.12em;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    color: #FF6B00;
+    text-shadow:
+        0 0 10px rgba(255, 107, 0, 0.8),
+        0 0 20px rgba(255, 107, 0, 0.6),
+        0 0 30px rgba(255, 107, 0, 0.4),
+        2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin: 0;
+    animation: titlePulse 2s ease-in-out infinite;
+}
+
+@keyframes titlePulse {
+    0%, 100% { text-shadow:
+        0 0 10px rgba(255, 107, 0, 0.8),
+        0 0 20px rgba(255, 107, 0, 0.6),
+        0 0 30px rgba(255, 107, 0, 0.4),
+        2px 2px 4px rgba(0, 0, 0, 0.8); }
+    50% { text-shadow:
+        0 0 20px rgba(255, 107, 0, 1),
+        0 0 30px rgba(255, 107, 0, 0.8),
+        0 0 40px rgba(255, 107, 0, 0.6),
+        2px 2px 4px rgba(0, 0, 0, 0.8); }
+}
+
+.power-icon {
+    display: inline-block;
+    animation: powerIconSpin 3s linear infinite;
+}
+
+@keyframes powerIconSpin {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
+}
+
+.system-status {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.75rem;
-    background: rgba(11, 31, 58, 0.7);
-    box-shadow: inset 0 0 0 1px rgba(24, 160, 199, 0.15);
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    letter-spacing: 0.1em;
 }
 
-.timer-value {
-    display: inline-flex;
+.status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #00FF00;
+    box-shadow:
+        0 0 10px #00FF00,
+        0 0 20px #00FF00,
+        inset 0 0 5px rgba(255, 255, 255, 0.5);
+    animation: statusBlink 1.5s ease-in-out infinite;
+}
+
+@keyframes statusBlink {
+    0%, 100% { opacity: 1; box-shadow:
+        0 0 10px #00FF00,
+        0 0 20px #00FF00,
+        inset 0 0 5px rgba(255, 255, 255, 0.5); }
+    50% { opacity: 0.5; box-shadow:
+        0 0 5px #00FF00,
+        0 0 10px #00FF00,
+        inset 0 0 3px rgba(255, 255, 255, 0.3); }
+}
+
+.status-text {
+    color: #00FF00;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
+
+/* ============================================
+   GRID 3 FAZ
+   ============================================ */
+
+.phases-grid {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    perspective: 1000px;
+}
+
+/* ============================================
+   PANELE FAZ - EFEKTY 3D
+   ============================================ */
+
+.phase-panel {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.phase-panel:hover {
+    transform: translateY(-10px) rotateX(5deg);
+}
+
+.panel-frame {
+    background: linear-gradient(145deg, #1a1a1a, #000000);
+    border: 3px solid #FF6B00;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(255, 107, 0, 0.3),
+        inset 0 0 30px rgba(255, 107, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+    transform: translateZ(20px);
+}
+
+.phase-panel:hover .panel-frame {
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.9),
+        0 0 40px rgba(255, 107, 0, 0.6),
+        inset 0 0 40px rgba(255, 107, 0, 0.1);
+}
+
+/* Efekt elektrycznego prądu w tle */
+.panel-frame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 107, 0, 0.1),
+        transparent);
+    animation: electricFlow 3s linear infinite;
+}
+
+@keyframes electricFlow {
+    0% { left: -100%; }
+    100% { left: 200%; }
+}
+
+/* ============================================
+   NAGŁÓWEK PANELU
+   ============================================ */
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid rgba(255, 107, 0, 0.3);
+}
+
+.phase-badge {
+    display: flex;
+    flex-direction: column;
     gap: 0.25rem;
 }
 
-.timer-bar {
+.phase-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 900;
+    color: #FF6B00;
+    text-shadow:
+        0 0 10px rgba(255, 107, 0, 0.8),
+        0 0 20px rgba(255, 107, 0, 0.5);
+    letter-spacing: 0.1em;
+}
+
+.voltage-display {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+    color: #FFD700;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.6);
+    letter-spacing: 0.15em;
+}
+
+/* ============================================
+   LED INDICATORS
+   ============================================ */
+
+.phase-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.led-indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    animation: ledPulse 2s ease-in-out infinite;
+    transform: translateZ(30px);
+}
+
+.led-indicator.orange {
+    background: #FF6B00;
+    box-shadow:
+        0 0 15px #FF6B00,
+        0 0 30px #FF6B00,
+        inset 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.led-indicator.black {
+    background: linear-gradient(135deg, #333, #000);
+    box-shadow:
+        0 0 15px rgba(255, 255, 255, 0.3),
+        inset 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.led-indicator.red {
+    background: #FF0000;
+    box-shadow:
+        0 0 15px #FF0000,
+        0 0 30px #FF0000,
+        0 0 45px #FF0000,
+        inset 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes ledPulse {
+    0%, 100% {
+        opacity: 1;
+        transform: translateZ(30px) scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: translateZ(30px) scale(0.95);
+    }
+}
+
+/* ============================================
+   INFORMACJE O FAZIE
+   ============================================ */
+
+.phase-info {
+    margin-bottom: 1.25rem;
+}
+
+.phase-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: 0.08em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.phase-description {
+    font-size: clamp(0.85rem, 2vw, 1rem);
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0.25rem 0;
+    letter-spacing: 0.05em;
+}
+
+.phase-deadline {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(0.75rem, 1.8vw, 0.95rem);
+    color: #FFD700;
+    margin: 0.25rem 0;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.4);
+}
+
+/* ============================================
+   LICZNIK DNI - DUŻY WYŚWIETLACZ
+   ============================================ */
+
+.days-counter {
+    background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+    border: 2px solid #FF6B00;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.5),
+        inset 0 0 20px rgba(255, 107, 0, 0.1);
+    transform: translateZ(10px);
+}
+
+.counter-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+    color: #FF6B00;
+    letter-spacing: 0.2em;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 5px rgba(255, 107, 0, 0.5);
+}
+
+.counter-value {
+    text-align: center;
+}
+
+.days-remaining {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 900;
+    color: #FF6B00;
+    text-shadow:
+        0 0 20px rgba(255, 107, 0, 1),
+        0 0 40px rgba(255, 107, 0, 0.8),
+        0 0 60px rgba(255, 107, 0, 0.6),
+        4px 4px 8px rgba(0, 0, 0, 1);
+    display: inline-block;
+    animation: daysCounterGlow 2s ease-in-out infinite;
+    letter-spacing: 0.1em;
+}
+
+@keyframes daysCounterGlow {
+    0%, 100% {
+        text-shadow:
+            0 0 20px rgba(255, 107, 0, 1),
+            0 0 40px rgba(255, 107, 0, 0.8),
+            0 0 60px rgba(255, 107, 0, 0.6),
+            4px 4px 8px rgba(0, 0, 0, 1);
+    }
+    50% {
+        text-shadow:
+            0 0 30px rgba(255, 107, 0, 1),
+            0 0 60px rgba(255, 107, 0, 1),
+            0 0 80px rgba(255, 107, 0, 0.8),
+            4px 4px 8px rgba(0, 0, 0, 1);
+    }
+}
+
+/* ============================================
+   LCD TIMER DISPLAY
+   ============================================ */
+
+.timer-lcd {
+    margin-bottom: 1rem;
+}
+
+.lcd-display {
+    background: linear-gradient(135deg, #001a00, #003300);
+    border: 3px solid #00FF00;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    box-shadow:
+        0 0 10px rgba(0, 255, 0, 0.5),
+        inset 0 0 20px rgba(0, 255, 0, 0.1),
+        inset 0 2px 4px rgba(0, 0, 0, 0.5);
+    transform: translateZ(5px);
+}
+
+.timer-value {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.2rem, 4vw, 2rem);
+    font-weight: 700;
+    color: #00FF00;
+    text-shadow:
+        0 0 10px rgba(0, 255, 0, 0.8),
+        0 0 20px rgba(0, 255, 0, 0.5);
+    letter-spacing: 0.15em;
+    display: block;
+    text-align: center;
+}
+
+.lcd-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(0.65rem, 1.2vw, 0.75rem);
+    color: rgba(0, 255, 0, 0.6);
+    letter-spacing: 0.2em;
+    text-align: center;
+    margin-top: 0.25rem;
+}
+
+/* ============================================
+   POWER BAR - PASEK POSTĘPU Z EFEKTAMI
+   ============================================ */
+
+.power-bar {
+    margin-bottom: 1rem;
+    position: relative;
+    height: 30px;
+}
+
+.power-bar-bg {
     position: relative;
     width: 100%;
-    height: 0.75rem;
-    border-radius: 999px;
-    background: rgba(244, 247, 251, 0.12);
+    height: 100%;
+    background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+    border: 2px solid #FF6B00;
+    border-radius: 0.5rem;
     overflow: hidden;
+    box-shadow:
+        inset 0 2px 8px rgba(0, 0, 0, 0.8),
+        0 0 10px rgba(255, 107, 0, 0.3);
 }
 
 .timer-fill {
     position: absolute;
-    inset: 0;
+    left: 0;
+    top: 0;
+    height: 100%;
     width: var(--progress, 0%);
-    background: linear-gradient(90deg, var(--secondary-accent), var(--primary-accent));
+    background: linear-gradient(90deg,
+        #FF6B00 0%,
+        #FFD700 50%,
+        #FF6B00 100%);
+    background-size: 200% 100%;
+    animation: powerFlow 2s linear infinite;
+    box-shadow:
+        0 0 20px rgba(255, 107, 0, 0.8),
+        inset 0 0 10px rgba(255, 255, 255, 0.3);
     transition: width 0.6s ease;
 }
 
+@keyframes powerFlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+.power-bar-glow {
+    position: absolute;
+    left: var(--progress, 0%);
+    top: 0;
+    width: 20px;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.8),
+        transparent);
+    animation: glowMove 1s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes glowMove {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+/* ============================================
+   PANEL FOOTER
+   ============================================ */
+
+.panel-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.75rem;
+    border-top: 2px solid rgba(255, 107, 0, 0.3);
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.1em;
+}
+
+.circuit-label {
+    color: #FFD700;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.4);
+}
+
+.power-rating {
+    color: #FF6B00;
+    text-shadow: 0 0 5px rgba(255, 107, 0, 0.4);
+}
+
+/* ============================================
+   KOLORY SPECYFICZNE DLA FAZ
+   ============================================ */
+
+.phase-l1 .panel-frame {
+    border-color: #FF6B00;
+}
+
+.phase-l1 .days-remaining {
+    color: #FF6B00;
+}
+
+.phase-l2 .panel-frame {
+    border-color: #FFFFFF;
+}
+
+.phase-l2 .phase-label,
+.phase-l2 .days-remaining {
+    color: #FFFFFF;
+    text-shadow:
+        0 0 20px rgba(255, 255, 255, 1),
+        0 0 40px rgba(255, 255, 255, 0.8);
+}
+
+.phase-l2 .counter-label {
+    color: #FFFFFF;
+}
+
+.phase-l2 .days-counter {
+    border-color: #FFFFFF;
+}
+
+.phase-l3.phase-critical .panel-frame {
+    border-color: #FF0000;
+    animation: criticalPulse 2s ease-in-out infinite;
+}
+
+@keyframes criticalPulse {
+    0%, 100% {
+        box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.8),
+            0 0 20px rgba(255, 0, 0, 0.5),
+            inset 0 0 30px rgba(255, 0, 0, 0.1);
+    }
+    50% {
+        box-shadow:
+            0 20px 50px rgba(0, 0, 0, 0.9),
+            0 0 40px rgba(255, 0, 0, 0.8),
+            inset 0 0 40px rgba(255, 0, 0, 0.2);
+    }
+}
+
+.phase-l3 .phase-label,
+.phase-l3 .days-remaining {
+    color: #FF0000;
+    text-shadow:
+        0 0 20px rgba(255, 0, 0, 1),
+        0 0 40px rgba(255, 0, 0, 0.8),
+        0 0 60px rgba(255, 0, 0, 0.6);
+}
+
+.phase-l3 .counter-label {
+    color: #FF0000;
+}
+
+.phase-l3 .days-counter {
+    border-color: #FF0000;
+}
+
+.phase-l3 .circuit-label,
+.phase-l3 .power-rating {
+    color: #FF0000;
+}
+
+/* ============================================
+   WEATHER WIDGET
+   ============================================ */
+
+.weather-widget {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #FF6B00;
+}
+
+.weather-frame {
+    background: linear-gradient(135deg, #1a1a1a, #000000);
+    border: 2px solid #FFD700;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(255, 215, 0, 0.3),
+        inset 0 0 30px rgba(255, 215, 0, 0.05);
+}
+
+.weather-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.weather-icon {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    animation: weatherIconFloat 3s ease-in-out infinite;
+}
+
+@keyframes weatherIconFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.weather-header h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    font-weight: 700;
+    color: #FFD700;
+    margin: 0;
+    letter-spacing: 0.15em;
+    text-shadow:
+        0 0 10px rgba(255, 215, 0, 0.8),
+        0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.weather-display {
+    background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.weather-loading {
+    animation: loadingPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes loadingPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Szczegółowe style zawartości widgetu pogody */
+.weather-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.weather-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.weather-temp-section {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.weather-icon-large {
+    font-size: clamp(4rem, 10vw, 6rem);
+    animation: weatherIconRotate 4s ease-in-out infinite;
+}
+
+@keyframes weatherIconRotate {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
+.weather-temp-value {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(3rem, 8vw, 4.5rem);
+    font-weight: 900;
+    color: #FFD700;
+    text-shadow:
+        0 0 20px rgba(255, 215, 0, 1),
+        0 0 40px rgba(255, 215, 0, 0.8),
+        0 0 60px rgba(255, 215, 0, 0.6);
+    letter-spacing: 0.05em;
+}
+
+.weather-description {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 700;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.weather-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.weather-detail-item {
+    background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.weather-detail-item:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 215, 0, 0.6);
+}
+
+.weather-detail-icon {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+.weather-detail-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.weather-detail-value {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    font-weight: 700;
+    color: #FFD700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.weather-simulated-label {
+    text-align: center;
+    font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+    color: rgba(255, 107, 0, 0.7);
+    font-style: italic;
+    margin-top: 0.5rem;
+}
+
+.weather-error {
+    color: #FF6B00;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.weather-loaded {
+    animation: weatherFadeIn 0.5s ease-out;
+}
+
+@keyframes weatherFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tła w zależności od typu pogody */
+.weather-display[data-weather-type="clear"] {
+    background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #2a1a0a);
+}
+
+.weather-display[data-weather-type="rain"],
+.weather-display[data-weather-type="drizzle"] {
+    background: linear-gradient(135deg, #0a0a1a, #0a0a2a, #1a1a1a);
+}
+
+.weather-display[data-weather-type="snow"] {
+    background: linear-gradient(135deg, #1a1a2a, #2a2a3a, #1a1a1a);
+}
+
+.weather-display[data-weather-type="thunderstorm"] {
+    background: linear-gradient(135deg, #1a0a0a, #2a1a0a, #0a0a0a);
+    animation: thunderstormFlash 3s ease-in-out infinite;
+}
+
+@keyframes thunderstormFlash {
+    0%, 90%, 100% { background: linear-gradient(135deg, #1a0a0a, #2a1a0a, #0a0a0a); }
+    92%, 94% { background: linear-gradient(135deg, #3a2a1a, #4a3a2a, #2a1a1a); }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
 @media (max-width: 680px) {
-    .deadlines-grid {
+    .phases-grid {
         grid-template-columns: 1fr;
     }
 
-    .deadline-header {
-        flex-direction: column;
-        align-items: flex-start;
+    .power-system-header h2 {
+        font-size: 1.3rem;
     }
 
-    .timer-display {
-        font-size: clamp(1rem, 6vw, 1.4rem);
+    .phase-panel:hover {
+        transform: translateY(-5px);
+    }
+
+    .days-remaining {
+        font-size: 2.5rem;
+    }
+
+    .timer-value {
+        font-size: 1rem;
     }
 }
 

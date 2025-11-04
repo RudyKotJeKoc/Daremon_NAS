@@ -161,37 +161,174 @@
                     <p id="listener-count-display"><span data-i18n-key="listenersLabel"></span> <span id="listener-count" aria-live="polite" role="status">...</span></p>
                 </header>
 
-                <!-- CRITICAL: Countdown timers for company restructuring phases -->
-                <section id="deadlines-section" class="content-box deadlines-section" aria-labelledby="deadlines-heading">
-                    <h2 id="deadlines-heading">⚠️ Krytyczne Terminy</h2>
-                    <div class="deadlines-grid">
-                        <article class="deadline-card" data-deadline-id="year-end-2025">
-                            <header class="deadline-header">
-                                <h3 class="deadline-title">🔴 Faza 2 - Kolejne Zwolnienia</h3>
-                                <p class="deadline-date">31.12.2025</p>
-                            </header>
-                            <p class="deadline-description">Druga faza redukcji zespołu - zamknięcie roku 2025.</p>
-                            <div class="timer-display" role="timer" aria-live="polite" aria-label="Pozostało 00 dni">
-                                <span class="timer-value" data-time-remaining>00:00:00:00</span>
-                            </div>
-                            <div class="timer-bar" aria-hidden="true">
-                                <div class="timer-fill"></div>
+                <!-- CRITICAL: Three-Phase Power System - Company Restructuring Countdown -->
+                <section id="deadlines-section" class="content-box power-system-section" aria-labelledby="deadlines-heading">
+                    <div class="power-system-header">
+                        <h2 id="deadlines-heading">
+                            <span class="power-icon">⚡</span>
+                            SYSTEM ZASILANIA 3-FAZOWEGO
+                            <span class="power-icon">⚡</span>
+                        </h2>
+                        <div class="system-status">
+                            <span class="status-indicator active"></span>
+                            <span class="status-text">SYSTEM AKTYWNY</span>
+                        </div>
+                    </div>
+
+                    <div class="phases-grid">
+                        <!-- FAZA L1 -->
+                        <article class="phase-panel phase-l1" data-deadline-id="phase-l1">
+                            <div class="panel-frame">
+                                <div class="panel-header">
+                                    <div class="phase-badge">
+                                        <span class="phase-label">⚡ L1</span>
+                                        <span class="voltage-display">230V 50Hz</span>
+                                    </div>
+                                    <div class="phase-status">
+                                        <div class="led-indicator orange"></div>
+                                    </div>
+                                </div>
+
+                                <div class="phase-info">
+                                    <h3 class="phase-title">FAZA L1</h3>
+                                    <p class="phase-description">Zamknięcie roku 2025</p>
+                                    <p class="phase-deadline">31.12.2025 23:59:59</p>
+                                </div>
+
+                                <div class="days-counter">
+                                    <div class="counter-label">DNI POZOSTAŁE</div>
+                                    <div class="counter-value">
+                                        <span class="days-remaining">000</span>
+                                    </div>
+                                </div>
+
+                                <div class="timer-lcd" role="timer" aria-live="polite">
+                                    <div class="lcd-display">
+                                        <span class="timer-value" data-time-remaining>00:00:00:00</span>
+                                    </div>
+                                    <div class="lcd-label">DD:HH:MM:SS</div>
+                                </div>
+
+                                <div class="power-bar" aria-hidden="true">
+                                    <div class="power-bar-bg">
+                                        <div class="timer-fill"></div>
+                                        <div class="power-bar-glow"></div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer">
+                                    <span class="circuit-label">OBWÓD #001</span>
+                                    <span class="power-rating">16A</span>
+                                </div>
                             </div>
                         </article>
 
-                        <article class="deadline-card deadline-card--critical" data-deadline-id="april-2026">
-                            <header class="deadline-header">
-                                <h3 class="deadline-title">💀 Faza 3 - GAME OVER</h3>
-                                <p class="deadline-date">30.04.2026</p>
-                            </header>
-                            <p class="deadline-description">Koniec istnienia fabryki. Final countdown.</p>
-                            <div class="timer-display" role="timer" aria-live="polite" aria-label="Pozostało 00 dni">
-                                <span class="timer-value" data-time-remaining>00:00:00:00</span>
-                            </div>
-                            <div class="timer-bar" aria-hidden="true">
-                                <div class="timer-fill"></div>
+                        <!-- FAZA L2 -->
+                        <article class="phase-panel phase-l2" data-deadline-id="phase-l2">
+                            <div class="panel-frame">
+                                <div class="panel-header">
+                                    <div class="phase-badge">
+                                        <span class="phase-label">⚡ L2</span>
+                                        <span class="voltage-display">230V 50Hz</span>
+                                    </div>
+                                    <div class="phase-status">
+                                        <div class="led-indicator black"></div>
+                                    </div>
+                                </div>
+
+                                <div class="phase-info">
+                                    <h3 class="phase-title">FAZA L2</h3>
+                                    <p class="phase-description">Raport kwartalny Q1 2026</p>
+                                    <p class="phase-deadline">30.04.2026 23:59:59</p>
+                                </div>
+
+                                <div class="days-counter">
+                                    <div class="counter-label">DNI POZOSTAŁE</div>
+                                    <div class="counter-value">
+                                        <span class="days-remaining">000</span>
+                                    </div>
+                                </div>
+
+                                <div class="timer-lcd" role="timer" aria-live="polite">
+                                    <div class="lcd-display">
+                                        <span class="timer-value" data-time-remaining>00:00:00:00</span>
+                                    </div>
+                                    <div class="lcd-label">DD:HH:MM:SS</div>
+                                </div>
+
+                                <div class="power-bar" aria-hidden="true">
+                                    <div class="power-bar-bg">
+                                        <div class="timer-fill"></div>
+                                        <div class="power-bar-glow"></div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer">
+                                    <span class="circuit-label">OBWÓD #002</span>
+                                    <span class="power-rating">16A</span>
+                                </div>
                             </div>
                         </article>
+
+                        <!-- FAZA L3 -->
+                        <article class="phase-panel phase-l3 phase-critical" data-deadline-id="phase-l3">
+                            <div class="panel-frame">
+                                <div class="panel-header">
+                                    <div class="phase-badge">
+                                        <span class="phase-label">⚡ L3</span>
+                                        <span class="voltage-display">230V 50Hz</span>
+                                    </div>
+                                    <div class="phase-status">
+                                        <div class="led-indicator red"></div>
+                                    </div>
+                                </div>
+
+                                <div class="phase-info">
+                                    <h3 class="phase-title">FAZA L3 - GAME OVER</h3>
+                                    <p class="phase-description">Finalizacja projektu</p>
+                                    <p class="phase-deadline">31.12.2026 23:59:59</p>
+                                </div>
+
+                                <div class="days-counter">
+                                    <div class="counter-label">DNI POZOSTAŁE</div>
+                                    <div class="counter-value">
+                                        <span class="days-remaining">000</span>
+                                    </div>
+                                </div>
+
+                                <div class="timer-lcd" role="timer" aria-live="polite">
+                                    <div class="lcd-display">
+                                        <span class="timer-value" data-time-remaining>00:00:00:00</span>
+                                    </div>
+                                    <div class="lcd-label">DD:HH:MM:SS</div>
+                                </div>
+
+                                <div class="power-bar" aria-hidden="true">
+                                    <div class="power-bar-bg">
+                                        <div class="timer-fill"></div>
+                                        <div class="power-bar-glow"></div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer">
+                                    <span class="circuit-label">OBWÓD #003</span>
+                                    <span class="power-rating">16A</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- Weather Widget -->
+                    <div class="weather-widget">
+                        <div class="weather-frame">
+                            <div class="weather-header">
+                                <span class="weather-icon">🌤️</span>
+                                <h3>WARUNKI ATMOSFERYCZNE</h3>
+                            </div>
+                            <div id="weather-display" class="weather-display">
+                                <div class="weather-loading">Ładowanie danych pogodowych...</div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -484,6 +621,7 @@
     <script type="module" src="survey.js"></script>
     <script type="module" src="employee-survey.js"></script>
     <script type="module" src="countdown-timers.js"></script>
+    <script type="module" src="weather-widget.js"></script>
     <script type="module" src="script.js"></script>
     <script type="module" src="app.js"></script>
 </body>
