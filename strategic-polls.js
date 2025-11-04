@@ -7,213 +7,174 @@ const euroFormatter = new Intl.NumberFormat('pl-PL', {
 export const STRATEGIC_TARGETS = {
     teamSize: 20,
     coreTeam: 5,
-    capital: 40000,
+    capital: 75000,
     clientRelationships: 2,
     machines: 15,
-    weeklyHours: 50,
+    weeklyHours: 10, // Godziny tygodniowo na organizację (poza normalnymi obowiązkami)
 };
 
 export const STRATEGIC_POLLS = [
+    // A. GOTOWOŚĆ DO DZIAŁANIA I RYZYKO (Test zaangażowania)
     {
-        id: 'core-team-declaration',
-        category: 'Zespół',
+        id: 'continuation-intent',
+        category: 'Gotowość',
         priority: 'CRITICAL',
         confidential: true,
-    question: 'Czy dołączasz do Zespołu Rdzenia projektu?',
+        question: 'Czy rozważasz kontynuację w nowej firmie?',
         type: 'single-choice',
         options: [
-            { id: 'core-team-commit', label: 'Tak — jestem w Zespole Rdzenia' },
-            { id: 'core-team-support', label: 'Wspieram działania, ale nie w rdzeniu' },
-            { id: 'core-team-undecided', label: 'Jeszcze się zastanawiam' },
+            { id: 'intent-yes', label: 'TAK — jestem gotowy/a do kontynuacji' },
+            { id: 'intent-maybe', label: 'MOŻE — zależy od warunków' },
+            { id: 'intent-no', label: 'NIE — nie rozważam kontynuacji' },
         ],
     },
     {
-        id: 'core-team-roles',
-        category: 'Zespół',
-        priority: 'URGENT',
-        confidential: true,
-        question: 'Jaką rolę możesz objąć od kwietnia 2026?',
-        type: 'multiple-choice',
-        options: [
-            { id: 'role-operations', label: 'Operacje / produkcja' },
-            { id: 'role-sales', label: 'Sprzedaż i relacje z klientami' },
-            { id: 'role-finance', label: 'Finanse / kontroling' },
-            { id: 'role-hr', label: 'HR / kadry' },
-            { id: 'role-quality', label: 'Jakość / audyty' },
-            { id: 'role-rnd', label: 'R&D / wdrożenia' },
-        ],
-    },
-    {
-        id: 'financial-commitment',
-        category: 'Kapitał',
+        id: 'financial-risk-tolerance',
+        category: 'Gotowość',
         priority: 'CRITICAL',
         confidential: true,
-    question: 'Jaką przykładową kwotę możesz zadeklarować na start projektu?',
+        question: 'Czy jesteś gotów przez 6–12 miesięcy żyć z minimalnych dochodów/zasiłku (WW)?',
         type: 'single-choice',
         options: [
-            { id: 'invest-0', label: '0 € — tylko wsparcie operacyjne' },
-            { id: 'invest-2k', label: '1 000 – 2 500 €' },
-            { id: 'invest-5k', label: '2 500 – 5 000 €' },
-            { id: 'invest-10k', label: '5 000 – 10 000 €' },
-            { id: 'invest-15k', label: '10 000 € i więcej' },
+            { id: 'risk-yes', label: 'TAK — jestem gotowy/a' },
+            { id: 'risk-no', label: 'NIE — to jest dla mnie bariera' },
         ],
     },
     {
-        id: 'time-commitment',
-        category: 'Zespół',
+        id: 'time-commitment-weekly',
+        category: 'Gotowość',
         priority: 'CRITICAL',
         confidential: true,
-    question: 'Ile godzin tygodniowo możesz przeznaczyć na projekt od kwietnia?',
+        question: 'Ile godzin tygodniowo możesz poświęcić na organizację nowej firmy (poza normalnymi obowiązkami)?',
         type: 'single-choice',
         options: [
-            { id: 'time-10', label: 'Do 10 h/tydzień' },
-            { id: 'time-20', label: '11 – 20 h/tydzień' },
-            { id: 'time-35', label: '21 – 35 h/tydzień' },
-            { id: 'time-50', label: '36 – 50 h/tydzień' },
-            { id: 'time-60', label: 'Ponad 50 h/tydzień' },
+            { id: 'time-0-2', label: '0–2 godziny/tydzień' },
+            { id: 'time-3-5', label: '3–5 godzin/tydzień' },
+            { id: 'time-6-10', label: '6–10 godzin/tydzień' },
+            { id: 'time-10plus', label: '10+ godzin/tydzień' },
         ],
     },
     {
-        id: 'client-relationships',
-        category: 'Relacje',
-        priority: 'URGENT',
-        confidential: true,
-    question: 'Ilu aktywnych klientów możesz wprowadzić do projektu?',
-        type: 'single-choice',
-        options: [
-            { id: 'clients-0', label: 'Brak — potrzebuję wsparcia' },
-            { id: 'clients-1', label: '1 klient / kontakt decyzyjny' },
-            { id: 'clients-2', label: '2 kontakty z klientami' },
-            { id: 'clients-3', label: '3 lub więcej relacji' },
-        ],
-    },
-
-    {
-        id: 'competency-gaps',
-        category: 'Kompetencje',
+        id: 'perceived-obstacles',
+        category: 'Gotowość',
         priority: 'HIGH',
         confidential: true,
-        question: 'W jakich obszarach brakuje nam dziś kompetencji?',
-        type: 'multiple-choice',
-        options: [
-            { id: 'gap-sales', label: 'Sprzedaż i rozwój biznesu' },
-            { id: 'gap-finance', label: 'Finanse / księgowość' },
-            { id: 'gap-legal', label: 'Prawo i kontrakty' },
-            { id: 'gap-production', label: 'Inżynieria / procesy produkcyjne' },
-            { id: 'gap-quality', label: 'Systemy jakości i audyty' },
-            { id: 'gap-marketing', label: 'Marketing / komunikacja' },
-        ],
-    },
-    {
-        id: 'training-priority',
-        category: 'Kompetencje',
-        priority: 'MEDIUM',
-        confidential: true,
-        question: 'Które szkolenie powinno być sfinansowane w pierwszej kolejności?',
-        type: 'single-choice',
-        options: [
-            { id: 'training-sales', label: 'Sprzedaż / negocjacje' },
-            { id: 'training-finance', label: 'Finanse i zarządzanie kosztami' },
-            { id: 'training-quality', label: 'Systemy jakości / audyty' },
-            { id: 'training-automation', label: 'Automatyzacja i utrzymanie ruchu' },
-            { id: 'training-leadership', label: 'Przywództwo i organizacja' },
-        ],
-    },
-    {
-        id: 'risk-readiness',
-        category: 'Ryzyko',
-        priority: 'MEDIUM',
-        confidential: true,
-        question: 'Jak oceniasz gotowość do poniesienia ryzyka biznesowego?',
-        type: 'rating',
-        scale: 5,
-        labels: ['0 — nie jestem gotowy', '1 — niska', '2 — umiarkowana', '3 — wysoka', '4 — pełna gotowość'],
-    },
-    {
-        id: 'whatsapp-availability',
-        category: 'Koordynacja',
-        priority: 'HIGH',
-        confidential: false,
-    question: 'Czy masz dostęp do wyznaczonego kanału komunikacji Komisji Maszyn?',
-        type: 'single-choice',
-        options: [
-            { id: 'channel-yes', label: 'Tak — mam dostęp' },
-            { id: 'channel-later', label: 'Jeszcze nie, dołączę dzisiaj' },
-            { id: 'channel-no', label: 'Potrzebuję zaproszenia' },
-        ],
-    },
-    {
-        id: 'motivation-statement',
-        category: 'Zespół',
-        priority: 'MEDIUM',
-        confidential: true,
-    question: 'Co jest Twoją największą motywacją do udziału w projekcie?',
+        question: 'Jakie widzisz największe przeszkody (prawne, finansowe, rynkowe)?',
         type: 'open-text',
         options: [],
     },
+
+    // B. KAPITAŁ (Weryfikacja finansowa)
     {
-        id: 'focus-2026',
-        category: 'Strategia',
+        id: 'severance-investment',
+        category: 'Kapitał',
+        priority: 'CRITICAL',
+        confidential: true,
+        question: 'Czy jesteś gotów zainwestować część swojej odprawy w nową firmę?',
+        type: 'single-choice',
+        options: [
+            { id: 'invest-no', label: 'NIE — nie mogę zainwestować' },
+            { id: 'invest-5k', label: 'TAK — do 5 000 €' },
+            { id: 'invest-10k', label: 'TAK — 5 000 – 10 000 €' },
+            { id: 'invest-15k', label: 'TAK — 10 000 – 15 000 €' },
+            { id: 'invest-20k', label: 'TAK — 15 000 – 20 000 €' },
+            { id: 'invest-25kplus', label: 'TAK — ponad 20 000 €' },
+        ],
+    },
+    {
+        id: 'legal-consultation-budget',
+        category: 'Kapitał',
+        priority: 'URGENT',
+        confidential: true,
+        question: 'Czy planujesz wykorzystać budżet €650 na konsultację prawną VSO/Art. 11?',
+        type: 'single-choice',
+        options: [
+            { id: 'legal-yes', label: 'TAK — planuję konsultację' },
+            { id: 'legal-no', label: 'NIE — nie planuję' },
+            { id: 'legal-unsure', label: 'Nie jestem pewny/a' },
+        ],
+    },
+    {
+        id: 'training-budget-allocation',
+        category: 'Kapitał',
         priority: 'MEDIUM',
-        confidential: false,
-        question: 'Na czym powinniśmy skoncentrować pierwsze 90 dni?',
+        confidential: true,
+        question: 'Na jakie szkolenia planujesz przeznaczyć budżet €1500 (np. Sprzedaż B2B, Finanse, CAD/CAM)?',
         type: 'multiple-choice',
         options: [
-            { id: 'focus-clients', label: 'Pozyskanie klientów' },
-            { id: 'focus-machines', label: 'Zabezpieczenie maszyn i produkcji' },
-            { id: 'focus-team', label: 'Budowa zespołu i struktury' },
-            { id: 'focus-cashflow', label: 'Finansowanie i cashflow' },
-            { id: 'focus-brand', label: 'Komunikacja i marka' },
+            { id: 'training-sales-b2b', label: 'Sprzedaż B2B / negocjacje' },
+            { id: 'training-finance', label: 'Finanse / zarządzanie kosztami' },
+            { id: 'training-cad-cam', label: 'CAD/CAM / projektowanie' },
+            { id: 'training-plc', label: 'Automatyka / PLC' },
+            { id: 'training-quality', label: 'Systemy jakości / audyty' },
+            { id: 'training-leadership', label: 'Przywództwo / zarządzanie zespołem' },
+            { id: 'training-none', label: 'Nie planuję szkoleń' },
         ],
+    },
+
+    // C. KOMPETENCJE I RYNKI (Weryfikacja strategiczna)
+    {
+        id: 'key-competencies',
+        category: 'Kompetencje',
+        priority: 'URGENT',
+        confidential: true,
+        question: 'Jakie masz kompetencje kluczowe dla nowej firmy?',
+        type: 'multiple-choice',
+        options: [
+            { id: 'comp-production', label: 'Produkcja' },
+            { id: 'comp-design', label: 'Projektowanie' },
+            { id: 'comp-sales', label: 'Sprzedaż' },
+            { id: 'comp-admin', label: 'Administracja' },
+            { id: 'comp-plc', label: 'Automatyka (PLC)' },
+            { id: 'comp-quality', label: 'Jakość / audyty' },
+            { id: 'comp-finance', label: 'Finanse / controlling' },
+        ],
+    },
+    {
+        id: 'satisfied-clients',
+        category: 'Kompetencje',
+        priority: 'URGENT',
+        confidential: true,
+        question: 'Którzy klienci z dotychczasowego portfolio ITB byli zadowoleni z Twojej pracy? (Podaj nazwy firm lub osoby kontaktowe)',
+        type: 'open-text',
+        options: [],
     },
 ];
 
 const CAPITAL_WEIGHTS = {
-    'invest-0': 0,
-    'invest-2k': 1750,
-    'invest-5k': 3750,
+    'invest-no': 0,
+    'invest-5k': 2500,
     'invest-10k': 7500,
     'invest-15k': 12500,
+    'invest-20k': 17500,
+    'invest-25kplus': 25000,
 };
 
 const TIME_WEIGHTS = {
-    'time-10': 10,
-    'time-20': 20,
-    'time-35': 35,
-    'time-50': 50,
-    'time-60': 60,
+    'time-0-2': 1,
+    'time-3-5': 4,
+    'time-6-10': 8,
+    'time-10plus': 15,
 };
 
-const CLIENT_WEIGHTS = {
-    'clients-0': 0,
-    'clients-1': 1,
-    'clients-2': 2,
-    'clients-3': 3,
+const COMPETENCY_LABELS = {
+    'comp-production': 'Produkcja',
+    'comp-design': 'Projektowanie',
+    'comp-sales': 'Sprzedaż',
+    'comp-admin': 'Administracja',
+    'comp-plc': 'Automatyka (PLC)',
+    'comp-quality': 'Jakość / audyty',
+    'comp-finance': 'Finanse / controlling',
 };
 
-const MACHINE_WEIGHTS = {
-    'machines-5': 5,
-    'machines-10': 10,
-    'machines-15': 15,
-    'machines-20': 20,
-};
-
-const ROLE_IDS = {
-    'role-operations': 'Operacje',
-    'role-sales': 'Sprzedaż',
-    'role-finance': 'Finanse',
-    'role-hr': 'HR',
-    'role-quality': 'Jakość',
-    'role-rnd': 'R&D',
-};
-
-const GAP_LABELS = {
-    'gap-sales': 'Sprzedaż i rozwój biznesu',
-    'gap-finance': 'Finanse / księgowość',
-    'gap-legal': 'Prawo i kontrakty',
-    'gap-production': 'Inżynieria / procesy produkcyjne',
-    'gap-quality': 'Systemy jakości i audyty',
-    'gap-marketing': 'Marketing / komunikacja',
+const TRAINING_LABELS = {
+    'training-sales-b2b': 'Sprzedaż B2B / negocjacje',
+    'training-finance': 'Finanse / zarządzanie kosztami',
+    'training-cad-cam': 'CAD/CAM / projektowanie',
+    'training-plc': 'Automatyka / PLC',
+    'training-quality': 'Systemy jakości / audyty',
+    'training-leadership': 'Przywództwo / zarządzanie zespołem',
+    'training-none': 'Nie planuję szkoleń',
 };
 
 function getPollState(pollId, store = {}) {
@@ -233,29 +194,30 @@ export function calculateStrategicMetrics(store = {}) {
         respondents: 0,
         responseRate: 0,
         coreTeam: 0,
-        support: 0,
-        undecided: 0,
+        maybeTeam: 0,
+        notInterested: 0,
+        riskTolerant: 0,
+        riskIntolerant: 0,
         capital: 0,
-        machines: 0,
         hoursTotal: 0,
         hoursAverage: 0,
-        clients: 0,
-        leadershipCoverage: {},
-        missingRoles: [],
-        gapSignals: [],
+        legalConsultation: 0,
+        competencyCoverage: {},
+        missingCompetencies: [],
+        trainingPriorities: [],
     };
 
-    const coreTeamState = getPollState('core-team-declaration', store);
-    metrics.coreTeam = getOptionVotes(coreTeamState, 'core-team-commit');
-    metrics.support = getOptionVotes(coreTeamState, 'core-team-support');
-    metrics.undecided = getOptionVotes(coreTeamState, 'core-team-undecided');
+    // A. GOTOWOŚĆ DO DZIAŁANIA I RYZYKO
+    const intentState = getPollState('continuation-intent', store);
+    metrics.coreTeam = getOptionVotes(intentState, 'intent-yes');
+    metrics.maybeTeam = getOptionVotes(intentState, 'intent-maybe');
+    metrics.notInterested = getOptionVotes(intentState, 'intent-no');
 
-    const investState = getPollState('financial-commitment', store);
-    Object.entries(CAPITAL_WEIGHTS).forEach(([optionId, euro]) => {
-        metrics.capital += euro * getOptionVotes(investState, optionId);
-    });
+    const riskState = getPollState('financial-risk-tolerance', store);
+    metrics.riskTolerant = getOptionVotes(riskState, 'risk-yes');
+    metrics.riskIntolerant = getOptionVotes(riskState, 'risk-no');
 
-    const timeState = getPollState('time-commitment', store);
+    const timeState = getPollState('time-commitment-weekly', store);
     let totalVotesForTime = 0;
     Object.entries(TIME_WEIGHTS).forEach(([optionId, hours]) => {
         const votes = getOptionVotes(timeState, optionId);
@@ -268,41 +230,34 @@ export function calculateStrategicMetrics(store = {}) {
         metrics.hoursAverage = Math.round(metrics.hoursTotal / totalVotesForTime);
     }
 
-    const clientState = getPollState('client-relationships', store);
-    Object.entries(CLIENT_WEIGHTS).forEach(([optionId, count]) => {
-        metrics.clients += count * getOptionVotes(clientState, optionId);
+    // B. KAPITAŁ
+    const investState = getPollState('severance-investment', store);
+    Object.entries(CAPITAL_WEIGHTS).forEach(([optionId, euro]) => {
+        metrics.capital += euro * getOptionVotes(investState, optionId);
     });
 
-    const machineState = getPollState('machine-documentation-status', store);
-    let machinesTotal = 0;
-    Object.entries(MACHINE_WEIGHTS).forEach(([optionId, count]) => {
-        machinesTotal += count * getOptionVotes(machineState, optionId);
-    });
-    if (metrics.coreTeam > 0 && machineState.totalVotes > 0) {
-        const avgMachinesPerVoter = machinesTotal / machineState.totalVotes;
-        metrics.machines = Math.round(avgMachinesPerVoter * metrics.coreTeam);
-    } else {
-        metrics.machines = 0;
-    }
+    const legalState = getPollState('legal-consultation-budget', store);
+    metrics.legalConsultation = getOptionVotes(legalState, 'legal-yes');
 
-    const leadershipState = getPollState('core-team-roles', store);
-    metrics.leadershipCoverage = Object.keys(ROLE_IDS).reduce((acc, optionId) => {
-        acc[ROLE_IDS[optionId]] = getOptionVotes(leadershipState, optionId);
+    const trainingState = getPollState('training-budget-allocation', store);
+    const trainingEntries = Object.entries(TRAINING_LABELS).map(([optionId, label]) => ({
+        label,
+        votes: getOptionVotes(trainingState, optionId),
+    })).filter(item => item.votes > 0);
+    trainingEntries.sort((a, b) => b.votes - a.votes);
+    metrics.trainingPriorities = trainingEntries.slice(0, 3).map(item => `${item.label} (${item.votes})`);
+
+    // C. KOMPETENCJE I RYNKI
+    const compState = getPollState('key-competencies', store);
+    metrics.competencyCoverage = Object.keys(COMPETENCY_LABELS).reduce((acc, optionId) => {
+        acc[COMPETENCY_LABELS[optionId]] = getOptionVotes(compState, optionId);
         return acc;
     }, {});
-    metrics.missingRoles = Object.entries(metrics.leadershipCoverage)
+    metrics.missingCompetencies = Object.entries(metrics.competencyCoverage)
         .filter(([, votes]) => votes === 0)
-        .map(([role]) => `Brak deklaracji dla roli: ${role}`);
+        .map(([comp]) => `Brak deklaracji dla: ${comp}`);
 
-    const gapState = getPollState('competency-gaps', store);
-    const gapEntries = Object.entries(GAP_LABELS).map(([optionId, label]) => ({
-        label,
-        votes: getOptionVotes(gapState, optionId),
-    })).filter(item => item.votes > 0);
-    gapEntries.sort((a, b) => b.votes - a.votes);
-    const topGaps = gapEntries.slice(0, 3);
-    metrics.gapSignals = topGaps.map(item => `${item.label} (${item.votes})`);
-
+    // Calculate respondents and response rate
     const pollTotals = Object.values(store).map(poll => poll.totalVotes || 0);
     metrics.respondents = pollTotals.length > 0 ? Math.max(...pollTotals) : 0;
     if (STRATEGIC_TARGETS.teamSize > 0) {
@@ -313,21 +268,23 @@ export function calculateStrategicMetrics(store = {}) {
 
     return {
         ...metrics,
-        gapSignalsDetailed: topGaps,
+        trainingPrioritiesDetailed: trainingEntries,
         formattedCapital: formatEuro(metrics.capital),
     };
 }
 
 export function analyzeCoreTeam(store = {}) {
     const metrics = calculateStrategicMetrics(store);
-    const total = metrics.coreTeam + metrics.support + metrics.undecided;
+    const total = metrics.coreTeam + metrics.maybeTeam + metrics.notInterested;
     const commitmentRate = total > 0 ? Math.round((metrics.coreTeam / total) * 100) : 0;
 
     return {
         committed: metrics.coreTeam,
-        support: metrics.support,
-        undecided: metrics.undecided,
+        maybe: metrics.maybeTeam,
+        notInterested: metrics.notInterested,
         commitmentRate,
+        riskTolerant: metrics.riskTolerant,
+        riskIntolerant: metrics.riskIntolerant,
     };
 }
 
@@ -335,30 +292,33 @@ export function generateGoNoGoReport(store = {}) {
     const metrics = calculateStrategicMetrics(store);
     const criticalGaps = [];
 
+    // Weryfikacja zespołu rdzenia
     if (metrics.coreTeam < STRATEGIC_TARGETS.coreTeam) {
-        criticalGaps.push(`Potrzebujemy minimum ${STRATEGIC_TARGETS.coreTeam} osób w Zespole Rdzenia (mamy ${metrics.coreTeam}).`);
+        criticalGaps.push(`Potrzebujemy minimum ${STRATEGIC_TARGETS.coreTeam} osób gotowych do kontynuacji (mamy ${metrics.coreTeam}).`);
     }
+
+    // Weryfikacja kapitału
     if (metrics.capital < STRATEGIC_TARGETS.capital) {
         criticalGaps.push(`Zadeklarowany kapitał ${formatEuro(metrics.capital)} nie osiąga celu ${formatEuro(STRATEGIC_TARGETS.capital)}.`);
     }
-    if (metrics.clients < STRATEGIC_TARGETS.clientRelationships) {
-        criticalGaps.push('Za mało relacji z klientami (cel: 2 aktywne osoby).');
+
+    // Weryfikacja tolerancji ryzyka
+    if (metrics.riskTolerant < STRATEGIC_TARGETS.coreTeam) {
+        criticalGaps.push(`Za mało osób gotowych na ryzyko finansowe przez 6-12 miesięcy (mamy ${metrics.riskTolerant}, cel: ${STRATEGIC_TARGETS.coreTeam}).`);
     }
-    if (metrics.machines < STRATEGIC_TARGETS.machines) {
-        criticalGaps.push(`Udokumentowane maszyny (${metrics.machines}) nie osiągają celu ${STRATEGIC_TARGETS.machines}.`);
-    }
+
+    // Weryfikacja czasu
     if (metrics.hoursAverage < STRATEGIC_TARGETS.weeklyHours) {
         criticalGaps.push(`Średnia deklaracja czasu (${metrics.hoursAverage} h/tydz.) jest poniżej celu ${STRATEGIC_TARGETS.weeklyHours} h.`);
     }
-    if (metrics.missingRoles.length > 0) {
-        criticalGaps.push(...metrics.missingRoles);
-    }
-    if (metrics.gapSignalsDetailed?.some(item => item.votes >= 2)) {
-        criticalGaps.push(`Najczęściej wskazywane luki: ${metrics.gapSignals.join(', ')}.`);
+
+    // Weryfikacja kompetencji
+    if (metrics.missingCompetencies.length > 2) {
+        criticalGaps.push(`Brakujące kompetencje: ${metrics.missingCompetencies.slice(0, 3).join(', ')}.`);
     }
 
     let decision = 'GO';
-    const majorFail = metrics.coreTeam < 3 || metrics.capital < 20000;
+    const majorFail = metrics.coreTeam < 3 || metrics.capital < 30000 || metrics.riskTolerant < 3;
     if (criticalGaps.length > 0) {
         decision = majorFail ? 'NO-GO' : 'PARTIAL GO';
     }
@@ -367,31 +327,35 @@ export function generateGoNoGoReport(store = {}) {
         ? [
             'Zwołaj spotkanie Zespołu Rdzenia w ciągu 48 godzin.',
             'Przydziel Koordynatora i osobę odpowiedzialną za finanse.',
-            'Przygotuj ofertę odkupu maszyn do rozmów z Rompą.',
-            'Umów konsultację prawną w sprawie VSO i formy prawnej.',
+            'Umów konsultację prawną w sprawie VSO/Art. 11 dla wszystkich zainteresowanych.',
+            'Przygotuj mapę klientów na podstawie zebranych danych kontaktowych.',
+            'Zaplanuj szkolenia priorytetowe z budżetu €1500 na osobę.',
         ]
         : decision === 'PARTIAL GO'
             ? [
-                'Zidentyfikuj brakujące role i zaproponuj osoby odpowiedzialne.',
-                'Poszukaj dodatkowego kapitału (pożyczki, inwestorzy, crowdfunding).',
-                'Ustal rozmowy z klientami i potwierdź zainteresowanie.',
+                'Zidentyfikuj brakujące kompetencje i zaproponuj osoby odpowiedzialne.',
+                'Poszukaj dodatkowego kapitału (pożyczki, dotacje, inwestorzy).',
+                'Zwiększ świadomość ryzyka i przygotuj plan finansowy na 12 miesięcy.',
                 'Przedłuż okno zbierania deklaracji o dodatkowy tydzień.',
+                'Zorganizuj warsztaty z kluczowych brakujących obszarów (np. sprzedaż B2B).',
             ]
             : [
                 'Przygotuj plan awaryjny dla osób wybierających VSO.',
-                'Kontynuuj dokumentację maszyn na przyszłe działania.',
                 'Utrzymaj kontakt w zespole i przygotuj restart w ciągu 6-12 miesięcy.',
                 'Zabezpiecz najcenniejsze dane i know-how zespołu.',
+                'Wykorzystaj budżety na szkolenia indywidualne (€650 prawne, €1500 rozwój).',
+                'Dokumentuj relacje z klientami na przyszłość.',
             ];
 
     return {
         decision,
         coreTeam: metrics.coreTeam,
+        maybeTeam: metrics.maybeTeam,
+        riskTolerant: metrics.riskTolerant,
         capital: metrics.formattedCapital,
         responseRate: metrics.responseRate,
-        machines: metrics.machines,
-        clients: metrics.clients,
         hoursAverage: metrics.hoursAverage,
+        legalConsultation: metrics.legalConsultation,
         criticalGaps,
         nextSteps,
     };
