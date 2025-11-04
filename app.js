@@ -55,6 +55,16 @@ document.addEventListener('DOMContentLoaded', () => {
             nextBtn: document.getElementById('sticky-next-btn'),
             nextIconUse: document.querySelector('#sticky-next-btn use'),
         },
+        headerPlayer: {
+            cover: document.getElementById('header-track-cover'),
+            title: document.getElementById('header-track-title'),
+            progressBar: document.getElementById('header-progress-bar'),
+            playPauseBtn: document.getElementById('header-play-pause-btn'),
+            playPauseIconUse: document.querySelector('#header-play-pause-btn use'),
+            nextBtn: document.getElementById('header-next-btn'),
+            nextIconUse: document.querySelector('#header-next-btn use'),
+            volumeSlider: document.getElementById('header-volume-slider'),
+        },
         sidePanel: {
             panel: document.getElementById('side-panel'),
             menuToggle: document.getElementById('menu-toggle'),
@@ -1039,6 +1049,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // if (dom.player.cover) dom.player.cover.src = cover;
             if (dom.stickyPlayer.title) dom.stickyPlayer.title.textContent = title;
             if (dom.stickyPlayer.cover) dom.stickyPlayer.cover.src = cover;
+            // Update header player
+            if (dom.headerPlayer.title) dom.headerPlayer.title.textContent = title;
+            if (dom.headerPlayer.cover) dom.headerPlayer.cover.src = cover;
             document.title = `${title} - Radio`;
 
             renderRatingUI(id);
@@ -1055,6 +1068,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updatePlayStateVisuals({ button: dom.player.playPauseBtn, iconUse: dom.player.playPauseIconUse }, state.isPlaying, iconIds);
         updatePlayStateVisuals({ button: dom.stickyPlayer.playPauseBtn, iconUse: dom.stickyPlayer.playPauseIconUse }, state.isPlaying, iconIds);
+        updatePlayStateVisuals({ button: dom.headerPlayer.playPauseBtn, iconUse: dom.headerPlayer.playPauseIconUse }, state.isPlaying, iconIds);
 
         const label = t(state.isPlaying ? 'playPauseLabel_pause' : 'playPauseLabel_play');
         if (dom.player.playPauseBtn) {
@@ -1064,6 +1078,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dom.stickyPlayer.playPauseBtn) {
             dom.stickyPlayer.playPauseBtn.setAttribute('aria-label', label);
             dom.stickyPlayer.playPauseBtn.setAttribute('aria-pressed', state.isPlaying ? 'true' : 'false');
+        }
+        if (dom.headerPlayer.playPauseBtn) {
+            dom.headerPlayer.playPauseBtn.setAttribute('aria-label', label);
+            dom.headerPlayer.playPauseBtn.setAttribute('aria-pressed', state.isPlaying ? 'true' : 'false');
         }
 
         document.body.classList.toggle('playing', state.isPlaying);
@@ -1089,6 +1107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const progress = (audio.currentTime / audio.duration) * 100;
         if (dom.player.progressBar) dom.player.progressBar.style.width = `${progress}%`;
         if (dom.player.stickyProgressBar) dom.player.stickyProgressBar.style.width = `${progress}%`;
+        if (dom.headerPlayer.progressBar) dom.headerPlayer.progressBar.style.width = `${progress}%`;
         if (dom.player.currentTime) dom.player.currentTime.textContent = formatTime(audio.currentTime);
         if (dom.player.timeRemaining) dom.player.timeRemaining.textContent = `-${formatTime(audio.duration - audio.currentTime)}`;
     }
@@ -1738,11 +1757,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dom.player.volumeSlider) {
             // Update volume percentage display on load
             updateVolumeDisplay(dom.player.volumeSlider.value);
+            // Sync header volume slider on load
+            if (dom.headerPlayer.volumeSlider) dom.headerPlayer.volumeSlider.value = dom.player.volumeSlider.value;
 
             dom.player.volumeSlider.addEventListener('input', (e) => {
                 const newVolume = isQuietHour() ? e.target.value * 0.5 : e.target.value;
                 players.forEach(p => p.volume = newVolume);
                 updateVolumeDisplay(e.target.value);
+                // Sync with header volume slider
+                if (dom.headerPlayer.volumeSlider) dom.headerPlayer.volumeSlider.value = e.target.value;
             });
         }
         if (dom.player.progressContainer) dom.player.progressContainer.addEventListener('click', seekTrack);
@@ -1773,6 +1796,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // Sticky Speler & Algemene UI
         if (dom.stickyPlayer.playPauseBtn) dom.stickyPlayer.playPauseBtn.addEventListener('click', togglePlayPause);
         if (dom.stickyPlayer.nextBtn) dom.stickyPlayer.nextBtn.addEventListener('click', playNextTrack);
+
+        // Header Player
+        if (dom.headerPlayer.playPauseBtn) dom.headerPlayer.playPauseBtn.addEventListener('click', togglePlayPause);
+        if (dom.headerPlayer.nextBtn) dom.headerPlayer.nextBtn.addEventListener('click', playNextTrack);
+        if (dom.headerPlayer.volumeSlider) {
+            dom.headerPlayer.volumeSlider.addEventListener('input', (e) => {
+                const newVolume = isQuietHour() ? e.target.value * 0.5 : e.target.value;
+                players.forEach(p => p.volume = newVolume);
+                updateVolumeDisplay(e.target.value);
+                // Sync with main volume slider
+                if (dom.player.volumeSlider) dom.player.volumeSlider.value = e.target.value;
+            });
+        }
+
         if (dom.themeSwitcher) {
             dom.themeSwitcher.addEventListener('click', (e) => { 
                 if (e.target.tagName === 'BUTTON') { 
