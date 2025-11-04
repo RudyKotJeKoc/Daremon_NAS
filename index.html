@@ -6,7 +6,7 @@
     <title>Radio ETS</title>
     
     <meta name="description" content="Het officiële bedrijfsradiostation. Een energieke dosis humor, technologie en de beste muziek. Luister live!">
-    <meta name="theme-color" content="#1A1A1A">
+    <meta name="theme-color" content="#ff6b00">
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
@@ -24,6 +24,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="survey-styles.css">
+    <link rel="stylesheet" href="daremon-3d.css">
     
     <!-- GSAP Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -86,6 +87,33 @@
             </div>
         </div>
     </header>
+
+    <!-- Weather Widget -->
+    <div id="weather-widget" class="glow-on-hover">
+        <h3>🌤️ Pogoda</h3>
+        <div class="weather-icon" id="weather-icon">☀️</div>
+        <div class="weather-temp" id="weather-temp">--°C</div>
+        <div class="weather-desc" id="weather-desc">Ładowanie...</div>
+        <div class="weather-details">
+            <div class="weather-detail-item">
+                <div class="weather-detail-label">Wilgotność</div>
+                <div class="weather-detail-value" id="weather-humidity">--%</div>
+            </div>
+            <div class="weather-detail-item">
+                <div class="weather-detail-label">Wiatr</div>
+                <div class="weather-detail-value" id="weather-wind">-- km/h</div>
+            </div>
+            <div class="weather-detail-item">
+                <div class="weather-detail-label">Ciśnienie</div>
+                <div class="weather-detail-value" id="weather-pressure">-- hPa</div>
+            </div>
+            <div class="weather-detail-item">
+                <div class="weather-detail-label">Odczuwalna</div>
+                <div class="weather-detail-value" id="weather-feels-like">--°C</div>
+            </div>
+        </div>
+    </div>
+
     <div id="app-container">
         <!-- Main Radio Player View -->
         <div id="radio-view">
@@ -484,6 +512,7 @@
     <script type="module" src="survey.js"></script>
     <script type="module" src="employee-survey.js"></script>
     <script type="module" src="countdown-timers.js"></script>
+    <script type="module" src="weather.js"></script>
     <script type="module" src="script.js"></script>
     <script type="module" src="app.js"></script>
 </body>

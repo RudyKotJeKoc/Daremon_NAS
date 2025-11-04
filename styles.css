@@ -1,36 +1,61 @@
-/* --- Globalne Style i Nowa Paleta (Arburg + DJ Bóbr) --- */
+/* --- DAREMON Radio: Black & Orange 3D Design --- */
 :root {
-    /* Neutralna paleta - bazowa gama szarości */
-    --neutral-100: #f8fafc;
-    --neutral-200: #eef2f6;
-    --neutral-300: #d9dee6;
-    --neutral-400: #b4bcc9;
-    --neutral-500: #8c95a3;
-    --neutral-600: #67707c;
-    --neutral-700: #4c5360;
-    --neutral-800: #363c47;
-    --neutral-900: #1f242d;
+    /* Czarno-pomarańczowa paleta */
+    --black-pure: #000000;
+    --black-soft: #0a0a0a;
+    --black-card: #121212;
+    --black-elevated: #1a1a1a;
 
-    --text-color: var(--neutral-100);
-    --text-subtle: var(--neutral-300);
-    --surface-base: var(--neutral-900);
-    --surface-elevated: rgba(54, 60, 71, 0.9);
-    --surface-border: rgba(212, 218, 230, 0.24);
-    --interactive-muted: rgba(136, 146, 163, 0.16);
-    --interactive-hover: rgba(136, 146, 163, 0.28);
-    --focus-ring: #9fb7d0;
-    --shadow-soft: 0 16px 32px rgba(4, 7, 12, 0.35);
+    --orange-vibrant: #ff6b00;
+    --orange-bright: #ff8c00;
+    --orange-glow: #ffa500;
+    --orange-soft: #ffb347;
+    --orange-subtle: #ffd19a;
+
+    --text-color: #ffffff;
+    --text-subtle: var(--orange-subtle);
+    --surface-base: var(--black-soft);
+    --surface-elevated: var(--black-elevated);
+    --surface-card: var(--black-card);
+    --surface-border: rgba(255, 107, 0, 0.3);
+    --interactive-muted: rgba(255, 107, 0, 0.15);
+    --interactive-hover: rgba(255, 107, 0, 0.35);
+    --focus-ring: var(--orange-glow);
+
+    /* 3D Effects */
+    --shadow-3d-small:
+        0 2px 4px rgba(255, 107, 0, 0.2),
+        0 4px 8px rgba(0, 0, 0, 0.4),
+        0 8px 16px rgba(0, 0, 0, 0.3);
+    --shadow-3d-medium:
+        0 4px 8px rgba(255, 107, 0, 0.25),
+        0 8px 16px rgba(0, 0, 0, 0.5),
+        0 16px 32px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 107, 0, 0.1);
+    --shadow-3d-large:
+        0 8px 16px rgba(255, 107, 0, 0.3),
+        0 16px 32px rgba(0, 0, 0, 0.6),
+        0 32px 64px rgba(0, 0, 0, 0.5),
+        inset 0 2px 0 rgba(255, 107, 0, 0.15);
+    --shadow-glow: 0 0 20px rgba(255, 107, 0, 0.6), 0 0 40px rgba(255, 107, 0, 0.4);
+    --shadow-soft: var(--shadow-3d-medium);
+
     --font-family: 'Orbitron', sans-serif;
 
     /* Zgodność ze starszymi nazwami zmiennych */
-    --primary-accent: #89a7c2;
-    --secondary-accent: #aac4dd;
-    --tertiary-accent: #556173;
-    --primary-green: var(--primary-accent);
-    --accent-brown: var(--tertiary-accent);
-    --rave-lime: var(--secondary-accent);
-    --rave-magenta: var(--neutral-300);
-    --box-bg: var(--surface-elevated);
+    --primary-accent: var(--orange-vibrant);
+    --secondary-accent: var(--orange-glow);
+    --tertiary-accent: var(--orange-soft);
+    --primary-green: var(--orange-vibrant);
+    --accent-brown: var(--black-elevated);
+    --rave-lime: var(--orange-glow);
+    --rave-magenta: var(--orange-soft);
+    --box-bg: var(--surface-card);
+
+    /* Brand colors dla kompatybilności */
+    --brand-emerald: var(--orange-vibrant);
+    --brand-sunrise: var(--orange-glow);
+    --brand-navy: var(--black-elevated);
 }
 
 /* --- Nowe Motywy --- */

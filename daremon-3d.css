@@ -1,0 +1,359 @@
+/* ===================================
+   DAREMON Radio - 3D Effects & Modern Features
+   Czarno-pomarańczowy design z efektami 3D
+   =================================== */
+
+/* --- 3D Transform Base --- */
+body {
+    background: linear-gradient(135deg, #000000 0%, #1a0a00 50%, #000000 100%) !important;
+    perspective: 1000px;
+}
+
+/* --- Efekty 3D dla głównych kart --- */
+.content-box {
+    background: linear-gradient(145deg, #1a1a1a, #0d0d0d) !important;
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    box-shadow: var(--shadow-3d-medium),
+                0 0 30px rgba(255, 107, 0, 0.2);
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.content-box:hover {
+    transform: translateY(-5px) rotateX(2deg);
+    box-shadow: var(--shadow-3d-large),
+                0 0 50px rgba(255, 107, 0, 0.4);
+}
+
+/* --- Header 3D --- */
+.app-header {
+    background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%) !important;
+    border-bottom: 2px solid var(--orange-vibrant);
+    box-shadow: 0 4px 20px rgba(255, 107, 0, 0.3),
+                0 8px 40px rgba(0, 0, 0, 0.6);
+}
+
+.app-logo {
+    filter: drop-shadow(0 0 10px rgba(255, 107, 0, 0.8));
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.app-logo:hover {
+    filter: drop-shadow(0 0 20px rgba(255, 107, 0, 1));
+    transform: scale(1.05);
+}
+
+/* --- Player Card 3D --- */
+#player-card,
+.player-card {
+    background: linear-gradient(145deg, #1f1f1f, #0f0f0f) !important;
+    border: 2px solid var(--orange-vibrant);
+    border-radius: 20px;
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.8),
+        0 5px 15px rgba(255, 107, 0, 0.4),
+        inset 0 1px 0 rgba(255, 107, 0, 0.2);
+    transform: translateZ(20px);
+}
+
+/* --- Track Cover 3D --- */
+#track-cover,
+.track-cover,
+#header-track-cover,
+#sticky-track-cover {
+    border: 3px solid var(--orange-vibrant);
+    border-radius: 15px;
+    box-shadow:
+        0 8px 24px rgba(255, 107, 0, 0.4),
+        0 16px 48px rgba(0, 0, 0, 0.7),
+        inset 0 -2px 8px rgba(0, 0, 0, 0.5);
+    transform: translateZ(10px);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+#track-cover:hover,
+.track-cover:hover {
+    transform: translateZ(20px) rotateY(5deg);
+    box-shadow:
+        0 12px 36px rgba(255, 107, 0, 0.6),
+        0 24px 72px rgba(0, 0, 0, 0.9),
+        var(--shadow-glow);
+}
+
+/* --- Przyciski 3D --- */
+.control-btn {
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a) !important;
+    border: 2px solid var(--orange-vibrant);
+    border-radius: 50%;
+    box-shadow:
+        0 4px 12px rgba(255, 107, 0, 0.3),
+        0 8px 24px rgba(0, 0, 0, 0.6),
+        inset 0 1px 2px rgba(255, 107, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.control-btn:hover {
+    background: linear-gradient(145deg, #ff6b00, #ff8c00) !important;
+    box-shadow:
+        0 6px 18px rgba(255, 107, 0, 0.6),
+        0 12px 36px rgba(0, 0, 0, 0.8),
+        var(--shadow-glow);
+    transform: translateY(-3px) scale(1.05);
+}
+
+.control-btn:active {
+    transform: translateY(-1px) scale(0.98);
+    box-shadow:
+        0 2px 8px rgba(255, 107, 0, 0.4),
+        0 4px 16px rgba(0, 0, 0, 0.7);
+}
+
+.control-btn.is-playing {
+    background: linear-gradient(145deg, #ff8c00, #ffa500) !important;
+    box-shadow: var(--shadow-glow);
+    animation: pulse-3d 2s ease-in-out infinite;
+}
+
+@keyframes pulse-3d {
+    0%, 100% {
+        box-shadow:
+            0 0 20px rgba(255, 107, 0, 0.6),
+            0 0 40px rgba(255, 107, 0, 0.4);
+    }
+    50% {
+        box-shadow:
+            0 0 30px rgba(255, 107, 0, 0.8),
+            0 0 60px rgba(255, 107, 0, 0.6);
+    }
+}
+
+/* --- Progress Bar 3D --- */
+#progress-container,
+.progress-container,
+#header-progress-container {
+    background: rgba(0, 0, 0, 0.6) !important;
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    border-radius: 10px;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+#progress-bar,
+.progress-bar,
+#header-progress-bar {
+    background: linear-gradient(90deg, #ff6b00, #ff8c00, #ffa500) !important;
+    box-shadow:
+        0 0 10px rgba(255, 107, 0, 0.6),
+        0 2px 4px rgba(255, 140, 0, 0.4);
+    border-radius: 10px;
+}
+
+/* --- Side Panel 3D --- */
+#side-panel {
+    background: linear-gradient(145deg, #1a1a1a, #0a0a0a) !important;
+    border-right: 2px solid var(--orange-vibrant);
+    box-shadow:
+        4px 0 20px rgba(255, 107, 0, 0.3),
+        8px 0 40px rgba(0, 0, 0, 0.6);
+}
+
+#drawer-menu {
+    background: linear-gradient(180deg, #1a1a1a, #0d0d0d) !important;
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.8),
+        0 4px 12px rgba(255, 107, 0, 0.3);
+}
+
+/* --- Lista utworów 3D --- */
+.side-panel-list li,
+.track-list-item {
+    background: linear-gradient(135deg, #1a1a1a, #0f0f0f) !important;
+    border: 1px solid rgba(255, 107, 0, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    transition: all 0.2s ease;
+}
+
+.side-panel-list li:hover,
+.track-list-item:hover {
+    background: linear-gradient(135deg, #2a1a0a, #1a0f00) !important;
+    border-color: var(--orange-vibrant);
+    box-shadow:
+        0 4px 12px rgba(255, 107, 0, 0.4),
+        0 2px 6px rgba(0, 0, 0, 0.8);
+    transform: translateX(5px);
+}
+
+/* --- Rating System 3D --- */
+.star-rating {
+    filter: drop-shadow(0 2px 4px rgba(255, 107, 0, 0.5));
+}
+
+.star {
+    transition: all 0.2s ease;
+}
+
+.star:hover {
+    transform: scale(1.3) rotateY(20deg);
+    filter: drop-shadow(0 4px 8px rgba(255, 107, 0, 0.8));
+}
+
+.star.filled {
+    color: var(--orange-vibrant);
+    text-shadow:
+        0 0 5px rgba(255, 107, 0, 0.8),
+        0 0 10px rgba(255, 140, 0, 0.6);
+}
+
+/* --- Text Glow Effects --- */
+h1, h2, h3 {
+    text-shadow:
+        0 0 10px rgba(255, 107, 0, 0.5),
+        0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+#track-title,
+#header-track-title,
+#sticky-track-title {
+    color: var(--orange-glow) !important;
+    text-shadow:
+        0 0 15px rgba(255, 107, 0, 0.8),
+        0 0 25px rgba(255, 140, 0, 0.5),
+        0 2px 4px rgba(0, 0, 0, 0.9);
+    font-weight: 700;
+}
+
+/* --- Weather Widget --- */
+#weather-widget {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    width: 280px;
+    background: linear-gradient(145deg, #1f1f1f, #0f0f0f);
+    border: 2px solid var(--orange-vibrant);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.8),
+        0 5px 15px rgba(255, 107, 0, 0.4),
+        inset 0 1px 0 rgba(255, 107, 0, 0.2);
+    z-index: 100;
+    transform: translateZ(30px);
+    backdrop-filter: blur(10px);
+}
+
+#weather-widget h3 {
+    margin: 0 0 15px 0;
+    color: var(--orange-glow);
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#weather-widget .weather-icon {
+    font-size: 3em;
+    text-align: center;
+    margin: 15px 0;
+    filter: drop-shadow(0 4px 8px rgba(255, 107, 0, 0.4));
+}
+
+#weather-widget .weather-temp {
+    font-size: 2.5em;
+    font-weight: 900;
+    color: var(--orange-vibrant);
+    text-align: center;
+    text-shadow: var(--shadow-glow);
+    margin: 10px 0;
+}
+
+#weather-widget .weather-desc {
+    text-align: center;
+    color: var(--orange-subtle);
+    font-size: 1.1em;
+    margin: 10px 0;
+}
+
+#weather-widget .weather-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 15px;
+    font-size: 0.9em;
+}
+
+#weather-widget .weather-detail-item {
+    background: rgba(255, 107, 0, 0.1);
+    padding: 8px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid rgba(255, 107, 0, 0.2);
+}
+
+#weather-widget .weather-detail-label {
+    color: var(--orange-subtle);
+    font-size: 0.85em;
+    margin-bottom: 4px;
+}
+
+#weather-widget .weather-detail-value {
+    color: var(--orange-vibrant);
+    font-weight: 700;
+    font-size: 1.1em;
+}
+
+/* --- Animowane tło z cząsteczkami --- */
+#particles-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    opacity: 0.3;
+}
+
+/* --- Glow effect dla hover --- */
+.glow-on-hover {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.glow-on-hover::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: linear-gradient(45deg, transparent, var(--orange-vibrant), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+    animation: rotate-glow 3s linear infinite;
+}
+
+.glow-on-hover:hover::before {
+    opacity: 1;
+}
+
+@keyframes rotate-glow {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    #weather-widget {
+        width: 200px;
+        top: 80px;
+        right: 10px;
+        padding: 15px;
+    }
+
+    #weather-widget .weather-temp {
+        font-size: 2em;
+    }
+}
