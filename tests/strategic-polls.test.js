@@ -2,80 +2,75 @@ import { describe, it, expect } from 'vitest';
 import { analyzeCoreTeam, calculateStrategicMetrics, generateGoNoGoReport } from '../strategic-polls.js';
 
 describe('strategic-polls', () => {
-    it('oblicza metryki zespołu i kapitału', () => {
+    it('oblicza metryki zespołu, kapitału i gotowości', () => {
         const store = {
-            'core-team-declaration': {
+            'continuation-intent': {
                 totalVotes: 5,
                 options: {
-                    'core-team-commit': { votes: 4 },
-                    'core-team-support': { votes: 1 },
-                    'core-team-undecided': { votes: 0 },
+                    'intent-yes': { votes: 3 },
+                    'intent-maybe': { votes: 1 },
+                    'intent-no': { votes: 1 },
                 },
             },
-            'financial-commitment': {
+            'financial-risk-tolerance': {
                 totalVotes: 5,
                 options: {
-                    'invest-5k': { votes: 2 },
-                    'invest-10k': { votes: 1 },
-                    'invest-0': { votes: 2 },
+                    'risk-yes': { votes: 3 },
+                    'risk-no': { votes: 2 },
                 },
             },
-            'time-commitment': {
+            'time-commitment-weekly': {
                 totalVotes: 5,
                 options: {
-                    'time-50': { votes: 3 },
-                    'time-35': { votes: 2 },
+                    'time-6-10': { votes: 2 },
+                    'time-10plus': { votes: 3 },
                 },
             },
-            'client-relationships': {
+            'severance-investment': {
                 totalVotes: 5,
                 options: {
-                    'clients-2': { votes: 2 },
-                    'clients-3': { votes: 1 },
-                    'clients-1': { votes: 2 },
+                    'invest-10k': { votes: 2 },
+                    'invest-15k': { votes: 1 },
+                    'invest-no': { votes: 2 },
                 },
             },
-            'machine-documentation-status': {
+            'legal-consultation-budget': {
                 totalVotes: 5,
                 options: {
-                    'machines-10': { votes: 2 },
-                    'machines-15': { votes: 1 },
-                    'machines-5': { votes: 2 },
+                    'legal-yes': { votes: 4 },
+                    'legal-no': { votes: 1 },
                 },
             },
-            'core-team-roles': {
+            'key-competencies': {
                 totalVotes: 5,
                 options: {
-                    'role-operations': { votes: 3 },
-                    'role-sales': { votes: 2 },
-                    'role-finance': { votes: 1 },
-                    'role-hr': { votes: 0 },
-                    'role-quality': { votes: 1 },
-                    'role-rnd': { votes: 2 },
-                },
-            },
-            'competency-gaps': {
-                totalVotes: 5,
-                options: {
-                    'gap-finance': { votes: 2 },
-                    'gap-sales': { votes: 1 },
-                    'gap-quality': { votes: 1 },
+                    'comp-production': { votes: 3 },
+                    'comp-sales': { votes: 1 },
+                    'comp-design': { votes: 2 },
+                    'comp-admin': { votes: 0 },
+                    'comp-plc': { votes: 2 },
+                    'comp-quality': { votes: 1 },
+                    'comp-finance': { votes: 1 },
                 },
             },
         };
 
         const metrics = calculateStrategicMetrics(store);
-        expect(metrics.coreTeam).toBe(4);
-        expect(metrics.support).toBe(1);
-        expect(metrics.capital).toBe(15000);
-        expect(metrics.machines).toBe(36);
-        expect(metrics.clients).toBe(9);
-        expect(metrics.hoursAverage).toBe(55);
-        expect(metrics.missingRoles).toContain('Brak deklaracji dla roli: HR');
+        expect(metrics.coreTeam).toBe(3);
+        expect(metrics.maybeTeam).toBe(1);
+        expect(metrics.notInterested).toBe(1);
+        expect(metrics.riskTolerant).toBe(3);
+        expect(metrics.riskIntolerant).toBe(2);
+        expect(metrics.capital).toBe(27500);
+        expect(metrics.hoursAverage).toBe(20);
+        expect(metrics.legalConsultation).toBe(4);
+        expect(metrics.missingCompetencies).toContain('Brak deklaracji dla: Administracja');
 
         const analysis = analyzeCoreTeam(store);
-        expect(analysis.committed).toBe(4);
-        expect(analysis.commitmentRate).toBe(80);
+        expect(analysis.committed).toBe(3);
+        expect(analysis.maybe).toBe(1);
+        expect(analysis.commitmentRate).toBe(60);
+        expect(analysis.riskTolerant).toBe(3);
 
         const report = generateGoNoGoReport(store);
         expect(report.decision).toBe('NO-GO');
@@ -84,61 +79,52 @@ describe('strategic-polls', () => {
 
     it('generuje raport GO przy kompletnych danych', () => {
         const store = {
-            'core-team-declaration': {
+            'continuation-intent': {
                 totalVotes: 7,
                 options: {
-                    'core-team-commit': { votes: 6 },
-                    'core-team-support': { votes: 1 },
+                    'intent-yes': { votes: 6 },
+                    'intent-maybe': { votes: 1 },
+                    'intent-no': { votes: 0 },
                 },
             },
-            'financial-commitment': {
+            'financial-risk-tolerance': {
                 totalVotes: 7,
                 options: {
-                    'invest-10k': { votes: 3 },
-                    'invest-15k': { votes: 2 },
-                    'invest-5k': { votes: 2 },
+                    'risk-yes': { votes: 6 },
+                    'risk-no': { votes: 1 },
                 },
             },
-            'time-commitment': {
-                totalVotes: 7,
+            'time-commitment-weekly': {
+                totalVotes: 6,
                 options: {
-                    'time-60': { votes: 4 },
-                    'time-50': { votes: 2 },
-                    'time-35': { votes: 1 },
+                    'time-10plus': { votes: 6 },
                 },
             },
-            'client-relationships': {
+            'severance-investment': {
                 totalVotes: 7,
                 options: {
-                    'clients-3': { votes: 3 },
-                    'clients-2': { votes: 2 },
-                    'clients-1': { votes: 2 },
+                    'invest-15k': { votes: 3 },
+                    'invest-20k': { votes: 2 },
+                    'invest-25kplus': { votes: 2 },
                 },
             },
-            'machine-documentation-status': {
+            'legal-consultation-budget': {
                 totalVotes: 7,
                 options: {
-                    'machines-15': { votes: 3 },
-                    'machines-10': { votes: 3 },
-                    'machines-5': { votes: 1 },
+                    'legal-yes': { votes: 6 },
+                    'legal-no': { votes: 1 },
                 },
             },
-            'core-team-roles': {
+            'key-competencies': {
                 totalVotes: 7,
                 options: {
-                    'role-operations': { votes: 4 },
-                    'role-sales': { votes: 3 },
-                    'role-finance': { votes: 2 },
-                    'role-hr': { votes: 1 },
-                    'role-quality': { votes: 2 },
-                    'role-rnd': { votes: 2 },
-                },
-            },
-            'competency-gaps': {
-                totalVotes: 7,
-                options: {
-                    'gap-finance': { votes: 1 },
-                    'gap-sales': { votes: 1 },
+                    'comp-production': { votes: 4 },
+                    'comp-sales': { votes: 3 },
+                    'comp-design': { votes: 3 },
+                    'comp-admin': { votes: 2 },
+                    'comp-plc': { votes: 3 },
+                    'comp-quality': { votes: 2 },
+                    'comp-finance': { votes: 2 },
                 },
             },
         };
@@ -147,5 +133,62 @@ describe('strategic-polls', () => {
         expect(report.decision).toBe('GO');
         expect(report.criticalGaps.length).toBe(0);
         expect(report.nextSteps).toContain('Zwołaj spotkanie Zespołu Rdzenia w ciągu 48 godzin.');
+    });
+
+    it('generuje raport PARTIAL GO przy częściowych danych', () => {
+        const store = {
+            'continuation-intent': {
+                totalVotes: 6,
+                options: {
+                    'intent-yes': { votes: 4 },
+                    'intent-maybe': { votes: 2 },
+                },
+            },
+            'financial-risk-tolerance': {
+                totalVotes: 6,
+                options: {
+                    'risk-yes': { votes: 4 },
+                    'risk-no': { votes: 2 },
+                },
+            },
+            'time-commitment-weekly': {
+                totalVotes: 6,
+                options: {
+                    'time-6-10': { votes: 3 },
+                    'time-10plus': { votes: 3 },
+                },
+            },
+            'severance-investment': {
+                totalVotes: 6,
+                options: {
+                    'invest-10k': { votes: 3 },
+                    'invest-15k': { votes: 3 },
+                },
+            },
+            'legal-consultation-budget': {
+                totalVotes: 6,
+                options: {
+                    'legal-yes': { votes: 5 },
+                    'legal-no': { votes: 1 },
+                },
+            },
+            'key-competencies': {
+                totalVotes: 6,
+                options: {
+                    'comp-production': { votes: 4 },
+                    'comp-sales': { votes: 2 },
+                    'comp-design': { votes: 2 },
+                    'comp-admin': { votes: 1 },
+                    'comp-plc': { votes: 2 },
+                    'comp-quality': { votes: 0 },
+                    'comp-finance': { votes: 1 },
+                },
+            },
+        };
+
+        const report = generateGoNoGoReport(store);
+        expect(report.decision).toBe('PARTIAL GO');
+        expect(report.criticalGaps.length).toBeGreaterThan(0);
+        expect(report.nextSteps).toContain('Zidentyfikuj brakujące kompetencje i zaproponuj osoby odpowiedzialne.');
     });
 });
