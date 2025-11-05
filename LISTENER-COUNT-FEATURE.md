@@ -174,12 +174,15 @@ WebSocket messages should contain:
 - Plain number: `42`
 - String: `"42"`
 
-## Screenshot Evidence
+## UI Display
 
-The feature is visible in the production UI:
-![Listener Count Display](https://github.com/user-attachments/assets/c0edf91c-ba38-44f3-9647-fc59779b9632)
+The feature is visible in the production UI, showing the listener count with a people icon (👥):
 
-Shows: **"Listeners: 15"** with a people icon (👥)
+```
+👥 Listeners: 15
+```
+
+The display updates automatically based on the configured update interval (default: 15 seconds).
 
 ## Performance Characteristics
 

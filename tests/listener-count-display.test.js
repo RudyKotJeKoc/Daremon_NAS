@@ -11,6 +11,12 @@ describe('Listener Count Display Feature', () => {
     let documentRef;
     let currentTime;
 
+    // Helper function to flush all pending promises
+    const flushPromises = async () => {
+        await Promise.resolve();
+        await Promise.resolve();
+    };
+
     beforeEach(() => {
         vi.useFakeTimers();
         element = { textContent: '' };
@@ -50,8 +56,7 @@ describe('Listener Count Display Feature', () => {
             
             // Run pending timers to trigger the initial fetch/simulation
             await vi.runOnlyPendingTimersAsync();
-            await Promise.resolve();
-            await Promise.resolve();
+            await flushPromises();
 
             // Should have a numeric value (simulated count)
             expect(element.textContent).toMatch(/^\d+$/);
@@ -76,8 +81,7 @@ describe('Listener Count Display Feature', () => {
             controller.start();
             
             await vi.runOnlyPendingTimersAsync();
-            await Promise.resolve();
-            await Promise.resolve();
+            await flushPromises();
 
             const firstCount = element.textContent;
             expect(firstCount).toMatch(/^\d+$/);
@@ -85,8 +89,7 @@ describe('Listener Count Display Feature', () => {
             // Advance time by cache duration
             currentTime += 16000;
             await vi.advanceTimersByTimeAsync(15000);
-            await Promise.resolve();
-            await Promise.resolve();
+            await flushPromises();
 
             const secondCount = element.textContent;
             expect(secondCount).toMatch(/^\d+$/);
@@ -115,8 +118,7 @@ describe('Listener Count Display Feature', () => {
 
             controller.start();
             await vi.runOnlyPendingTimersAsync();
-            await Promise.resolve();
-            await Promise.resolve();
+            await flushPromises();
 
             const morningCount = parseInt(element.textContent, 10);
             expect(morningCount).toBeGreaterThanOrEqual(1);
@@ -145,8 +147,7 @@ describe('Listener Count Display Feature', () => {
 
             controller.start();
             await vi.runOnlyPendingTimersAsync();
-            await Promise.resolve();
-            await Promise.resolve();
+            await flushPromises();
 
             expect(element.textContent).toBe('42');
             expect(fetchMock).toHaveBeenCalledWith('https://example.com/listeners', { cache: 'no-store' });
@@ -164,14 +165,16 @@ describe('Listener Count Display Feature', () => {
             ];
 
             for (const { response, expected } of testCases) {
-                element.textContent = '';
+                // Reset element for each test case
+                const testElement = { textContent: '' };
+                
                 const fetchMock = vi.fn().mockResolvedValue({
                     ok: true,
                     json: async () => response,
                 });
 
                 const controller = createListenerCountController({
-                    element,
+                    element: testElement,
                     endpoint: 'https://example.com/listeners',
                     fetchImpl: fetchMock,
                     navigatorRef,
@@ -184,10 +187,9 @@ describe('Listener Count Display Feature', () => {
 
                 controller.start();
                 await vi.runOnlyPendingTimersAsync();
-                await Promise.resolve();
-                await Promise.resolve();
+                await flushPromises();
 
-                expect(element.textContent).toBe(expected);
+                expect(testElement.textContent).toBe(expected);
                 
                 controller.dispose();
             }
@@ -209,7 +211,7 @@ describe('Listener Count Display Feature', () => {
 
             controller.start();
             await vi.runOnlyPendingTimersAsync();
-            await Promise.resolve();
+            await flushPromises();
 
             // Should have initial count
             const initialContent = element.textContent;
@@ -248,8 +250,7 @@ describe('Listener Count Display Feature', () => {
 
             controller.start();
             await vi.runOnlyPendingTimersAsync();
-            await Promise.resolve();
-            await Promise.resolve();
+            await flushPromises();
 
             expect(element.textContent).toBe('10');
             expect(fetchMock).toHaveBeenCalledTimes(1);
@@ -292,8 +293,7 @@ describe('Listener Count Display Feature', () => {
 
             controller.start();
             await vi.runOnlyPendingTimersAsync();
-            await Promise.resolve();
-            await Promise.resolve();
+            await flushPromises();
 
             expect(fetchMock).toHaveBeenCalledTimes(1);
 
@@ -305,8 +305,7 @@ describe('Listener Count Display Feature', () => {
             visibilityTarget.dispatchEvent(new Event('visibilitychange'));
             
             await vi.runOnlyPendingTimersAsync();
-            await Promise.resolve();
-            await Promise.resolve();
+            await flushPromises();
 
             expect(element.textContent).toBe('20');
             expect(fetchMock).toHaveBeenCalledTimes(2);
@@ -334,8 +333,7 @@ describe('Listener Count Display Feature', () => {
 
             controller.start();
             await vi.runOnlyPendingTimersAsync();
-            await Promise.resolve();
-            await Promise.resolve();
+            await flushPromises();
 
             expect(element.textContent).toBe('15');
             expect(fetchMock).toHaveBeenCalledTimes(1);
