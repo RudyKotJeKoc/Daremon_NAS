@@ -127,5 +127,16 @@
   "videoFallback": "Twoja przeglądarka nie obsługuje wideo.",
   "videoDJDaremon": "DJ DAREMON – set na żywo",
   "videoDJBobro": "DJ Bobro w studiu",
-  "videoBeaver": "Beaver – aftermovie"
+  "videoBeaver": "Beaver – aftermovie",
+  "shutdownSystemTitle": "SYSTEM WYGASZANIA FABRYKI 3-FAZOWY",
+  "shutdownSystemStatus": "WYGASZANIE W TOKU",
+  "phaseL2Label": "FAZA L2 - ODŁĄCZENIE",
+  "phaseL2Description": "Wygaszenie drugiej fazy produkcji",
+  "phaseL2Deadline": "31.01.2026 23:59:59",
+  "phaseL3Label": "FAZA L3 - GAME OVER",
+  "phaseL3Description": "Finalne wyłączenie fabryki",
+  "phaseL3Deadline": "30.04.2026 23:59:59",
+  "daysRemaining": "DNI POZOSTAŁE",
+  "phaseOffline": "OFFLINE",
+  "phaseShutdown": "SHUTDOWN"
 }
