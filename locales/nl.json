@@ -127,5 +127,16 @@
   "videoFallback": "Je browser ondersteunt deze video niet.",
   "videoDJDaremon": "DJ DAREMON live-set",
   "videoDJBobro": "DJ Bobro in de studio",
-  "videoBeaver": "Beaver aftermovie"
+  "videoBeaver": "Beaver aftermovie",
+  "shutdownSystemTitle": "DRIEFASIG FABRIEKSSLUITING SYSTEEM",
+  "shutdownSystemStatus": "SLUITING IN UITVOERING",
+  "phaseL2Label": "FASE L2 - ONTKOPPELING",
+  "phaseL2Description": "Stopzetting van de tweede productiefase",
+  "phaseL2Deadline": "31.01.2026 23:59:59",
+  "phaseL3Label": "FASE L3 - GAME OVER",
+  "phaseL3Description": "Definitieve fabriekssluiting",
+  "phaseL3Deadline": "30.04.2026 23:59:59",
+  "daysRemaining": "RESTERENDE DAGEN",
+  "phaseOffline": "OFFLINE",
+  "phaseShutdown": "SHUTDOWN"
 }

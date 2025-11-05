@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function i18n_init() {
         try {
             console.log('🌍 Wykrywanie języka...');
-            const supportedLangs = ['nl', 'pl'];
+            const supportedLangs = ['nl', 'pl', 'en', 'cs'];
             const rawNavigatorLanguage = typeof navigator === 'object' && typeof navigator.language === 'string' ? navigator.language : 'nl';
             console.log('📍 navigator.language:', rawNavigatorLanguage);
             const userLang = String(rawNavigatorLanguage).split('-')[0].toLowerCase();

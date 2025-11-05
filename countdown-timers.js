@@ -2,26 +2,26 @@ const TIMER_DEFINITIONS = [
   {
     id: 'phase-l2',
     phase: 'L2',
-    label: 'FAZA L2',
-    description: 'Raport kwartalny Q1 2026',
-    voltage: '230V',
-    frequency: '50Hz',
-    icon: '⚡',
-    color: '#000000', // Czarny - faza 2
-    start: new Date(2026, 0, 1, 0, 0, 0),
-    deadline: new Date(2026, 3, 30, 23, 59, 59),
+    label: 'FASE L2',
+    description: 'Stopzetting van de tweede productiefase',
+    voltage: 'OFFLINE',
+    frequency: 'SHUTDOWN',
+    icon: '🔌',
+    color: '#000000', // Zwart - fase 2
+    start: new Date(2025, 10, 5, 0, 0, 0), // 5 november 2025
+    deadline: new Date(2026, 0, 31, 23, 59, 59), // 31 januari 2026
   },
   {
     id: 'phase-l3',
     phase: 'L3',
-    label: 'FAZA L3',
-    description: 'GAME OVER - Finalizacja',
-    voltage: '230V',
-    frequency: '50Hz',
-    icon: '⚡',
-    color: '#FF0000', // Czerwony - faza 3 (krytyczna)
-    start: new Date(2026, 4, 1, 0, 0, 0),
-    deadline: new Date(2026, 11, 31, 23, 59, 59),
+    label: 'FASE L3',
+    description: 'Definitieve fabriekssluiting',
+    voltage: 'OFFLINE',
+    frequency: 'SHUTDOWN',
+    icon: '🔌',
+    color: '#FF0000', // Rood - fase 3 (kritiek)
+    start: new Date(2026, 1, 1, 0, 0, 0), // 1 februari 2026
+    deadline: new Date(2026, 3, 30, 23, 59, 59), // 30 april 2026
   },
 ];
 
@@ -76,9 +76,9 @@ export const computeTimeParts = (deadline, now) => {
 
 export const buildAriaLabel = (label, parts) => {
   if (parts.isComplete) {
-    return `Termin ${label} został osiągnięty.`;
+    return `Deadline ${label} is bereikt.`;
   }
-  return `Do terminu ${label} pozostało ${parts.days} dni, ${parts.hours} godzin, ${parts.minutes} minut i ${parts.seconds} sekund.`;
+  return `Tot de deadline ${label} blijven er ${parts.days} dagen, ${parts.hours} uren, ${parts.minutes} minuten en ${parts.seconds} seconden over.`;
 };
 
 export const updateTimerElement = (element, config, now) => {
