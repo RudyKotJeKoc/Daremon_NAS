@@ -1,17 +1,5 @@
 const TIMER_DEFINITIONS = [
   {
-    id: 'phase-l1',
-    phase: 'L1',
-    label: 'FAZA L1',
-    description: 'Zamknięcie roku 2025',
-    voltage: '230V',
-    frequency: '50Hz',
-    icon: '⚡',
-    color: '#FF6B00', // Pomarańczowy - faza 1
-    start: new Date(2025, 0, 1, 0, 0, 0),
-    deadline: new Date(2025, 11, 31, 23, 59, 59),
-  },
-  {
     id: 'phase-l2',
     phase: 'L2',
     label: 'FAZA L2',

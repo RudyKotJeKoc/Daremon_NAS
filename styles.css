@@ -1176,14 +1176,6 @@ header p {
    KOLORY SPECYFICZNE DLA FAZ
    ============================================ */
 
-.phase-l1 .panel-frame {
-    border-color: #FF6B00;
-}
-
-.phase-l1 .days-remaining {
-    color: #FF6B00;
-}
-
 .phase-l2 .panel-frame {
     border-color: #FFFFFF;
 }
