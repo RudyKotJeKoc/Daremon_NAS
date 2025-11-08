@@ -711,6 +711,32 @@ body {
     margin-bottom: 2rem;
 }
 
+.beaver-urgent-banner {
+    background: linear-gradient(135deg, rgba(174, 28, 40, 0.2), rgba(255, 98, 0, 0.15));
+    border: 2px solid var(--nl-red);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    animation: pulse-urgent 2s ease-in-out infinite;
+}
+
+.beaver-urgent-banner p {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+@keyframes pulse-urgent {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(174, 28, 40, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 20px 5px rgba(174, 28, 40, 0.2);
+    }
+}
+
 .beaver-goals {
     background: rgba(33, 70, 139, 0.1);
     border-left: 4px solid var(--nl-blue);
