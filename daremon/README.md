@@ -37,10 +37,29 @@ De website gebruikt een professioneel donker kleurenschema met Nederlandse accen
 
 ```
 daremon/
-├── index.html      # Hoofdpagina
+├── index.html      # Hoofdpagina (home)
+├── analizy.html    # Analyses pagina (volledige lijst)
 ├── styles.css      # Alle styling (gescheiden van HTML)
 └── README.md       # Deze documentatie
 ```
+
+### Pagina's
+
+**index.html** - Hoofdpagina met:
+- Hero section met tagline
+- Mission statement
+- 3 categorie cards
+- Preview van 2 nieuwste analyses
+- Statistieken
+- About sectie
+- Footer
+
+**analizy.html** - Analyses pagina met:
+- Page hero
+- Filter functionaliteit (Alle/Huisvesting/Economie/Transparantie/Prioriteit)
+- Volledige lijst van analyses (8+ artikelen)
+- Uitgebreide analyse highlights
+- Load more functionaliteit
 
 ## ✨ Belangrijkste Elementen
 
