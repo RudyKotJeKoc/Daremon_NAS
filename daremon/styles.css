@@ -638,7 +638,7 @@ body {
     font-size: 0.9rem;
 }
 
-/* Pizza Section */
+/* Pizza Section / Beaver Home Section */
 .pizza-section {
     background: var(--dark-secondary);
     padding: 4rem 0;
@@ -663,7 +663,7 @@ body {
 
 .pizza-content h2 {
     font-size: 2.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     background: linear-gradient(135deg, var(--oranje-primary) 0%, var(--oranje-light) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -676,12 +676,159 @@ body {
     margin-bottom: 3rem;
 }
 
+/* Beaver Story Styling */
+.beaver-story {
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2.5rem;
+    margin-bottom: 3rem;
+    text-align: left;
+}
+
+.beaver-intro {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+}
+
+.beaver-metaphor {
+    font-size: 1.5rem;
+    color: var(--oranje-primary);
+    text-align: center;
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(255, 98, 0, 0.1);
+    border-left: 4px solid var(--oranje-primary);
+    border-radius: 8px;
+}
+
+.beaver-mission {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.beaver-urgent-banner {
+    background: linear-gradient(135deg, rgba(174, 28, 40, 0.2), rgba(255, 98, 0, 0.15));
+    border: 2px solid var(--nl-red);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    animation: pulse-urgent 2s ease-in-out infinite;
+}
+
+.beaver-urgent-banner p {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+@keyframes pulse-urgent {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(174, 28, 40, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 20px 5px rgba(174, 28, 40, 0.2);
+    }
+}
+
+.beaver-goals {
+    background: rgba(33, 70, 139, 0.1);
+    border-left: 4px solid var(--nl-blue);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+.beaver-goals h3 {
+    color: var(--oranje-primary);
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.beaver-goals ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.beaver-goals li {
+    padding: 0.5rem 0;
+    padding-left: 1.8rem;
+    position: relative;
+    color: var(--text-primary);
+    font-size: 1.05rem;
+}
+
+.beaver-goals li::before {
+    content: '🏠';
+    position: absolute;
+    left: 0;
+}
+
+.beaver-promise {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    background: rgba(174, 28, 40, 0.1);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--nl-red);
+}
+
+/* Beaver Support Section */
+.beaver-support-section {
+    margin-top: 3rem;
+    padding-top: 3rem;
+    border-top: 2px solid var(--border-color);
+}
+
+.beaver-support-section h3 {
+    font-size: 2rem;
+    color: var(--oranje-primary);
+    margin-bottom: 1.5rem;
+}
+
+.support-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.8;
+}
+
+.support-description .paypal-link {
+    color: var(--oranje-primary);
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 2px solid var(--oranje-primary);
+    transition: all 0.3s;
+}
+
+.support-description .paypal-link:hover {
+    color: var(--oranje-light);
+    border-bottom-color: var(--oranje-light);
+}
+
+.beaver-footer {
+    margin-top: 2rem;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 1.5rem;
+    background: rgba(255, 98, 0, 0.05);
+    border-radius: 8px;
+}
+
 .pizza-options {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
     max-width: 900px;
-    margin: 0 auto;
+    margin: 2rem auto;
 }
 
 .pizza-card {

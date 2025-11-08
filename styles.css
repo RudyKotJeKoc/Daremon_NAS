@@ -3164,6 +3164,139 @@ body.playing #track-cover {
     object-fit: contain;
 }
 
+/* Beaver Fundraiser Section */
+.beaver-fundraiser {
+    background: linear-gradient(135deg, rgba(0, 136, 120, 0.15), rgba(0, 100, 90, 0.1));
+    border: 2px solid rgba(0, 136, 120, 0.3);
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin: 3rem 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.beaver-title {
+    font-size: 2rem;
+    text-align: center;
+    color: #00d4aa;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 20px rgba(0, 212, 170, 0.3);
+}
+
+.beaver-story-compact {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.beaver-intro {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #e8e9ed;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.beaver-quote {
+    font-size: 1.4rem;
+    color: #00d4aa;
+    text-align: center;
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(0, 136, 120, 0.15);
+    border-left: 4px solid #00d4aa;
+    border-radius: 8px;
+    font-style: italic;
+}
+
+.beaver-desc {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #b8bac5;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.beaver-donate-options {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 2px solid rgba(0, 136, 120, 0.3);
+}
+
+.beaver-donate-options h3 {
+    font-size: 1.5rem;
+    color: #00d4aa;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.paypal-link-section {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.paypal-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #00d4aa, #008878);
+    color: #0d0d0d;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 212, 170, 0.4);
+}
+
+.paypal-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(0, 212, 170, 0.6);
+    background: linear-gradient(135deg, #00ffcc, #00aa99);
+}
+
+.donation-amounts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.donation-btn {
+    display: block;
+    padding: 0.8rem 1.5rem;
+    background: rgba(0, 136, 120, 0.2);
+    border: 2px solid rgba(0, 212, 170, 0.4);
+    color: #00d4aa;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.donation-btn:hover {
+    background: rgba(0, 136, 120, 0.4);
+    border-color: #00d4aa;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(0, 212, 170, 0.3);
+}
+
+.beaver-transparency {
+    margin-top: 2rem;
+    text-align: center;
+    color: #888;
+    line-height: 1.6;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+
+.beaver-transparency strong {
+    color: #00d4aa;
+}
+
 @media (max-width: 768px) {
     .urgent-cta-header {
         flex-direction: column;
