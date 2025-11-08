@@ -5,8 +5,8 @@
 [![License](https://img.shields.io/badge/license-ISC-blue.svg)](LICENSE)
 [![PWA](https://img.shields.io/badge/PWA-enabled-brightgreen.svg)](manifest.json)
 [![Service Worker](https://img.shields.io/badge/Service%20Worker-v10-orange.svg)](sw.js)
-[![Tests](https://img.shields.io/badge/tests-22_suites-success.svg)](tests/)
-[![Lines of Code](https://img.shields.io/badge/lines_of_code-5800%2B-blue.svg)](#)
+[![Tests](https://img.shields.io/badge/tests-23_suites-success.svg)](tests/)
+[![Lines of Code](https://img.shields.io/badge/lines_of_code-8100%2B-blue.svg)](#)
 
 ## 📋 Spis treści
 
@@ -36,7 +36,7 @@ Aplikacja powstała jako wewnętrzne narzędzie dla zespołu DAREMON ETS, mając
 
 ### Kluczowe cechy:
 - 🎵 **Inteligentny odtwarzacz audio** z płynnym crossfade między utworami (2s)
-- 🌐 **Wielojęzyczność** - pełna obsługa języka polskiego i niderlandzkiego z automatycznym wykrywaniem
+- 🌐 **Wielojęzyczność** - pełna obsługa 4 języków (polski, niderlandzki, angielski, czeski) z automatycznym wykrywaniem
 - 📴 **Tryb offline** - pełna funkcjonalność bez połączenia z internetem dzięki Service Worker
 - 🎨 **Dynamiczne motywy** - zmienne motywy kolorystyczne (Arburg, Rave) z animacjami
 - 📊 **Wizualizacja audio** - efekty wizualne w czasie rzeczywistym (2D Canvas + 3D Three.js)
@@ -44,8 +44,11 @@ Aplikacja powstała jako wewnętrzne narzędzie dla zespołu DAREMON ETS, mając
 - 💬 **Czat DJ z AI** - interaktywna komunikacja z automatycznymi odpowiedziami bota
 - 🗳️ **Ankiety słuchaczy** - interaktywne głosowania reagujące na wydarzenia w radiu
 - 👥 **Ankieta zespołu** - dedykowana ankieta dla pracowników DAREMON o przyszłości projektu
+- 📋 **Ankieta Granulate** - specjalistyczna ankieta dla systemu transportu granulatu
 - ⏱️ **Timery odliczające** - monitorowanie ważnych terminów firmowych
 - 🎙️ **Live Talk** - symulacja funkcji "mów do radia"
+- 🌤️ **Widget pogodowy** - wyświetlanie aktualnych warunków atmosferycznych
+- 👥 **Licznik słuchaczy** - symulacja liczby aktualnych słuchaczy w czasie rzeczywistym
 
 ## ✨ Funkcje
 
@@ -79,10 +82,18 @@ Aplikacja powstała jako wewnętrzne narzędzie dla zespołu DAREMON ETS, mając
   - Pomysłach na nowe funkcje (edytor playlist, podcasty, czat, kalendarz, mini gry)
   - Obszarach, w których pracownicy mogą pomóc (programowanie, design, muzyka, testowanie)
   - Ogólnych pomysłach i sugestiach dotyczących rozwoju
+- **Ankieta Granulate** - specjalistyczna ankieta dla pracowników dotycząca systemu transportu granulatu:
+  - Ocena doświadczenia z systemem
+  - Najczęstsze problemy i wyzwania
+  - Zadowolenie z wydajności i jakości
+  - Propozycje ulepszeń
+  - Szkolenia i wsparcie techniczne
 - **Timery deadline** - wizualne odliczanie do ważnych terminów firmowych:
   - Zamknięcie roku 2025 (31.12.2025)
   - Raport kwartalny 2026 (30.04.2026)
 - **Live Talk** - funkcja symulująca "mów do radia" (przycisk mikrofonu)
+- **Widget pogodowy** - wyświetlanie aktualnych warunków atmosferycznych z ikonami
+- **Licznik słuchaczy** - dynamiczny licznik pokazujący liczbę aktywnych słuchaczy
 
 ### Wizualizacje
 - **2D Canvas visualizer** - wizualizacja audio w czasie rzeczywistym z efektami:
@@ -114,6 +125,45 @@ Aplikacja powstała jako wewnętrzne narzędzie dla zespołu DAREMON ETS, mając
 
 Lub zaktualizować ścieżki w `manifest.json` i `sw.js` do istniejących ikon.
 
+### Dodatkowe narzędzia
+
+#### Widget pogodowy
+- Wyświetlanie aktualnych warunków atmosferycznych
+- Ikony reprezentujące pogodę (słońce, chmury, deszcz, śnieg, burza, mgła)
+- Polskie i niderlandzkie opisy pogody
+- Integracja z interfejsem radiowym
+
+#### Licznik słuchaczy
+- Symulacja liczby aktywnych słuchaczy w czasie rzeczywistym
+- Inteligentny algorytm uwzględniający porę dnia i dzień tygodnia
+- Możliwość integracji z rzeczywistym API
+- Wsparcie dla WebSocket w celu aktualizacji na żywo
+- Automatyczne pauzowanie gdy strona jest ukryta (optymalizacja baterii)
+
+#### Ankieta Granulate
+Dedykowana ankieta dla pracowników systemu transportu granulatu:
+- 6 sekcji tematycznych (doświadczenie, problemy, wydajność, szkolenia, wsparcie, przyszłość)
+- Różne typy pytań (skale, wielokrotny wybór, tekst)
+- Dedykowana strona z własnym designem
+- Przechowywanie wyników lokalnie
+
+#### Platforma DAREMON.NL
+Niezależna platforma analiz lokalnego beleid (polityki lokalnej):
+- Profesjonalny design z holenderskimi akcentami kolorystycznymi
+- Strona główna z kategoriami analiz
+- Dedykowana strona analiz z filtrowaniem
+- System tagów i priorytetów
+- Responsywny design
+
+#### Kalkulator VSO
+- Dedykowana strona z kalkulatorem VSO
+- Narzędzie pomocnicze dla pracowników
+
+#### Skrypt Update Mottos
+- Automatyczne generowanie i aktualizacja mott dla utworów
+- Placeholdery dla okładek z konfigurowalnymi kolorami
+- Masowe operacje na playliście
+
 ## 🛠 Stack technologiczny
 
 ### Frontend
@@ -141,11 +191,11 @@ Lub zaktualizować ścieżki w `manifest.json` i `sw.js` do istniejących ikon.
 - **MediaSession API** - integracja z systemowymi kontrolkami multimedialnymi
 
 ### Statystyki projektu
-- **~5800 linii kodu JavaScript** (bez node_modules)
-- **45 plików JavaScript** (moduły aplikacji)
-- **22 pliki testowe** (kompleksowe pokrycie testami)
-- **2 języki interfejsu** (polski, niderlandzki)
-- **~500 utworów** w domyślnej playliście (144KB JSON)
+- **~8100 linii kodu JavaScript** (bez node_modules)
+- **50 plików JavaScript** (moduły aplikacji)
+- **23 pliki testowe** (kompleksowe pokrycie testami)
+- **4 języki interfejsu** (polski, niderlandzki, angielski, czeski)
+- **~500 utworów** w domyślnej playliście (180KB JSON)
 
 ## 📦 Instalacja
 
@@ -190,8 +240,8 @@ Zbudowane pliki znajdą się w katalogu `dist/`.
 
 ```
 Daremon_NAS/
-├── index.html              # Główny plik HTML aplikacji
-├── app.js                  # Główna logika aplikacji (2097 linii)
+├── index.html              # Główny plik HTML aplikacji (589 linii)
+├── app.js                  # Główna logika aplikacji (2134 linie)
 ├── state.js                # Zarządzanie stanem aplikacji (31 linii)
 ├── config.js               # Konfiguracja aplikacji - strategie, prefiksy (32 linie)
 ├── script.js               # Dodatkowe skrypty pomocnicze (123 linie)
@@ -209,21 +259,28 @@ Daremon_NAS/
 ├── countdown-timers.js     # Timery odliczające do deadline'ów
 ├── survey.js               # Ogólny system ankiet
 ├── employee-survey.js      # Dedykowana ankieta pracownicza DAREMON
-├── styles.css              # Style CSS (1400+ linii)
+├── weather-widget.js       # Widget wyświetlający aktualną pogodę
+├── update-mottos.js        # Skrypt aktualizacji mott dla utworów
+├── styles.css              # Style CSS (3224 linie)
 ├── survey-styles.css       # Style dla ankiet
 ├── polls.css               # Style dla systemu głosowań
+├── granulate-survey.css    # Style dla ankiety Granulate
 ├── sw.js                   # Service Worker (v10) - offline support
 ├── manifest.json           # PWA manifest
-├── playlist.json           # Konfiguracja playlisty (144KB, ~500 utworów)
-├── tracks.json             # Dodatkowe dane utworów
+├── playlist.json           # Konfiguracja playlisty (180KB, ~500 utworów)
+├── tracks.json             # Dodatkowe dane utworów (76KB)
 ├── template_config.json    # Szablon konfiguracji
 ├── rename_files.py         # Skrypt Python do normalizacji nazw plików
 ├── polls.html              # Dedykowana strona dla ankiet społeczności
-├── vso-calculator.html     # Kalkulator VSO (usunięty z głównej aplikacji)
+├── granulate-survey.html   # Dedykowana ankieta systemu transportu granulatu
+├── vso-calculator.html     # Kalkulator VSO
+├── vite.config.js          # Konfiguracja Vite (wiele entry points)
 │
-├── locales/                # Tłumaczenia i18n
+├── locales/                # Tłumaczenia i18n (4 języki)
 │   ├── pl.json            # Język polski (kompletne tłumaczenia)
-│   └── nl.json            # Język niderlandzki (kompletne tłumaczenia)
+│   ├── nl.json            # Język niderlandzki (kompletne tłumaczenia)
+│   ├── en.json            # Język angielski (kompletne tłumaczenia)
+│   └── cs.json            # Język czeski (kompletne tłumaczenia)
 │
 ├── visualizer/             # Wizualizacje audio 3D
 │   ├── Visualizer3D.js            # Wizualizator 3D z Three.js
@@ -232,6 +289,12 @@ Daremon_NAS/
 │
 ├── scripts/                # Skrypty pomocnicze
 │   └── generate-media-manifest.js # Generator manifestu mediów dla slideshow
+│
+├── daremon/                # Platforma analiz DAREMON.NL
+│   ├── index.html         # Strona główna platformy
+│   ├── analizy.html       # Strona z analizami
+│   ├── styles.css         # Style platformy
+│   └── README.md          # Dokumentacja platformy
 │
 ├── icons/                  # Ikony PWA (format SVG)
 │   ├── icon-192.svg       # Ikona 192x192 (dowolny rozmiar, SVG)
@@ -245,7 +308,7 @@ Daremon_NAS/
 ├── video/                  # Wideo dla pokazu slajdów
 │   └── ... (MP4, WebM, OGG, MOV)
 │
-├── tests/                  # Testy jednostkowe (22 pliki testowe)
+├── tests/                  # Testy jednostkowe (23 pliki testowe)
 │   ├── state.test.js                  # Testy stanu aplikacji
 │   ├── crossfade.test.js              # Testy funkcji crossfade
 │   ├── ui-utils.test.js               # Testy UI utilities
@@ -264,7 +327,8 @@ Daremon_NAS/
 │   ├── polls.e2e.test.js              # Testy end-to-end ankiet
 │   ├── strategic-polls.test.js        # Testy strategicznych ankiet
 │   ├── slideshow.test.js              # Testy pokazu slajdów
-│   ├── listener-count.test.js         # Testy licznika słuchaczy
+│   ├── listener-count.test.js         # Testy licznika słuchaczy (core)
+│   ├── listener-count-display.test.js # Testy wyświetlania licznika słuchaczy
 │   ├── locales-regression.test.js     # Testy regresji tłumaczeń
 │   ├── localstorage.test.js           # Testy LocalStorage
 │   └── config.test.js                 # Testy konfiguracji
@@ -279,7 +343,9 @@ Daremon_NAS/
 ├── IMPLEMENTATION-REPORT.md              # Raport wdrożenia funkcji
 ├── MEDIA-AVAILABILITY-OPTIMIZATION.md    # Optymalizacja dostępności mediów
 ├── MEDIA_INSTRUKCJA.md                   # Instrukcja dodawania mediów
-└── VISUALIZER-GUIDE.md                   # Quick Start Guide dla wizualizatora 3D
+├── VISUALIZER-GUIDE.md                   # Quick Start Guide dla wizualizatora 3D
+├── LISTENER-COUNT-FEATURE.md             # Dokumentacja funkcji licznika słuchaczy
+└── RAPORT-LICZNIKA-SLUCHACZY.md          # Raport weryfikacji licznika słuchaczy
 ```
 
 ## ⚙️ Konfiguracja
@@ -395,6 +461,8 @@ const DEFAULT_CONFIG = {
 Pliki JSON z tłumaczeniami wszystkich tekstów w aplikacji:
 - `pl.json` - język polski
 - `nl.json` - język niderlandzki
+- `en.json` - język angielski
+- `cs.json` - język czeski
 
 Automatyczne wykrywanie języka przeglądarki z fallback na niderlandzki.
 
@@ -486,16 +554,34 @@ Ankieta jest **anonimowa** (imię opcjonalne) i przechowywana lokalnie w Indexed
 ```bash
 # Development server
 pnpm dev
+# lub
+npm run dev
 
 # Production build
 pnpm build
+# lub
+npm run build
 
 # Uruchom testy
 pnpm test
+# lub
+npm test
+
+# Generuj manifest mediów dla pokazu slajdów
+npm run generate:media
 
 # Linting (placeholder)
 pnpm lint
 ```
+
+### Build Configuration
+
+Projekt używa Vite z konfiguracją dla wielu stron:
+- `index.html` - główna aplikacja radiowa
+- `granulate-survey.html` - ankieta systemu Granulate
+- `polls.html` - dedykowana strona ankiet
+
+Wszystkie strony są budowane równocześnie podczas `npm run build`.
 
 ### Struktura kodu
 
@@ -758,6 +844,51 @@ Projekt zawiera szczegółową dokumentację w osobnych plikach:
   - Integracja z Web Audio API
   - Optymalizacje wydajności
   - Plany rozwoju
+
+- **[LISTENER-COUNT-FEATURE.md](LISTENER-COUNT-FEATURE.md)** - Dokumentacja funkcji licznika słuchaczy:
+  - Przegląd funkcjonalności
+  - Konfiguracja i integracja API
+  - Tryby działania (symulacja, API, WebSocket)
+  - Charakterystyka wydajności i dostępności
+
+- **[RAPORT-LICZNIKA-SLUCHACZY.md](RAPORT-LICZNIKA-SLUCHACZY.md)** - Raport weryfikacji licznika słuchaczy:
+  - Potwierdzenie działania funkcji
+  - Pokrycie testami
+  - Dowody i metryki jakości
+  - Instrukcje użytkowania
+
+- **[daremon/README.md](daremon/README.md)** - Dokumentacja platformy DAREMON.NL:
+  - Zasady designu i kolorystyka
+  - Struktura platformy analiz
+  - Elementy interfejsu
+  - Responsive design
+
+## 🌐 Dodatkowe strony
+
+Projekt zawiera kilka dedykowanych stron HTML poza główną aplikacją:
+
+### polls.html
+Dedykowana strona dla ankiet społecznościowych z:
+- Własnym interfejsem użytkownika
+- Systemem głosowania
+- Wyświetlaniem wyników
+
+### granulate-survey.html
+Specjalistyczna ankieta dla systemu transportu granulatu:
+- 6 sekcji tematycznych
+- Różnorodne typy pytań
+- Dedykowany design i CSS
+- Lokalne przechowywanie odpowiedzi
+
+### vso-calculator.html
+Narzędzie kalkulatora VSO dla pracowników.
+
+### daremon/index.html & daremon/analizy.html
+Platforma analiz polityki lokalnej DAREMON.NL:
+- Profesjonalny design z holenderską kolorystyką
+- System kategorii i tagów
+- Filtrowanie i wyszukiwanie analiz
+- Statystyki i credentials
 
 ---
 
