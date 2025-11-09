@@ -11,12 +11,39 @@
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
     
-    <!-- SEO & Social Media -->
-    <meta property="og:title" content="Radio ETS">
-    <meta property="og:description" content="De beste bedrijfsradio vol humor en zorgvuldig geselecteerde energie.">
-    <meta property="og:image" content="https://placehold.co/1200x1200/1A1A1A/008878?text=RADIO">
+    <!-- SEO Metadata -->
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Radio ETS Team">
+    <meta name="keywords" content="radio ETS, bedrijfsradio, muziek, webradio, live stream">
+
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://daremon.nl/">
+    <meta property="og:title" content="Radio ETS - Bedrijfsradio met Humor en Energie">
+    <meta property="og:description" content="Het officiële bedrijfsradiostation. Een energieke dosis humor, technologie en de beste muziek. Luister live!">
+    <meta property="og:image" content="/images/fallback-radio-og.svg">
+    <meta property="og:image:alt" content="Radio ETS Logo">
+    <meta property="og:site_name" content="Radio ETS">
+    <meta property="og:locale" content="nl_NL">
+    <meta property="og:locale:alternate" content="pl_PL">
+    <meta property="og:locale:alternate" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Radio ETS - Bedrijfsradio met Humor en Energie">
+    <meta name="twitter:description" content="Het officiële bedrijfsradiostation. Luister live!">
+    <meta name="twitter:image" content="/images/fallback-radio-og.svg">
+
+    <!-- Icons -->
     <link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="icons/icon-192.svg">
+
+    <!-- Language Alternates -->
+    <link rel="alternate" hreflang="nl" href="https://daremon.nl/">
+    <link rel="alternate" hreflang="pl" href="https://daremon.nl/?lang=pl">
+    <link rel="alternate" hreflang="en" href="https://daremon.nl/?lang=en">
+    <link rel="alternate" hreflang="cs" href="https://daremon.nl/?lang=cs">
+    <link rel="alternate" hreflang="x-default" href="https://daremon.nl/">
 
     <!-- Fonts and Styles -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,6 +57,62 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
     <script type="module" src="config.js"></script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://daremon.nl/#website",
+          "url": "https://daremon.nl/",
+          "name": "Radio ETS",
+          "description": "Het officiële bedrijfsradiostation. Een energieke dosis humor, technologie en de beste muziek.",
+          "inLanguage": ["nl", "pl", "en", "cs"],
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://daremon.nl/?s={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://daremon.nl/#organization",
+          "name": "Radio ETS",
+          "url": "https://daremon.nl/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://daremon.nl/images/logo.png",
+            "width": 512,
+            "height": 512
+          },
+          "sameAs": []
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://daremon.nl/#webpage",
+          "url": "https://daremon.nl/",
+          "name": "Radio ETS - Bedrijfsradio met Humor en Energie",
+          "isPartOf": {
+            "@id": "https://daremon.nl/#website"
+          },
+          "about": {
+            "@id": "https://daremon.nl/#organization"
+          },
+          "description": "Het officiële bedrijfsradiostation. Een energieke dosis humor, technologie en de beste muziek. Luister live!",
+          "inLanguage": "nl"
+        },
+        {
+          "@type": "RadioStation",
+          "name": "Radio ETS",
+          "description": "Bedrijfsradio met humor, technologie en zorgvuldig geselecteerde muziek",
+          "url": "https://daremon.nl/",
+          "broadcastFrequency": "Online streaming"
+        }
+      ]
+    }
+    </script>
 </head>
 <body data-theme="arburg">
 
@@ -56,11 +139,11 @@
     <div id="offline-indicator" class="hidden" aria-live="assertive" data-i18n-key="offlineMessage"></div>
     <header id="app-header" class="app-header" role="banner">
         <div class="app-header-inner">
-            <img src="/images/logo.png" alt="Radio ETS" aria-hidden="true" class="app-logo">
+            <img src="/images/logo.png" alt="Radio ETS" aria-hidden="true" class="app-logo" loading="lazy" width="200" height="80">
 
             <!-- Compact Radio Player in Header -->
             <div id="header-player" class="header-player">
-                <img id="header-track-cover" src="https://placehold.co/48x48/1A1A1A/008878?text=ETS" alt="Albumhoes" class="header-track-cover" data-i18n-alt="trackCoverAlt">
+                <img id="header-track-cover" src="/images/fallback-header.svg" alt="Albumhoes" class="header-track-cover" data-i18n-alt="trackCoverAlt" loading="lazy" width="48" height="48">
                 <div id="header-player-info" class="header-player-info">
                     <h5 id="header-track-title" data-i18n-key="trackTitleDefault">Radio ETS</h5>
                     <div id="header-progress-container" class="header-progress-container">
@@ -111,8 +194,21 @@
 
                     <section class="content-box">
                         <h3 data-i18n-key="messageToDJ"></h3>
-                        <form id="dj-message-form">
-                            <textarea id="dj-message-input" name="message" rows="3" data-i18n-placeholder="djMessagePlaceholder" maxlength="200" required aria-required="true"></textarea>
+                        <form id="dj-message-form" novalidate>
+                            <label for="dj-message-input" class="visually-hidden" data-i18n-key="messageToDJ"></label>
+                            <textarea
+                                id="dj-message-input"
+                                name="message"
+                                rows="3"
+                                data-i18n-placeholder="djMessagePlaceholder"
+                                minlength="3"
+                                maxlength="200"
+                                required
+                                aria-required="true"
+                                aria-describedby="dj-message-hint"
+                                autocomplete="off"
+                                spellcheck="true"></textarea>
+                            <div id="dj-message-hint" class="form-hint" aria-live="polite"></div>
                             <button type="submit" data-i18n-key="sendMessage"></button>
                         </form>
                         <ul id="messages-list" aria-live="polite"></ul>
@@ -315,8 +411,19 @@
                             <div id="rating-section">
                                 <div id="average-rating-display"></div>
                                 <div class="star-rating" data-i18n-aria-label="ratingLabel"></div>
-                                <form id="comment-form" class="hidden">
-                                    <textarea id="comment-input" data-i18n-placeholder="commentPlaceholder" maxlength="200"></textarea>
+                                <form id="comment-form" class="hidden" novalidate>
+                                    <label for="comment-input" class="visually-hidden" data-i18n-key="commentPlaceholder"></label>
+                                    <textarea
+                                        id="comment-input"
+                                        data-i18n-placeholder="commentPlaceholder"
+                                        minlength="3"
+                                        maxlength="200"
+                                        required
+                                        aria-required="true"
+                                        aria-describedby="comment-hint"
+                                        autocomplete="off"
+                                        spellcheck="true"></textarea>
+                                    <div id="comment-hint" class="form-hint" aria-live="polite"></div>
                                     <button type="submit" data-i18n-key="submitReview"></button>
                                 </form>
                             </div>
@@ -566,8 +673,8 @@
     </div>
 
     <div id="sticky-player">
-        <img src="/images/logo.png" alt="Radio ETS" aria-hidden="true" class="sticky-player-logo">
-        <img id="sticky-track-cover" src="https://placehold.co/40x40/1A1A1A/008878?text=ETS" alt="Albumhoes" data-i18n-alt="stickyTrackCoverAlt">
+        <img src="/images/logo.png" alt="Radio ETS" aria-hidden="true" class="sticky-player-logo" loading="lazy" width="120" height="48">
+        <img id="sticky-track-cover" src="/images/fallback-sticky.svg" alt="Albumhoes" data-i18n-alt="stickyTrackCoverAlt" loading="lazy" width="40" height="40">
         <div id="sticky-player-info">
             <h5 id="sticky-track-title" data-i18n-key="trackTitleDefault"></h5>
              <div id="sticky-progress-container">

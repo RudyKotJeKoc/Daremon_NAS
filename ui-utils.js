@@ -1,4 +1,4 @@
-const FALLBACK_COVER = 'https://placehold.co/120x120/1A1A1A/FFFFFF?text=DAREMON';
+const FALLBACK_COVER = '/images/fallback-cover.svg';
 
 function buildSubtitle(subtitle) {
     return typeof subtitle === 'string' ? subtitle.trim() : '';

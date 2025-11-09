@@ -1,0 +1,301 @@
+# Apache Configuration for Radio ETS
+# Performance, Security, and Caching
+
+# =====================================================
+# SECURITY HEADERS
+# =====================================================
+
+<IfModule mod_headers.c>
+    # Force HTTPS with HSTS (HTTP Strict Transport Security)
+    # Uncomment when HTTPS is properly configured
+    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+    # Prevent XSS attacks
+    Header set X-XSS-Protection "1; mode=block"
+
+    # Prevent MIME type sniffing
+    Header set X-Content-Type-Options "nosniff"
+
+    # Prevent clickjacking
+    Header set X-Frame-Options "SAMEORIGIN"
+
+    # Referrer Policy
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Permissions Policy (formerly Feature Policy)
+    Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+
+    # Content Security Policy
+    # Adjust based on your needs - current settings allow GSAP CDN and Google Fonts
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+</IfModule>
+
+# =====================================================
+# FORCE HTTPS (Uncomment when SSL is configured)
+# =====================================================
+
+# <IfModule mod_rewrite.c>
+#     RewriteEngine On
+#     RewriteCond %{HTTPS} off
+#     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# </IfModule>
+
+# =====================================================
+# CACHING & PERFORMANCE
+# =====================================================
+
+# Enable ETags
+FileETag MTime Size
+
+# Enable Expires Headers
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    # Default expiration: 1 hour
+    ExpiresDefault "access plus 1 hour"
+
+    # HTML - No caching (always fresh)
+    ExpiresByType text/html "access plus 0 seconds"
+
+    # CSS - 1 month
+    ExpiresByType text/css "access plus 1 month"
+
+    # JavaScript - 1 month
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+
+    # Images - 1 year
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+
+    # Audio - 1 year
+    ExpiresByType audio/mpeg "access plus 1 year"
+    ExpiresByType audio/mp3 "access plus 1 year"
+    ExpiresByType audio/ogg "access plus 1 year"
+    ExpiresByType audio/wav "access plus 1 year"
+
+    # Video - 1 year
+    ExpiresByType video/mp4 "access plus 1 year"
+    ExpiresByType video/webm "access plus 1 year"
+
+    # Fonts - 1 year
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType application/font-woff "access plus 1 year"
+    ExpiresByType application/font-woff2 "access plus 1 year"
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
+
+    # Manifest - 1 week
+    ExpiresByType application/manifest+json "access plus 1 week"
+
+    # JSON - 1 hour
+    ExpiresByType application/json "access plus 1 hour"
+</IfModule>
+
+# Cache-Control Headers
+<IfModule mod_headers.c>
+    # HTML - No caching
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires 0
+    </FilesMatch>
+
+    # CSS & JavaScript - 1 month, must revalidate
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "public, max-age=2592000, must-revalidate"
+    </FilesMatch>
+
+    # Images - 1 year
+    <FilesMatch "\.(jpg|jpeg|png|gif|svg|webp|ico)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    # Audio/Video - 1 year
+    <FilesMatch "\.(mp3|mp4|webm|ogg|wav)$">
+        Header set Cache-Control "public, max-age=31536000"
+    </FilesMatch>
+
+    # Fonts - 1 year
+    <FilesMatch "\.(woff|woff2|ttf|otf|eot)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    # Service Worker - No caching (must always be fresh)
+    <FilesMatch "sw\.js$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+    </FilesMatch>
+
+    # Manifest - 1 week
+    <FilesMatch "manifest\.json$">
+        Header set Cache-Control "public, max-age=604800"
+    </FilesMatch>
+</IfModule>
+
+# =====================================================
+# COMPRESSION
+# =====================================================
+
+# Gzip Compression
+<IfModule mod_deflate.c>
+    # Compress HTML, CSS, JavaScript, Text, XML, and other text formats
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE application/font-woff
+    AddOutputFilterByType DEFLATE application/font-woff2
+
+    # Remove browser bugs (only needed for really old browsers)
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+    Header append Vary User-Agent
+</IfModule>
+
+# Brotli Compression (if available)
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css text/javascript
+    AddOutputFilterByType BROTLI_COMPRESS application/xml application/xhtml+xml application/rss+xml
+    AddOutputFilterByType BROTLI_COMPRESS application/javascript application/x-javascript application/json
+    AddOutputFilterByType BROTLI_COMPRESS image/svg+xml
+</IfModule>
+
+# =====================================================
+# MIME TYPES
+# =====================================================
+
+<IfModule mod_mime.c>
+    # Audio
+    AddType audio/mp3 .mp3
+    AddType audio/mpeg .mp3
+    AddType audio/ogg .ogg
+    AddType audio/wav .wav
+
+    # Video
+    AddType video/mp4 .mp4
+    AddType video/webm .webm
+
+    # Fonts
+    AddType font/woff .woff
+    AddType font/woff2 .woff2
+    AddType font/ttf .ttf
+    AddType font/otf .otf
+
+    # Images
+    AddType image/webp .webp
+    AddType image/svg+xml .svg
+
+    # JavaScript
+    AddType application/javascript .js
+    AddType text/javascript .js
+
+    # CSS
+    AddType text/css .css
+
+    # Manifest
+    AddType application/manifest+json .json
+
+    # Other
+    AddType application/json .json
+    AddType text/plain .txt
+</IfModule>
+
+# =====================================================
+# HOTLINK PROTECTION (Prevent bandwidth theft)
+# =====================================================
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Block hotlinking of audio files
+    RewriteCond %{HTTP_REFERER} !^$
+    RewriteCond %{HTTP_REFERER} !^https?://(.+\.)?daremon\.nl [NC]
+    RewriteCond %{REQUEST_URI} ^/music/.*$ [NC]
+    RewriteRule .* - [F,L]
+
+    # Block hotlinking of images
+    RewriteCond %{HTTP_REFERER} !^$
+    RewriteCond %{HTTP_REFERER} !^https?://(.+\.)?daremon\.nl [NC]
+    RewriteCond %{REQUEST_URI} \.(jpg|jpeg|png|gif|webp)$ [NC]
+    RewriteRule .* - [F,L]
+</IfModule>
+
+# =====================================================
+# ERROR PAGES
+# =====================================================
+
+# ErrorDocument 404 /404.html
+# ErrorDocument 500 /500.html
+
+# =====================================================
+# DIRECTORY BROWSING
+# =====================================================
+
+# Disable directory browsing
+Options -Indexes
+
+# Follow symbolic links (required for some configurations)
+Options +FollowSymLinks
+
+# =====================================================
+# FILE ACCESS PROTECTION
+# =====================================================
+
+# Block access to hidden files (.git, .env, etc.)
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+# Protect sensitive files
+<FilesMatch "(^#.*#|\.(bak|conf|dist|fla|in[ci]|log|psd|sh|sql|sw[op])|~)$">
+    Require all denied
+</FilesMatch>
+
+# =====================================================
+# UTF-8 ENCODING
+# =====================================================
+
+AddDefaultCharset UTF-8
+<IfModule mod_mime.c>
+    AddCharset UTF-8 .html .css .js .xml .json .rss .atom
+</IfModule>
+
+# =====================================================
+# REWRITE RULES (SPA Support)
+# =====================================================
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # If not a file or directory, serve index.html
+    # (For Single Page Application routing)
+    # Uncomment if using client-side routing
+    # RewriteCond %{REQUEST_FILENAME} !-f
+    # RewriteCond %{REQUEST_FILENAME} !-d
+    # RewriteRule ^ index.html [L]
+</IfModule>
+
+# =====================================================
+# CORS (if needed for API endpoints)
+# =====================================================
+
+# <IfModule mod_headers.c>
+#     <FilesMatch "\.(ttf|ttc|otf|eot|woff|woff2|font.css|css|js|json)$">
+#         Header set Access-Control-Allow-Origin "*"
+#     </FilesMatch>
+# </IfModule>

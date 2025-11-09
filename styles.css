@@ -76,6 +76,42 @@ body {
     border: 0;
 }
 
+/* Form validation and hints */
+.form-hint {
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    min-height: 1.25rem;
+    color: var(--text-secondary, #9ca3af);
+}
+
+.form-hint.error {
+    color: var(--error-color, #ef4444);
+}
+
+.form-hint.success {
+    color: var(--success-color, #10b981);
+}
+
+textarea.invalid,
+input.invalid {
+    border-color: var(--error-color, #ef4444) !important;
+    background-color: rgba(239, 68, 68, 0.05);
+}
+
+textarea.valid,
+input.valid {
+    border-color: var(--success-color, #10b981) !important;
+}
+
+/* Enhanced focus states for better accessibility */
+textarea:focus-visible,
+input:focus-visible,
+button:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--accent-primary, #008878);
+    outline-offset: 2px;
+}
+
 .primary-actions {
     margin-top: 1.5rem;
     display: flex;
