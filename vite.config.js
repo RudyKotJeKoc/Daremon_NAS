@@ -33,7 +33,7 @@ function copyStaticAssets() {
       });
       
       // Copy entire directories
-      const dirsToCopy = ['locales', 'music', 'images', 'video', 'visualizer', 'scripts', 'daremon'];
+      const dirsToCopy = ['locales', 'music', 'images', 'video', 'visualizer', 'scripts', 'daremon', 'audio'];
       
       dirsToCopy.forEach(dir => {
         const srcDir = resolve(__dirname, dir);
@@ -78,7 +78,8 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         'granulate-survey': resolve(__dirname, 'granulate-survey.html'),
         polls: resolve(__dirname, 'polls.html'),
-        'vso-calculator': resolve(__dirname, 'vso-calculator.html')
+        'vso-calculator': resolve(__dirname, 'vso-calculator.html'),
+        'audio-example': resolve(__dirname, 'audio-example.html')
       }
     }
   },
