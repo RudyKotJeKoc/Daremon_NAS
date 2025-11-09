@@ -54,8 +54,554 @@
       "golden": false
     },
     {
-      "id": "track-46",
+      "id": "track-4",
       "title": "Boete: €2500 direct, zonder waarschuwing",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(4).mp3",
+      "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=4",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-5",
+      "title": "Je algemene vaardigheden zijn vrij - de rest vereist een Waiver",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(5).mp3",
+      "cover": "https://placehold.co/120x120/673AB7/ffffff?text=5",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-6",
+      "title": "Gebruik geen CAD-tekeningen van ITB - maak nieuwe vanaf nul",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(6).mp3",
+      "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=6",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-7",
+      "title": "Je PLC-kennis is van jou - documenteer externe bronnen",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(7).mp3",
+      "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=7",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-8",
+      "title": "Art. 11 beschermt alles wat niet publiek is",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(8).mp3",
+      "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=8",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-9",
+      "title": "Volledige schadevergoeding kan €150k overschrijden",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(9).mp3",
+      "cover": "https://placehold.co/120x120/009688/ffffff?text=9",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-10",
+      "title": "Parameters van Cremer cursus, niet van ITB",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(10).mp3",
+      "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=10",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-11",
+      "title": "VSO is je laatste kans voor Art. 11 vrijstelling",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(11).mp3",
+      "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=11",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-12",
+      "title": "Contact geen ITB klanten - bouw eigen B2C basis",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(12).mp3",
+      "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=12",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-13",
+      "title": "Retourneer alle documenten ongevraagd aan Rompa",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(13).mp3",
+      "cover": "https://placehold.co/120x120/FFC107/ffffff?text=13",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-14",
+      "title": "Art. 10: je uitvindingen op het werk zijn van Rompa",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(14).mp3",
+      "cover": "https://placehold.co/120x120/FF5722/ffffff?text=14",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-15",
+      "title": "BASF Catamold is veilig, ITB recepten niet",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(15).mp3",
+      "cover": "https://placehold.co/120x120/795548/ffffff?text=15",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-16",
+      "title": "Registreer bij KVK onder neutrale naam",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(16).mp3",
+      "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=16",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-17",
+      "title": "Raadpleeg advocaat - je hebt €650 budget",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(17).mp3",
+      "cover": "https://placehold.co/120x120/607D8B/ffffff?text=17",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-18",
+      "title": "Gebruik €1500 voor certificaten: SolidWorks en ISO 9001",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(18).mp3",
+      "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=18",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-19",
+      "title": "Beperk schadevergoeding tot 6 maanden bruto salaris",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(19).mp3",
+      "cover": "https://placehold.co/120x120/2196F3/ffffff?text=19",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-20",
+      "title": "Teken VSO niet binnen 7 dagen - je hebt 14 dagen bedenktijd",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(20).mp3",
+      "cover": "https://placehold.co/120x120/FF9800/ffffff?text=20",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-21",
+      "title": "Defense File is je juridische pantser",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(21).mp3",
+      "cover": "https://placehold.co/120x120/E91E63/ffffff?text=21",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-22",
+      "title": "Stilzwijgen van Rompa is geen toestemming",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(22).mp3",
+      "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=22",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-23",
+      "title": "Notification Letter is een verzekering voor €0",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(23).mp3",
+      "cover": "https://placehold.co/120x120/673AB7/ffffff?text=23",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-24",
+      "title": "Market Carve-Out elimineert 80% juridisch risico",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(24).mp3",
+      "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=24",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-25",
+      "title": "Kopieer nooit bestanden naar privé apparaten",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(25).mp3",
+      "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=25",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-26",
+      "title": "Kapitaal is afvloeiingsregeling - gebruik het voor start, niet juridische strijd",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(26).mp3",
+      "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=26",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-27",
+      "title": "UWV Startersperiode: 6 maanden financiële buffer",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(27).mp3",
+      "cover": "https://placehold.co/120x120/009688/ffffff?text=27",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-28",
+      "title": "Transformeer opleidingsbudget in verkoop- en business vaardigheden",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(28).mp3",
+      "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=28",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-29",
+      "title": "Bied Rompa formeel aan om tooling te kopen voor fractie van boekwaarde",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(29).mp3",
+      "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=29",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-30",
+      "title": "Slopen is rationeel voor Rompa - elimineert concurrentie",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(30).mp3",
+      "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=30",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-31",
+      "title": "Oldtimers zijn je Market Carve-Out strategie",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(31).mp3",
+      "cover": "https://placehold.co/120x120/FFC107/ffffff?text=31",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-32",
+      "title": "Bouw bedrijf op vertrouwen, niet op Rompa's chaos",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(32).mp3",
+      "cover": "https://placehold.co/120x120/FF5722/ffffff?text=32",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-33",
+      "title": "Wacht niet op Rompa's hulp - bouw zonder hen",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(33).mp3",
+      "cover": "https://placehold.co/120x120/795548/ffffff?text=33",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-34",
+      "title": "Overtuig team: succes is mogelijk zonder Rompa",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(34).mp3",
+      "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=34",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-35",
+      "title": "Stop met vragen om toestemming - begin met handelen",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(35).mp3",
+      "cover": "https://placehold.co/120x120/607D8B/ffffff?text=35",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-36",
+      "title": "Verifieer markt: zonder 2-3 klanten heeft business geen zin",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(36).mp3",
+      "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=36",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-37",
+      "title": "Inventariseer machines met serienummers",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(37).mp3",
+      "cover": "https://placehold.co/120x120/2196F3/ffffff?text=37",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-38",
+      "title": "Als Rompa weigert te verkopen, zoek tweedehands op Machineseeker",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(38).mp3",
+      "cover": "https://placehold.co/120x120/FF9800/ffffff?text=38",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-39",
+      "title": "B.V. geeft beperkte aansprakelijkheid",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(39).mp3",
+      "cover": "https://placehold.co/120x120/E91E63/ffffff?text=39",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-40",
+      "title": "B2B verkoop en management zijn cruciale hiaten",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(40).mp3",
+      "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=40",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-41",
+      "title": "Toon Hans: stabiele huur en jij bent Caretaker 24/7",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(41).mp3",
+      "cover": "https://placehold.co/120x120/673AB7/ffffff?text=41",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-42",
+      "title": "Gebruik betaalde vrije maand voor B.V. registratie",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(42).mp3",
+      "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=42",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-43",
+      "title": "Laat Rompa niet denken dat je voorbereidt op concurrentie",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(43).mp3",
+      "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=43",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-44",
+      "title": "Wekelijkse kernteam meetings: feiten, geen emoties",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(44).mp3",
+      "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=44",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-45",
+      "title": "Realistisch plan: 6-12 maanden tot eerste inkomsten",
+      "artist": "DAREMON Radio",
+      "src": "/music/Utwor%20(45).mp3",
+      "cover": "https://placehold.co/120x120/009688/ffffff?text=45",
+      "tags": [
+        "music"
+      ],
+      "weight": 1,
+      "type": "song",
+      "golden": false
+    },
+    {
+      "id": "track-46",
+      "title": "Snelle kleine overwinningen bouwen teamvertrouwen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(46).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=46",
@@ -68,7 +614,7 @@
     },
     {
       "id": "track-47",
-      "title": "Je algemene vaardigheden zijn vrij - de rest vereist een Waiver",
+      "title": "ZZP netwerk is flexibel alternatief",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(47).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=47",
@@ -81,7 +627,7 @@
     },
     {
       "id": "track-48",
-      "title": "Gebruik geen CAD-tekeningen van ITB - maak nieuwe vanaf nul",
+      "title": "Gebruik opleidingsbudget voor KMO Management cursus",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(48).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=48",
@@ -94,7 +640,7 @@
     },
     {
       "id": "track-49",
-      "title": "Je PLC-kennis is van jou - documenteer externe bronnen",
+      "title": "Je hebt hun machines niet nodig om geld te verdienen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(49).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=49",
@@ -107,7 +653,7 @@
     },
     {
       "id": "track-50",
-      "title": "Art. 11 beschermt alles wat niet publiek is",
+      "title": "Hans' klassieker renovatie is Proof of Concept",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(50).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=50",
@@ -120,7 +666,7 @@
     },
     {
       "id": "track-51",
-      "title": "Volledige schadevergoeding kan €150k overschrijden",
+      "title": "Voel me beste in industriële automatisering en storing zoeken",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(51).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=51",
@@ -133,7 +679,7 @@
     },
     {
       "id": "track-52",
-      "title": "Parameters van Cremer cursus, niet van ITB",
+      "title": "Moderniseer PLC controller - oude MIM ovens kunnen nog jaren werken",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(52).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=52",
@@ -146,7 +692,7 @@
     },
     {
       "id": "track-53",
-      "title": "VSO is je laatste kans voor Art. 11 vrijstelling",
+      "title": "MIM ovens hebben eenvoudige bouw - repareer met juiste materialen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(53).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=53",
@@ -159,7 +705,7 @@
     },
     {
       "id": "track-54",
-      "title": "Contact geen ITB klanten - bouw eigen B2C basis",
+      "title": "In vacuümovens betekent vacuüm niet altijd zuiverheid",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(54).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=54",
@@ -172,7 +718,7 @@
     },
     {
       "id": "track-55",
-      "title": "Retourneer alle documenten ongevraagd aan Rompa",
+      "title": "Ideaal debinding proces vereist actieve gas purge na cyclus",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(55).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=55",
@@ -185,7 +731,7 @@
     },
     {
       "id": "track-56",
-      "title": "Art. 10: je uitvindingen op het werk zijn van Rompa",
+      "title": "Voeg Cold-Trap en isolatie toe aan gas leiding",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(56).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=56",
@@ -198,7 +744,7 @@
     },
     {
       "id": "track-57",
-      "title": "BASF Catamold is veilig, ITB recepten niet",
+      "title": "Grafiet liner in hot-zone stabiliseert thermische proces",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(57).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=57",
@@ -211,7 +757,7 @@
     },
     {
       "id": "track-58",
-      "title": "Registreer bij KVK onder neutrale naam",
+      "title": "Je rol: Legacy Systems Reviver",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(58).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=58",
@@ -224,7 +770,7 @@
     },
     {
       "id": "track-59",
-      "title": "Raadpleeg advocaat - je hebt €650 budget",
+      "title": "Gebruik MIM ovens voor prototyping: €200-600 per cyclus",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(59).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=59",
@@ -237,7 +783,7 @@
     },
     {
       "id": "track-60",
-      "title": "Gebruik €1500 voor certificaten: SolidWorks en ISO 9001",
+      "title": "Repareer niet zoals voor storing - verbeter systemische fout",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(60).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=60",
@@ -250,7 +796,7 @@
     },
     {
       "id": "track-61",
-      "title": "Beperk schadevergoeding tot 6 maanden bruto salaris",
+      "title": "In MIM ovens is formaldehyde en zuur het probleem",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(61).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=61",
@@ -263,7 +809,7 @@
     },
     {
       "id": "track-62",
-      "title": "Teken VSO niet binnen 7 dagen - je hebt 14 dagen bedenktijd",
+      "title": "Gebruik Elino PLC controller voor MIM temperatuur controle",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(62).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=62",
@@ -276,7 +822,7 @@
     },
     {
       "id": "track-63",
-      "title": "Defense File is je juridische pantser",
+      "title": "Controleer rookgas samenstelling en brander temperatuur",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(63).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=63",
@@ -289,7 +835,7 @@
     },
     {
       "id": "track-64",
-      "title": "Stilzwijgen van Rompa is geen toestemming",
+      "title": "HCHO en dauwpunt sensor in uitlaat kanaal is goedkoop en effectief",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(64).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=64",
@@ -302,7 +848,7 @@
     },
     {
       "id": "track-65",
-      "title": "Notification Letter is een verzekering voor €0",
+      "title": "MIM ovens zijn laboratorium voor hoge temperatuur",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(65).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=65",
@@ -315,7 +861,7 @@
     },
     {
       "id": "track-66",
-      "title": "Market Carve-Out elimineert 80% juridisch risico",
+      "title": "Zie technical constraints en business opportunity in elk project",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(66).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=66",
@@ -328,7 +874,7 @@
     },
     {
       "id": "track-67",
-      "title": "Kopieer nooit bestanden naar privé apparaten",
+      "title": "Thermische reiniging van industriële tooling: stabiel inkomen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(67).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=67",
@@ -341,7 +887,7 @@
     },
     {
       "id": "track-68",
-      "title": "Kapitaal is afvloeiingsregeling - gebruik het voor start, niet juridische strijd",
+      "title": "Jouw technische kennis + Hans strategische contacten = succes",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(68).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=68",
@@ -354,7 +900,7 @@
     },
     {
       "id": "track-69",
-      "title": "UWV Startersperiode: 6 maanden financiële buffer",
+      "title": "Wil technologische ideeën ontwikkelen zoals ITB vroeger",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(69).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=69",
@@ -367,7 +913,7 @@
     },
     {
       "id": "track-70",
-      "title": "Transformeer opleidingsbudget in verkoop- en business vaardigheden",
+      "title": "Doe geen zinloze dingen - zoek plan met motivatie",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(70).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=70",
@@ -380,7 +926,7 @@
     },
     {
       "id": "track-71",
-      "title": "Bied Rompa formeel aan om tooling te kopen voor fractie van boekwaarde",
+      "title": "CoolFlow: 25% energie besparing in 30 dagen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(71).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=71",
@@ -393,7 +939,7 @@
     },
     {
       "id": "track-72",
-      "title": "Slopen is rationeel voor Rompa - elimineert concurrentie",
+      "title": "VibeLog: monitor machine hartslag voordat het stopt",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(72).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=72",
@@ -406,7 +952,7 @@
     },
     {
       "id": "track-73",
-      "title": "Oldtimers zijn je Market Carve-Out strategie",
+      "title": "Mijn stack: goedkope ESP32 in plaats van dure server",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(73).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=73",
@@ -419,7 +965,7 @@
     },
     {
       "id": "track-74",
-      "title": "Bouw bedrijf op vertrouwen, niet op Rompa's chaos",
+      "title": "Automatisering is mijn passie - routine is tijdverspilling",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(74).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=74",
@@ -432,7 +978,7 @@
     },
     {
       "id": "track-75",
-      "title": "Wacht niet op Rompa's hulp - bouw zonder hen",
+      "title": "Ik repareer niet - ik moderniseer",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(75).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=75",
@@ -445,7 +991,7 @@
     },
     {
       "id": "track-76",
-      "title": "Overtuig team: succes is mogelijk zonder Rompa",
+      "title": "Woede en frustratie zijn normaal, maar geen strategie basis",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(76).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=76",
@@ -458,7 +1004,7 @@
     },
     {
       "id": "track-77",
-      "title": "Stop met vragen om toestemming - begin met handelen",
+      "title": "Rompa creëert opzettelijk chaos om jullie te verdelen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(77).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=77",
@@ -471,7 +1017,7 @@
     },
     {
       "id": "track-78",
-      "title": "Verifieer markt: zonder 2-3 klanten heeft business geen zin",
+      "title": "Verander narratief: stop met Slachtoffer zijn, word Schepper",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(78).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=78",
@@ -484,7 +1030,7 @@
     },
     {
       "id": "track-79",
-      "title": "Inventariseer machines met serienummers",
+      "title": "ADHD is Pattern Recognition - verbind punten en voorspel hun zetten",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(79).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=79",
@@ -497,7 +1043,7 @@
     },
     {
       "id": "track-80",
-      "title": "Als Rompa weigert te verkopen, zoek tweedehands op Machineseeker",
+      "title": "Ze praten je waardeloos - dat is Rompa's manipulatie",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(80).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=80",
@@ -510,7 +1056,7 @@
     },
     {
       "id": "track-81",
-      "title": "B.V. geeft beperkte aansprakelijkheid",
+      "title": "Hun \"hulp\" betekent: vind werk elders, concurreer niet met Rompa CZ",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(81).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=81",
@@ -523,7 +1069,7 @@
     },
     {
       "id": "track-82",
-      "title": "B2B verkoop en management zijn cruciale hiaten",
+      "title": "Je waarde zit niet in gebouw of machines, maar in know-how",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(82).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=82",
@@ -536,7 +1082,7 @@
     },
     {
       "id": "track-83",
-      "title": "Toon Hans: stabiele huur en jij bent Caretaker 24/7",
+      "title": "Roep reputatie druk op bestuur op voordat ze documenten tonen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(83).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=83",
@@ -549,7 +1095,7 @@
     },
     {
       "id": "track-84",
-      "title": "Gebruik betaalde vrije maand voor B.V. registratie",
+      "title": "Laat je niet in mentale lus trekken - Rompa is niet jouw probleem",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(84).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=84",
@@ -562,7 +1108,7 @@
     },
     {
       "id": "track-85",
-      "title": "Laat Rompa niet denken dat je voorbereidt op concurrentie",
+      "title": "Bouw nieuw doel - niet per se eigen bedrijf, maar iets met zin",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(85).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=85",
@@ -575,7 +1121,7 @@
     },
     {
       "id": "track-86",
-      "title": "Wekelijkse kernteam meetings: feiten, geen emoties",
+      "title": "Zelfs als Rompa alles sloopt, kun je tweedehands machines kopen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(86).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=86",
@@ -588,7 +1134,7 @@
     },
     {
       "id": "track-87",
-      "title": "Realistisch plan: 6-12 maanden tot eerste inkomsten",
+      "title": "Vecht niet met Rompa - negeer hen en bouw alternatief",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(87).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=87",
@@ -601,7 +1147,7 @@
     },
     {
       "id": "track-88",
-      "title": "Snelle kleine overwinningen bouwen teamvertrouwen",
+      "title": "Georganiseerde actie verlamt bestuur's chaos plan",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(88).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=88",
@@ -614,7 +1160,7 @@
     },
     {
       "id": "track-89",
-      "title": "ZZP netwerk is flexibel alternatief",
+      "title": "Werk aan Hans' project om vertrouwen en werkplek te winnen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(89).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=89",
@@ -627,7 +1173,7 @@
     },
     {
       "id": "track-90",
-      "title": "Gebruik opleidingsbudget voor KMO Management cursus",
+      "title": "Wees flexibel - oldtimers zijn start, automatisering is doel",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(90).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=90",
@@ -640,7 +1186,7 @@
     },
     {
       "id": "track-91",
-      "title": "Je hebt hun machines niet nodig om geld te verdienen",
+      "title": "Toon Hans je uitgewerkte scenario's en risico analyse",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(91).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=91",
@@ -653,7 +1199,7 @@
     },
     {
       "id": "track-92",
-      "title": "Hans' klassieker renovatie is Proof of Concept",
+      "title": "Je hebt al voorsprong - zij weten niet dat jij hun manipulatie ziet",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(92).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=92",
@@ -666,7 +1212,7 @@
     },
     {
       "id": "track-93",
-      "title": "Voel me beste in industriële automatisering en storing zoeken",
+      "title": "Jouw succes is enige wat hen verslaat",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(93).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=93",
@@ -679,7 +1225,7 @@
     },
     {
       "id": "track-94",
-      "title": "Moderniseer PLC controller - oude MIM ovens kunnen nog jaren werken",
+      "title": "Als Rompa bewust verliesgevende optie kiest, schendt ze zorgplicht",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(94).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=94",
@@ -692,7 +1238,7 @@
     },
     {
       "id": "track-95",
-      "title": "MIM ovens hebben eenvoudige bouw - repareer met juiste materialen",
+      "title": "Afwijzen winstgevend aanbod bewijst: Rompa beschermt CZ, niet ITB NL",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(95).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=95",
@@ -705,7 +1251,7 @@
     },
     {
       "id": "track-96",
-      "title": "In vacuümovens betekent vacuüm niet altijd zuiverheid",
+      "title": "Je bent Strategic Problem Solver - ziet business, niet alleen techniek",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(96).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=96",
@@ -718,7 +1264,7 @@
     },
     {
       "id": "track-97",
-      "title": "Ideaal debinding proces vereist actieve gas purge na cyclus",
+      "title": "Heb altijd Plan B klaar: Machineseeker en alternatief gebouw",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(97).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=97",
@@ -731,7 +1277,7 @@
     },
     {
       "id": "track-98",
-      "title": "Voeg Cold-Trap en isolatie toe aan gas leiding",
+      "title": "Formeel voorstel voor activa aankoop via B.V., niet privé personen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(98).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=98",
@@ -744,7 +1290,7 @@
     },
     {
       "id": "track-99",
-      "title": "Grafiet liner in hot-zone stabiliseert thermische proces",
+      "title": "Focus op kleine partijen en hoge marge",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(99).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=99",
@@ -757,7 +1303,7 @@
     },
     {
       "id": "track-100",
-      "title": "Je rol: Legacy Systems Reviver",
+      "title": "Als Rompa weigert, eis schriftelijke motivering waarom ze verlies boven winst kiezen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(100).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=100",
@@ -770,7 +1316,7 @@
     },
     {
       "id": "track-101",
-      "title": "Gebruik MIM ovens voor prototyping: €200-600 per cyclus",
+      "title": "Alleen denken maakt geen prototypen - actie creëert momentum",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(101).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=101",
@@ -783,7 +1329,7 @@
     },
     {
       "id": "track-102",
-      "title": "Repareer niet zoals voor storing - verbeter systemische fout",
+      "title": "DAREMON succes: 20% AI strategie, 80% jouw uitvoering",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(102).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=102",
@@ -796,7 +1342,7 @@
     },
     {
       "id": "track-103",
-      "title": "In MIM ovens is formaldehyde en zuur het probleem",
+      "title": "Wacht niet tot iemand zegt wat te doen - leider maakt eigen plan",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(103).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=103",
@@ -809,7 +1355,7 @@
     },
     {
       "id": "track-104",
-      "title": "Gebruik Elino PLC controller voor MIM temperatuur controle",
+      "title": "Verlamming door analyse is valkuil",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(104).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=104",
@@ -822,7 +1368,7 @@
     },
     {
       "id": "track-105",
-      "title": "Controleer rookgas samenstelling en brander temperatuur",
+      "title": "Uitvoering telt, niet ideeën",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(105).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=105",
@@ -835,7 +1381,7 @@
     },
     {
       "id": "track-106",
-      "title": "HCHO en dauwpunt sensor in uitlaat kanaal is goedkoop en effectief",
+      "title": "Belangrijkste wat je morgen kunt doen: vandaag beginnen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(106).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=106",
@@ -848,7 +1394,7 @@
     },
     {
       "id": "track-107",
-      "title": "MIM ovens zijn laboratorium voor hoge temperatuur",
+      "title": "Moed om te starten is grootste verschil tussen succes en falen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(107).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=107",
@@ -861,7 +1407,7 @@
     },
     {
       "id": "track-108",
-      "title": "Zie technical constraints en business opportunity in elk project",
+      "title": "Goede ambachtsman met goed gereedschap wint altijd",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(108).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=108",
@@ -874,7 +1420,7 @@
     },
     {
       "id": "track-109",
-      "title": "Thermische reiniging van industriële tooling: stabiel inkomen",
+      "title": "Als je iets niet snapt, verbeter en fix het",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(109).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=109",
@@ -887,7 +1433,7 @@
     },
     {
       "id": "track-110",
-      "title": "Jouw technische kennis + Hans strategische contacten = succes",
+      "title": "Rompa is langzame Tank, jij en AI zijn snelle Drone",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(110).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=110",
@@ -900,7 +1446,7 @@
     },
     {
       "id": "track-111",
-      "title": "Wil technologische ideeën ontwikkelen zoals ITB vroeger",
+      "title": "AI is geen bedrog - het democratiseert expert kennis",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(111).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=111",
@@ -913,7 +1459,7 @@
     },
     {
       "id": "track-112",
-      "title": "Doe geen zinloze dingen - zoek plan met motivatie",
+      "title": "Solo Founder met AI verslaat corporaties",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(112).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=112",
@@ -926,7 +1472,7 @@
     },
     {
       "id": "track-113",
-      "title": "CoolFlow: 25% energie besparing in 30 dagen",
+      "title": "Onafhankelijkheid: werken aan wat zin heeft",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(113).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=113",
@@ -939,7 +1485,7 @@
     },
     {
       "id": "track-114",
-      "title": "VibeLog: monitor machine hartslag voordat het stopt",
+      "title": "Controle over tijd is waardevoller dan stabiel salaris",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(114).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=114",
@@ -952,7 +1498,7 @@
     },
     {
       "id": "track-115",
-      "title": "Mijn stack: goedkope ESP32 in plaats van dure server",
+      "title": "Zoek geen werk - zoek problemen om op te lossen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(115).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=115",
@@ -965,7 +1511,7 @@
     },
     {
       "id": "track-116",
-      "title": "Automatisering is mijn passie - routine is tijdverspilling",
+      "title": "Vrijheid is cruciaal voor innovatie",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(116).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=116",
@@ -978,7 +1524,7 @@
     },
     {
       "id": "track-117",
-      "title": "Ik repareer niet - ik moderniseer",
+      "title": "Beste deals: iedereen wint",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(117).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=117",
@@ -991,7 +1537,7 @@
     },
     {
       "id": "track-118",
-      "title": "Woede en frustratie zijn normaal, maar geen strategie basis",
+      "title": "Passie > Salaris",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(118).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=118",
@@ -1004,7 +1550,7 @@
     },
     {
       "id": "track-119",
-      "title": "Rompa creëert opzettelijk chaos om jullie te verdelen",
+      "title": "Je bent investering in project succes, geen werknemer",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(119).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=119",
@@ -1017,7 +1563,7 @@
     },
     {
       "id": "track-120",
-      "title": "Verander narratief: stop met Slachtoffer zijn, word Schepper",
+      "title": "Test realiteit: zijn jullie klaar om eigen geld en tijd te investeren?",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(120).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=120",
@@ -1030,7 +1576,7 @@
     },
     {
       "id": "track-121",
-      "title": "ADHD is Pattern Recognition - verbind punten en voorspel hun zetten",
+      "title": "Over jaar: of je had gelijk over manipulatie, of je hebt bedrijf",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(121).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=121",
@@ -1043,7 +1589,7 @@
     },
     {
       "id": "track-122",
-      "title": "Ze praten je waardeloos - dat is Rompa's manipulatie",
+      "title": "Gebruik Art. 31 verlof voor certificaten",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(122).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=122",
@@ -1056,7 +1602,7 @@
     },
     {
       "id": "track-123",
-      "title": "Hun \"hulp\" betekent: vind werk elders, concurreer niet met Rompa CZ",
+      "title": "Blijf professioneel en kalm, zelfs als Rompa oneerlijk handelt",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(123).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=123",
@@ -1069,7 +1615,7 @@
     },
     {
       "id": "track-124",
-      "title": "Je waarde zit niet in gebouw of machines, maar in know-how",
+      "title": "Bouw op vertrouwen en coördinatie, niet op chaos",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(124).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=124",
@@ -1082,7 +1628,7 @@
     },
     {
       "id": "track-125",
-      "title": "Roep reputatie druk op bestuur op voordat ze documenten tonen",
+      "title": "Jouw toekomstige versie zal je bedanken dat je vandaag begon",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(125).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=125",
@@ -1095,7 +1641,7 @@
     },
     {
       "id": "track-126",
-      "title": "Laat je niet in mentale lus trekken - Rompa is niet jouw probleem",
+      "title": "Clean Room is your fundamental legal shield against Rompa",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(126).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=126",
@@ -1108,7 +1654,7 @@
     },
     {
       "id": "track-127",
-      "title": "Bouw nieuw doel - niet per se eigen bedrijf, maar iets met zin",
+      "title": "Document every step in R&D Log - it's your proof of independence",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(127).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=127",
@@ -1121,7 +1667,7 @@
     },
     {
       "id": "track-128",
-      "title": "Zelfs als Rompa alles sloopt, kun je tweedehands machines kopen",
+      "title": "Remember: confidentiality clause (Art. 11) applies indefinitely",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(128).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=128",
@@ -1134,7 +1680,7 @@
     },
     {
       "id": "track-129",
-      "title": "Vecht niet met Rompa - negeer hen en bouw alternatief",
+      "title": "Contractual penalty: €2500 immediately, without notice",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(129).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=129",
@@ -1147,7 +1693,7 @@
     },
     {
       "id": "track-130",
-      "title": "Georganiseerde actie verlamt bestuur's chaos plan",
+      "title": "Your general skills are free - rest requires Waiver",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(130).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=130",
@@ -1160,7 +1706,7 @@
     },
     {
       "id": "track-131",
-      "title": "Werk aan Hans' project om vertrouwen en werkplek te winnen",
+      "title": "Don't use CAD drawings from ITB - create new from scratch",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(131).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=131",
@@ -1173,7 +1719,7 @@
     },
     {
       "id": "track-132",
-      "title": "Wees flexibel - oldtimers zijn start, automatisering is doel",
+      "title": "Your PLC programming knowledge belongs to you - document external sources",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(132).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=132",
@@ -1186,7 +1732,7 @@
     },
     {
       "id": "track-133",
-      "title": "Toon Hans je uitgewerkte scenario's en risico analyse",
+      "title": "Art. 11 protects everything not publicly available",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(133).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=133",
@@ -1199,7 +1745,7 @@
     },
     {
       "id": "track-134",
-      "title": "Je hebt al voorsprong - zij weten niet dat jij hun manipulatie ziet",
+      "title": "Full damages can exceed €150,000 - don't risk it",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(134).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=134",
@@ -1212,7 +1758,7 @@
     },
     {
       "id": "track-135",
-      "title": "Jouw succes is enige wat hen verslaat",
+      "title": "Always be ready to prove parameters come from Cremer course, not ITB",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(135).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=135",
@@ -1225,7 +1771,7 @@
     },
     {
       "id": "track-136",
-      "title": "Als Rompa bewust verliesgevende optie kiest, schendt ze zorgplicht",
+      "title": "Analyze VSO - last moment to negotiate Art. 11 release",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(136).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=136",
@@ -1238,7 +1784,7 @@
     },
     {
       "id": "track-137",
-      "title": "Afwijzen winstgevend aanbod bewijst: Rompa beschermt CZ, niet ITB NL",
+      "title": "Never contact ITB clients - build own B2C and car club base",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(137).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=137",
@@ -1251,7 +1797,7 @@
     },
     {
       "id": "track-138",
-      "title": "Je bent Strategic Problem Solver - ziet business, niet alleen techniek",
+      "title": "Return all documents and equipment to Rompa \"ongevraagd\"",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(138).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=138",
@@ -1264,7 +1810,7 @@
     },
     {
       "id": "track-139",
-      "title": "Heb altijd Plan B klaar: Machineseeker en alternatief gebouw",
+      "title": "Art. 10 states: your work inventions belong to Rompa - be aware",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(139).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=139",
@@ -1277,7 +1823,7 @@
     },
     {
       "id": "track-140",
-      "title": "Formeel voorstel voor activa aankoop via B.V., niet privé personen",
+      "title": "Using ready-made feedstocks (BASF Catamold) is safe, ITB recipes - not",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(140).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=140",
@@ -1290,7 +1836,7 @@
     },
     {
       "id": "track-141",
-      "title": "Focus op kleine partijen en hoge marge",
+      "title": "Register with KVK under neutral name before Rompa monitors you",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(141).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=141",
@@ -1303,7 +1849,7 @@
     },
     {
       "id": "track-142",
-      "title": "Als Rompa weigert, eis schriftelijke motivering waarom ze verlies boven winst kiezen",
+      "title": "Consult lawyer (€650 from Social Plan) - it's mandatory",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(142).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=142",
@@ -1316,7 +1862,7 @@
     },
     {
       "id": "track-143",
-      "title": "Alleen denken maakt geen prototypen - actie creëert momentum",
+      "title": "Use €1500 budget for certificates: SolidWorks and ISO 9001",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(143).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=143",
@@ -1329,7 +1875,7 @@
     },
     {
       "id": "track-144",
-      "title": "DAREMON succes: 20% AI strategie, 80% jouw uitvoering",
+      "title": "Limiting damages to 6 months gross salary is worth fighting for",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(144).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=144",
@@ -1342,7 +1888,7 @@
     },
     {
       "id": "track-145",
-      "title": "Wacht niet tot iemand zegt wat te doen - leider maakt eigen plan",
+      "title": "Don't sign VSO in 7 days - you have 14 days reflection period",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(145).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=145",
@@ -1355,7 +1901,7 @@
     },
     {
       "id": "track-146",
-      "title": "Verlamming door analyse is valkuil",
+      "title": "Market Carve-Out is your legal armor",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(146).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=146",
@@ -1368,7 +1914,7 @@
     },
     {
       "id": "track-147",
-      "title": "Uitvoering telt, niet ideeën",
+      "title": "Rompa's silence is strategic victory (Estoppel)",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(147).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=147",
@@ -1381,7 +1927,7 @@
     },
     {
       "id": "track-148",
-      "title": "Belangrijkste wat je morgen kunt doen: vandaag beginnen",
+      "title": "Never use Rompa's documentation, drawings or parameters",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(148).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=148",
@@ -1394,7 +1940,7 @@
     },
     {
       "id": "track-149",
-      "title": "Moed om te starten is grootste verschil tussen succes en falen",
+      "title": "Formal Notification to Rompa is insurance policy for €0",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(149).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=149",
@@ -1407,7 +1953,7 @@
     },
     {
       "id": "track-150",
-      "title": "Goede ambachtsman met goed gereedschap wint altijd",
+      "title": "Market Carve-Out eliminates 80% legal risk",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(150).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=150",
@@ -1420,7 +1966,7 @@
     },
     {
       "id": "track-151",
-      "title": "Als je iets niet snapt, verbeter en fix het",
+      "title": "Capital is severance pay (up to €40k per person) - use for start, not legal fight",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(151).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=151",
@@ -1433,7 +1979,7 @@
     },
     {
       "id": "track-152",
-      "title": "Rompa is langzame Tank, jij en AI zijn snelle Drone",
+      "title": "UWV Startersperiode: 6 months financial buffer - use wisely",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(152).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=152",
@@ -1446,7 +1992,7 @@
     },
     {
       "id": "track-153",
-      "title": "AI is geen bedrog - het democratiseert expert kennis",
+      "title": "Transform training budget (€1,500) into business and sales competencies",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(153).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=153",
@@ -1459,7 +2005,7 @@
     },
     {
       "id": "track-154",
-      "title": "Solo Founder met AI verslaat corporaties",
+      "title": "Make Rompa formal offer to buy tooling for fraction of book value",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(154).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=154",
@@ -1472,7 +2018,7 @@
     },
     {
       "id": "track-155",
-      "title": "Onafhankelijkheid: werken aan wat zin heeft",
+      "title": "Scrapping is rational for Rompa - eliminates competition",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(155).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=155",
@@ -1485,7 +2031,7 @@
     },
     {
       "id": "track-156",
-      "title": "Controle over tijd is waardevoller dan stabiel salaris",
+      "title": "Oldtimers is your Market Carve-Out strategy - safe B2C start",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(156).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=156",
@@ -1498,7 +2044,7 @@
     },
     {
       "id": "track-157",
-      "title": "Zoek geen werk - zoek problemen om op te lossen",
+      "title": "Build company on trust and coordination, not Rompa's chaos",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(157).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=157",
@@ -1511,7 +2057,7 @@
     },
     {
       "id": "track-158",
-      "title": "Vrijheid is cruciaal voor innovatie",
+      "title": "Don't wait for Rompa's help - build without them",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(158).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=158",
@@ -1524,7 +2070,7 @@
     },
     {
       "id": "track-159",
-      "title": "Beste deals: iedereen wint",
+      "title": "Your mission: convince team success is possible without Rompa",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(159).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=159",
@@ -1537,7 +2083,7 @@
     },
     {
       "id": "track-160",
-      "title": "Passie > Salaris",
+      "title": "Stop asking for permission - start acting on free will",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(160).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=160",
@@ -1550,7 +2096,7 @@
     },
     {
       "id": "track-161",
-      "title": "Je bent investering in project succes, geen werknemer",
+      "title": "Verify market: without 2-3 ready clients, business makes no sense",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(161).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=161",
@@ -1563,7 +2109,7 @@
     },
     {
       "id": "track-162",
-      "title": "Test realiteit: zijn jullie klaar om eigen geld en tijd te investeren?",
+      "title": "Inventory machines noting serial numbers and online valuation",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(162).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=162",
@@ -1576,7 +2122,7 @@
     },
     {
       "id": "track-163",
-      "title": "Over jaar: of je had gelijk over manipulatie, of je hebt bedrijf",
+      "title": "If Rompa refuses to sell, look for used on Machineseeker",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(163).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=163",
@@ -1589,7 +2135,7 @@
     },
     {
       "id": "track-164",
-      "title": "Gebruik Art. 31 verlof voor certificaten",
+      "title": "B.V. (LLC) gives limited liability - consider for large investments",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(164).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=164",
@@ -1602,7 +2148,7 @@
     },
     {
       "id": "track-165",
-      "title": "Blijf professioneel en kalm, zelfs als Rompa oneerlijk handelt",
+      "title": "B2B sales and management - key competency gaps to fill",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(165).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=165",
@@ -1615,7 +2161,7 @@
     },
     {
       "id": "track-166",
-      "title": "Bouw op vertrouwen en coördinatie, niet op chaos",
+      "title": "Show Hans: your workshop is stable rent and you're Caretaker 24/7",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(166).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=166",
@@ -1628,7 +2174,7 @@
     },
     {
       "id": "track-167",
-      "title": "Jouw toekomstige versie zal je bedanken dat je vandaag begon",
+      "title": "Use paid month off before contract ends for B.V. registration",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(167).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=167",
@@ -1641,7 +2187,7 @@
     },
     {
       "id": "track-168",
-      "title": "Clean Room is your fundamental legal shield against Rompa",
+      "title": "Don't let Rompa consider your vision as \"preparing competition\"",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(168).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=168",
@@ -1654,7 +2200,7 @@
     },
     {
       "id": "track-169",
-      "title": "Document every step in R&D Log - it's your proof of independence",
+      "title": "Weekly core team meetings: facts, not emotions",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(169).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=169",
@@ -1667,7 +2213,7 @@
     },
     {
       "id": "track-170",
-      "title": "Remember: confidentiality clause (Art. 11) applies indefinitely",
+      "title": "Your plan must be realistic: 6-12 months to first revenues",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(170).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=170",
@@ -1680,7 +2226,7 @@
     },
     {
       "id": "track-171",
-      "title": "Contractual penalty: €2500 immediately, without notice",
+      "title": "Quick small wins build team trust",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(171).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=171",
@@ -1693,7 +2239,7 @@
     },
     {
       "id": "track-172",
-      "title": "Your general skills are free - rest requires Waiver",
+      "title": "ZZP network is flexible alternative to large employment",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(172).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=172",
@@ -1706,7 +2252,7 @@
     },
     {
       "id": "track-173",
-      "title": "Don't use CAD drawings from ITB - create new from scratch",
+      "title": "Use training budget for SME Management and Entrepreneur Finance courses",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(173).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=173",
@@ -1719,7 +2265,7 @@
     },
     {
       "id": "track-174",
-      "title": "Your PLC programming knowledge belongs to you - document external sources",
+      "title": "You don't need their machines to make money - you need clients",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(174).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=174",
@@ -1732,7 +2278,7 @@
     },
     {
       "id": "track-175",
-      "title": "Art. 11 protects everything not publicly available",
+      "title": "Hans' classic renovation can be Proof of Concept",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(175).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=175",
@@ -1745,7 +2291,7 @@
     },
     {
       "id": "track-176",
-      "title": "Full damages can exceed €150,000 - don't risk it",
+      "title": "Feel best in industrial automation, finding faults and reliability planning",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(176).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=176",
@@ -1758,7 +2304,7 @@
     },
     {
       "id": "track-177",
-      "title": "Always be ready to prove parameters come from Cremer course, not ITB",
+      "title": "Modernize PLC controller so old MIM furnaces can work for years",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(177).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=177",
@@ -1771,7 +2317,7 @@
     },
     {
       "id": "track-178",
-      "title": "Analyze VSO - last moment to negotiate Art. 11 release",
+      "title": "MIM furnaces have very simple construction - repair with proper materials",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(178).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=178",
@@ -1784,7 +2330,7 @@
     },
     {
       "id": "track-179",
-      "title": "Never contact ITB clients - build own B2C and car club base",
+      "title": "In vacuum furnaces, vacuum doesn't always equal cleanliness",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(179).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=179",
@@ -1797,7 +2343,7 @@
     },
     {
       "id": "track-180",
-      "title": "Return all documents and equipment to Rompa \"ongevraagd\"",
+      "title": "Ideal debinding process requires active gas purge after cycle",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(180).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=180",
@@ -1810,7 +2356,7 @@
     },
     {
       "id": "track-181",
-      "title": "Art. 10 states: your work inventions belong to Rompa - be aware",
+      "title": "Add Cold-Trap and gas line insulation to avoid acid condensation",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(181).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=181",
@@ -1823,7 +2369,7 @@
     },
     {
       "id": "track-182",
-      "title": "Using ready-made feedstocks (BASF Catamold) is safe, ITB recipes - not",
+      "title": "Graphite liner in hot-zone stabilizes thermal and improves sintering",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(182).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=182",
@@ -1836,7 +2382,7 @@
     },
     {
       "id": "track-183",
-      "title": "Register with KVK under neutral name before Rompa monitors you",
+      "title": "Your role: Legacy Systems Reviver - revive industrial dinosaurs",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(183).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=183",
@@ -1849,7 +2395,7 @@
     },
     {
       "id": "track-184",
-      "title": "Consult lawyer (€650 from Social Plan) - it's mandatory",
+      "title": "Use MIM furnaces for prototyping, R&D sintering: €200-600 per cycle",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(184).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=184",
@@ -1862,7 +2408,7 @@
     },
     {
       "id": "track-185",
-      "title": "Use €1500 budget for certificates: SolidWorks and ISO 9001",
+      "title": "Don't repair as it was before failure - fix systemic error",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(185).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=185",
@@ -1875,7 +2421,7 @@
     },
     {
       "id": "track-186",
-      "title": "Limiting damages to 6 months gross salary is worth fighting for",
+      "title": "In MIM furnaces, formaldehyde and acid dirty machine's \"lungs\"",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(186).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=186",
@@ -1888,7 +2434,7 @@
     },
     {
       "id": "track-187",
-      "title": "Don't sign VSO in 7 days - you have 14 days reflection period",
+      "title": "Use Elino PLC controller to modernize MIM temperature control",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(187).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=187",
@@ -1901,7 +2447,7 @@
     },
     {
       "id": "track-188",
-      "title": "Market Carve-Out is your legal armor",
+      "title": "Control flue gas composition and burner temperature for effective acid burning",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(188).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=188",
@@ -1914,7 +2460,7 @@
     },
     {
       "id": "track-189",
-      "title": "Rompa's silence is strategic victory (Estoppel)",
+      "title": "Adding HCHO and dew-point sensor to exhaust channel is cheap and effective",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(189).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=189",
@@ -1927,7 +2473,7 @@
     },
     {
       "id": "track-190",
-      "title": "Never use Rompa's documentation, drawings or parameters",
+      "title": "MIM furnaces are laboratory for high temperature and controlled atmosphere",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(190).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=190",
@@ -1940,7 +2486,7 @@
     },
     {
       "id": "track-191",
-      "title": "Formal Notification to Rompa is insurance policy for €0",
+      "title": "I see technical constraints and business opportunity in every project",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(191).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=191",
@@ -1953,7 +2499,7 @@
     },
     {
       "id": "track-192",
-      "title": "Market Carve-Out eliminates 80% legal risk",
+      "title": "Thermal cleaning services for industrial tooling: stable, repeatable income",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(192).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=192",
@@ -1966,7 +2512,7 @@
     },
     {
       "id": "track-193",
-      "title": "Capital is severance pay (up to €40k per person) - use for start, not legal fight",
+      "title": "Your technical knowledge + Hans strategic contacts = complementary success",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(193).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=193",
@@ -1979,7 +2525,7 @@
     },
     {
       "id": "track-194",
-      "title": "UWV Startersperiode: 6 months financial buffer - use wisely",
+      "title": "Want to develop tech ideas related to MIM like ITB once did",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(194).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=194",
@@ -1992,7 +2538,7 @@
     },
     {
       "id": "track-195",
-      "title": "Transform training budget (€1,500) into business and sales competencies",
+      "title": "Don't like doing senseless things - find plan that gives motivation",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(195).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=195",
@@ -2005,7 +2551,7 @@
     },
     {
       "id": "track-196",
-      "title": "Make Rompa formal offer to buy tooling for fraction of book value",
+      "title": "CoolFlow: 25% energy savings in 30 days - that's real KPI",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(196).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=196",
@@ -2018,7 +2564,7 @@
     },
     {
       "id": "track-197",
-      "title": "Scrapping is rational for Rompa - eliminates competition",
+      "title": "VibeLog: Monitor machine pulse before heart stops",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(197).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=197",
@@ -2031,7 +2577,7 @@
     },
     {
       "id": "track-198",
-      "title": "Oldtimers is your Market Carve-Out strategy - safe B2C start",
+      "title": "My stack: Cheap ESP32 instead of expensive server",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(198).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=198",
@@ -2044,7 +2590,7 @@
     },
     {
       "id": "track-199",
-      "title": "Build company on trust and coordination, not Rompa's chaos",
+      "title": "Automation is my passion - routine is slow death",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(199).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=199",
@@ -2057,7 +2603,7 @@
     },
     {
       "id": "track-200",
-      "title": "Don't wait for Rompa's help - build without them",
+      "title": "I don't repair - I modernize",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(200).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=200",
@@ -2070,7 +2616,7 @@
     },
     {
       "id": "track-201",
-      "title": "Your mission: convince team success is possible without Rompa",
+      "title": "Anger and frustration are normal, but can't be strategy foundation",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(201).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=201",
@@ -2083,7 +2629,7 @@
     },
     {
       "id": "track-202",
-      "title": "Stop asking for permission - start acting on free will",
+      "title": "Rompa deliberately creates chaos to divide you and prevent competition",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(202).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=202",
@@ -2096,7 +2642,7 @@
     },
     {
       "id": "track-203",
-      "title": "Verify market: without 2-3 ready clients, business makes no sense",
+      "title": "Change narrative: stop being Victim, become Creator of New Company",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(203).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=203",
@@ -2109,7 +2655,7 @@
     },
     {
       "id": "track-204",
-      "title": "Inventory machines noting serial numbers and online valuation",
+      "title": "ADHD is Pattern Recognition - connect dots and predict their moves",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(204).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=204",
@@ -2122,7 +2668,7 @@
     },
     {
       "id": "track-205",
-      "title": "If Rompa refuses to sell, look for used on Machineseeker",
+      "title": "Making you feel worthless is Rompa's manipulation element",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(205).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=205",
@@ -2135,7 +2681,7 @@
     },
     {
       "id": "track-206",
-      "title": "B.V. (LLC) gives limited liability - consider for large investments",
+      "title": "Their \"help\" means: find job elsewhere, don't compete with Rompa CZ",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(206).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=206",
@@ -2148,7 +2694,7 @@
     },
     {
       "id": "track-207",
-      "title": "B2B sales and management - key competency gaps to fill",
+      "title": "Your value isn't in building or machines, but in know-how you take",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(207).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=207",
@@ -2161,7 +2707,7 @@
     },
     {
       "id": "track-208",
-      "title": "Show Hans: your workshop is stable rent and you're Caretaker 24/7",
+      "title": "Call reputation pressure on management before they reveal documents",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(208).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=208",
@@ -2174,7 +2720,7 @@
     },
     {
       "id": "track-209",
-      "title": "Use paid month off before contract ends for B.V. registration",
+      "title": "Don't get pulled into mental loop - Rompa isn't your problem",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(209).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=209",
@@ -2187,7 +2733,7 @@
     },
     {
       "id": "track-210",
-      "title": "Don't let Rompa consider your vision as \"preparing competition\"",
+      "title": "Build new goal - not necessarily own company, but something meaningful",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(210).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=210",
@@ -2200,7 +2746,7 @@
     },
     {
       "id": "track-211",
-      "title": "Weekly core team meetings: facts, not emotions",
+      "title": "Even if Rompa scraps everything, you can buy used machines and succeed",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(211).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=211",
@@ -2213,7 +2759,7 @@
     },
     {
       "id": "track-212",
-      "title": "Your plan must be realistic: 6-12 months to first revenues",
+      "title": "Don't fight Rompa - ignore them and build alternative",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(212).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=212",
@@ -2226,7 +2772,7 @@
     },
     {
       "id": "track-213",
-      "title": "Quick small wins build team trust",
+      "title": "Organized action paralyzes management's plan assuming chaos",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(213).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=213",
@@ -2239,7 +2785,7 @@
     },
     {
       "id": "track-214",
-      "title": "ZZP network is flexible alternative to large employment",
+      "title": "Work on Hans' project to gain trust and workplace",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(214).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=214",
@@ -2252,7 +2798,7 @@
     },
     {
       "id": "track-215",
-      "title": "Use training budget for SME Management and Entrepreneur Finance courses",
+      "title": "Be flexible - oldtimers are start, industrial automation is goal",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(215).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=215",
@@ -2265,7 +2811,7 @@
     },
     {
       "id": "track-216",
-      "title": "You don't need their machines to make money - you need clients",
+      "title": "Show Hans you have detailed scenarios and can analyze risks",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(216).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=216",
@@ -2278,7 +2824,7 @@
     },
     {
       "id": "track-217",
-      "title": "Hans' classic renovation can be Proof of Concept",
+      "title": "You already have advantage - they don't know you see their manipulation",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(217).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=217",
@@ -2291,7 +2837,7 @@
     },
     {
       "id": "track-218",
-      "title": "Feel best in industrial automation, finding faults and reliability planning",
+      "title": "Your success is only thing that defeats them",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(218).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=218",
@@ -2304,7 +2850,7 @@
     },
     {
       "id": "track-219",
-      "title": "Modernize PLC controller so old MIM furnaces can work for years",
+      "title": "If Rompa consciously chooses loss option, violates duty of care",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(219).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=219",
@@ -2317,7 +2863,7 @@
     },
     {
       "id": "track-220",
-      "title": "MIM furnaces have very simple construction - repair with proper materials",
+      "title": "Rejecting profitable offer proves: Rompa protects CZ, not ITB NL",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(220).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=220",
@@ -2330,7 +2876,7 @@
     },
     {
       "id": "track-221",
-      "title": "In vacuum furnaces, vacuum doesn't always equal cleanliness",
+      "title": "You're Strategic Problem Solver - see business, not just tech",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(221).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=221",
@@ -2343,7 +2889,7 @@
     },
     {
       "id": "track-222",
-      "title": "Ideal debinding process requires active gas purge after cycle",
+      "title": "Always have Plan B ready: Machineseeker and alternative building",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(222).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=222",
@@ -2356,7 +2902,7 @@
     },
     {
       "id": "track-223",
-      "title": "Add Cold-Trap and gas line insulation to avoid acid condensation",
+      "title": "Formal asset purchase proposal must be made by established B.V.",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(223).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=223",
@@ -2369,7 +2915,7 @@
     },
     {
       "id": "track-224",
-      "title": "Graphite liner in hot-zone stabilizes thermal and improves sintering",
+      "title": "Focus on small batches and high margin",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(224).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=224",
@@ -2382,7 +2928,7 @@
     },
     {
       "id": "track-225",
-      "title": "Your role: Legacy Systems Reviver - revive industrial dinosaurs",
+      "title": "If Rompa refuses, demand written justification why they choose loss over profit",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(225).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=225",
@@ -2395,7 +2941,7 @@
     },
     {
       "id": "track-226",
-      "title": "Use MIM furnaces for prototyping, R&D sintering: €200-600 per cycle",
+      "title": "Thinking alone doesn't create prototypes - action creates momentum",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(226).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=226",
@@ -2408,7 +2954,7 @@
     },
     {
       "id": "track-227",
-      "title": "Don't repair as it was before failure - fix systemic error",
+      "title": "DAREMON success: 20% AI strategy, 80% your execution",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(227).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=227",
@@ -2421,7 +2967,7 @@
     },
     {
       "id": "track-228",
-      "title": "In MIM furnaces, formaldehyde and acid dirty machine's \"lungs\"",
+      "title": "Don't wait for someone to tell you what to do - leader creates own plan",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(228).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=228",
@@ -2434,7 +2980,7 @@
     },
     {
       "id": "track-229",
-      "title": "Use Elino PLC controller to modernize MIM temperature control",
+      "title": "Paralysis by analysis is trap that prevents business from starting",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(229).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=229",
@@ -2447,7 +2993,7 @@
     },
     {
       "id": "track-230",
-      "title": "Control flue gas composition and burner temperature for effective acid burning",
+      "title": "Execution counts, not ideas - ideas became commodity",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(230).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=230",
@@ -2460,7 +3006,7 @@
     },
     {
       "id": "track-231",
-      "title": "Adding HCHO and dew-point sensor to exhaust channel is cheap and effective",
+      "title": "Most important thing you can do tomorrow: start acting today",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(231).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=231",
@@ -2473,7 +3019,7 @@
     },
     {
       "id": "track-232",
-      "title": "MIM furnaces are laboratory for high temperature and controlled atmosphere",
+      "title": "Courage to start is greatest difference between success and failure",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(232).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=232",
@@ -2486,7 +3032,7 @@
     },
     {
       "id": "track-233",
-      "title": "I see technical constraints and business opportunity in every project",
+      "title": "Good craftsman with good tool always wins over bad craftsman with best equipment",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(233).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=233",
@@ -2499,7 +3045,7 @@
     },
     {
       "id": "track-234",
-      "title": "Thermal cleaning services for industrial tooling: stable, repeatable income",
+      "title": "If you can't figure something out, improve and fix it",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(234).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=234",
@@ -2512,7 +3058,7 @@
     },
     {
       "id": "track-235",
-      "title": "Your technical knowledge + Hans strategic contacts = complementary success",
+      "title": "Rompa is slow Tank, you and AI are fast Drone",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(235).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=235",
@@ -2525,7 +3071,7 @@
     },
     {
       "id": "track-236",
-      "title": "Want to develop tech ideas related to MIM like ITB once did",
+      "title": "AI isn't cheating - it's tool for democratizing expert knowledge",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(236).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=236",
@@ -2538,7 +3084,7 @@
     },
     {
       "id": "track-237",
-      "title": "Don't like doing senseless things - find plan that gives motivation",
+      "title": "Solo Founder with AI beats corporations",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(237).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=237",
@@ -2551,7 +3097,7 @@
     },
     {
       "id": "track-238",
-      "title": "CoolFlow: 25% energy savings in 30 days - that's real KPI",
+      "title": "AI barrier fell - use revolution before others notice",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(238).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=238",
@@ -2564,7 +3110,7 @@
     },
     {
       "id": "track-239",
-      "title": "VibeLog: Monitor machine pulse before heart stops",
+      "title": "DAREMON strategy based on Market Carve-Out - legally avoiding competition",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(239).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=239",
@@ -2577,7 +3123,7 @@
     },
     {
       "id": "track-240",
-      "title": "My stack: Cheap ESP32 instead of expensive server",
+      "title": "Use AI as assistant, not decision maker - final voice belongs to you",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(240).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=240",
@@ -2590,7 +3136,7 @@
     },
     {
       "id": "track-241",
-      "title": "Automation is my passion - routine is slow death",
+      "title": "Without AI, legal analysis would cost €650 and weeks waiting",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(241).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=241",
@@ -2603,7 +3149,7 @@
     },
     {
       "id": "track-242",
-      "title": "I don't repair - I modernize",
+      "title": "Strategic thinking becomes premium skill in automation era",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(242).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=242",
@@ -2616,7 +3162,7 @@
     },
     {
       "id": "track-243",
-      "title": "Anger and frustration are normal, but can't be strategy foundation",
+      "title": "Proper AI strategy worth €5k-8k monthly savings",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(243).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=243",
@@ -2629,7 +3175,7 @@
     },
     {
       "id": "track-244",
-      "title": "Rompa deliberately creates chaos to divide you and prevent competition",
+      "title": "Knowledge value: €2,000 daily when you know how to use it",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(244).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=244",
@@ -2642,7 +3188,7 @@
     },
     {
       "id": "track-245",
-      "title": "Change narrative: stop being Victim, become Creator of New Company",
+      "title": "Independence: ability to work on what makes sense",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(245).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=245",
@@ -2655,7 +3201,7 @@
     },
     {
       "id": "track-246",
-      "title": "ADHD is Pattern Recognition - connect dots and predict their moves",
+      "title": "Full commitment comes from knowing your future depends on success",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(246).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=246",
@@ -2668,7 +3214,7 @@
     },
     {
       "id": "track-247",
-      "title": "Making you feel worthless is Rompa's manipulation element",
+      "title": "Control over time and vision more valuable than stable salary",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(247).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=247",
@@ -2681,7 +3227,7 @@
     },
     {
       "id": "track-248",
-      "title": "Their \"help\" means: find job elsewhere, don't compete with Rompa CZ",
+      "title": "Don't look for job - look for problems to solve",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(248).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=248",
@@ -2694,7 +3240,7 @@
     },
     {
       "id": "track-249",
-      "title": "Your value isn't in building or machines, but in know-how you take",
+      "title": "Best deals: everyone wins (Mutual Benefit Focus)",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(249).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=249",
@@ -2707,7 +3253,7 @@
     },
     {
       "id": "track-250",
-      "title": "Call reputation pressure on management before they reveal documents",
+      "title": "Passion > Paycheck - authentic power of DAREMON",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(250).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=250",
@@ -2720,7 +3266,7 @@
     },
     {
       "id": "track-251",
-      "title": "Don't get pulled into mental loop - Rompa isn't your problem",
+      "title": "Clean Room je tvůj fundamentální právní štít proti Rompě",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(251).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=251",
@@ -2733,7 +3279,7 @@
     },
     {
       "id": "track-252",
-      "title": "Build new goal - not necessarily own company, but something meaningful",
+      "title": "Dokumentuj každý krok v R&D Log - je to tvůj důkaz nezávislosti",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(252).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=252",
@@ -2746,7 +3292,7 @@
     },
     {
       "id": "track-253",
-      "title": "Even if Rompa scraps everything, you can buy used machines and succeed",
+      "title": "Pamatuj: doložka mlčenlivosti (Art. 11) platí bezterminově",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(253).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=253",
@@ -2759,7 +3305,7 @@
     },
     {
       "id": "track-254",
-      "title": "Don't fight Rompa - ignore them and build alternative",
+      "title": "Smluvní pokuta: €2500 okamžitě, bez upozornění",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(254).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=254",
@@ -2772,7 +3318,7 @@
     },
     {
       "id": "track-255",
-      "title": "Organized action paralyzes management's plan assuming chaos",
+      "title": "Tvé obecné dovednosti jsou volné - zbytek vyžaduje Waiver",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(255).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=255",
@@ -2785,7 +3331,7 @@
     },
     {
       "id": "track-256",
-      "title": "Work on Hans' project to gain trust and workplace",
+      "title": "Nepoužívej CAD výkresy z ITB - vytvoř nové od nuly",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(256).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=256",
@@ -2798,7 +3344,7 @@
     },
     {
       "id": "track-257",
-      "title": "Be flexible - oldtimers are start, industrial automation is goal",
+      "title": "Tvé znalosti PLC programování patří tobě - dokumentuj externí zdroje",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(257).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=257",
@@ -2811,7 +3357,7 @@
     },
     {
       "id": "track-258",
-      "title": "Show Hans you have detailed scenarios and can analyze risks",
+      "title": "Art. 11 chrání vše, co není veřejně dostupné",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(258).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=258",
@@ -2824,7 +3370,7 @@
     },
     {
       "id": "track-259",
-      "title": "You already have advantage - they don't know you see their manipulation",
+      "title": "Plná náhrada škody může přesáhnout €150,000",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(259).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=259",
@@ -2837,7 +3383,7 @@
     },
     {
       "id": "track-260",
-      "title": "Your success is only thing that defeats them",
+      "title": "Vždy buď připraven dokázat, že parametry pocházejí z kurzu Cremer",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(260).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=260",
@@ -2850,7 +3396,7 @@
     },
     {
       "id": "track-261",
-      "title": "If Rompa consciously chooses loss option, violates duty of care",
+      "title": "Analyzuj VSO - poslední moment na vyjednání osvobození od Art. 11",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(261).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=261",
@@ -2863,7 +3409,7 @@
     },
     {
       "id": "track-262",
-      "title": "Rejecting profitable offer proves: Rompa protects CZ, not ITB NL",
+      "title": "Nikdy nekontaktuj klienty ITB - vybuduj vlastní B2C základnu",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(262).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=262",
@@ -2876,7 +3422,7 @@
     },
     {
       "id": "track-263",
-      "title": "You're Strategic Problem Solver - see business, not just tech",
+      "title": "Vrať Rompě všechny dokumenty a vybavení bez vyzvání",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(263).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=263",
@@ -2889,7 +3435,7 @@
     },
     {
       "id": "track-264",
-      "title": "Always have Plan B ready: Machineseeker and alternative building",
+      "title": "Art. 10 stanoví: tvé pracovní vynálezy patří Rompě",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(264).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=264",
@@ -2902,7 +3448,7 @@
     },
     {
       "id": "track-265",
-      "title": "Formal asset purchase proposal must be made by established B.V.",
+      "title": "Použití hotových feedstocků (BASF Catamold) je bezpečné",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(265).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=265",
@@ -2915,7 +3461,7 @@
     },
     {
       "id": "track-266",
-      "title": "Focus on small batches and high margin",
+      "title": "Zaregistruj se v KVK pod neutrálním názvem před monitoringem Rompy",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(266).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=266",
@@ -2928,7 +3474,7 @@
     },
     {
       "id": "track-267",
-      "title": "If Rompa refuses, demand written justification why they choose loss over profit",
+      "title": "Konzultuj s právníkem (€650 ze Sociálního plánu)",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(267).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=267",
@@ -2941,7 +3487,7 @@
     },
     {
       "id": "track-268",
-      "title": "Thinking alone doesn't create prototypes - action creates momentum",
+      "title": "Použij €1500 rozpočet na certifikáty: SolidWorks a ISO 9001",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(268).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=268",
@@ -2954,7 +3500,7 @@
     },
     {
       "id": "track-269",
-      "title": "DAREMON success: 20% AI strategy, 80% your execution",
+      "title": "Omezení náhrady škody na 6 měsíců hrubého platu stojí za boj",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(269).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=269",
@@ -2967,7 +3513,7 @@
     },
     {
       "id": "track-270",
-      "title": "Don't wait for someone to tell you what to do - leader creates own plan",
+      "title": "Nepodepisuj VSO za 7 dní - máš 14denní lhůtu na rozmyšlenou",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(270).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=270",
@@ -2980,7 +3526,7 @@
     },
     {
       "id": "track-271",
-      "title": "Paralysis by analysis is trap that prevents business from starting",
+      "title": "Market Carve-Out je tvá právní zbroj",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(271).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=271",
@@ -2993,7 +3539,7 @@
     },
     {
       "id": "track-272",
-      "title": "Execution counts, not ideas - ideas became commodity",
+      "title": "Mlčení Rompy je strategické vítězství",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(272).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=272",
@@ -3006,7 +3552,7 @@
     },
     {
       "id": "track-273",
-      "title": "Most important thing you can do tomorrow: start acting today",
+      "title": "Nikdy nepoužívej dokumentaci, výkresy nebo parametry Rompy",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(273).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=273",
@@ -3019,7 +3565,7 @@
     },
     {
       "id": "track-274",
-      "title": "Courage to start is greatest difference between success and failure",
+      "title": "Formální oznámení Rompě je pojistka za €0",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(274).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=274",
@@ -3032,7 +3578,7 @@
     },
     {
       "id": "track-275",
-      "title": "Good craftsman with good tool always wins over bad craftsman with best equipment",
+      "title": "Market Carve-Out eliminuje 80% právního rizika",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(275).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=275",
@@ -3045,7 +3591,7 @@
     },
     {
       "id": "track-276",
-      "title": "If you can't figure something out, improve and fix it",
+      "title": "Kapitál je odstupné (až €40k na osobu) - použij na start",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(276).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=276",
@@ -3058,7 +3604,7 @@
     },
     {
       "id": "track-277",
-      "title": "Rompa is slow Tank, you and AI are fast Drone",
+      "title": "UWV Startersperiode: 6 měsíců finanční rezervy",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(277).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=277",
@@ -3071,7 +3617,7 @@
     },
     {
       "id": "track-278",
-      "title": "AI isn't cheating - it's tool for democratizing expert knowledge",
+      "title": "Přeměň školící rozpočet (€1,500) na obchodní kompetence",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(278).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=278",
@@ -3084,7 +3630,7 @@
     },
     {
       "id": "track-279",
-      "title": "Solo Founder with AI beats corporations",
+      "title": "Nabídni Rompě formálně koupi nástrojů za zlomek účetní hodnoty",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(279).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=279",
@@ -3097,7 +3643,7 @@
     },
     {
       "id": "track-280",
-      "title": "AI barrier fell - use revolution before others notice",
+      "title": "Šrotování je pro Rompu racionální - eliminuje konkurenci",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(280).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=280",
@@ -3110,7 +3656,7 @@
     },
     {
       "id": "track-281",
-      "title": "DAREMON strategy based on Market Carve-Out - legally avoiding competition",
+      "title": "Oldtimery jsou tvá Market Carve-Out strategie - bezpečný B2C start",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(281).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=281",
@@ -3123,7 +3669,7 @@
     },
     {
       "id": "track-282",
-      "title": "Use AI as assistant, not decision maker - final voice belongs to you",
+      "title": "Vybuduj firmu na důvěře, ne na chaosu Rompy",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(282).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=282",
@@ -3136,7 +3682,7 @@
     },
     {
       "id": "track-283",
-      "title": "Without AI, legal analysis would cost €650 and weeks waiting",
+      "title": "Nečekej na pomoc Rompy - buduj bez nich",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(283).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=283",
@@ -3149,7 +3695,7 @@
     },
     {
       "id": "track-284",
-      "title": "Strategic thinking becomes premium skill in automation era",
+      "title": "Tvá mise: přesvědčit tým, že úspěch je možný bez Rompy",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(284).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=284",
@@ -3162,7 +3708,7 @@
     },
     {
       "id": "track-285",
-      "title": "Proper AI strategy worth €5k-8k monthly savings",
+      "title": "Přestaň žádat o povolení - začni jednat ze svobodné vůle",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(285).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=285",
@@ -3175,7 +3721,7 @@
     },
     {
       "id": "track-286",
-      "title": "Knowledge value: €2,000 daily when you know how to use it",
+      "title": "Ověř trh: bez 2-3 připravených klientů nemá byznys smysl",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(286).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=286",
@@ -3188,7 +3734,7 @@
     },
     {
       "id": "track-287",
-      "title": "Independence: ability to work on what makes sense",
+      "title": "Zinventarizuj stroje se sériovými čísly a online oceněním",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(287).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=287",
@@ -3201,7 +3747,7 @@
     },
     {
       "id": "track-288",
-      "title": "Full commitment comes from knowing your future depends on success",
+      "title": "Pokud Rompa odmítne prodat, hledej použité na Machineseeker",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(288).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=288",
@@ -3214,7 +3760,7 @@
     },
     {
       "id": "track-289",
-      "title": "Control over time and vision more valuable than stable salary",
+      "title": "B.V. (s.r.o.) poskytuje omezenou odpovědnost",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(289).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=289",
@@ -3227,7 +3773,7 @@
     },
     {
       "id": "track-290",
-      "title": "Don't look for job - look for problems to solve",
+      "title": "B2B prodej a management - klíčové kompetence k doplnění",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(290).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=290",
@@ -3240,7 +3786,7 @@
     },
     {
       "id": "track-291",
-      "title": "Best deals: everyone wins (Mutual Benefit Focus)",
+      "title": "Ukaž Hansovi: tvá dílna je stabilní nájem a ty jsi Správce 24/7",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(291).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=291",
@@ -3253,7 +3799,7 @@
     },
     {
       "id": "track-292",
-      "title": "Passion > Paycheck - authentic power of DAREMON",
+      "title": "Využij placený měsíc volna před koncem smlouvy",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(292).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=292",
@@ -3266,7 +3812,7 @@
     },
     {
       "id": "track-293",
-      "title": "Clean Room je tvůj fundamentální právní štít proti Rompě",
+      "title": "Nedovol Rompě považovat tvou vizi za \"přípravu konkurence\"",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(293).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=293",
@@ -3279,7 +3825,7 @@
     },
     {
       "id": "track-294",
-      "title": "Dokumentuj každý krok v R&D Log - je to tvůj důkaz nezávislosti",
+      "title": "Týdenní schůzky jádra týmu: fakta, ne emoceinformují o situaci",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(294).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=294",
@@ -3292,7 +3838,7 @@
     },
     {
       "id": "track-295",
-      "title": "Pamatuj: doložka mlčenlivosti (Art. 11) platí bezterminově",
+      "title": "Tvůj plán musí být realistický: 6-12 měsíců do prvních příjmů",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(295).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=295",
@@ -3305,7 +3851,7 @@
     },
     {
       "id": "track-296",
-      "title": "Smluvní pokuta: €2500 okamžitě, bez upozornění",
+      "title": "Rychlá malá vítězství budují důvěru týmu",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(296).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=296",
@@ -3318,7 +3864,7 @@
     },
     {
       "id": "track-297",
-      "title": "Tvé obecné dovednosti jsou volné - zbytek vyžaduje Waiver",
+      "title": "Síť ZZP je flexibilní alternativa k velkému zaměstnání",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(297).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=297",
@@ -3331,7 +3877,7 @@
     },
     {
       "id": "track-298",
-      "title": "Nepoužívej CAD výkresy z ITB - vytvoř nové od nuly",
+      "title": "Použij školící rozpočet na kurzy řízení MSP",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(298).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=298",
@@ -3344,7 +3890,7 @@
     },
     {
       "id": "track-299",
-      "title": "Tvé znalosti PLC programování patří tobě - dokumentuj externí zdroje",
+      "title": "Nepotřebuješ jejich stroje, aby ses vydělával - potřebuješ klienty",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(299).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=299",
@@ -3357,7 +3903,7 @@
     },
     {
       "id": "track-300",
-      "title": "Art. 11 chrání vše, co není veřejně dostupné",
+      "title": "Renovace Hansova klasika může být Proof of Concept",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(300).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=300",
@@ -3370,7 +3916,7 @@
     },
     {
       "id": "track-301",
-      "title": "Plná náhrada škody může přesáhnout €150,000",
+      "title": "Cítím se nejlépe v průmyslové automatizaci a hledání poruch",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(301).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=301",
@@ -3383,7 +3929,7 @@
     },
     {
       "id": "track-302",
-      "title": "Vždy buď připraven dokázat, že parametry pocházejí z kurzu Cremer",
+      "title": "Zmodernizuj PLC řadič, aby staré MIM pece mohly fungovat roky",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(302).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=302",
@@ -3396,7 +3942,7 @@
     },
     {
       "id": "track-303",
-      "title": "Analyzuj VSO - poslední moment na vyjednání osvobození od Art. 11",
+      "title": "MIM pece mají velmi jednoduchou konstrukci",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(303).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=303",
@@ -3409,7 +3955,7 @@
     },
     {
       "id": "track-304",
-      "title": "Nikdy nekontaktuj klienty ITB - vybuduj vlastní B2C základnu",
+      "title": "Ve vakuových pecích vakuum ne vždy znamená čistotu",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(304).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=304",
@@ -3422,7 +3968,7 @@
     },
     {
       "id": "track-305",
-      "title": "Vrať Rompě všechny dokumenty a vybavení bez vyzvání",
+      "title": "Ideální proces debindingu vyžaduje aktivní pročištění plynem",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(305).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=305",
@@ -3435,7 +3981,7 @@
     },
     {
       "id": "track-306",
-      "title": "Art. 10 stanoví: tvé pracovní vynálezy patří Rompě",
+      "title": "Přidej Cold-Trap a izolaci plynového vedení",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(306).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=306",
@@ -3448,7 +3994,7 @@
     },
     {
       "id": "track-307",
-      "title": "Použití hotových feedstocků (BASF Catamold) je bezpečné",
+      "title": "Grafitový liner v hot-zone stabilizuje termiku",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(307).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=307",
@@ -3461,7 +4007,7 @@
     },
     {
       "id": "track-308",
-      "title": "Zaregistruj se v KVK pod neutrálním názvem před monitoringem Rompy",
+      "title": "Tvá role: Oživovatel Legacy Systémů",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(308).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=308",
@@ -3474,7 +4020,7 @@
     },
     {
       "id": "track-309",
-      "title": "Konzultuj s právníkem (€650 ze Sociálního plánu)",
+      "title": "Použij MIM pece pro prototypování: €200-600 za cyklus",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(309).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=309",
@@ -3487,7 +4033,7 @@
     },
     {
       "id": "track-310",
-      "title": "Použij €1500 rozpočet na certifikáty: SolidWorks a ISO 9001",
+      "title": "Neopravuj tak, jak to bylo před poruchou - oprav systémovou chybu",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(310).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=310",
@@ -3500,7 +4046,7 @@
     },
     {
       "id": "track-311",
-      "title": "Omezení náhrady škody na 6 měsíců hrubého platu stojí za boj",
+      "title": "V MIM pecích je problém formaldehyd a kyselina",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(311).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=311",
@@ -3513,7 +4059,7 @@
     },
     {
       "id": "track-312",
-      "title": "Nepodepisuj VSO za 7 dní - máš 14denní lhůtu na rozmyšlenou",
+      "title": "Použij Elino PLC řadič pro modernizaci MIM kontroly teploty",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(312).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=312",
@@ -3526,7 +4072,7 @@
     },
     {
       "id": "track-313",
-      "title": "Market Carve-Out je tvá právní zbroj",
+      "title": "Kontroluj složení spalin a teplotu hořáku",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(313).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=313",
@@ -3539,7 +4085,7 @@
     },
     {
       "id": "track-314",
-      "title": "Mlčení Rompy je strategické vítězství",
+      "title": "Přidání HCHO a rosného bodu senzoru je levné a účinné",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(314).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=314",
@@ -3552,7 +4098,7 @@
     },
     {
       "id": "track-315",
-      "title": "Nikdy nepoužívej dokumentaci, výkresy nebo parametry Rompy",
+      "title": "MIM pece jsou laboratoř vysoké teploty",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(315).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=315",
@@ -3565,7 +4111,7 @@
     },
     {
       "id": "track-316",
-      "title": "Formální oznámení Rompě je pojistka za €0",
+      "title": "Vidím technická omezení a obchodní příležitost v každém projektu",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(316).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=316",
@@ -3578,7 +4124,7 @@
     },
     {
       "id": "track-317",
-      "title": "Market Carve-Out eliminuje 80% právního rizika",
+      "title": "Termální čištění průmyslových nástrojů: stabilní příjem",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(317).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=317",
@@ -3591,7 +4137,7 @@
     },
     {
       "id": "track-318",
-      "title": "Kapitál je odstupné (až €40k na osobu) - použij na start",
+      "title": "Tvé technické znalosti + Hansovy strategické kontakty = úspěch",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(318).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=318",
@@ -3604,7 +4150,7 @@
     },
     {
       "id": "track-319",
-      "title": "UWV Startersperiode: 6 měsíců finanční rezervy",
+      "title": "Chci rozvíjet tech nápady spojené s MIM jako kdysi ITB",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(319).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=319",
@@ -3617,7 +4163,7 @@
     },
     {
       "id": "track-320",
-      "title": "Přeměň školící rozpočet (€1,500) na obchodní kompetence",
+      "title": "Nemám rád dělat nesmyslné věci - hledej plán s motivací",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(320).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=320",
@@ -3630,7 +4176,7 @@
     },
     {
       "id": "track-321",
-      "title": "Nabídni Rompě formálně koupi nástrojů za zlomek účetní hodnoty",
+      "title": "CoolFlow: 25% úspora energie za 30 dní",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(321).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=321",
@@ -3643,7 +4189,7 @@
     },
     {
       "id": "track-322",
-      "title": "Šrotování je pro Rompu racionální - eliminuje konkurenci",
+      "title": "VibeLog: Monitoruj puls stroje než se zastaví",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(322).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=322",
@@ -3656,7 +4202,7 @@
     },
     {
       "id": "track-323",
-      "title": "Oldtimery jsou tvá Market Carve-Out strategie - bezpečný B2C start",
+      "title": "Můj stack: Levný ESP32 místo drahého serveru",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(323).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=323",
@@ -3669,7 +4215,7 @@
     },
     {
       "id": "track-324",
-      "title": "Vybuduj firmu na důvěře, ne na chaosu Rompy",
+      "title": "Automatizace je má vášeň - rutina je ztráta času",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(324).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=324",
@@ -3682,7 +4228,7 @@
     },
     {
       "id": "track-325",
-      "title": "Nečekej na pomoc Rompy - buduj bez nich",
+      "title": "Neopravuji - modernizuji",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(325).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=325",
@@ -3695,7 +4241,7 @@
     },
     {
       "id": "track-326",
-      "title": "Tvá mise: přesvědčit tým, že úspěch je možný bez Rompy",
+      "title": "Vztek a frustrace jsou normální, ale nemohou být základem strategie",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(326).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=326",
@@ -3708,7 +4254,7 @@
     },
     {
       "id": "track-327",
-      "title": "Přestaň žádat o povolení - začni jednat ze svobodné vůle",
+      "title": "Rompa záměrně vytváří chaos, aby vás rozdělila",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(327).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=327",
@@ -3721,7 +4267,7 @@
     },
     {
       "id": "track-328",
-      "title": "Ověř trh: bez 2-3 připravených klientů nemá byznys smysl",
+      "title": "Změň naratív: přestaň být Obětí, staň se Tvůrcem",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(328).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=328",
@@ -3734,7 +4280,7 @@
     },
     {
       "id": "track-329",
-      "title": "Zinventarizuj stroje se sériovými čísly a online oceněním",
+      "title": "ADHD je Rozpoznávání Vzorců - spoj tečky a předvídej jejich tahy",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(329).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=329",
@@ -3747,7 +4293,7 @@
     },
     {
       "id": "track-330",
-      "title": "Pokud Rompa odmítne prodat, hledej použité na Machineseeker",
+      "title": "Vnucování bezcennosti je element manipulace Rompy",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(330).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=330",
@@ -3760,7 +4306,7 @@
     },
     {
       "id": "track-331",
-      "title": "B.V. (s.r.o.) poskytuje omezenou odpovědnost",
+      "title": "Jejich \"pomoc\" znamená: najdi práci jinde, nekonkuruj Rompě CZ",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(331).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=331",
@@ -3773,7 +4319,7 @@
     },
     {
       "id": "track-332",
-      "title": "B2B prodej a management - klíčové kompetence k doplnění",
+      "title": "Tvá hodnota není v budově či strojích, ale v know-how",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(332).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=332",
@@ -3786,7 +4332,7 @@
     },
     {
       "id": "track-333",
-      "title": "Ukaž Hansovi: tvá dílna je stabilní nájem a ty jsi Správce 24/7",
+      "title": "Vyvolej reputační tlak na vedení před zveřejněním dokumentů",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(333).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=333",
@@ -3799,7 +4345,7 @@
     },
     {
       "id": "track-334",
-      "title": "Využij placený měsíc volna před koncem smlouvy",
+      "title": "Nedej se vtáhnout do mentální smyčky - Rompa není tvůj problém",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(334).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=334",
@@ -3812,7 +4358,7 @@
     },
     {
       "id": "track-335",
-      "title": "Nedovol Rompě považovat tvou vizi za \"přípravu konkurence\"",
+      "title": "Vybuduj nový cíl - ne nutně vlastní firmu, ale něco smysluplného",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(335).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=335",
@@ -3825,7 +4371,7 @@
     },
     {
       "id": "track-336",
-      "title": "Týdenní schůzky jádra týmu: fakta, ne emoceinformují o situaci",
+      "title": "I když Rompa vše zešrotuje, můžeš koupit použité stroje",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(336).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=336",
@@ -3838,7 +4384,7 @@
     },
     {
       "id": "track-337",
-      "title": "Tvůj plán musí být realistický: 6-12 měsíců do prvních příjmů",
+      "title": "Neboj se s Rompou - ignoruj je a buduj alternativu",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(337).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=337",
@@ -3851,7 +4397,7 @@
     },
     {
       "id": "track-338",
-      "title": "Rychlá malá vítězství budují důvěru týmu",
+      "title": "Organizovaná akce paralyzuje plán vedení počítající s chaosem",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(338).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=338",
@@ -3864,7 +4410,7 @@
     },
     {
       "id": "track-339",
-      "title": "Síť ZZP je flexibilní alternativa k velkému zaměstnání",
+      "title": "Pracuj na Hansově projektu, abys získal důvěru a pracoviště",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(339).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=339",
@@ -3877,7 +4423,7 @@
     },
     {
       "id": "track-340",
-      "title": "Použij školící rozpočet na kurzy řízení MSP",
+      "title": "Buď flexibilní - oldtimery jsou start, automatizace je cíl",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(340).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=340",
@@ -3890,7 +4436,7 @@
     },
     {
       "id": "track-341",
-      "title": "Nepotřebuješ jejich stroje, aby ses vydělával - potřebuješ klienty",
+      "title": "Ukaž Hansovi rozpracované scénáře a analýzu rizik",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(341).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=341",
@@ -3903,7 +4449,7 @@
     },
     {
       "id": "track-342",
-      "title": "Renovace Hansova klasika může být Proof of Concept",
+      "title": "Už máš výhodu - oni neví, že vidíš jejich manipulaci",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(342).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=342",
@@ -3916,7 +4462,7 @@
     },
     {
       "id": "track-343",
-      "title": "Cítím se nejlépe v průmyslové automatizaci a hledání poruch",
+      "title": "Tvůj úspěch je jediné, co je porazí",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(343).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=343",
@@ -3929,7 +4475,7 @@
     },
     {
       "id": "track-344",
-      "title": "Zmodernizuj PLC řadič, aby staré MIM pece mohly fungovat roky",
+      "title": "Pokud Rompa vědomě zvolí ztrátovou variantu, porušuje povinnost péče",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(344).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=344",
@@ -3942,7 +4488,7 @@
     },
     {
       "id": "track-345",
-      "title": "MIM pece mají velmi jednoduchou konstrukci",
+      "title": "Odmítnutí ziskové nabídky dokazuje: Rompa chrání CZ, ne ITB NL",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(345).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=345",
@@ -3955,7 +4501,7 @@
     },
     {
       "id": "track-346",
-      "title": "Ve vakuových pecích vakuum ne vždy znamená čistotu",
+      "title": "Jsi Strategic Problem Solver - vidíš byznys, ne jen techniku",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(346).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=346",
@@ -3968,7 +4514,7 @@
     },
     {
       "id": "track-347",
-      "title": "Ideální proces debindingu vyžaduje aktivní pročištění plynem",
+      "title": "Vždy měj připravený Plán B: Machineseeker a alternativní budova",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(347).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=347",
@@ -3981,7 +4527,7 @@
     },
     {
       "id": "track-348",
-      "title": "Přidej Cold-Trap a izolaci plynového vedení",
+      "title": "Formální návrh na nákup aktiv musí podat založená B.V.",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(348).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=348",
@@ -3994,7 +4540,7 @@
     },
     {
       "id": "track-349",
-      "title": "Grafitový liner v hot-zone stabilizuje termiku",
+      "title": "Zaměř se na malé dávky a vysokou marži",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(349).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=349",
@@ -4007,7 +4553,7 @@
     },
     {
       "id": "track-350",
-      "title": "Tvá role: Oživovatel Legacy Systémů",
+      "title": "Pokud Rompa odmítne, požaduj písemné odůvodnění",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(350).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=350",
@@ -4020,7 +4566,7 @@
     },
     {
       "id": "track-351",
-      "title": "Použij MIM pece pro prototypování: €200-600 za cyklus",
+      "title": "Samotné myšlení nevytváří prototypy - akce vytváří momentum",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(351).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=351",
@@ -4033,7 +4579,7 @@
     },
     {
       "id": "track-352",
-      "title": "Neopravuj tak, jak to bylo před poruchou - oprav systémovou chybu",
+      "title": "DAREMON úspěch: 20% AI strategie, 80% tvá realizace",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(352).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=352",
@@ -4046,7 +4592,7 @@
     },
     {
       "id": "track-353",
-      "title": "V MIM pecích je problém formaldehyd a kyselina",
+      "title": "Nečekej, až ti někdo řekne, co dělat - lídr vytváří vlastní plán",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(353).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=353",
@@ -4059,7 +4605,7 @@
     },
     {
       "id": "track-354",
-      "title": "Použij Elino PLC řadič pro modernizaci MIM kontroly teploty",
+      "title": "Paralýza analýzou je past, která brání vzniku byznysu",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(354).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=354",
@@ -4072,7 +4618,7 @@
     },
     {
       "id": "track-355",
-      "title": "Kontroluj složení spalin a teplotu hořáku",
+      "title": "Počítá se realizace, ne nápady - nápady se staly komoditou",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(355).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=355",
@@ -4085,7 +4631,7 @@
     },
     {
       "id": "track-356",
-      "title": "Přidání HCHO a rosného bodu senzoru je levné a účinné",
+      "title": "Nejdůležitější věc, kterou můžeš zítra udělat: začít jednat dnes",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(356).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=356",
@@ -4098,7 +4644,7 @@
     },
     {
       "id": "track-357",
-      "title": "MIM pece jsou laboratoř vysoké teploty",
+      "title": "Odvaha začít je největší rozdíl mezi úspěchem a neúspěchem",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(357).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=357",
@@ -4111,7 +4657,7 @@
     },
     {
       "id": "track-358",
-      "title": "Vidím technická omezení a obchodní příležitost v každém projektu",
+      "title": "Dobrý řemeslník s dobrým nástrojem vždy vyhraje",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(358).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=358",
@@ -4124,7 +4670,7 @@
     },
     {
       "id": "track-359",
-      "title": "Termální čištění průmyslových nástrojů: stabilní příjem",
+      "title": "Pokud něco nechápš, vylepši to a oprav",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(359).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=359",
@@ -4137,7 +4683,7 @@
     },
     {
       "id": "track-360",
-      "title": "Tvé technické znalosti + Hansovy strategické kontakty = úspěch",
+      "title": "Rompa je pomalý Tank, ty a AI jste rychlý Dron",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(360).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=360",
@@ -4150,7 +4696,7 @@
     },
     {
       "id": "track-361",
-      "title": "Chci rozvíjet tech nápady spojené s MIM jako kdysi ITB",
+      "title": "AI není podvod - je to nástroj demokratizace expertní znalosti",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(361).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=361",
@@ -4163,7 +4709,7 @@
     },
     {
       "id": "track-362",
-      "title": "Nemám rád dělat nesmyslné věci - hledej plán s motivací",
+      "title": "Solo Founder s AI poráží korporace",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(362).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=362",
@@ -4176,7 +4722,7 @@
     },
     {
       "id": "track-363",
-      "title": "CoolFlow: 25% úspora energie za 30 dní",
+      "title": "Bariéra vstupu spadla - využij revoluci než ji ostatní zpozorují",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(363).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=363",
@@ -4189,7 +4735,7 @@
     },
     {
       "id": "track-364",
-      "title": "VibeLog: Monitoruj puls stroje než se zastaví",
+      "title": "DAREMON strategie založena na Market Carve-Out",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(364).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=364",
@@ -4202,7 +4748,7 @@
     },
     {
       "id": "track-365",
-      "title": "Můj stack: Levný ESP32 místo drahého serveru",
+      "title": "Používej AI jako asistenta, ne rozhodce - finální hlas patří tobě",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(365).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=365",
@@ -4215,7 +4761,7 @@
     },
     {
       "id": "track-366",
-      "title": "Automatizace je má vášeň - rutina je ztráta času",
+      "title": "Bez AI by právní analýza stála €650 a týdny čekání",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(366).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=366",
@@ -4228,7 +4774,7 @@
     },
     {
       "id": "track-367",
-      "title": "Neopravuji - modernizuji",
+      "title": "Strategické myšlení se stává premium dovedností v éře automatizace",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(367).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=367",
@@ -4241,7 +4787,7 @@
     },
     {
       "id": "track-368",
-      "title": "Vztek a frustrace jsou normální, ale nemohou být základem strategie",
+      "title": "Správná AI strategie je hodna €5k-8k měsíčních úspor",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(368).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=368",
@@ -4254,7 +4800,7 @@
     },
     {
       "id": "track-369",
-      "title": "Rompa záměrně vytváří chaos, aby vás rozdělila",
+      "title": "Hodnota znalosti: €2,000 denně, když víš, jak ji použít",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(369).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=369",
@@ -4267,7 +4813,7 @@
     },
     {
       "id": "track-370",
-      "title": "Změň naratív: přestaň být Obětí, staň se Tvůrcem",
+      "title": "Nezávislost: schopnost pracovat na tom, co dává smysl",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(370).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=370",
@@ -4280,7 +4826,7 @@
     },
     {
       "id": "track-371",
-      "title": "ADHD je Rozpoznávání Vzorců - spoj tečky a předvídej jejich tahy",
+      "title": "Plné zapojení pramení ze znalosti, že tvá budoucnost závisí na úspěchu",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(371).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=371",
@@ -4293,7 +4839,7 @@
     },
     {
       "id": "track-372",
-      "title": "Vnucování bezcennosti je element manipulace Rompy",
+      "title": "Kontrola nad časem a vizí je cennější než stabilní plat",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(372).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=372",
@@ -4306,7 +4852,7 @@
     },
     {
       "id": "track-373",
-      "title": "Jejich \"pomoc\" znamená: najdi práci jinde, nekonkuruj Rompě CZ",
+      "title": "Nehledej práci - hledej problémy k řešení",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(373).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=373",
@@ -4319,7 +4865,7 @@
     },
     {
       "id": "track-374",
-      "title": "Tvá hodnota není v budově či strojích, ale v know-how",
+      "title": "Nejlepší dealy: všichni vyhrávají",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(374).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=374",
@@ -4332,7 +4878,7 @@
     },
     {
       "id": "track-375",
-      "title": "Vyvolej reputační tlak na vedení před zveřejněním dokumentů",
+      "title": "Vášeň > Výplata - autentická síla DAREMON",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(375).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=375",
@@ -4345,7 +4891,7 @@
     },
     {
       "id": "track-376",
-      "title": "Nedej se vtáhnout do mentální smyčky - Rompa není tvůj problém",
+      "title": "Clean Room is uw fundamentele juridische schild tegen Rompa",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(376).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=376",
@@ -4358,7 +4904,7 @@
     },
     {
       "id": "track-377",
-      "title": "Vybuduj nový cíl - ne nutně vlastní firmu, ale něco smysluplného",
+      "title": "Documenteer elke stap in R&D Log - 't is uw bewijs van onafhankelijkheid",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(377).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=377",
@@ -4371,7 +4917,7 @@
     },
     {
       "id": "track-378",
-      "title": "I když Rompa vše zešrotuje, můžeš koupit použité stroje",
+      "title": "Vergeet nie: geheimhoudingsclausule (Art. 11) geldt voor onbepaalde tijd",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(378).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=378",
@@ -4384,7 +4930,7 @@
     },
     {
       "id": "track-379",
-      "title": "Neboj se s Rompou - ignoruj je a buduj alternativu",
+      "title": "Contractuele boete: €2500 onmiddellijk, zonder aanmaning",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(379).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=379",
@@ -4397,7 +4943,7 @@
     },
     {
       "id": "track-380",
-      "title": "Organizovaná akce paralyzuje plán vedení počítající s chaosem",
+      "title": "Uw algemene vaardigheden zijn vrij - de rest vereist een Waiver",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(380).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=380",
@@ -4410,7 +4956,7 @@
     },
     {
       "id": "track-381",
-      "title": "Pracuj na Hansově projektu, abys získal důvěru a pracoviště",
+      "title": "Gebruik geen CAD-tekeningen van ITB - maak nieuwe van nul af",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(381).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=381",
@@ -4423,7 +4969,7 @@
     },
     {
       "id": "track-382",
-      "title": "Buď flexibilní - oldtimery jsou start, automatizace je cíl",
+      "title": "Uw PLC-kennis is van u - documenteer externe bronnen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(382).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=382",
@@ -4436,7 +4982,7 @@
     },
     {
       "id": "track-383",
-      "title": "Ukaž Hansovi rozpracované scénáře a analýzu rizik",
+      "title": "Art. 11 beschermt alles dat niet openbaar beschikbaar is",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(383).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=383",
@@ -4449,7 +4995,7 @@
     },
     {
       "id": "track-384",
-      "title": "Už máš výhodu - oni neví, že vidíš jejich manipulaci",
+      "title": "Volledige schadevergoeding kan €150k overschrijden - neem geen risico",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(384).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=384",
@@ -4462,7 +5008,7 @@
     },
     {
       "id": "track-385",
-      "title": "Tvůj úspěch je jediné, co je porazí",
+      "title": "Wees altijd klaar te bewijzen dat parameters van Cremer cursus komen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(385).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=385",
@@ -4475,7 +5021,7 @@
     },
     {
       "id": "track-386",
-      "title": "Pokud Rompa vědomě zvolí ztrátovou variantu, porušuje povinnost péče",
+      "title": "Analyseer VSO - laatste moment voor Art. 11 vrijstelling",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(386).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=386",
@@ -4488,7 +5034,7 @@
     },
     {
       "id": "track-387",
-      "title": "Odmítnutí ziskové nabídky dokazuje: Rompa chrání CZ, ne ITB NL",
+      "title": "Contacteer nooit ITB klanten - bouw eigen B2C basis",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(387).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=387",
@@ -4501,7 +5047,7 @@
     },
     {
       "id": "track-388",
-      "title": "Jsi Strategic Problem Solver - vidíš byznys, ne jen techniku",
+      "title": "Retourneer alle documenten ongevraagd aan Rompa",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(388).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=388",
@@ -4514,7 +5060,7 @@
     },
     {
       "id": "track-389",
-      "title": "Vždy měj připravený Plán B: Machineseeker a alternativní budova",
+      "title": "Art. 10 zegt: uw werkuitvindingen zijn van Rompa - weet dit",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(389).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=389",
@@ -4527,7 +5073,7 @@
     },
     {
       "id": "track-390",
-      "title": "Formální návrh na nákup aktiv musí podat založená B.V.",
+      "title": "Gebruik van kant-en-klare feedstocks (BASF Catamold) is veilig",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(390).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=390",
@@ -4540,7 +5086,7 @@
     },
     {
       "id": "track-391",
-      "title": "Zaměř se na malé dávky a vysokou marži",
+      "title": "Registreer bij KVK onder neutrale naam voor Rompa u monitort",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(391).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=391",
@@ -4553,7 +5099,7 @@
     },
     {
       "id": "track-392",
-      "title": "Pokud Rompa odmítne, požaduj písemné odůvodnění",
+      "title": "Raadpleeg advocaat (€650 van Sociaal Plan) - 't is verplicht",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(392).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=392",
@@ -4566,7 +5112,7 @@
     },
     {
       "id": "track-393",
-      "title": "Samotné myšlení nevytváří prototypy - akce vytváří momentum",
+      "title": "Gebruik €1500 budget voor certificaten: SolidWorks en ISO 9001",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(393).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=393",
@@ -4579,7 +5125,7 @@
     },
     {
       "id": "track-394",
-      "title": "DAREMON úspěch: 20% AI strategie, 80% tvá realizace",
+      "title": "Beperking schade tot 6 maanden brutoloon is de strijd waard",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(394).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=394",
@@ -4592,7 +5138,7 @@
     },
     {
       "id": "track-395",
-      "title": "Nečekej, až ti někdo řekne, co dělat - lídr vytváří vlastní plán",
+      "title": "Onderteken VSO nie binnen 7 dagen - ge hebt 14 dagen bedenktijd",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(395).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=395",
@@ -4605,7 +5151,7 @@
     },
     {
       "id": "track-396",
-      "title": "Paralýza analýzou je past, která brání vzniku byznysu",
+      "title": "Market Carve-Out is uw juridisch harnas",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(396).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=396",
@@ -4618,7 +5164,7 @@
     },
     {
       "id": "track-397",
-      "title": "Počítá se realizace, ne nápady - nápady se staly komoditou",
+      "title": "Stilzwijgen Rompa is strategische overwinning (Estoppel)",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(397).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=397",
@@ -4631,7 +5177,7 @@
     },
     {
       "id": "track-398",
-      "title": "Nejdůležitější věc, kterou můžeš zítra udělat: začít jednat dnes",
+      "title": "Gebruik nooit Rompa's documentatie, tekeningen of parameters",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(398).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=398",
@@ -4644,7 +5190,7 @@
     },
     {
       "id": "track-399",
-      "title": "Odvaha začít je největší rozdíl mezi úspěchem a neúspěchem",
+      "title": "Formele Kennisgeving aan Rompa is verzekeringspolis voor €0",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(399).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=399",
@@ -4657,7 +5203,7 @@
     },
     {
       "id": "track-400",
-      "title": "Dobrý řemeslník s dobrým nástrojem vždy vyhraje",
+      "title": "Market Carve-Out elimineert 80% juridisch risico",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(400).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=400",
@@ -4670,7 +5216,7 @@
     },
     {
       "id": "track-401",
-      "title": "Pokud něco nechápš, vylepši to a oprav",
+      "title": "Kapitaal is ontslagvergoeding (tot €40k per persoon) - gebruik voor start",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(401).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=401",
@@ -4683,7 +5229,7 @@
     },
     {
       "id": "track-402",
-      "title": "Rompa je pomalý Tank, ty a AI jste rychlý Dron",
+      "title": "UWV Startersperiode: 6 maanden financiële buffer - gebruik verstandig",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(402).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=402",
@@ -4696,7 +5242,7 @@
     },
     {
       "id": "track-403",
-      "title": "AI není podvod - je to nástroj demokratizace expertní znalosti",
+      "title": "Transformeer opleidingsbudget (€1,500) naar verkoop- en business competenties",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(403).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=403",
@@ -4709,7 +5255,7 @@
     },
     {
       "id": "track-404",
-      "title": "Solo Founder s AI poráží korporace",
+      "title": "Doe Rompa formeel aanbod om tooling te kopen voor fractie boekwaarde",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(404).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=404",
@@ -4722,7 +5268,7 @@
     },
     {
       "id": "track-405",
-      "title": "Bariéra vstupu spadla - využij revoluci než ji ostatní zpozorují",
+      "title": "Slopen is rationeel voor Rompa - elimineert concurrentie",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(405).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=405",
@@ -4735,7 +5281,7 @@
     },
     {
       "id": "track-406",
-      "title": "DAREMON strategie založena na Market Carve-Out",
+      "title": "Oldtimers is uw Market Carve-Out strategie - veilige B2C start",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(406).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=406",
@@ -4748,7 +5294,7 @@
     },
     {
       "id": "track-407",
-      "title": "Používej AI jako asistenta, ne rozhodce - finální hlas patří tobě",
+      "title": "Bouw bedrijf op vertrouwen en coördinatie, nie op Rompa's chaos",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(407).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=407",
@@ -4761,7 +5307,7 @@
     },
     {
       "id": "track-408",
-      "title": "Bez AI by právní analýza stála €650 a týdny čekání",
+      "title": "Wacht nie op Rompa's hulp - bouw zonder hen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(408).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=408",
@@ -4774,7 +5320,7 @@
     },
     {
       "id": "track-409",
-      "title": "Strategické myšlení se stává premium dovedností v éře automatizace",
+      "title": "Uw missie: overtuig team dat succes mogelijk is zonder Rompa",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(409).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=409",
@@ -4787,7 +5333,7 @@
     },
     {
       "id": "track-410",
-      "title": "Správná AI strategie je hodna €5k-8k měsíčních úspor",
+      "title": "Stop met vragen om toestemming - begin handelen uit vrije wil",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(410).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=410",
@@ -4800,7 +5346,7 @@
     },
     {
       "id": "track-411",
-      "title": "Hodnota znalosti: €2,000 denně, když víš, jak ji použít",
+      "title": "Verifieer markt: zonder 2-3 klare klanten heeft business geen zin",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(411).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=411",
@@ -4813,7 +5359,7 @@
     },
     {
       "id": "track-412",
-      "title": "Nezávislost: schopnost pracovat na tom, co dává smysl",
+      "title": "Inventariseer machines met serienummers en online waardering",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(412).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=412",
@@ -4826,7 +5372,7 @@
     },
     {
       "id": "track-413",
-      "title": "Plné zapojení pramení ze znalosti, že tvá budoucnost závisí na úspěchu",
+      "title": "Als Rompa weigert te verkopen, zoek tweedehands op Machineseeker",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(413).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=413",
@@ -4839,7 +5385,7 @@
     },
     {
       "id": "track-414",
-      "title": "Kontrola nad časem a vizí je cennější než stabilní plat",
+      "title": "B.V. geeft beperkte aansprakelijkheid - overweeg bij grote investeringen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(414).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=414",
@@ -4852,7 +5398,7 @@
     },
     {
       "id": "track-415",
-      "title": "Nehledej práci - hledej problémy k řešení",
+      "title": "B2B verkoop en management - cruciale competentiehiaten te vullen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(415).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=415",
@@ -4865,7 +5411,7 @@
     },
     {
       "id": "track-416",
-      "title": "Nejlepší dealy: všichni vyhrávají",
+      "title": "Toon Hans: uw werkplaats is stabiele huur en ge zijt Caretaker 24/7",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(416).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=416",
@@ -4878,7 +5424,7 @@
     },
     {
       "id": "track-417",
-      "title": "Vášeň > Výplata - autentická síla DAREMON",
+      "title": "Gebruik betaalde vrije maand voor B.V. registratie en klantengesprekken",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(417).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=417",
@@ -4891,7 +5437,7 @@
     },
     {
       "id": "track-418",
-      "title": "Clean Room is uw fundamentele juridische schild tegen Rompa",
+      "title": "Laat Rompa nie denken dat ge voorbereidt op concurrentie",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(418).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=418",
@@ -4904,7 +5450,7 @@
     },
     {
       "id": "track-419",
-      "title": "Documenteer elke stap in R&D Log - 't is uw bewijs van onafhankelijkheid",
+      "title": "Wekelijkse kernteam meetings: feiten, geen emoties",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(419).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=419",
@@ -4917,7 +5463,7 @@
     },
     {
       "id": "track-420",
-      "title": "Vergeet nie: geheimhoudingsclausule (Art. 11) geldt voor onbepaalde tijd",
+      "title": "Uw plan moet realistisch zijn: 6-12 maanden tot eerste inkomsten",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(420).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=420",
@@ -4930,7 +5476,7 @@
     },
     {
       "id": "track-421",
-      "title": "Contractuele boete: €2500 onmiddellijk, zonder aanmaning",
+      "title": "Snelle kleine overwinningen bouwen teamvertrouwen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(421).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=421",
@@ -4943,7 +5489,7 @@
     },
     {
       "id": "track-422",
-      "title": "Uw algemene vaardigheden zijn vrij - de rest vereist een Waiver",
+      "title": "ZZP netwerk is flexibel alternatief voor groot dienstverband",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(422).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=422",
@@ -4956,7 +5502,7 @@
     },
     {
       "id": "track-423",
-      "title": "Gebruik geen CAD-tekeningen van ITB - maak nieuwe van nul af",
+      "title": "Gebruik opleidingsbudget voor KMO Management cursus",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(423).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=423",
@@ -4969,7 +5515,7 @@
     },
     {
       "id": "track-424",
-      "title": "Uw PLC-kennis is van u - documenteer externe bronnen",
+      "title": "Ge hebt hun machines nie nodig om geld te verdienen - ge hebt klanten nodig",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(424).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=424",
@@ -4982,7 +5528,7 @@
     },
     {
       "id": "track-425",
-      "title": "Art. 11 beschermt alles dat niet openbaar beschikbaar is",
+      "title": "Hans' klassieker renovatie kan Proof of Concept zijn",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(425).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=425",
@@ -4995,7 +5541,7 @@
     },
     {
       "id": "track-426",
-      "title": "Volledige schadevergoeding kan €150k overschrijden - neem geen risico",
+      "title": "Voel mij beste in industriële automatisering en storing zoeken",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(426).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=426",
@@ -5008,7 +5554,7 @@
     },
     {
       "id": "track-427",
-      "title": "Wees altijd klaar te bewijzen dat parameters van Cremer cursus komen",
+      "title": "Moderniseer PLC controller zodat oude MIM ovens nog jaren kunnen werken",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(427).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=427",
@@ -5021,7 +5567,7 @@
     },
     {
       "id": "track-428",
-      "title": "Analyseer VSO - laatste moment voor Art. 11 vrijstelling",
+      "title": "MIM ovens hebben zeer eenvoudige bouw - repareer met juiste materialen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(428).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=428",
@@ -5034,7 +5580,7 @@
     },
     {
       "id": "track-429",
-      "title": "Contacteer nooit ITB klanten - bouw eigen B2C basis",
+      "title": "In vacuümovens betekent vacuüm nie altijd zuiverheid",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(429).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=429",
@@ -5047,7 +5593,7 @@
     },
     {
       "id": "track-430",
-      "title": "Retourneer alle documenten ongevraagd aan Rompa",
+      "title": "Ideaal debinding proces vereist actieve gas purge na cyclus",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(430).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=430",
@@ -5060,7 +5606,7 @@
     },
     {
       "id": "track-431",
-      "title": "Art. 10 zegt: uw werkuitvindingen zijn van Rompa - weet dit",
+      "title": "Voeg Cold-Trap en isolatie toe aan gasleiding om zuurcondensatie te vermijden",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(431).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=431",
@@ -5073,7 +5619,7 @@
     },
     {
       "id": "track-432",
-      "title": "Gebruik van kant-en-klare feedstocks (BASF Catamold) is veilig",
+      "title": "Grafiet liner in hot-zone stabiliseert thermisch proces en verbetert sinteren",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(432).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=432",
@@ -5086,7 +5632,7 @@
     },
     {
       "id": "track-433",
-      "title": "Registreer bij KVK onder neutrale naam voor Rompa u monitort",
+      "title": "Uw rol: Legacy Systems Reviver - breng industriële dinosaurussen terug tot leven",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(433).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=433",
@@ -5099,7 +5645,7 @@
     },
     {
       "id": "track-434",
-      "title": "Raadpleeg advocaat (€650 van Sociaal Plan) - 't is verplicht",
+      "title": "Gebruik MIM ovens voor prototyping, R&D sinteren: €200-600 per cyclus",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(434).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=434",
@@ -5112,7 +5658,7 @@
     },
     {
       "id": "track-435",
-      "title": "Gebruik €1500 budget voor certificaten: SolidWorks en ISO 9001",
+      "title": "Repareer nie zoals 't was voor storing - verbeter systemische fout",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(435).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=435",
@@ -5125,7 +5671,7 @@
     },
     {
       "id": "track-436",
-      "title": "Beperking schade tot 6 maanden brutoloon is de strijd waard",
+      "title": "In MIM ovens is formaldehyde en zuur het probleem",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(436).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=436",
@@ -5138,7 +5684,7 @@
     },
     {
       "id": "track-437",
-      "title": "Onderteken VSO nie binnen 7 dagen - ge hebt 14 dagen bedenktijd",
+      "title": "Gebruik Elino PLC controller om MIM temperatuurcontrole te moderniseren",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(437).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=437",
@@ -5151,7 +5697,7 @@
     },
     {
       "id": "track-438",
-      "title": "Market Carve-Out is uw juridisch harnas",
+      "title": "Controleer rookgas samenstelling en brandertemperatuur",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(438).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=438",
@@ -5164,7 +5710,7 @@
     },
     {
       "id": "track-439",
-      "title": "Stilzwijgen Rompa is strategische overwinning (Estoppel)",
+      "title": "HCHO en dauwpunt sensor in uitlaatkanaal is goedkoop en effectief",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(439).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=439",
@@ -5177,7 +5723,7 @@
     },
     {
       "id": "track-440",
-      "title": "Gebruik nooit Rompa's documentatie, tekeningen of parameters",
+      "title": "MIM ovens zijn laboratorium voor hoge temperatuur",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(440).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=440",
@@ -5190,7 +5736,7 @@
     },
     {
       "id": "track-441",
-      "title": "Formele Kennisgeving aan Rompa is verzekeringspolis voor €0",
+      "title": "Ik zie technical constraints en business opportunity in elk project",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(441).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=441",
@@ -5203,7 +5749,7 @@
     },
     {
       "id": "track-442",
-      "title": "Market Carve-Out elimineert 80% juridisch risico",
+      "title": "Thermische reiniging diensten voor industriële tooling: stabiel inkomen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(442).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=442",
@@ -5216,7 +5762,7 @@
     },
     {
       "id": "track-443",
-      "title": "Kapitaal is ontslagvergoeding (tot €40k per persoon) - gebruik voor start",
+      "title": "Uw technische kennis + Hans strategische contacten = complementair succes",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(443).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=443",
@@ -5229,7 +5775,7 @@
     },
     {
       "id": "track-444",
-      "title": "UWV Startersperiode: 6 maanden financiële buffer - gebruik verstandig",
+      "title": "Wil tech ideeën ontwikkelen gerelateerd aan MIM zoals ITB vroeger deed",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(444).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=444",
@@ -5242,7 +5788,7 @@
     },
     {
       "id": "track-445",
-      "title": "Transformeer opleidingsbudget (€1,500) naar verkoop- en business competenties",
+      "title": "Hou nie van zinloze dingen doen - zoek plan dat motivatie geeft",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(445).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=445",
@@ -5255,7 +5801,7 @@
     },
     {
       "id": "track-446",
-      "title": "Doe Rompa formeel aanbod om tooling te kopen voor fractie boekwaarde",
+      "title": "CoolFlow: 25% energiebesparing in 30 dagen - da's echte KPI",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(446).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=446",
@@ -5268,7 +5814,7 @@
     },
     {
       "id": "track-447",
-      "title": "Slopen is rationeel voor Rompa - elimineert concurrentie",
+      "title": "VibeLog: Monitor machine hartslag voor 't stopt",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(447).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=447",
@@ -5281,7 +5827,7 @@
     },
     {
       "id": "track-448",
-      "title": "Oldtimers is uw Market Carve-Out strategie - veilige B2C start",
+      "title": "Mijn stack: Goedkope ESP32 in plaats van dure server",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(448).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=448",
@@ -5294,7 +5840,7 @@
     },
     {
       "id": "track-449",
-      "title": "Bouw bedrijf op vertrouwen en coördinatie, nie op Rompa's chaos",
+      "title": "Automatisering is mijn passie - routine is tijdverspilling",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(449).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=449",
@@ -5307,7 +5853,7 @@
     },
     {
       "id": "track-450",
-      "title": "Wacht nie op Rompa's hulp - bouw zonder hen",
+      "title": "Ik repareer nie - ik moderniseer",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(450).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=450",
@@ -5320,7 +5866,7 @@
     },
     {
       "id": "track-451",
-      "title": "Uw missie: overtuig team dat succes mogelijk is zonder Rompa",
+      "title": "Woede en frustratie zijn normaal, maar kunnen geen strategie basis zijn",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(451).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=451",
@@ -5333,7 +5879,7 @@
     },
     {
       "id": "track-452",
-      "title": "Stop met vragen om toestemming - begin handelen uit vrije wil",
+      "title": "Rompa creëert opzettelijk chaos om jullie te verdelen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(452).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=452",
@@ -5346,7 +5892,7 @@
     },
     {
       "id": "track-453",
-      "title": "Verifieer markt: zonder 2-3 klare klanten heeft business geen zin",
+      "title": "Verander narratief: stop met Slachtoffer zijn, word Schepper",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(453).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=453",
@@ -5359,7 +5905,7 @@
     },
     {
       "id": "track-454",
-      "title": "Inventariseer machines met serienummers en online waardering",
+      "title": "ADHD is Pattern Recognition - verbind punten en voorspel hun zetten",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(454).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=454",
@@ -5372,7 +5918,7 @@
     },
     {
       "id": "track-455",
-      "title": "Als Rompa weigert te verkopen, zoek tweedehands op Machineseeker",
+      "title": "U waardeloos praten is Rompa's manipulatie element",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(455).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=455",
@@ -5385,7 +5931,7 @@
     },
     {
       "id": "track-456",
-      "title": "B.V. geeft beperkte aansprakelijkheid - overweeg bij grote investeringen",
+      "title": "Hun \"hulp\" betekent: vind werk elders, concurreer nie met Rompa CZ",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(456).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=456",
@@ -5398,7 +5944,7 @@
     },
     {
       "id": "track-457",
-      "title": "B2B verkoop en management - cruciale competentiehiaten te vullen",
+      "title": "Uw waarde zit nie in gebouw of machines, maar in know-how",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(457).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=457",
@@ -5411,7 +5957,7 @@
     },
     {
       "id": "track-458",
-      "title": "Toon Hans: uw werkplaats is stabiele huur en ge zijt Caretaker 24/7",
+      "title": "Roep reputatie druk op bestuur op voor ze documenten tonen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(458).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=458",
@@ -5424,7 +5970,7 @@
     },
     {
       "id": "track-459",
-      "title": "Gebruik betaalde vrije maand voor B.V. registratie en klantengesprekken",
+      "title": "Laat u nie in mentale lus trekken - Rompa is nie uw probleem",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(459).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=459",
@@ -5437,7 +5983,7 @@
     },
     {
       "id": "track-460",
-      "title": "Laat Rompa nie denken dat ge voorbereidt op concurrentie",
+      "title": "Bouw nieuw doel - nie per se eigen bedrijf, maar iets met zin",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(460).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=460",
@@ -5450,7 +5996,7 @@
     },
     {
       "id": "track-461",
-      "title": "Wekelijkse kernteam meetings: feiten, geen emoties",
+      "title": "Zelfs als Rompa alles sloopt, kunt ge tweedehands machines kopen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(461).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=461",
@@ -5463,7 +6009,7 @@
     },
     {
       "id": "track-462",
-      "title": "Uw plan moet realistisch zijn: 6-12 maanden tot eerste inkomsten",
+      "title": "Vecht nie met Rompa - negeer hen en bouw alternatief",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(462).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=462",
@@ -5476,7 +6022,7 @@
     },
     {
       "id": "track-463",
-      "title": "Snelle kleine overwinningen bouwen teamvertrouwen",
+      "title": "Georganiseerde actie verlamt bestuur's chaos plan",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(463).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=463",
@@ -5489,7 +6035,7 @@
     },
     {
       "id": "track-464",
-      "title": "ZZP netwerk is flexibel alternatief voor groot dienstverband",
+      "title": "Werk aan Hans' project om vertrouwen en werkplek te winnen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(464).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=464",
@@ -5502,7 +6048,7 @@
     },
     {
       "id": "track-465",
-      "title": "Gebruik opleidingsbudget voor KMO Management cursus",
+      "title": "Wees flexibel - oldtimers zijn start, automatisering is doel",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(465).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=465",
@@ -5515,7 +6061,7 @@
     },
     {
       "id": "track-466",
-      "title": "Ge hebt hun machines nie nodig om geld te verdienen - ge hebt klanten nodig",
+      "title": "Toon Hans uw uitgewerkte scenario's en risico analyse",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(466).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=466",
@@ -5528,7 +6074,7 @@
     },
     {
       "id": "track-467",
-      "title": "Hans' klassieker renovatie kan Proof of Concept zijn",
+      "title": "Ge hebt al voorsprong - zij weten nie dat ge hun manipulatie ziet",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(467).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=467",
@@ -5541,7 +6087,7 @@
     },
     {
       "id": "track-468",
-      "title": "Voel mij beste in industriële automatisering en storing zoeken",
+      "title": "Uw succes is enige wat hen verslaat",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(468).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=468",
@@ -5554,7 +6100,7 @@
     },
     {
       "id": "track-469",
-      "title": "Moderniseer PLC controller zodat oude MIM ovens nog jaren kunnen werken",
+      "title": "Als Rompa bewust verliesgevende optie kiest, schendt ze zorgplicht",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(469).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=469",
@@ -5567,7 +6113,7 @@
     },
     {
       "id": "track-470",
-      "title": "MIM ovens hebben zeer eenvoudige bouw - repareer met juiste materialen",
+      "title": "Afwijzen winstgevend aanbod bewijst: Rompa beschermt CZ, nie ITB NL",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(470).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=470",
@@ -5580,7 +6126,7 @@
     },
     {
       "id": "track-471",
-      "title": "In vacuümovens betekent vacuüm nie altijd zuiverheid",
+      "title": "Ge zijt Strategic Problem Solver - ziet business, nie alleen techniek",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(471).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=471",
@@ -5593,7 +6139,7 @@
     },
     {
       "id": "track-472",
-      "title": "Ideaal debinding proces vereist actieve gas purge na cyclus",
+      "title": "Heb altijd Plan B klaar: Machineseeker en alternatief gebouw",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(472).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=472",
@@ -5606,7 +6152,7 @@
     },
     {
       "id": "track-473",
-      "title": "Voeg Cold-Trap en isolatie toe aan gasleiding om zuurcondensatie te vermijden",
+      "title": "Formeel voorstel voor activa aankoop via B.V., nie privé personen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(473).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=473",
@@ -5619,7 +6165,7 @@
     },
     {
       "id": "track-474",
-      "title": "Grafiet liner in hot-zone stabiliseert thermisch proces en verbetert sinteren",
+      "title": "Focus op kleine partijen en hoge marge",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(474).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=474",
@@ -5632,7 +6178,7 @@
     },
     {
       "id": "track-475",
-      "title": "Uw rol: Legacy Systems Reviver - breng industriële dinosaurussen terug tot leven",
+      "title": "Als Rompa weigert, eis schriftelijke motivering waarom ze verlies boven winst kiezen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(475).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=475",
@@ -5645,7 +6191,7 @@
     },
     {
       "id": "track-476",
-      "title": "Gebruik MIM ovens voor prototyping, R&D sinteren: €200-600 per cyclus",
+      "title": "Alleen denken maakt geen prototypen - actie creëert momentum",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(476).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=476",
@@ -5658,7 +6204,7 @@
     },
     {
       "id": "track-477",
-      "title": "Repareer nie zoals 't was voor storing - verbeter systemische fout",
+      "title": "DAREMON succes: 20% AI strategie, 80% uw uitvoering",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(477).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=477",
@@ -5671,7 +6217,7 @@
     },
     {
       "id": "track-478",
-      "title": "In MIM ovens is formaldehyde en zuur het probleem",
+      "title": "Wacht nie tot iemand zegt wa te doen - leider maakt eigen plan",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(478).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=478",
@@ -5684,7 +6230,7 @@
     },
     {
       "id": "track-479",
-      "title": "Gebruik Elino PLC controller om MIM temperatuurcontrole te moderniseren",
+      "title": "Verlamming door analyse is valkuil die verhindert dat business ontstaat",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(479).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=479",
@@ -5697,7 +6243,7 @@
     },
     {
       "id": "track-480",
-      "title": "Controleer rookgas samenstelling en brandertemperatuur",
+      "title": "Uitvoering telt, nie ideeën - ideeën werden koopwaar",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(480).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=480",
@@ -5710,7 +6256,7 @@
     },
     {
       "id": "track-481",
-      "title": "HCHO en dauwpunt sensor in uitlaatkanaal is goedkoop en effectief",
+      "title": "Belangrijkste wa ge morgen kunt doen: vandaag beginnen handelen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(481).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=481",
@@ -5723,7 +6269,7 @@
     },
     {
       "id": "track-482",
-      "title": "MIM ovens zijn laboratorium voor hoge temperatuur",
+      "title": "Moed om te starten is grootste verschil tussen succes en falen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(482).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=482",
@@ -5736,7 +6282,7 @@
     },
     {
       "id": "track-483",
-      "title": "Ik zie technical constraints en business opportunity in elk project",
+      "title": "Goede ambachtsman met goed gereedschap wint altijd",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(483).mp3",
       "cover": "https://placehold.co/120x120/795548/ffffff?text=483",
@@ -5749,7 +6295,7 @@
     },
     {
       "id": "track-484",
-      "title": "Thermische reiniging diensten voor industriële tooling: stabiel inkomen",
+      "title": "Als ge iets nie snapt, verbeter 't en fix 't",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(484).mp3",
       "cover": "https://placehold.co/120x120/9E9E9E/ffffff?text=484",
@@ -5762,7 +6308,7 @@
     },
     {
       "id": "track-485",
-      "title": "Uw technische kennis + Hans strategische contacten = complementair succes",
+      "title": "Rompa is trage Tank, gij en AI zijn snelle Drone",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(485).mp3",
       "cover": "https://placehold.co/120x120/607D8B/ffffff?text=485",
@@ -5775,7 +6321,7 @@
     },
     {
       "id": "track-486",
-      "title": "Wil tech ideeën ontwikkelen gerelateerd aan MIM zoals ITB vroeger deed",
+      "title": "AI is geen bedrog - 't is instrument voor democratisering expert kennis",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(486).mp3",
       "cover": "https://placehold.co/120x120/4CAF50/ffffff?text=486",
@@ -5788,7 +6334,7 @@
     },
     {
       "id": "track-487",
-      "title": "Hou nie van zinloze dingen doen - zoek plan dat motivatie geeft",
+      "title": "Solo Founder met AI verslaat corporaties",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(487).mp3",
       "cover": "https://placehold.co/120x120/2196F3/ffffff?text=487",
@@ -5801,7 +6347,7 @@
     },
     {
       "id": "track-488",
-      "title": "CoolFlow: 25% energiebesparing in 30 dagen - da's echte KPI",
+      "title": "Toegangsbarrière viel - gebruik revolutie voor anderen 't merken",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(488).mp3",
       "cover": "https://placehold.co/120x120/FF9800/ffffff?text=488",
@@ -5814,7 +6360,7 @@
     },
     {
       "id": "track-489",
-      "title": "VibeLog: Monitor machine hartslag voor 't stopt",
+      "title": "DAREMON strategie gebaseerd op Market Carve-Out",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(489).mp3",
       "cover": "https://placehold.co/120x120/E91E63/ffffff?text=489",
@@ -5827,7 +6373,7 @@
     },
     {
       "id": "track-490",
-      "title": "Mijn stack: Goedkope ESP32 in plaats van dure server",
+      "title": "Gebruik AI als assistent, nie als beslisser - finale stem hoort bij u",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(490).mp3",
       "cover": "https://placehold.co/120x120/9C27B0/ffffff?text=490",
@@ -5840,7 +6386,7 @@
     },
     {
       "id": "track-491",
-      "title": "Automatisering is mijn passie - routine is tijdverspilling",
+      "title": "Zonder AI zou juridische analyse €650 kosten en weken wachten",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(491).mp3",
       "cover": "https://placehold.co/120x120/673AB7/ffffff?text=491",
@@ -5853,7 +6399,7 @@
     },
     {
       "id": "track-492",
-      "title": "Ik repareer nie - ik moderniseer",
+      "title": "Strategisch denken wordt premium vaardigheid in automatisering era",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(492).mp3",
       "cover": "https://placehold.co/120x120/3F51B5/ffffff?text=492",
@@ -5866,7 +6412,7 @@
     },
     {
       "id": "track-493",
-      "title": "Woede en frustratie zijn normaal, maar kunnen geen strategie basis zijn",
+      "title": "Juiste AI strategie waard €5k-8k maandelijkse besparingen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(493).mp3",
       "cover": "https://placehold.co/120x120/03A9F4/ffffff?text=493",
@@ -5879,7 +6425,7 @@
     },
     {
       "id": "track-494",
-      "title": "Rompa creëert opzettelijk chaos om jullie te verdelen",
+      "title": "Kennis waarde: €2,000 daags wanneer ge weet hoe te gebruiken",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(494).mp3",
       "cover": "https://placehold.co/120x120/00BCD4/ffffff?text=494",
@@ -5892,7 +6438,7 @@
     },
     {
       "id": "track-495",
-      "title": "Verander narratief: stop met Slachtoffer zijn, word Schepper",
+      "title": "Onafhankelijkheid: mogelijkheid werken aan wa zin heeft",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(495).mp3",
       "cover": "https://placehold.co/120x120/009688/ffffff?text=495",
@@ -5905,7 +6451,7 @@
     },
     {
       "id": "track-496",
-      "title": "ADHD is Pattern Recognition - verbind punten en voorspel hun zetten",
+      "title": "Volle betrokkenheid komt uit weten dat uw toekomst afhangt van succes",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(496).mp3",
       "cover": "https://placehold.co/120x120/8BC34A/ffffff?text=496",
@@ -5918,7 +6464,7 @@
     },
     {
       "id": "track-497",
-      "title": "U waardeloos praten is Rompa's manipulatie element",
+      "title": "Controle over tijd en visie waardevoller dan stabiel salaris",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(497).mp3",
       "cover": "https://placehold.co/120x120/CDDC39/ffffff?text=497",
@@ -5931,7 +6477,7 @@
     },
     {
       "id": "track-498",
-      "title": "Hun \"hulp\" betekent: vind werk elders, concurreer nie met Rompa CZ",
+      "title": "Zoek geen werk - zoek problemen om op te lossen",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(498).mp3",
       "cover": "https://placehold.co/120x120/FFEB3B/ffffff?text=498",
@@ -5944,7 +6490,7 @@
     },
     {
       "id": "track-499",
-      "title": "Uw waarde zit nie in gebouw of machines, maar in know-how",
+      "title": "Beste deals: iedereen wint (Mutual Benefit Focus)",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(499).mp3",
       "cover": "https://placehold.co/120x120/FFC107/ffffff?text=499",
@@ -5957,7 +6503,7 @@
     },
     {
       "id": "track-500",
-      "title": "Roep reputatie druk op bestuur op voor ze documenten tonen",
+      "title": "Passie > Salaris - authentieke kracht van DAREMON",
       "artist": "DAREMON Radio",
       "src": "/music/Utwor%20(500).mp3",
       "cover": "https://placehold.co/120x120/FF5722/ffffff?text=500",

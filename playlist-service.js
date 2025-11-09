@@ -100,9 +100,9 @@ function normalizeTrackSrc(src) {
         return '';
     }
 
-    // URLs są zarządzane przez serwer – zwracamy je bez dodatkowego kodowania
+    // Zewnętrzne adresy URL kodujemy delikatnie, aby zachować host i protokół
     if (/^https?:\/\//i.test(trimmed)) {
-        return trimmed;
+        return encodeMediaPath(trimmed);
     }
 
     let normalized = trimmed.replace(/\\/g, '/');
