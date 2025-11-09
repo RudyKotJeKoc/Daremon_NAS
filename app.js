@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function i18n_init() {
         try {
             console.log('🌍 Wykrywanie języka...');
-            const supportedLangs = ['nl', 'pl'];
+            const supportedLangs = ['nl', 'pl', 'en', 'cs'];
             const rawNavigatorLanguage = typeof navigator === 'object' && typeof navigator.language === 'string' ? navigator.language : 'nl';
             console.log('📍 navigator.language:', rawNavigatorLanguage);
             const userLang = String(rawNavigatorLanguage).split('-')[0].toLowerCase();
@@ -288,6 +288,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('[data-i18n-aria-label]').forEach(el => {
             if (el && state.translations[el.dataset.i18nAriaLabel]) {
                 el.setAttribute('aria-label', t(el.dataset.i18nAriaLabel));
+            }
+        });
+        document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+            if (el && state.translations[el.dataset.i18nAlt]) {
+                el.setAttribute('alt', t(el.dataset.i18nAlt));
             }
         });
 
@@ -1441,6 +1446,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // song dedications feature removed in simplified build
 
     // --- Live Talk Feature ---
+    const LIVE_TALK_STYLE = Object.freeze({
+        activeBackgroundColor: '#ff4444',
+        activeAnimation: 'pulse 1s infinite',
+        activeFeedbackColor: '#ff4444',
+        errorFeedbackColor: '#ff6b6b',
+        endedFeedbackColor: '#18a0c7'
+    });
+
     let liveTalkStream = null;
     let liveTalkRecording = false;
     let liveTalkAudioContext = null;
@@ -1457,7 +1470,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Start recording
             try {
                 if (dom.liveTalk.feedback) {
-                    dom.liveTalk.feedback.textContent = 'Proszę zezwolić na dostęp do mikrofonu...';
+                    dom.liveTalk.feedback.textContent = t('liveTalkRequestMic');
+                    dom.liveTalk.feedback.style.color = '';
                 }
 
                 liveTalkStream = await navigator.mediaDevices.getUserMedia({
@@ -1481,24 +1495,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 liveTalkRecording = true;
 
-                if (dom.liveTalk.status) {
-                    dom.liveTalk.status.textContent = 'NA ŻYWO - Mówisz do radia!';
-                }
-                if (dom.liveTalk.feedback) {
-                    dom.liveTalk.feedback.textContent = '🔴 Transmisja LIVE - Wszyscy Cię słyszą!';
-                    dom.liveTalk.feedback.style.color = '#ff4444';
-                }
-                if (dom.liveTalk.btn) {
-                    dom.liveTalk.btn.style.backgroundColor = '#ff4444';
-                    dom.liveTalk.btn.style.animation = 'pulse 1s infinite';
-                }
+                dom.liveTalk.status.textContent = t('liveTalkLiveStatus');
+                dom.liveTalk.feedback.textContent = t('liveTalkLiveFeedback');
+                dom.liveTalk.feedback.style.color = LIVE_TALK_STYLE.activeFeedbackColor;
+                dom.liveTalk.btn.style.backgroundColor = LIVE_TALK_STYLE.activeBackgroundColor;
+                dom.liveTalk.btn.style.animation = LIVE_TALK_STYLE.activeAnimation;
+                dom.liveTalk.btn.setAttribute('aria-pressed', 'true');
 
             } catch (error) {
                 console.error('Błąd dostępu do mikrofonu:', error);
-                if (dom.liveTalk.feedback) {
-                    dom.liveTalk.feedback.textContent = 'Błąd: Brak dostępu do mikrofonu. Sprawdź uprawnienia.';
-                    dom.liveTalk.feedback.style.color = '#ff6b6b';
-                }
+                dom.liveTalk.feedback.textContent = t('liveTalkErrorNoMic');
+                dom.liveTalk.feedback.style.color = LIVE_TALK_STYLE.errorFeedbackColor;
+                dom.liveTalk.status.textContent = t('liveTalkButtonIdle');
+                dom.liveTalk.btn.style.backgroundColor = '';
+                dom.liveTalk.btn.style.animation = '';
+                dom.liveTalk.btn.setAttribute('aria-pressed', 'false');
             }
         } else {
             // Stop recording
@@ -1514,17 +1525,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             liveTalkRecording = false;
 
-            if (dom.liveTalk.status) {
-                dom.liveTalk.status.textContent = 'Naciśnij aby mówić';
-            }
-            if (dom.liveTalk.feedback) {
-                dom.liveTalk.feedback.textContent = 'Transmisja zakończona.';
-                dom.liveTalk.feedback.style.color = '#18a0c7';
-            }
-            if (dom.liveTalk.btn) {
-                dom.liveTalk.btn.style.backgroundColor = '';
-                dom.liveTalk.btn.style.animation = '';
-            }
+            dom.liveTalk.status.textContent = t('liveTalkButtonIdle');
+            dom.liveTalk.feedback.textContent = t('liveTalkEnded');
+            dom.liveTalk.feedback.style.color = LIVE_TALK_STYLE.endedFeedbackColor;
+            dom.liveTalk.btn.style.backgroundColor = '';
+            dom.liveTalk.btn.style.animation = '';
+            dom.liveTalk.btn.setAttribute('aria-pressed', 'false');
         }
     }
 

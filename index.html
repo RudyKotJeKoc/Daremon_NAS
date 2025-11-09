@@ -60,7 +60,7 @@
 
             <!-- Compact Radio Player in Header -->
             <div id="header-player" class="header-player">
-                <img id="header-track-cover" src="https://placehold.co/48x48/1A1A1A/008878?text=ETS" alt="Okładka utworu" class="header-track-cover">
+                <img id="header-track-cover" src="https://placehold.co/48x48/1A1A1A/008878?text=ETS" alt="Albumhoes" class="header-track-cover" data-i18n-alt="trackCoverAlt">
                 <div id="header-player-info" class="header-player-info">
                     <h5 id="header-track-title" data-i18n-key="trackTitleDefault">Radio ETS</h5>
                     <div id="header-progress-container" class="header-progress-container">
@@ -124,12 +124,12 @@
                     <!-- Song Dedications section removed - aplikacja uproszczona do core radio -->
 
                     <section class="content-box" id="live-talk-section">
-                        <h3>Live Talk - Mów do radia</h3>
-                        <p class="section-intro">Naciśnij przycisk, powiedz coś i wszyscy Cię usłyszą!</p>
-                        <button id="live-talk-btn" class="cta-button primary">
-                            🎙️ <span id="live-talk-status">Naciśnij aby mówić</span>
+                        <h3 data-i18n-key="liveTalkTitle"></h3>
+                        <p class="section-intro" data-i18n-key="liveTalkIntro"></p>
+                        <button id="live-talk-btn" class="cta-button primary" type="button" data-i18n-aria-label="liveTalkButtonLabel" aria-pressed="false">
+                            🎙️ <span id="live-talk-status" data-i18n-key="liveTalkButtonIdle"></span>
                         </button>
-                        <p id="live-talk-feedback" class="form-feedback"></p>
+                        <p id="live-talk-feedback" class="form-feedback" role="status" aria-live="polite" data-i18n-key="liveTalkFeedbackIdle"></p>
                     </section>
 
                     <section class="content-box">
@@ -146,6 +146,13 @@
                     <!-- Polls section removed - optymalizacja dla wyświetlania TV -->
 
                     <!-- Photo Gallery usunięta - aplikacja uproszczona do core radio -->
+
+                    <!-- Granulate Transport System Survey -->
+                    <section class="content-box">
+                        <h3 data-i18n-key="granulateSurveyTitle"></h3>
+                        <p class="section-intro" data-i18n-key="granulateSurveyIntro"></p>
+                        <a href="granulate-survey.html" class="cta-button primary" style="display: block; text-align: center; text-decoration: none; padding: 0.75rem 1rem; margin-top: 1rem;" data-i18n-key="granulateSurveyCta" data-i18n-aria-label="granulateSurveyCtaLabel"></a>
+                    </section>
                 </nav>
             </aside>
 
@@ -161,37 +168,131 @@
                     <p id="listener-count-display"><span data-i18n-key="listenersLabel"></span> <span id="listener-count" aria-live="polite" role="status">...</span></p>
                 </header>
 
-                <!-- CRITICAL: Countdown timers for company restructuring phases -->
-                <section id="deadlines-section" class="content-box deadlines-section" aria-labelledby="deadlines-heading">
-                    <h2 id="deadlines-heading">⚠️ Krytyczne Terminy</h2>
-                    <div class="deadlines-grid">
-                        <article class="deadline-card" data-deadline-id="year-end-2025">
-                            <header class="deadline-header">
-                                <h3 class="deadline-title">🔴 Faza 2 - Kolejne Zwolnienia</h3>
-                                <p class="deadline-date">31.12.2025</p>
-                            </header>
-                            <p class="deadline-description">Druga faza redukcji zespołu - zamknięcie roku 2025.</p>
-                            <div class="timer-display" role="timer" aria-live="polite" aria-label="Pozostało 00 dni">
-                                <span class="timer-value" data-time-remaining>00:00:00:00</span>
-                            </div>
-                            <div class="timer-bar" aria-hidden="true">
-                                <div class="timer-fill"></div>
+                <!-- CRITICAL: Three-Phase Factory Shutdown System -->
+                <section id="deadlines-section" class="content-box power-system-section" aria-labelledby="deadlines-heading">
+                    <div class="power-system-header">
+                        <h2 id="deadlines-heading">
+                            <span class="power-icon">🔌</span>
+                            <span data-i18n-key="shutdownSystemTitle">DRIEFASIG FABRIEKSSLUITING SYSTEEM</span>
+                            <span class="power-icon">🔌</span>
+                        </h2>
+                        <div class="system-status">
+                            <span class="status-indicator warning"></span>
+                            <span class="status-text" data-i18n-key="shutdownSystemStatus">SLUITING IN UITVOERING</span>
+                        </div>
+                    </div>
+
+                    <div class="phases-grid">
+                        <!-- FAZA L2 -->
+                        <article class="phase-panel phase-l2" data-deadline-id="phase-l2">
+                            <div class="panel-frame">
+                                <div class="panel-header">
+                                    <div class="phase-badge">
+                                        <span class="phase-label">🔌 L2</span>
+                                        <span class="voltage-display">OFFLINE</span>
+                                    </div>
+                                    <div class="phase-status">
+                                        <div class="led-indicator black"></div>
+                                    </div>
+                                </div>
+
+                                <div class="phase-info">
+                                    <h3 class="phase-title" data-i18n-key="phaseL2Label">FASE L2 - ONTKOPPELING</h3>
+                                    <p class="phase-description" data-i18n-key="phaseL2Description">Stopzetting van de tweede productiefase</p>
+                                    <p class="phase-deadline" data-i18n-key="phaseL2Deadline">31.01.2026 23:59:59</p>
+                                </div>
+
+                                <div class="days-counter">
+                                    <div class="counter-label" data-i18n-key="daysRemaining">RESTERENDE DAGEN</div>
+                                    <div class="counter-value">
+                                        <span class="days-remaining">000</span>
+                                    </div>
+                                </div>
+
+                                <div class="timer-lcd" role="timer" aria-live="polite">
+                                    <div class="lcd-display">
+                                        <span class="timer-value" data-time-remaining>00:00:00:00</span>
+                                    </div>
+                                    <div class="lcd-label">DD:HH:MM:SS</div>
+                                </div>
+
+                                <div class="timer-bar" aria-hidden="true">
+                                    <div class="power-bar">
+                                        <div class="power-bar-bg">
+                                            <div class="timer-fill"></div>
+                                            <div class="power-bar-glow"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer">
+                                    <span class="circuit-label">OBWÓD #002</span>
+                                    <span class="power-rating">16A</span>
+                                </div>
                             </div>
                         </article>
 
-                        <article class="deadline-card deadline-card--critical" data-deadline-id="april-2026">
-                            <header class="deadline-header">
-                                <h3 class="deadline-title">💀 Faza 3 - GAME OVER</h3>
-                                <p class="deadline-date">30.04.2026</p>
-                            </header>
-                            <p class="deadline-description">Koniec istnienia fabryki. Final countdown.</p>
-                            <div class="timer-display" role="timer" aria-live="polite" aria-label="Pozostało 00 dni">
-                                <span class="timer-value" data-time-remaining>00:00:00:00</span>
-                            </div>
-                            <div class="timer-bar" aria-hidden="true">
-                                <div class="timer-fill"></div>
+                        <!-- FAZA L3 -->
+                        <article class="phase-panel phase-l3 phase-critical" data-deadline-id="phase-l3">
+                            <div class="panel-frame">
+                                <div class="panel-header">
+                                    <div class="phase-badge">
+                                        <span class="phase-label">🔌 L3</span>
+                                        <span class="voltage-display">OFFLINE</span>
+                                    </div>
+                                    <div class="phase-status">
+                                        <div class="led-indicator red"></div>
+                                    </div>
+                                </div>
+
+                                <div class="phase-info">
+                                    <h3 class="phase-title" data-i18n-key="phaseL3Label">FASE L3 - GAME OVER</h3>
+                                    <p class="phase-description" data-i18n-key="phaseL3Description">Definitieve fabriekssluiting</p>
+                                    <p class="phase-deadline" data-i18n-key="phaseL3Deadline">30.04.2026 23:59:59</p>
+                                </div>
+
+                                <div class="days-counter">
+                                    <div class="counter-label" data-i18n-key="daysRemaining">RESTERENDE DAGEN</div>
+                                    <div class="counter-value">
+                                        <span class="days-remaining">000</span>
+                                    </div>
+                                </div>
+
+                                <div class="timer-lcd" role="timer" aria-live="polite">
+                                    <div class="lcd-display">
+                                        <span class="timer-value" data-time-remaining>00:00:00:00</span>
+                                    </div>
+                                    <div class="lcd-label">DD:HH:MM:SS</div>
+                                </div>
+
+                                <div class="timer-bar" aria-hidden="true">
+                                    <div class="power-bar">
+                                        <div class="power-bar-bg">
+                                            <div class="timer-fill"></div>
+                                            <div class="power-bar-glow"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer">
+                                    <span class="circuit-label">OBWÓD #003</span>
+                                    <span class="power-rating">16A</span>
+                                </div>
                             </div>
                         </article>
+                    </div>
+
+                    <!-- Weather Widget -->
+                    <div class="weather-widget">
+                        <div class="weather-frame">
+                            <div class="weather-header">
+                                <span class="weather-icon">🌤️</span>
+                                <h3>WARUNKI ATMOSFERYCZNE</h3>
+                            </div>
+                            <div id="weather-display" class="weather-display">
+                                <div class="weather-loading">Ładowanie danych pogodowych...</div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -425,6 +526,39 @@
                 <div id="install-banner" class="hidden" role="region" aria-live="polite">
                     <button id="install-btn" class="control-btn">⬇️ Zainstaluj aplikację</button>
                 </div>
+
+                <!-- Beaver Fundraiser -->
+                <section class="content-box beaver-fundraiser">
+                    <h2 class="beaver-title" data-i18n-key="beaverTitleCompact"></h2>
+
+                    <div class="beaver-story-compact">
+                        <p class="beaver-intro" data-i18n-key="beaverIntroCompact"></p>
+
+                        <p class="beaver-quote" data-i18n-key="beaverQuote"></p>
+
+                        <p class="beaver-desc" data-i18n-key="beaverDesc"></p>
+
+                        <div class="beaver-donate-options">
+                            <h3 data-i18n-key="beaverSupportTitleCompact"></h3>
+                            <p class="paypal-link-section">
+                                <a href="https://paypal.me/daremonnl" target="_blank" rel="noopener" class="paypal-button">
+                                    💳 paypal.me/daremonnl
+                                </a>
+                            </p>
+
+                            <div class="donation-amounts">
+                                <a href="https://paypal.me/daremonnl/5" target="_blank" rel="noopener" class="donation-btn" data-i18n-key="beaverDonation5"></a>
+                                <a href="https://paypal.me/daremonnl/10" target="_blank" rel="noopener" class="donation-btn" data-i18n-key="beaverDonation10"></a>
+                                <a href="https://paypal.me/daremonnl/50" target="_blank" rel="noopener" class="donation-btn" data-i18n-key="beaverDonation50"></a>
+                                <a href="https://paypal.me/daremonnl" target="_blank" rel="noopener" class="donation-btn" data-i18n-key="beaverDonationCustom"></a>
+                            </div>
+
+                            <p class="beaver-transparency">
+                                <small data-i18n-key="beaverTransparency"></small>
+                            </p>
+                        </div>
+                    </div>
+                </section>
             </main>
 
         </div>
@@ -433,7 +567,7 @@
 
     <div id="sticky-player">
         <img src="/images/logo.png" alt="Radio ETS" aria-hidden="true" class="sticky-player-logo">
-        <img id="sticky-track-cover" src="https://placehold.co/40x40/1A1A1A/008878?text=ETS" alt="Okładka utworu na przypiętym odtwarzaczu">
+        <img id="sticky-track-cover" src="https://placehold.co/40x40/1A1A1A/008878?text=ETS" alt="Albumhoes" data-i18n-alt="stickyTrackCoverAlt">
         <div id="sticky-player-info">
             <h5 id="sticky-track-title" data-i18n-key="trackTitleDefault"></h5>
              <div id="sticky-progress-container">
@@ -484,6 +618,7 @@
     <script type="module" src="survey.js"></script>
     <script type="module" src="employee-survey.js"></script>
     <script type="module" src="countdown-timers.js"></script>
+    <script type="module" src="weather-widget.js"></script>
     <script type="module" src="script.js"></script>
     <script type="module" src="app.js"></script>
 </body>

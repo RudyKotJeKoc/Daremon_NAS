@@ -1,0 +1,317 @@
+body {
+    background: linear-gradient(135deg, #04132b 0%, #0a1929 100%);
+    color: rgba(255, 255, 255, 0.9);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    padding: 2rem 1rem;
+    min-height: 100vh;
+}
+
+.granulate-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: rgba(4, 19, 43, 0.95);
+    border: 2px solid rgba(24, 160, 199, 0.4);
+    border-radius: 1rem;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.granulate-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    border-bottom: 2px solid rgba(24, 160, 199, 0.3);
+    padding-bottom: 2rem;
+}
+
+.granulate-header h1 {
+    color: #18A0C7;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.granulate-header .subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.granulate-header .company-name {
+    color: #18A0C7;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.section-divider {
+    border: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, rgba(24, 160, 199, 0.5), transparent);
+    margin: 3rem 0;
+}
+
+.section-header {
+    background: linear-gradient(135deg, rgba(24, 160, 199, 0.2) 0%, rgba(4, 19, 43, 0.8) 100%);
+    padding: 1.25rem 1.5rem;
+    border-left: 4px solid #18A0C7;
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+}
+
+.section-header h2 {
+    color: #18A0C7;
+    font-size: 1.4rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.question-block {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(24, 160, 199, 0.05);
+    border-radius: 0.5rem;
+    border: 1px solid rgba(24, 160, 199, 0.2);
+}
+
+.question-number {
+    color: #18A0C7;
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.question-text {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.option-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: rgba(4, 19, 43, 0.5);
+    border: 1px solid rgba(24, 160, 199, 0.2);
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.option-item:hover {
+    background: rgba(24, 160, 199, 0.15);
+    border-color: rgba(24, 160, 199, 0.4);
+    transform: translateX(4px);
+}
+
+.option-item input[type="radio"],
+.option-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #18A0C7;
+    flex-shrink: 0;
+}
+
+.option-item label {
+    color: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+    flex: 1;
+    font-size: 0.95rem;
+}
+
+.inline-text-input {
+    flex: 1;
+    margin-left: 0.5rem;
+    background: rgba(4, 19, 43, 0.8);
+    border: 1px solid rgba(24, 160, 199, 0.4);
+    border-radius: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    color: white;
+    font-size: 0.95rem;
+}
+
+.inline-text-input:focus {
+    outline: none;
+    border-color: #18A0C7;
+    box-shadow: 0 0 0 3px rgba(24, 160, 199, 0.2);
+}
+
+.text-input,
+.textarea-input {
+    width: 100%;
+    background: rgba(4, 19, 43, 0.7);
+    border: 1px solid rgba(24, 160, 199, 0.4);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    color: white;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.text-input:focus,
+.textarea-input:focus {
+    outline: none;
+    border-color: #18A0C7;
+    box-shadow: 0 0 0 3px rgba(24, 160, 199, 0.2);
+}
+
+.textarea-input {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.6;
+}
+
+.note-text {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    font-style: italic;
+    margin-top: 0.5rem;
+    display: block;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid rgba(24, 160, 199, 0.3);
+}
+
+.btn {
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #18A0C7 0%, #008878 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(24, 160, 199, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(24, 160, 199, 0.5);
+}
+
+.btn-secondary {
+    background: rgba(24, 160, 199, 0.15);
+    color: #18A0C7;
+    border: 2px solid rgba(24, 160, 199, 0.5);
+}
+
+.btn-secondary:hover {
+    background: rgba(24, 160, 199, 0.25);
+    border-color: #18A0C7;
+}
+
+.success-message {
+    background: rgba(76, 175, 80, 0.2);
+    border: 2px solid rgba(76, 175, 80, 0.6);
+    color: #4CAF50;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    text-align: center;
+    font-size: 1.2rem;
+    margin: 2rem 0;
+}
+
+.success-message h3 {
+    color: #4CAF50;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.footer-note {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid rgba(24, 160, 199, 0.3);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+}
+
+.footer-note strong {
+    color: #18A0C7;
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Results styling */
+.survey-results {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: rgba(4, 19, 43, 0.95);
+    border: 2px solid rgba(24, 160, 199, 0.4);
+    border-radius: 0.75rem;
+}
+
+.survey-results h3 {
+    color: #18A0C7;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.stat-section h5 {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    padding-left: 0.5rem;
+    border-left: 3px solid rgba(24, 160, 199, 0.5);
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 1rem 0.5rem;
+    }
+
+    .granulate-container {
+        padding: 2rem 1.5rem;
+    }
+
+    .granulate-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .option-item {
+        padding: 0.75rem;
+    }
+}

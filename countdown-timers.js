@@ -1,17 +1,39 @@
 const TIMER_DEFINITIONS = [
   {
     id: 'year-end-2025',
-    label: '31.12.2025',
-    description: 'Zamknięcie roku 2025',
+    phase: 'YE25',
+    label: 'JAARAFSLUITING 2025',
+    description: 'Eindejaarsafsluiting van de productie',
+    voltage: 'OFFLINE',
+    frequency: 'COUNTDOWN',
+    icon: '⏱️',
+    color: '#F5A623',
     start: new Date(2025, 0, 1, 0, 0, 0),
     deadline: new Date(2025, 11, 31, 23, 59, 59),
   },
   {
-    id: 'april-2026',
-    label: '30.04.2026',
-    description: 'Raport kwartalny 2026',
-    start: new Date(2026, 0, 1, 0, 0, 0),
-    deadline: new Date(2026, 3, 30, 23, 59, 59),
+    id: 'phase-l2',
+    phase: 'L2',
+    label: 'FASE L2',
+    description: 'Stopzetting van de tweede productiefase',
+    voltage: 'OFFLINE',
+    frequency: 'SHUTDOWN',
+    icon: '🔌',
+    color: '#000000', // Zwart - fase 2
+    start: new Date(2025, 10, 5, 0, 0, 0), // 5 november 2025
+    deadline: new Date(2026, 0, 31, 23, 59, 59), // 31 januari 2026
+  },
+  {
+    id: 'phase-l3',
+    phase: 'L3',
+    label: 'FASE L3',
+    description: 'Definitieve fabriekssluiting',
+    voltage: 'OFFLINE',
+    frequency: 'SHUTDOWN',
+    icon: '🔌',
+    color: '#FF0000', // Rood - fase 3 (kritiek)
+    start: new Date(2026, 1, 1, 0, 0, 0), // 1 februari 2026
+    deadline: new Date(2026, 3, 30, 23, 59, 59), // 30 april 2026
   },
 ];
 
@@ -66,9 +88,9 @@ export const computeTimeParts = (deadline, now) => {
 
 export const buildAriaLabel = (label, parts) => {
   if (parts.isComplete) {
-    return `Termin ${label} został osiągnięty.`;
+    return `Deadline ${label} is bereikt.`;
   }
-  return `Do terminu ${label} pozostało ${parts.days} dni, ${parts.hours} godzin, ${parts.minutes} minut i ${parts.seconds} sekund.`;
+  return `Tot de deadline ${label} blijven er ${parts.days} dagen, ${parts.hours} uren, ${parts.minutes} minuten en ${parts.seconds} seconden over.`;
 };
 
 export const updateTimerElement = (element, config, now) => {
@@ -79,6 +101,9 @@ export const updateTimerElement = (element, config, now) => {
   const timerDisplay = element.querySelector('[data-time-remaining]');
   const timerContainer = element.querySelector('[role="timer"]');
   const progressFill = element.querySelector('.timer-fill');
+  const phaseLabel = element.querySelector('.phase-label');
+  const voltageDisplay = element.querySelector('.voltage-display');
+  const daysRemaining = element.querySelector('.days-remaining');
 
   if (!timerDisplay || !timerContainer || !progressFill) {
     return;
@@ -88,6 +113,21 @@ export const updateTimerElement = (element, config, now) => {
   const formatted = formatTimeParts(parts);
   timerDisplay.textContent = formatted;
 
+  // Aktualizuj dni pozostałe jeśli element istnieje
+  if (daysRemaining) {
+    daysRemaining.textContent = parts.days;
+  }
+
+  // Aktualizuj labelę fazy jeśli istnieje
+  if (phaseLabel) {
+    phaseLabel.textContent = `${config.icon} ${config.phase}`;
+  }
+
+  // Aktualizuj napięcie jeśli istnieje
+  if (voltageDisplay) {
+    voltageDisplay.textContent = `${config.voltage} ${config.frequency}`;
+  }
+
   const ariaLabel = buildAriaLabel(config.label, parts);
   timerContainer.setAttribute('aria-label', ariaLabel);
 
@@ -96,6 +136,12 @@ export const updateTimerElement = (element, config, now) => {
   progressFill.style.width = `${formattedProgress}%`;
   progressFill.style.setProperty('--progress', `${formattedProgress}%`);
   progressFill.dataset.progress = formattedProgress;
+
+  // Ustaw kolor fazy
+  if (config.color) {
+    progressFill.style.setProperty('--phase-color', config.color);
+    element.style.setProperty('--phase-color', config.color);
+  }
 };
 
 export const initCountdownTimers = (

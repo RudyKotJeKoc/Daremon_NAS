@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enquête Granulaattransportsysteem - DAREMON ETS</title>
+
+    <meta name="description" content="Enquête over het granulaattransportsysteem voor operatoren en onderhoudspersoneel">
+    <meta name="theme-color" content="#1A1A1A">
+
+    <link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+
+    <!-- Fonts and Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="survey-styles.css">
+    <link rel="stylesheet" href="./granulate-survey.css">
+</head>
+<body>
+    <div class="granulate-container">
+        <header class="granulate-header">
+            <h1>📋 Enquête Granulaattransportsysteem</h1>
+            <p class="subtitle">Systeem voor Productie en Onderhoud</p>
+            <p class="company-name">DAREMON ETS</p>
+        </header>
+
+        <!-- Success Message (Hidden by default) -->
+        <div id="granulate-survey-success" class="success-message hidden">
+            <h3>✅ Hartelijk dank!</h3>
+            <p>Uw antwoorden zijn succesvol opgeslagen.</p>
+            <p>Uw feedback helpt ons een betrouwbaarder en gebruiksvriendelijker systeem te creëren.</p>
+        </div>
+
+        <!-- Survey Form -->
+        <form id="granulate-survey-form">
+
+            <!-- SECTIE 1: ALGEMENE ERVARING -->
+            <div class="section-header">
+                <h2>SECTIE 1: ALGEMENE ERVARING</h2>
+            </div>
+
+            <div class="question-block">
+                <span class="question-number">1.</span>
+                <div class="question-text">Hoe lang werkt u al met het granulaattransportsysteem?</div>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="radio" id="exp-less-3m" name="experience" value="less-3m" required>
+                        <label for="exp-less-3m">Minder dan 3 maanden</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="exp-3-6m" name="experience" value="3-6m">
+                        <label for="exp-3-6m">3-6 maanden</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="exp-6-12m" name="experience" value="6-12m">
+                        <label for="exp-6-12m">6-12 maanden</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="exp-more-1y" name="experience" value="more-1y">
+                        <label for="exp-more-1y">Meer dan 1 jaar</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <span class="question-number">2.</span>
+                <div class="question-text">In welke fabriek werkt u?</div>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="radio" id="factory-boxtel" name="factory" value="boxtel" required>
+                        <label for="factory-boxtel">Boxtel (Nederland)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="factory-czech" name="factory" value="czech">
+                        <label for="factory-czech">Tsjechië</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="factory-other" name="factory" value="other">
+                        <label for="factory-other">Ander locatie (gelieve aan te geven):</label>
+                        <input type="text" name="factory-other" class="inline-text-input" placeholder="Locatie...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <span class="question-number">3.</span>
+                <div class="question-text">Wat is uw hoofdrol?</div>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="radio" id="role-operator" name="role" value="operator" required>
+                        <label for="role-operator">Machineoperator</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="role-logistics" name="role" value="logistics">
+                        <label for="role-logistics">Logistiek medewerker</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="role-maintenance" name="role" value="maintenance">
+                        <label for="role-maintenance">Onderhoudstechnicus</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="role-management" name="role" value="management">
+                        <label for="role-management">Management / Toezicht</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="role-other" name="role" value="other">
+                        <label for="role-other">Overig:</label>
+                        <input type="text" name="role-other" class="inline-text-input" placeholder="Specificeer...">
+                    </div>
+                </div>
+            </div>
+
+            <hr class="section-divider">
+
+            <!-- SECTIE 2: SYSTEEMPROBLEMEN -->
+            <div class="section-header">
+                <h2>SECTIE 2: SYSTEEMPROBLEMEN</h2>
+            </div>
+
+            <div class="question-block">
+                <span class="question-number">4.</span>
+                <div class="question-text">Hoe vaak ervaar je onderbrekingen in de granulaattoevoer naar machines?</div>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="radio" id="int-daily" name="interruption-frequency" value="daily">
+                        <label for="int-daily">Dagelijks</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="int-several-week" name="interruption-frequency" value="several-week">
+                        <label for="int-several-week">Enkele keren per week</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="int-once-week" name="interruption-frequency" value="once-week">
+                        <label for="int-once-week">Eenmaal per week</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="int-rarely" name="interruption-frequency" value="rarely">
+                        <label for="int-rarely">Zelden (enkele keren per maand)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="int-never" name="interruption-frequency" value="never">
+                        <label for="int-never">Nooit</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <span class="question-number">5.</span>
+                <div class="question-text">Welke problemen met het systeem observeer je het meest? (meerdere opties mogelijk)</div>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="checkbox" id="prob-blockage" name="system-problems" value="blockage">
+                        <label for="prob-blockage">Verstopping in leidingen</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="prob-shortage" name="system-problems" value="shortage">
+                        <label for="prob-shortage">Granulaattekort in hoppers</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="prob-false-alarms" name="system-problems" value="false-alarms">
+                        <label for="prob-false-alarms">Valse alarmen</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="prob-valve" name="system-problems" value="valve-issues">
+                        <label for="prob-valve">Slecht functionerende kleppen</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="prob-sensor" name="system-problems" value="sensor-problems">
+                        <label for="prob-sensor">Problemen met niveausensoren</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="prob-comm" name="system-problems" value="communication">
+                        <label for="prob-comm">Communicatieproblemen tussen apparaten</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="prob-other" name="system-problems" value="other">
+                        <label for="prob-other">Overig:</label>
+                        <input type="text" name="system-problems-other" class="inline-text-input" placeholder="Specificeer...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <span class="question-number">6.</span>
+                <div class="question-text">Hoe lang duurt een typische onderbreking (stilstand)?</div>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="radio" id="dur-less-5m" name="interruption-duration" value="less-5m">
+                        <label for="dur-less-5m">Minder dan 5 minuten</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="dur-5-15m" name="interruption-duration" value="5-15m">
+                        <label for="dur-5-15m">5-15 minuten</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="dur-15-30m" name="interruption-duration" value="15-30m">
+                        <label for="dur-15-30m">15-30 minuten</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="dur-30-60m" name="interruption-duration" value="30-60m">
+                        <label for="dur-30-60m">30-60 minuten</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="dur-more-1h" name="interruption-duration" value="more-1h">
+                        <label for="dur-more-1h">Meer dan 1 uur</label>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="section-divider">
+
+            <!-- SECTIE 3: SENSOREN EN AUTOMATISERING -->
+            <div class="section-header">
+                <h2>SECTIE 3: SENSOREN EN AUTOMATISERING</h2>
+            </div>
+
+            <div class="question-block">
+                <span class="question-number">7.</span>
+                <div class="question-text">Functioneren de niveausensoren altijd correct?</div>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="radio" id="sens-definitely" name="sensors-function" value="definitely">
+                        <label for="sens-definitely">Zeker ja</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="sens-mostly-yes" name="sensors-function" value="mostly-yes">
+                        <label for="sens-mostly-yes">Meestal wel</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="sens-sometimes" name="sensors-function" value="sometimes">
+                        <label for="sens-sometimes">Soms zijn er problemen</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="sens-mostly-not" name="sensors-function" value="mostly-not">
+                        <label for="sens-mostly-not">Meestal niet</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="sens-frequent" name="sensors-function" value="frequent-problems">
+                        <label for="sens-frequent">Nee, zeer frequent problemen</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <span class="question-number">8.</span>
+                <div class="question-text">Diagnoseert het systeem zelf het probleem (duidelijk foutbericht)?</div>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="radio" id="diag-always" name="system-diagnosis" value="always">
+                        <label for="diag-always">Altijd</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="diag-mostly" name="system-diagnosis" value="mostly">
+                        <label for="diag-mostly">Meestal</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="diag-sometimes" name="system-diagnosis" value="sometimes">
+                        <label for="diag-sometimes">Soms</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="diag-rarely" name="system-diagnosis" value="rarely">
+                        <label for="diag-rarely">Zelden</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="diag-never" name="system-diagnosis" value="never">
+                        <label for="diag-never">Nooit – moeilijk te begrijpen wat er mis is</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <span class="question-number">9.</span>
+                <div class="question-text">Kun je zelf een alarm oplossen zonder technische ondersteuning?</div>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="radio" id="alarm-definitely" name="alarm-resolution" value="definitely">
+                        <label for="alarm-definitely">Zeker ja</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="alarm-mostly-yes" name="alarm-resolution" value="mostly-yes">
+                        <label for="alarm-mostly-yes">Meestal wel</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="alarm-sometimes" name="alarm-resolution" value="sometimes">
+                        <label for="alarm-sometimes">Soms</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="alarm-mostly-not" name="alarm-resolution" value="mostly-not">
+                        <label for="alarm-mostly-not">Meestal niet</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="alarm-never" name="alarm-resolution" value="never">
+                        <label for="alarm-never">Nooit</label>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="section-divider">
+
+            <!-- SECTIE 4: LOGISTIEK EN MATERIAALTOEVOER -->
+            <div class="section-header">
+                <h2>SECTIE 4: LOGISTIEK EN MATERIAALTOEVOER</h2>
+            </div>
+
+            <div class="question-block">
+                <span class="question-number">10.</span>
+                <div class="question-text">Hoe beoordeelt u de continuïteit van granulaattoevoer (zonder onverwachte storingen)?</div>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="radio" id="cont-very-good" name="supply-continuity" value="very-good">
+                        <label for="cont-very-good">Zeer goed</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="cont-good" name="supply-continuity" value="good">
+                        <label for="cont-good">Goed</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="cont-average" name="supply-continuity" value="average">
+                        <label for="cont-average">Gemiddeld</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="cont-poor" name="supply-continuity" value="poor">
+                        <label for="cont-poor">Slecht</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="cont-very-poor" name="supply-continuity" value="very-poor">
+                        <label for="cont-very-poor">Zeer slecht</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <span class="question-number">11.</span>
+                <div class="question-text">Mist u een granulaatbuffer (voorraad) voor het geval van vertraagde levering?</div>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="radio" id="buf-definitely-miss" name="buffer-need" value="definitely-miss">
+                        <label for="buf-definitely-miss">Zeker – ik mis deze beveiliging</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="buf-mostly-yes" name="buffer-need" value="mostly-yes">
+                        <label for="buf-mostly-yes">Meestal wel</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="buf-sometimes" name="buffer-need" value="sometimes">
+                        <label for="buf-sometimes">Soms zou dit nuttig zijn</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="buf-mostly-not" name="buffer-need" value="mostly-not">
+                        <label for="buf-mostly-not">Meestal niet</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="buf-no-sufficient" name="buffer-need" value="no-sufficient">
+                        <label for="buf-no-sufficient">Nee – we hebben voldoende buffers</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <span class="question-number">12.</span>
+                <div class="question-text">Is de vorm van materiaallevering (dozen, big-bags) ergonomisch en veilig?</div>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="radio" id="erg-definitely" name="delivery-ergonomics" value="definitely">
+                        <label for="erg-definitely">Zeker ja</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="erg-mostly-yes" name="delivery-ergonomics" value="mostly-yes">
+                        <label for="erg-mostly-yes">Meestal wel</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="erg-moderate" name="delivery-ergonomics" value="moderate">
+                        <label for="erg-moderate">Matig</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="erg-mostly-not" name="delivery-ergonomics" value="mostly-not">
+                        <label for="erg-mostly-not">Meestal niet</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="erg-no-problems" name="delivery-ergonomics" value="no-problems">
+                        <label for="erg-no-problems">Nee – veel problemen</label>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="section-divider">
+
+            <!-- SECTIE 5: TRAINING EN ONDERSTEUNING -->
+            <div class="section-header">
+                <h2>SECTIE 5: TRAINING EN ONDERSTEUNING</h2>
+            </div>
+
+            <div class="question-block">
+                <span class="question-number">13.</span>
+                <div class="question-text">Heeft u training ontvangen over systeembediening en diagnostiek?</div>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="radio" id="train-extensive" name="training-received" value="extensive">
+                        <label for="train-extensive">Ja, uitgebreide training</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="train-yes-short" name="training-received" value="yes-short">
+                        <label for="train-yes-short">Ja, maar kort</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="train-brief" name="training-received" value="brief">
+                        <label for="train-brief">Alleen korte instructie</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="train-no" name="training-received" value="no">
+                        <label for="train-no">Nee</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <span class="question-number">14.</span>
+                <div class="question-text">Voelt u zich zelfverzekerd bij het bedienen van het systeem?</div>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="radio" id="conf-fully" name="operation-confidence" value="fully">
+                        <label for="conf-fully">Volledig zelfverzekerd</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="conf-mostly-yes" name="operation-confidence" value="mostly-yes">
+                        <label for="conf-mostly-yes">Meestal wel</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="conf-sometimes" name="operation-confidence" value="sometimes">
+                        <label for="conf-sometimes">Soms twijfels</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="conf-mostly-not" name="operation-confidence" value="mostly-not">
+                        <label for="conf-mostly-not">Meestal niet zelfverzekerd</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="conf-no-knowledge" name="operation-confidence" value="no-knowledge">
+                        <label for="conf-no-knowledge">Nee – ik mis kennis</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <span class="question-number">15.</span>
+                <div class="question-text">Welke hulp zou voor u het waardevol zijn? (meerdere opties mogelijk)</div>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="checkbox" id="help-diagnosis" name="help-needed" value="diagnosis-training">
+                        <label for="help-diagnosis">Training in probleemdiagnose</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="help-procedures" name="help-needed" value="procedures">
+                        <label for="help-procedures">Duidelijke stap-voor-stap procedures</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="help-tech-support" name="help-needed" value="tech-support">
+                        <label for="help-tech-support">Beter bereikbare technische ondersteuning</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="help-error-msg" name="help-needed" value="error-messages">
+                        <label for="help-error-msg">Betere foutmeldingen in het systeem</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="help-other" name="help-needed" value="other">
+                        <label for="help-other">Overig:</label>
+                        <input type="text" name="help-needed-other" class="inline-text-input" placeholder="Specificeer...">
+                    </div>
+                </div>
+            </div>
+
+            <hr class="section-divider">
+
+            <!-- SECTIE 6: VERBETERINGSVOORSTELLEN -->
+            <div class="section-header">
+                <h2>SECTIE 6: VERBETERINGSVOORSTELLEN</h2>
+            </div>
+
+            <div class="question-block">
+                <span class="question-number">16.</span>
+                <div class="question-text">Wat kunt u volgens u verbeteren in het systeem?</div>
+                <span class="note-text">(Alstublieft concreet omschrijven)</span>
+                <textarea name="improvements" class="textarea-input" placeholder="Beschrijf uw verbeteringsvoorstellen..."></textarea>
+            </div>
+
+            <div class="question-block">
+                <span class="question-number">17.</span>
+                <div class="question-text">Observeert u gedrag van werknemers dat de systeembetrouwbaarheid vermindert?</div>
+                <span class="note-text">(Bijv. manipulatie van sensoren, onjuiste bediening)</span>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="radio" id="behav-yes-regular" name="harmful-behavior" value="yes-regular">
+                        <label for="behav-yes-regular">Ja, regelmatig:</label>
+                        <input type="text" name="harmful-behavior-detail" class="inline-text-input" placeholder="Beschrijf...">
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="behav-sometimes" name="harmful-behavior" value="sometimes">
+                        <label for="behav-sometimes">Soms</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="behav-rarely" name="harmful-behavior" value="rarely">
+                        <label for="behav-rarely">Zelden</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="behav-no" name="harmful-behavior" value="no">
+                        <label for="behav-no">Nee</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <span class="question-number">18.</span>
+                <div class="question-text">Voelt u zich uitgeput / vermoeid door frequente systeemproblemen?</div>
+                <div class="option-group">
+                    <div class="option-item">
+                        <input type="radio" id="stress-definitely" name="stress-level" value="definitely">
+                        <label for="stress-definitely">Zeker – dit is veel stress</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="stress-mostly-yes" name="stress-level" value="mostly-yes">
+                        <label for="stress-mostly-yes">Meestal wel</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="stress-sometimes" name="stress-level" value="sometimes">
+                        <label for="stress-sometimes">Soms</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="stress-mostly-not" name="stress-level" value="mostly-not">
+                        <label for="stress-mostly-not">Meestal niet</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" id="stress-no" name="stress-level" value="no">
+                        <label for="stress-no">Nee</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text" style="font-weight: 600; color: #18A0C7;">Indien u nog iets wilt toevoegen:</div>
+                <textarea name="additional-comments" class="textarea-input" rows="4" placeholder="Aanvullende opmerkingen, suggesties of feedback..."></textarea>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">📤 Enquête Verzenden</button>
+                <button type="button" id="granulate-survey-results-btn" class="btn btn-secondary">📊 Bekijk Resultaten</button>
+            </div>
+
+            <div class="footer-note">
+                <strong>DANK U VOOR UW ANTWOORDEN!</strong>
+                <p>Uw opmerkingen helpen ons een betrouwbaarder en gebruiksvriendelijker systeem te creëren.</p>
+            </div>
+        </form>
+
+        <!-- Results Section (Hidden by default) -->
+        <div id="granulate-survey-results" class="survey-results hidden">
+            <h3>📊 Enquêteresultaten</h3>
+            <div id="granulate-survey-results-content"></div>
+            <button id="close-granulate-results-btn" class="btn btn-secondary" style="display: block; margin: 2rem auto 0;">
+                ✕ Sluit Resultaten
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Module -->
+    <script type="module">
+        import { initializeGranulateSurvey } from './granulate-survey.js';
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeGranulateSurvey);
+        } else {
+            initializeGranulateSurvey();
+        }
+    </script>
+</body>
+</html>
