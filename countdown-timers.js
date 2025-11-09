@@ -1,5 +1,17 @@
 const TIMER_DEFINITIONS = [
   {
+    id: 'year-end-2025',
+    phase: 'YE25',
+    label: 'JAARAFSLUITING 2025',
+    description: 'Eindejaarsafsluiting van de productie',
+    voltage: 'OFFLINE',
+    frequency: 'COUNTDOWN',
+    icon: '⏱️',
+    color: '#F5A623',
+    start: new Date(2025, 0, 1, 0, 0, 0),
+    deadline: new Date(2025, 11, 31, 23, 59, 59),
+  },
+  {
     id: 'phase-l2',
     phase: 'L2',
     label: 'FASE L2',
