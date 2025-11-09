@@ -177,5 +177,22 @@
   "beaverDonation5": "🧱 Small brick: 5€",
   "beaverDonation10": "🧱 Medium brick: 10€",
   "beaverDonation50": "🧱 Large brick: 50€",
-  "beaverDonationCustom": "🧱 Custom amount"
+  "beaverDonationCustom": "🧱 Custom amount",
+  "weatherWidgetTitle": "ATMOSPHERIC CONDITIONS",
+  "weatherLoading": "Loading weather data...",
+  "employeeSurveyTitle": "📋 Team Survey",
+  "employeeSurveyIntroStrong": "Dear employees!",
+  "employeeSurveyIntro1": "We would like to hear your opinion on continuing our project with a smaller team and gather ideas for Daremon development.",
+  "employeeSurveyIntro2": "The survey is anonymous (name optional) and will help us better plan the future.",
+  "employeeSurveyNameLabel": "Name (optional):",
+  "employeeSurveyNamePlaceholder": "Your name or nickname",
+  "employeeSurveyTeamQuestion": "Would you like to continue working with a smaller team?",
+  "employeeSurveyYes": "Yes, I'm interested",
+  "employeeSurveyMaybe": "Maybe, depending on conditions",
+  "employeeSurveyNo": "No, thank you",
+  "languageSwitcher": "Language",
+  "languageDutch": "Nederlands",
+  "languagePolish": "Polski",
+  "languageEnglish": "English",
+  "languageCzech": "Čeština"
 }
