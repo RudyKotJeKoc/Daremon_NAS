@@ -154,5 +154,22 @@
   "phaseL3Deadline": "30.04.2026 23:59:59",
   "daysRemaining": "ZBÝVAJÍCÍ DNY",
   "phaseOffline": "OFFLINE",
-  "phaseShutdown": "SHUTDOWN"
+  "phaseShutdown": "SHUTDOWN",
+  "weatherWidgetTitle": "ATMOSFÉRICKÉ PODMÍNKY",
+  "weatherLoading": "Načítání dat o počasí...",
+  "employeeSurveyTitle": "📋 Týmový průzkum",
+  "employeeSurveyIntroStrong": "Vážení zaměstnanci!",
+  "employeeSurveyIntro1": "Rádi bychom slyšeli váš názor na pokračování našeho projektu s menším týmem a shromáždili nápady na rozvoj Daremon.",
+  "employeeSurveyIntro2": "Průzkum je anonymní (jméno nepovinné) a pomůže nám lépe naplánovat budoucnost.",
+  "employeeSurveyNameLabel": "Jméno (nepovinné):",
+  "employeeSurveyNamePlaceholder": "Vaše jméno nebo přezdívka",
+  "employeeSurveyTeamQuestion": "Chtěli byste pokračovat v práci s menším týmem?",
+  "employeeSurveyYes": "Ano, mám zájem",
+  "employeeSurveyMaybe": "Možná, záleží na podmínkách",
+  "employeeSurveyNo": "Ne, děkuji",
+  "languageSwitcher": "Jazyk",
+  "languageDutch": "Nederlands",
+  "languagePolish": "Polski",
+  "languageEnglish": "English",
+  "languageCzech": "Čeština"
 }

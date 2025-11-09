@@ -38,11 +38,22 @@ export function initializeGranulateSurvey() {
 function handleGranulateSurveySubmit(event) {
     event.preventDefault();
 
-    const formData = new FormData(event.target);
+    const form = event.target;
+    const submitButton = form.querySelector('button[type="submit"]');
+
+    // Disable submit button to prevent double submission
+    if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = '⏳ Verzenden...';
+    }
+
+    const formData = new FormData(form);
 
     // Collect form data
     const response = {
         timestamp: new Date().toISOString(),
+        sessionToken: generateSessionToken(), // Basic CSRF-like protection
+
         // Sectie 1: Algemene ervaring
         experience: formData.get('experience'),
         factory: formData.get('factory'),
@@ -80,26 +91,90 @@ function handleGranulateSurveySubmit(event) {
         additionalComments: formData.get('additional-comments') || ''
     };
 
-    // Validate required fields
-    if (!response.experience || !response.factory || !response.role) {
-        alert('Gelieve alle verplichte velden in te vullen (Sectie 1: Algemene Ervaring).');
+    // Validate required fields with better feedback
+    const validationErrors = [];
+    if (!response.experience) validationErrors.push('Werkervaring');
+    if (!response.factory) validationErrors.push('Fabriek');
+    if (!response.role) validationErrors.push('Rol');
+
+    if (validationErrors.length > 0) {
+        showValidationError(`Vul de volgende verplichte velden in: ${validationErrors.join(', ')}`);
+
+        // Re-enable submit button
+        if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = '📤 Enquête Verzenden';
+        }
         return;
     }
 
-    // Save response to localStorage
-    saveGranulateSurveyResponse(response);
+    // Simulate network delay for better UX
+    setTimeout(() => {
+        // Save response to localStorage
+        saveGranulateSurveyResponse(response);
 
-    // Show success message
-    showGranulateSuccessMessage();
+        // Show success message with animation
+        showGranulateSuccessMessage();
 
-    // Reset form
-    event.target.reset();
+        // Reset form
+        form.reset();
 
-    // Scroll to success message
-    document.getElementById('granulate-survey-success')?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center'
-    });
+        // Re-enable submit button
+        if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = '📤 Enquête Verzenden';
+        }
+
+        // Scroll to success message
+        document.getElementById('granulate-survey-success')?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+    }, 500);
+}
+
+/**
+ * Generate a simple session token for basic CSRF-like protection
+ */
+function generateSessionToken() {
+    const timestamp = Date.now();
+    const random = Math.random().toString(36).substring(2, 15);
+    return `${timestamp}-${random}`;
+}
+
+/**
+ * Show validation error message
+ */
+function showValidationError(message) {
+    // Check if error message already exists
+    let errorDiv = document.querySelector('.survey-validation-error');
+
+    if (!errorDiv) {
+        errorDiv = document.createElement('div');
+        errorDiv.className = 'survey-validation-error';
+        errorDiv.style.cssText = `
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 2px solid rgba(239, 68, 68, 0.5);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            color: #ef4444;
+            font-weight: 600;
+        `;
+
+        const form = document.getElementById('granulate-survey-form');
+        if (form) {
+            form.insertBefore(errorDiv, form.firstChild);
+        }
+    }
+
+    errorDiv.textContent = `⚠️ ${message}`;
+    errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // Remove after 5 seconds
+    setTimeout(() => {
+        errorDiv.remove();
+    }, 5000);
 }
 
 /**

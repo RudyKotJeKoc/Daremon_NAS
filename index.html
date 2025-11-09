@@ -141,6 +141,27 @@
         <div class="app-header-inner">
             <img src="/images/logo.png" alt="Radio ETS" aria-hidden="true" class="app-logo" loading="lazy" width="200" height="80">
 
+            <!-- Language Switcher -->
+            <div id="language-switcher" class="language-switcher">
+                <button id="language-toggle" class="language-toggle" data-i18n-aria-label="languageSwitcher" aria-haspopup="true" aria-expanded="false">
+                    🌐 <span id="current-language">NL</span>
+                </button>
+                <div id="language-menu" class="language-menu" role="menu" aria-hidden="true">
+                    <button class="language-option" data-lang="nl" role="menuitem">
+                        🇳🇱 <span data-i18n-key="languageDutch">Nederlands</span>
+                    </button>
+                    <button class="language-option" data-lang="pl" role="menuitem">
+                        🇵🇱 <span data-i18n-key="languagePolish">Polski</span>
+                    </button>
+                    <button class="language-option" data-lang="en" role="menuitem">
+                        🇬🇧 <span data-i18n-key="languageEnglish">English</span>
+                    </button>
+                    <button class="language-option" data-lang="cs" role="menuitem">
+                        🇨🇿 <span data-i18n-key="languageCzech">Čeština</span>
+                    </button>
+                </div>
+            </div>
+
             <!-- Compact Radio Player in Header -->
             <div id="header-player" class="header-player">
                 <img id="header-track-cover" src="/images/fallback-header.svg" alt="Albumhoes" class="header-track-cover" data-i18n-alt="trackCoverAlt" loading="lazy" width="48" height="48">
@@ -383,10 +404,10 @@
                         <div class="weather-frame">
                             <div class="weather-header">
                                 <span class="weather-icon">🌤️</span>
-                                <h3>WARUNKI ATMOSFERYCZNE</h3>
+                                <h3 data-i18n-key="weatherWidgetTitle">ATMOSFERISCHE OMSTANDIGHEDEN</h3>
                             </div>
                             <div id="weather-display" class="weather-display">
-                                <div class="weather-loading">Ładowanie danych pogodowych...</div>
+                                <div class="weather-loading" data-i18n-key="weatherLoading">Weergegevens laden...</div>
                             </div>
                         </div>
                     </div>
@@ -477,155 +498,155 @@
 
                 <!-- Employee Survey Section -->
                 <section class="content-box survey-box">
-                    <h3 class="survey-title">📋 Ankieta Zespołu</h3>
+                    <h3 class="survey-title" data-i18n-key="employeeSurveyTitle">📋 Teamonderzoek</h3>
                     <div class="survey-intro">
-                        <p><strong>Drodzy pracownicy!</strong></p>
-                        <p>Chcielibyśmy poznać Wasze zdanie na temat kontynuacji naszego projektu w okrojonym zespole oraz zebrać pomysły na rozwój Daremon.</p>
-                        <p class="survey-note">Ankieta jest anonimowa (imię opcjonalne) i pomoże nam lepiej zaplanować przyszłość.</p>
+                        <p><strong data-i18n-key="employeeSurveyIntroStrong">Beste medewerkers!</strong></p>
+                        <p data-i18n-key="employeeSurveyIntro1">We willen graag uw mening horen over de voortzetting van ons project met een kleiner team en ideeën verzamelen voor de ontwikkeling van Daremon.</p>
+                        <p class="survey-note" data-i18n-key="employeeSurveyIntro2">De enquête is anoniem (naam optioneel) en helpt ons de toekomst beter te plannen.</p>
                     </div>
 
                     <!-- Survey Form -->
                     <form id="employee-survey-form" class="survey-form">
                         <div class="form-group">
-                            <label for="emp-name">Imię (opcjonalne):</label>
-                            <input type="text" id="emp-name" name="name" placeholder="Twoje imię lub pseudonim">
+                            <label for="emp-name" data-i18n-key="employeeSurveyNameLabel">Naam (optioneel):</label>
+                            <input type="text" id="emp-name" name="name" data-i18n-placeholder="employeeSurveyNamePlaceholder">
                         </div>
 
                         <div class="form-group">
-                            <label>Czy chciałbyś/chciałabyś kontynuować pracę w okrojonym zespole?</label>
+                            <label data-i18n-key="employeeSurveyTeamQuestion">Zou u willen doorgaan met werken in een kleiner team?</label>
                             <div class="radio-group">
                                 <label class="radio-label">
                                     <input type="radio" name="team-continuation" value="yes" required>
-                                    <span>Tak, jestem zainteresowany/a</span>
+                                    <span data-i18n-key="employeeSurveyYes">Ja, ik ben geïnteresseerd</span>
                                 </label>
                                 <label class="radio-label">
                                     <input type="radio" name="team-continuation" value="maybe" required>
-                                    <span>Może, w zależności od warunków</span>
+                                    <span data-i18n-key="employeeSurveyMaybe">Misschien, afhankelijk van de voorwaarden</span>
                                 </label>
                                 <label class="radio-label">
                                     <input type="radio" name="team-continuation" value="no" required>
-                                    <span>Nie, dziękuję</span>
+                                    <span data-i18n-key="employeeSurveyNo">Nee, bedankt</span>
                                 </label>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label>Które funkcje Daremon uważasz za najbardziej przydatne? (wybierz wszystkie pasujące)</label>
+                            <label data-i18n-key="employeeSurveyFeaturesQuestion">Welke Daremon-functies vindt u het nuttigst? (selecteer alle toepasselijke)</label>
                             <div class="checkbox-group">
                                 <label class="checkbox-label">
                                     <input type="checkbox" name="daremon-features" value="radio">
-                                    <span>🎵 Radio / Odtwarzacz muzyki</span>
+                                    <span data-i18n-key="employeeSurveyFeatureRadio">🎵 Radio / Muziekspeler</span>
                                 </label>
                                 <label class="checkbox-label">
                                     <input type="checkbox" name="daremon-features" value="visualizer">
-                                    <span>🌀 Wizualizator audio (2D/3D)</span>
+                                    <span data-i18n-key="employeeSurveyFeatureVisualizer">🌀 Audio visualizer (2D/3D)</span>
                                 </label>
                                 <label class="checkbox-label">
                                     <input type="checkbox" name="daremon-features" value="surveys">
-                                    <span>📊 Ankiety i głosowania</span>
+                                    <span data-i18n-key="employeeSurveyFeatureSurveys">📊 Enquêtes en stemmingen</span>
                                 </label>
                                 <label class="checkbox-label">
                                     <input type="checkbox" name="daremon-features" value="messaging">
-                                    <span>💬 Wiadomości do DJ / Live Talk</span>
+                                    <span data-i18n-key="employeeSurveyFeatureMessaging">💬 Berichten naar DJ / Live Talk</span>
                                 </label>
                                 <label class="checkbox-label">
                                     <input type="checkbox" name="daremon-features" value="themes">
-                                    <span>🎨 Motywy wizualne</span>
+                                    <span data-i18n-key="employeeSurveyFeatureThemes">🎨 Visuele thema's</span>
                                 </label>
                                 <label class="checkbox-label">
                                     <input type="checkbox" name="daremon-features" value="ratings">
-                                    <span>⭐ System ocen utworów</span>
+                                    <span data-i18n-key="employeeSurveyFeatureRatings">⭐ Nummerbeoordelingssysteem</span>
                                 </label>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label>Jakie nowe funkcje chciałbyś/chciałabyś zobaczyć w Daremon?</label>
+                            <label data-i18n-key="employeeSurveyNewFeaturesQuestion">Welke nieuwe functies zou u graag in Daremon zien?</label>
                             <div class="checkbox-group">
                                 <label class="checkbox-label">
                                     <input type="checkbox" name="new-features" value="playlist-editor">
-                                    <span>🎧 Edytor playlist / kolejki utworów</span>
+                                    <span data-i18n-key="employeeSurveyNewPlaylist">🎧 Afspeellijst editor / nummerwachtrij</span>
                                 </label>
                                 <label class="checkbox-label">
                                     <input type="checkbox" name="new-features" value="podcast">
-                                    <span>🎙️ Podcasty / nagrania audio</span>
+                                    <span data-i18n-key="employeeSurveyNewPodcast">🎙️ Podcasts / audio-opnames</span>
                                 </label>
                                 <label class="checkbox-label">
                                     <input type="checkbox" name="new-features" value="chat">
-                                    <span>💭 Czat na żywo</span>
+                                    <span data-i18n-key="employeeSurveyNewChat">💭 Live chat</span>
                                 </label>
                                 <label class="checkbox-label">
                                     <input type="checkbox" name="new-features" value="calendar">
-                                    <span>📅 Kalendarz wydarzeń / zmian</span>
+                                    <span data-i18n-key="employeeSurveyNewCalendar">📅 Evenementenkalender / diensten</span>
                                 </label>
                                 <label class="checkbox-label">
                                     <input type="checkbox" name="new-features" value="news">
-                                    <span>📰 Tablica ogłoszeń</span>
+                                    <span data-i18n-key="employeeSurveyNewNews">📰 Mededelingenbord</span>
                                 </label>
                                 <label class="checkbox-label">
                                     <input type="checkbox" name="new-features" value="games">
-                                    <span>🎮 Mini gry / zabawy</span>
+                                    <span data-i18n-key="employeeSurveyNewGames">🎮 Mini games / activiteiten</span>
                                 </label>
                                 <label class="checkbox-label">
                                     <input type="checkbox" name="new-features" value="other">
-                                    <span>Inne:</span>
-                                    <input type="text" class="inline-input" name="new-features-other" placeholder="Opisz...">
+                                    <span data-i18n-key="employeeSurveyNewOther">Ander:</span>
+                                    <input type="text" class="inline-input" name="new-features-other" data-i18n-placeholder="employeeSurveyNewOtherPlaceholder">
                                 </label>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label>W jakich obszarach mógłbyś/mogłabyś pomóc przy rozwoju Daremon?</label>
+                            <label data-i18n-key="employeeSurveyHelpAreasQuestion">Op welke gebieden kunt u helpen bij de ontwikkeling van Daremon?</label>
                             <div class="checkbox-group">
                                 <label class="checkbox-label">
                                     <input type="checkbox" name="help-areas" value="programming">
-                                    <span>💻 Programowanie / kod</span>
+                                    <span data-i18n-key="employeeSurveyHelpProgramming">💻 Programmeren / code</span>
                                 </label>
                                 <label class="checkbox-label">
                                     <input type="checkbox" name="help-areas" value="design">
-                                    <span>🎨 Projektowanie / grafika</span>
+                                    <span data-i18n-key="employeeSurveyHelpDesign">🎨 Ontwerpen / graphics</span>
                                 </label>
                                 <label class="checkbox-label">
                                     <input type="checkbox" name="help-areas" value="music">
-                                    <span>🎵 Muzyka / audio</span>
+                                    <span data-i18n-key="employeeSurveyHelpMusic">🎵 Muziek / audio</span>
                                 </label>
                                 <label class="checkbox-label">
                                     <input type="checkbox" name="help-areas" value="testing">
-                                    <span>🔍 Testowanie / feedback</span>
+                                    <span data-i18n-key="employeeSurveyHelpTesting">🔍 Testen / feedback</span>
                                 </label>
                                 <label class="checkbox-label">
                                     <input type="checkbox" name="help-areas" value="content">
-                                    <span>✍️ Tworzenie treści</span>
+                                    <span data-i18n-key="employeeSurveyHelpContent">✍️ Inhoud creëren</span>
                                 </label>
                                 <label class="checkbox-label">
                                     <input type="checkbox" name="help-areas" value="ideas">
-                                    <span>💡 Pomysły / koncepcje</span>
+                                    <span data-i18n-key="employeeSurveyHelpIdeas">💡 Ideeën / concepten</span>
                                 </label>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="emp-ideas">Twoje pomysły, uwagi lub sugestie:</label>
-                            <textarea id="emp-ideas" name="ideas" rows="4" placeholder="Podziel się swoimi pomysłami na ulepszenie Daremon lub inne projekty..."></textarea>
+                            <label for="emp-ideas" data-i18n-key="employeeSurveyIdeasLabel">Uw ideeën, opmerkingen of suggesties:</label>
+                            <textarea id="emp-ideas" name="ideas" rows="4" data-i18n-placeholder="employeeSurveyIdeasPlaceholder"></textarea>
                         </div>
 
                         <div class="form-actions">
-                            <button type="submit" class="survey-submit-btn">📤 Wyślij ankietę</button>
-                            <button type="button" id="employee-survey-results-btn" class="survey-results-btn">📊 Zobacz wyniki</button>
+                            <button type="submit" class="survey-submit-btn" data-i18n-key="employeeSurveySubmit">📤 Enquête verzenden</button>
+                            <button type="button" id="employee-survey-results-btn" class="survey-results-btn" data-i18n-key="employeeSurveyViewResults">📊 Bekijk resultaten</button>
                         </div>
                     </form>
 
                     <!-- Success Message -->
                     <div id="employee-survey-success" class="survey-message success-message hidden">
-                        <p><strong>✅ Dziękujemy za wypełnienie ankiety!</strong></p>
-                        <p>Twoja opinia jest dla nas bardzo ważna.</p>
+                        <p><strong data-i18n-key="employeeSurveySuccessTitle">✅ Bedankt voor het invullen van de enquête!</strong></p>
+                        <p data-i18n-key="employeeSurveySuccessMessage">Uw mening is zeer belangrijk voor ons.</p>
                     </div>
 
                     <!-- Results Section -->
                     <div id="employee-survey-results" class="survey-results hidden">
-                        <h3>📊 Wyniki Ankiety Zespołu</h3>
+                        <h3 data-i18n-key="employeeSurveyResultsTitle">📊 Resultaten Teamonderzoek</h3>
                         <div id="employee-survey-results-content"></div>
-                        <button id="close-employee-results-btn" class="close-results-btn">Zamknij wyniki</button>
+                        <button id="close-employee-results-btn" class="close-results-btn" data-i18n-key="employeeSurveyCloseResults">Sluit resultaten</button>
                     </div>
                 </section>
 
@@ -726,7 +747,15 @@
     <script type="module" src="employee-survey.js"></script>
     <script type="module" src="countdown-timers.js"></script>
     <script type="module" src="weather-widget.js"></script>
+    <script type="module" src="language-switcher.js"></script>
     <script type="module" src="script.js"></script>
     <script type="module" src="app.js"></script>
+    <script type="module">
+        // Initialize language switcher after DOM is ready
+        import { initializeLanguageSwitcher } from './language-switcher.js';
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeLanguageSwitcher();
+        });
+    </script>
 </body>
 </html>
