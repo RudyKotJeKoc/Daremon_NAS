@@ -748,13 +748,17 @@
     <script type="module" src="countdown-timers.js"></script>
     <script type="module" src="weather-widget.js"></script>
     <script type="module" src="language-switcher.js"></script>
+    <script type="module" src="survey-api.js"></script>
     <script type="module" src="script.js"></script>
     <script type="module" src="app.js"></script>
     <script type="module">
-        // Initialize language switcher after DOM is ready
+        // Initialize language switcher and survey API after DOM is ready
         import { initializeLanguageSwitcher } from './language-switcher.js';
+        import { initializeSurveyAPI } from './survey-api.js';
+
         document.addEventListener('DOMContentLoaded', () => {
             initializeLanguageSwitcher();
+            initializeSurveyAPI();
         });
     </script>
 </body>

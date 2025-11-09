@@ -3,6 +3,8 @@
  * Dedicated survey for granulate transport system operators and maintenance staff
  */
 
+import { submitSurvey } from './survey-api.js';
+
 const GRANULATE_SURVEY_STORAGE_KEY = 'daremon_granulate_survey_responses';
 
 // Initialize granulate survey system
@@ -108,29 +110,8 @@ function handleGranulateSurveySubmit(event) {
         return;
     }
 
-    // Simulate network delay for better UX
-    setTimeout(() => {
-        // Save response to localStorage
-        saveGranulateSurveyResponse(response);
-
-        // Show success message with animation
-        showGranulateSuccessMessage();
-
-        // Reset form
-        form.reset();
-
-        // Re-enable submit button
-        if (submitButton) {
-            submitButton.disabled = false;
-            submitButton.textContent = '📤 Enquête Verzenden';
-        }
-
-        // Scroll to success message
-        document.getElementById('granulate-survey-success')?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center'
-        });
-    }, 500);
+    // Submit to backend API (with offline fallback)
+    submitSurveyToBackend(response, form, submitButton);
 }
 
 /**
@@ -140,6 +121,57 @@ function generateSessionToken() {
     const timestamp = Date.now();
     const random = Math.random().toString(36).substring(2, 15);
     return `${timestamp}-${random}`;
+}
+
+/**
+ * Submit survey to backend with offline fallback
+ */
+async function submitSurveyToBackend(response, form, submitButton) {
+    try {
+        // Submit to backend API
+        const result = await submitSurvey('granulate', response);
+
+        // Save to localStorage regardless of backend status
+        saveGranulateSurveyResponse(response);
+
+        // Show appropriate success message
+        if (result.offline) {
+            if (result.queued) {
+                showSuccessMessage('✅ Enquête opgeslagen en in wachtrij voor synchronisatie', 'info');
+            } else {
+                showSuccessMessage('✅ Enquête lokaal opgeslagen (backend niet beschikbaar)', 'warning');
+            }
+        } else {
+            showSuccessMessage('✅ Enquête succesvol verzonden naar server!', 'success');
+        }
+
+        // Show default success message
+        showGranulateSuccessMessage();
+
+        // Reset form
+        form.reset();
+
+        // Scroll to success message
+        document.getElementById('granulate-survey-success')?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+
+    } catch (error) {
+        console.error('Survey submission error:', error);
+
+        // Save locally even if backend fails
+        saveGranulateSurveyResponse(response);
+
+        // Show error but confirm local save
+        showValidationError('Verzending mislukt, maar lokaal opgeslagen. Probeer later opnieuw.');
+    } finally {
+        // Re-enable submit button
+        if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = '📤 Enquête Verzenden';
+        }
+    }
 }
 
 /**
@@ -174,6 +206,48 @@ function showValidationError(message) {
     // Remove after 5 seconds
     setTimeout(() => {
         errorDiv.remove();
+    }, 5000);
+}
+
+/**
+ * Show success message with different types
+ */
+function showSuccessMessage(message, type = 'success') {
+    const colors = {
+        success: { bg: 'rgba(16, 185, 129, 0.1)', border: 'rgba(16, 185, 129, 0.5)', color: '#10b981' },
+        info: { bg: 'rgba(59, 130, 246, 0.1)', border: 'rgba(59, 130, 246, 0.5)', color: '#3b82f6' },
+        warning: { bg: 'rgba(245, 158, 11, 0.1)', border: 'rgba(245, 158, 11, 0.5)', color: '#f59e0b' }
+    };
+
+    const style = colors[type] || colors.success;
+
+    let messageDiv = document.querySelector('.survey-status-message');
+
+    if (!messageDiv) {
+        messageDiv = document.createElement('div');
+        messageDiv.className = 'survey-status-message';
+
+        const form = document.getElementById('granulate-survey-form');
+        if (form) {
+            form.insertBefore(messageDiv, form.firstChild);
+        }
+    }
+
+    messageDiv.style.cssText = `
+        background-color: ${style.bg};
+        border: 2px solid ${style.border};
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 1rem 0;
+        color: ${style.color};
+        font-weight: 600;
+    `;
+
+    messageDiv.textContent = message;
+
+    // Remove after 5 seconds
+    setTimeout(() => {
+        messageDiv.remove();
     }, 5000);
 }
 

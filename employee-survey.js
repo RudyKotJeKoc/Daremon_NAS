@@ -3,6 +3,8 @@
  * Handles employee survey form submission and results display
  */
 
+import { submitSurvey } from './survey-api.js';
+
 const EMPLOYEE_SURVEY_STORAGE_KEY = 'daremon_employee_survey_responses';
 
 // Initialize employee survey system
@@ -35,14 +37,24 @@ export function initializeEmployeeSurvey() {
 /**
  * Handle employee survey form submission
  */
-function handleEmployeeSurveySubmit(event) {
+async function handleEmployeeSurveySubmit(event) {
     event.preventDefault();
 
-    const formData = new FormData(event.target);
+    const form = event.target;
+    const submitButton = form.querySelector('button[type="submit"]');
+
+    // Disable submit button
+    if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = '⏳ Verzenden...';
+    }
+
+    const formData = new FormData(form);
 
     // Collect form data
     const response = {
         timestamp: new Date().toISOString(),
+        sessionToken: generateSessionToken(),
         name: formData.get('name') || 'Anonim',
         teamContinuation: formData.get('team-continuation'),
         daremonFeatures: formData.getAll('daremon-features'),
@@ -52,17 +64,145 @@ function handleEmployeeSurveySubmit(event) {
         ideas: formData.get('ideas') || ''
     };
 
-    // Save response to localStorage
-    saveEmployeeSurveyResponse(response);
+    // Validate required field
+    if (!response.teamContinuation) {
+        showEmployeeValidationError('Selecteer een antwoord op de eerste vraag');
+        if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = '📤 Enquête verzenden';
+        }
+        return;
+    }
 
-    // Show success message
-    showEmployeeSuccessMessage();
+    try {
+        // Submit to backend API
+        const result = await submitSurvey('employee', response);
 
-    // Reset form
-    event.target.reset();
+        // Save to localStorage regardless of backend status
+        saveEmployeeSurveyResponse(response);
 
-    // Scroll to success message
-    document.getElementById('employee-survey-success').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Show appropriate success message
+        if (result.offline) {
+            if (result.queued) {
+                showEmployeeStatusMessage('✅ Enquête opgeslagen en in wachtrij voor synchronisatie', 'info');
+            } else {
+                showEmployeeStatusMessage('✅ Enquête lokaal opgeslagen (backend niet beschikbaar)', 'warning');
+            }
+        } else {
+            showEmployeeStatusMessage('✅ Enquête succesvol verzonden naar server!', 'success');
+        }
+
+        // Show default success message
+        showEmployeeSuccessMessage();
+
+        // Reset form
+        form.reset();
+
+        // Scroll to success message
+        document.getElementById('employee-survey-success')?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+
+    } catch (error) {
+        console.error('Survey submission error:', error);
+
+        // Save locally even if backend fails
+        saveEmployeeSurveyResponse(response);
+
+        // Show error but confirm local save
+        showEmployeeValidationError('Verzending mislukt, maar lokaal opgeslagen. Probeer later opnieuw.');
+
+    } finally {
+        // Re-enable submit button
+        if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = '📤 Enquête verzenden';
+        }
+    }
+}
+
+/**
+ * Generate session token
+ */
+function generateSessionToken() {
+    const timestamp = Date.now();
+    const random = Math.random().toString(36).substring(2, 15);
+    return `${timestamp}-${random}`;
+}
+
+/**
+ * Show validation error
+ */
+function showEmployeeValidationError(message) {
+    let errorDiv = document.querySelector('.employee-validation-error');
+
+    if (!errorDiv) {
+        errorDiv = document.createElement('div');
+        errorDiv.className = 'employee-validation-error';
+        errorDiv.style.cssText = `
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 2px solid rgba(239, 68, 68, 0.5);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            color: #ef4444;
+            font-weight: 600;
+        `;
+
+        const form = document.getElementById('employee-survey-form');
+        if (form) {
+            form.insertBefore(errorDiv, form.firstChild);
+        }
+    }
+
+    errorDiv.textContent = `⚠️ ${message}`;
+    errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    setTimeout(() => {
+        errorDiv.remove();
+    }, 5000);
+}
+
+/**
+ * Show status message
+ */
+function showEmployeeStatusMessage(message, type = 'success') {
+    const colors = {
+        success: { bg: 'rgba(16, 185, 129, 0.1)', border: 'rgba(16, 185, 129, 0.5)', color: '#10b981' },
+        info: { bg: 'rgba(59, 130, 246, 0.1)', border: 'rgba(59, 130, 246, 0.5)', color: '#3b82f6' },
+        warning: { bg: 'rgba(245, 158, 11, 0.1)', border: 'rgba(245, 158, 11, 0.5)', color: '#f59e0b' }
+    };
+
+    const style = colors[type] || colors.success;
+
+    let messageDiv = document.querySelector('.employee-status-message');
+
+    if (!messageDiv) {
+        messageDiv = document.createElement('div');
+        messageDiv.className = 'employee-status-message';
+
+        const form = document.getElementById('employee-survey-form');
+        if (form) {
+            form.insertBefore(messageDiv, form.firstChild);
+        }
+    }
+
+    messageDiv.style.cssText = `
+        background-color: ${style.bg};
+        border: 2px solid ${style.border};
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 1rem 0;
+        color: ${style.color};
+        font-weight: 600;
+    `;
+
+    messageDiv.textContent = message;
+
+    setTimeout(() => {
+        messageDiv.remove();
+    }, 5000);
 }
 
 /**
