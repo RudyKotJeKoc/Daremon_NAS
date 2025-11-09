@@ -14,16 +14,23 @@ const WEATHER_ICONS = {
   drizzle: '🌦️',
 };
 
-const POLISH_WEATHER_DESCRIPTIONS = {
-  clear: 'Bezchmurnie',
-  clouds: 'Pochmurno',
-  rain: 'Deszcz',
-  snow: 'Śnieg',
-  thunderstorm: 'Burza',
-  mist: 'Mgła',
-  fog: 'Mgła',
-  drizzle: 'Mżawka',
-};
+/**
+ * Get translated weather descriptions
+ */
+function getWeatherDescriptions() {
+  const translations = window.daremonState?.translations || {};
+
+  return {
+    clear: translations.weatherClear || 'Clear',
+    clouds: translations.weatherClouds || 'Cloudy',
+    rain: translations.weatherRain || 'Rain',
+    snow: translations.weatherSnow || 'Snow',
+    thunderstorm: translations.weatherThunderstorm || 'Thunderstorm',
+    mist: translations.weatherMist || 'Mist',
+    fog: translations.weatherFog || 'Fog',
+    drizzle: translations.weatherDrizzle || 'Drizzle',
+  };
+}
 
 /**
  * Pobiera dane pogodowe z geolokalizacji
@@ -69,12 +76,13 @@ function parseWeatherData(data) {
 
   // Mapowanie kodów pogody Open-Meteo na nasze kategorie
   const weatherType = getWeatherTypeFromCode(weatherCode);
+  const descriptions = getWeatherDescriptions();
 
   return {
     temperature: Math.round(current.temperature_2m),
     humidity: current.relative_humidity_2m,
     windSpeed: Math.round(current.wind_speed_10m),
-    description: POLISH_WEATHER_DESCRIPTIONS[weatherType],
+    description: descriptions[weatherType],
     icon: WEATHER_ICONS[weatherType],
     type: weatherType,
   };
@@ -103,12 +111,13 @@ function getSimulatedWeather() {
 
   const baseTemp = 15;
   const tempVariation = Math.random() * 20 - 10;
+  const descriptions = getWeatherDescriptions();
 
   return {
     temperature: Math.round(baseTemp + tempVariation),
     humidity: Math.round(40 + Math.random() * 40),
     windSpeed: Math.round(Math.random() * 30),
-    description: POLISH_WEATHER_DESCRIPTIONS[type],
+    description: descriptions[type],
     icon: WEATHER_ICONS[type],
     type: type,
     simulated: true,
@@ -124,6 +133,11 @@ function renderWeatherWidget(data) {
     return;
   }
 
+  const translations = window.daremonState?.translations || {};
+  const humidityLabel = translations.weatherHumidity || 'Humidity';
+  const windLabel = translations.weatherWind || 'Wind';
+  const simulatedLabel = translations.weatherSimulated || '⚠️ Simulated data';
+
   const html = `
     <div class="weather-content">
       <div class="weather-main">
@@ -136,16 +150,16 @@ function renderWeatherWidget(data) {
       <div class="weather-details">
         <div class="weather-detail-item">
           <div class="weather-detail-icon">💧</div>
-          <div class="weather-detail-label">Wilgotność</div>
+          <div class="weather-detail-label">${humidityLabel}</div>
           <div class="weather-detail-value">${data.humidity}%</div>
         </div>
         <div class="weather-detail-item">
           <div class="weather-detail-icon">💨</div>
-          <div class="weather-detail-label">Wiatr</div>
+          <div class="weather-detail-label">${windLabel}</div>
           <div class="weather-detail-value">${data.windSpeed} km/h</div>
         </div>
       </div>
-      ${data.simulated ? '<div class="weather-simulated-label">⚠️ Dane symulowane</div>' : ''}
+      ${data.simulated ? `<div class="weather-simulated-label">${simulatedLabel}</div>` : ''}
     </div>
   `;
 

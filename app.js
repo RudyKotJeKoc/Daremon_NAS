@@ -225,6 +225,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) throw new Error(`Nie znaleziono pliku: locales/${state.language}.json`);
             state.translations = await response.json();
             try { window.localStorage && localStorage.setItem('daremon_language', state.language); } catch {}
+
+            // Expose state globally for language switcher and weather widget
+            window.daremonState = state;
+
             i18n_apply();
             window.daremonTranslate = (key, replacements = {}) => t(key, replacements);
         } catch (error) {
