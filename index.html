@@ -249,14 +249,6 @@
                         <p id="live-talk-feedback" class="form-feedback" role="status" aria-live="polite" data-i18n-key="liveTalkFeedbackIdle"></p>
                     </section>
 
-                    <section class="content-box">
-                        <h3 data-i18n-key="changeTheme"></h3>
-                        <div class="theme-switcher">
-                            <button id="theme-arburg" data-i18n-title="themeArburg" data-i18n-aria-label="themeArburgLabel"></button>
-                            <button id="theme-rave" data-i18n-title="themeRave" data-i18n-aria-label="themeRaveLabel"></button>
-                        </div>
-                    </section>
-
                     <!-- Machine documentation section removed -->
                     <!-- Strategic polls section removed - aplikacja uproszczona do core radio -->
                     <!-- VSO Calculator section removed - aplikacja uproszczona do core radio -->
@@ -284,6 +276,21 @@
                     <p data-i18n-key="headerSubtitle"></p>
                     <p id="listener-count-display"><span data-i18n-key="listenersLabel"></span> <span id="listener-count" aria-live="polite" role="status">...</span></p>
                 </header>
+
+                <!-- Weather Widget - Atmospheric Conditions -->
+                <section id="weather-section" class="content-box weather-section" aria-labelledby="weather-heading">
+                    <div class="weather-widget">
+                        <div class="weather-frame">
+                            <div class="weather-header">
+                                <span class="weather-icon">🌤️</span>
+                                <h2 id="weather-heading" data-i18n-key="weatherWidgetTitle">ATMOSFERISCHE OMSTANDIGHEDEN</h2>
+                            </div>
+                            <div id="weather-display" class="weather-display">
+                                <div class="weather-loading" data-i18n-key="weatherLoading">Weergegevens laden...</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
                 <!-- CRITICAL: Three-Phase Factory Shutdown System -->
                 <section id="deadlines-section" class="content-box power-system-section" aria-labelledby="deadlines-heading">
@@ -397,19 +404,6 @@
                                 </div>
                             </div>
                         </article>
-                    </div>
-
-                    <!-- Weather Widget -->
-                    <div class="weather-widget">
-                        <div class="weather-frame">
-                            <div class="weather-header">
-                                <span class="weather-icon">🌤️</span>
-                                <h3 data-i18n-key="weatherWidgetTitle">ATMOSFERISCHE OMSTANDIGHEDEN</h3>
-                            </div>
-                            <div id="weather-display" class="weather-display">
-                                <div class="weather-loading" data-i18n-key="weatherLoading">Weergegevens laden...</div>
-                            </div>
-                        </div>
                     </div>
                 </section>
 

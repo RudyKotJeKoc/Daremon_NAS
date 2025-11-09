@@ -225,5 +225,16 @@
   "languageDutch": "Nederlands",
   "languagePolish": "Polski",
   "languageEnglish": "English",
-  "languageCzech": "Čeština"
+  "languageCzech": "Čeština",
+  "weatherHumidity": "Luchtvochtigheid",
+  "weatherWind": "Wind",
+  "weatherSimulated": "⚠️ Gesimuleerde gegevens",
+  "weatherClear": "Helder",
+  "weatherClouds": "Bewolkt",
+  "weatherRain": "Regen",
+  "weatherSnow": "Sneeuw",
+  "weatherThunderstorm": "Onweer",
+  "weatherMist": "Mist",
+  "weatherFog": "Mist",
+  "weatherDrizzle": "Motregen"
 }

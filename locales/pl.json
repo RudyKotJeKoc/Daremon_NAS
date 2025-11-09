@@ -225,5 +225,16 @@
   "languageDutch": "Nederlands",
   "languagePolish": "Polski",
   "languageEnglish": "English",
-  "languageCzech": "Čeština"
+  "languageCzech": "Čeština",
+  "weatherHumidity": "Wilgotność",
+  "weatherWind": "Wiatr",
+  "weatherSimulated": "⚠️ Dane symulowane",
+  "weatherClear": "Bezchmurnie",
+  "weatherClouds": "Pochmurno",
+  "weatherRain": "Deszcz",
+  "weatherSnow": "Śnieg",
+  "weatherThunderstorm": "Burza",
+  "weatherMist": "Mgła",
+  "weatherFog": "Mgła",
+  "weatherDrizzle": "Mżawka"
 }
