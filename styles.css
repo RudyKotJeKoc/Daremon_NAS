@@ -646,6 +646,7 @@ select:focus-visible {
     display: flex;
     flex-direction: column;
     gap: 0.75rem; /* TV optimization: reduced from 1.5rem */
+    margin-top: 2rem;
 }
 
 .now-playing-layout {
@@ -714,6 +715,7 @@ header p {
         inset 0 0 60px rgba(255, 107, 0, 0.05);
     position: relative;
     overflow: visible;
+    margin-top: 3rem;
 }
 
 .power-system-section::before {
@@ -1277,6 +1279,10 @@ header p {
 /* ============================================
    WEATHER WIDGET
    ============================================ */
+
+.weather-section {
+    margin-bottom: 4rem;
+}
 
 .weather-widget {
     margin-top: 2rem;
