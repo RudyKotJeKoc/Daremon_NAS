@@ -1879,9 +1879,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateVolumeDisplay(dom.player.volumeSlider.value);
             } 
         });
-        
-        let touchStartX = 0; 
-        let touchEndX = 0; 
+
         let setMenuState = null;
         if (dom.sidePanel.menuToggle && dom.sidePanel.panel) {
             const toggleButton = dom.sidePanel.menuToggle;
@@ -1923,34 +1921,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         }
-        
-        document.body.addEventListener('touchstart', e => { 
-            touchStartX = e.changedTouches[0].screenX; 
-        }, { passive: true }); 
-        
-        document.body.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            const deltaX = touchEndX - touchStartX;
-            if (Math.abs(deltaX) > 50) {
-                if (deltaX < 0) {
-                    if(dom.sidePanel.panel && dom.sidePanel.panel.classList.contains('open')) {
-                        if (typeof setMenuState === 'function') {
-                            setMenuState(false);
-                        } else {
-                            dom.sidePanel.panel.classList.remove('open');
-                        }
-                    } else {
-                        playNextTrack();
-                    }
-                } else {
-                    if (typeof setMenuState === 'function') {
-                        setMenuState(true);
-                    } else if (dom.sidePanel.panel) {
-                        dom.sidePanel.panel.classList.add('open');
-                    }
-                }
-            }
-        });
 
         if (dom.polls?.cta && dom.polls?.container) {
             dom.polls.cta.addEventListener('click', () => {
