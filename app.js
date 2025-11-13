@@ -70,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
             menuToggle: document.getElementById('menu-toggle'),
             drawer: document.getElementById('drawer-menu'),
             historyList: document.getElementById('history-list'),
-            goldenRecordsList: document.getElementById('golden-records-list'),
             topRatedList: document.getElementById('top-rated-list'),
             messagesList: document.getElementById('messages-list'),
             djMessageForm: document.getElementById('dj-message-form'),
@@ -412,7 +411,6 @@ document.addEventListener('DOMContentLoaded', () => {
             updateWelcomeGreeting();
             updateOfflineStatus();
             // messages and song dedications removed in simplified build
-            renderGoldenRecords();
             renderTopRated();
             // calendar and machine select removed
             if (listenerCountController) {
@@ -1367,22 +1365,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Luisteraarstelsimulatie ---
-    // --- Gouden Platen & Berichten ---
-    function renderGoldenRecords() { 
-        if (!dom.sidePanel.goldenRecordsList) return;
-        const goldenTracks = state.playlist.filter(t => t.golden);
-        dom.sidePanel.goldenRecordsList.innerHTML = '';
-        goldenTracks.forEach(track => {
-            const item = createTrackListItem(track, {
-                subtitle: Array.isArray(track.tags) && track.tags.length > 0
-                    ? track.tags.slice(0, 2).join(', ')
-                    : '',
-                interactive: true,
-                onActivate: () => playTrackNow(track)
-            });
-            dom.sidePanel.goldenRecordsList.appendChild(item);
-        });
-    }
+    // --- Berichten ---
 
     function handleLike() {
         if (!state.currentTrack) return;
