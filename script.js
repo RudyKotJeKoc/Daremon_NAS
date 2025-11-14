@@ -72,7 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const formatDoubleDigit = (value) => value.toString().padStart(2, '0');
 
-    let intervalId;
+    let intervalId = null;
+    let animationId = null;
+    let lastUpdateTime = 0;
 
     const updateCountdown = () => {
         const now = new Date();
@@ -86,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const seconds = totalSeconds % 60;
 
         updateElementText(countdownElements.days, days.toString());
-
         updateElementText(countdownElements.hours, formatDoubleDigit(hours));
         updateElementText(countdownElements.minutes, formatDoubleDigit(minutes));
         updateElementText(countdownElements.seconds, formatDoubleDigit(seconds));
@@ -103,7 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
             countdownDisplay.setAttribute('aria-label', ariaLabel);
         }
 
-
         if (countdownStatus) {
             if (diff <= 0) {
                 countdownStatus.textContent = translate('countdownStatusComplete');
@@ -112,13 +112,54 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        if (diff <= 0 && intervalId) {
-            clearInterval(intervalId);
-            intervalId = null;
+        if (diff <= 0) {
+            stopCountdown();
         }
+    };
+
+    // Użyj requestAnimationFrame zamiast setInterval dla lepszej wydajności
+    const animateCountdown = (timestamp) => {
+        if (timestamp - lastUpdateTime >= 1000) {
+            updateCountdown();
+            lastUpdateTime = timestamp;
+        }
+
+        if (!document.hidden && intervalId) {
+            animationId = requestAnimationFrame(animateCountdown);
+        }
+    };
+
+    const startCountdown = () => {
+        if (intervalId) return; // Already running
+
+        intervalId = true; // Mark as running
+        lastUpdateTime = 0;
+        animationId = requestAnimationFrame(animateCountdown);
+    };
+
+    const stopCountdown = () => {
+        if (animationId) {
+            cancelAnimationFrame(animationId);
+            animationId = null;
+        }
+        intervalId = null;
     };
 
     applyStaticLabels();
     updateCountdown();
-    intervalId = window.setInterval(updateCountdown, 1000);
+    startCountdown();
+
+    // Pause/resume countdown based on page visibility
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            stopCountdown();
+        } else {
+            startCountdown();
+        }
+    });
+
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', () => {
+        stopCountdown();
+    });
 });

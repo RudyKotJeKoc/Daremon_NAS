@@ -12,6 +12,7 @@
 
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { debounce } from '../utils.js';
 
 export class Visualizer3D {
     constructor(canvasElement, analyserNode) {
@@ -19,27 +20,32 @@ export class Visualizer3D {
         this.analyser = analyserNode;
         this.isActive = false;
         this.animationId = null;
-        
+
         // Scene components
         this.scene = null;
         this.camera = null;
         this.renderer = null;
         this.controls = null;
-        
+
         // 3D Objects
         this.centerSphere = null;
         this.particles = [];
         this.particleSystem = null;
-        
+
         // Audio data
         this.dataArray = null;
         this.bufferLength = 0;
-        
+
         // Auto-rotation
         this.autoRotate = true;
         this.lastInteractionTime = Date.now();
         this.interactionTimeout = 5000; // 5 seconds
-        
+
+        // Event handlers (store as instance properties for proper cleanup)
+        this.handleResize = debounce(() => this.onWindowResize(), 150);
+        this.handleMouseDown = () => this.onUserInteraction();
+        this.handleTouchStart = () => this.onUserInteraction();
+
         this.init();
     }
     
@@ -62,13 +68,13 @@ export class Visualizer3D {
             this.bufferLength = this.analyser.frequencyBinCount;
             this.dataArray = new Uint8Array(this.bufferLength);
         }
-        
-        // Handle window resize
-        window.addEventListener('resize', () => this.onWindowResize());
-        
+
+        // Handle window resize (debounced)
+        window.addEventListener('resize', this.handleResize);
+
         // Track user interaction
-        this.canvas.addEventListener('mousedown', () => this.onUserInteraction());
-        this.canvas.addEventListener('touchstart', () => this.onUserInteraction());
+        this.canvas.addEventListener('mousedown', this.handleMouseDown);
+        this.canvas.addEventListener('touchstart', this.handleTouchStart);
     }
     
     setupScene() {
@@ -348,21 +354,82 @@ export class Visualizer3D {
             this.renderer.dispose();
         }
         
+        // Dispose geometries and materials
         if (this.particleSystem) {
-            this.particleSystem.geometry.dispose();
-            this.particleSystem.material.dispose();
-            this.scene.remove(this.particleSystem);
+            if (this.particleSystem.geometry) {
+                this.particleSystem.geometry.dispose();
+            }
+            if (this.particleSystem.material) {
+                this.particleSystem.material.dispose();
+            }
+            if (this.scene) {
+                this.scene.remove(this.particleSystem);
+            }
+            this.particleSystem = null;
         }
-        
+
         if (this.centerSphere) {
-            this.centerSphere.geometry.dispose();
-            this.centerSphere.material.dispose();
-            this.scene.remove(this.centerSphere);
+            if (this.centerSphere.geometry) {
+                this.centerSphere.geometry.dispose();
+            }
+            if (this.centerSphere.material) {
+                this.centerSphere.material.dispose();
+            }
+            if (this.scene) {
+                this.scene.remove(this.centerSphere);
+            }
+            this.centerSphere = null;
         }
-        
-        window.removeEventListener('resize', () => this.onWindowResize());
-        this.canvas.removeEventListener('mousedown', () => this.onUserInteraction());
-        this.canvas.removeEventListener('touchstart', () => this.onUserInteraction());
+
+        // Dispose controls
+        if (this.controls) {
+            this.controls.dispose();
+            this.controls = null;
+        }
+
+        // Dispose renderer
+        if (this.renderer) {
+            this.renderer.dispose();
+            this.renderer.forceContextLoss();
+            this.renderer = null;
+        }
+
+        // Clear scene completely
+        if (this.scene) {
+            this.scene.traverse((object) => {
+                if (object.geometry) {
+                    object.geometry.dispose();
+                }
+                if (object.material) {
+                    if (Array.isArray(object.material)) {
+                        object.material.forEach(m => m.dispose());
+                    } else {
+                        object.material.dispose();
+                    }
+                }
+            });
+            this.scene.clear();
+            this.scene = null;
+        }
+
+        // Remove event listeners (using stored handler references)
+        if (this.handleResize) {
+            window.removeEventListener('resize', this.handleResize);
+        }
+        if (this.canvas) {
+            if (this.handleMouseDown) {
+                this.canvas.removeEventListener('mousedown', this.handleMouseDown);
+            }
+            if (this.handleTouchStart) {
+                this.canvas.removeEventListener('touchstart', this.handleTouchStart);
+            }
+        }
+
+        // Clear references
+        this.camera = null;
+        this.dataArray = null;
+        this.particles = [];
+        this.isActive = false;
     }
     
     /**

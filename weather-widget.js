@@ -125,7 +125,37 @@ function getSimulatedWeather() {
 }
 
 /**
- * Renderuje widget pogody
+ * Tworzy HTML template dla widgetu pogody (tylko przy pierwszym renderze)
+ */
+function createWeatherTemplate() {
+  return `
+    <div class="weather-content">
+      <div class="weather-main">
+        <div class="weather-temp-section">
+          <div class="weather-icon-large"></div>
+          <div class="weather-temp-value"></div>
+        </div>
+        <div class="weather-description"></div>
+      </div>
+      <div class="weather-details">
+        <div class="weather-detail-item">
+          <div class="weather-detail-icon">💧</div>
+          <div class="weather-detail-label"></div>
+          <div class="weather-detail-value weather-humidity"></div>
+        </div>
+        <div class="weather-detail-item">
+          <div class="weather-detail-icon">💨</div>
+          <div class="weather-detail-label"></div>
+          <div class="weather-detail-value weather-wind"></div>
+        </div>
+      </div>
+      <div class="weather-simulated-label" style="display: none;"></div>
+    </div>
+  `;
+}
+
+/**
+ * Renderuje widget pogody (zoptymalizowane - unika innerHTML)
  */
 function renderWeatherWidget(data) {
   const displayElement = document.getElementById('weather-display');
@@ -138,32 +168,39 @@ function renderWeatherWidget(data) {
   const windLabel = translations.weatherWind || 'Wind';
   const simulatedLabel = translations.weatherSimulated || '⚠️ Simulated data';
 
-  const html = `
-    <div class="weather-content">
-      <div class="weather-main">
-        <div class="weather-temp-section">
-          <div class="weather-icon-large">${data.icon}</div>
-          <div class="weather-temp-value">${data.temperature}°C</div>
-        </div>
-        <div class="weather-description">${data.description}</div>
-      </div>
-      <div class="weather-details">
-        <div class="weather-detail-item">
-          <div class="weather-detail-icon">💧</div>
-          <div class="weather-detail-label">${humidityLabel}</div>
-          <div class="weather-detail-value">${data.humidity}%</div>
-        </div>
-        <div class="weather-detail-item">
-          <div class="weather-detail-icon">💨</div>
-          <div class="weather-detail-label">${windLabel}</div>
-          <div class="weather-detail-value">${data.windSpeed} km/h</div>
-        </div>
-      </div>
-      ${data.simulated ? `<div class="weather-simulated-label">${simulatedLabel}</div>` : ''}
-    </div>
-  `;
+  // Pierwszy render - użyj innerHTML
+  if (!displayElement.dataset.initialized) {
+    displayElement.innerHTML = createWeatherTemplate();
+    displayElement.dataset.initialized = 'true';
 
-  displayElement.innerHTML = html;
+    // Cache element references
+    displayElement._weatherElements = {
+      icon: displayElement.querySelector('.weather-icon-large'),
+      temp: displayElement.querySelector('.weather-temp-value'),
+      description: displayElement.querySelector('.weather-description'),
+      humidityLabel: displayElement.querySelectorAll('.weather-detail-label')[0],
+      windLabel: displayElement.querySelectorAll('.weather-detail-label')[1],
+      humidity: displayElement.querySelector('.weather-humidity'),
+      wind: displayElement.querySelector('.weather-wind'),
+      simulatedLabel: displayElement.querySelector('.weather-simulated-label'),
+    };
+  }
+
+  const els = displayElement._weatherElements;
+
+  // Update tylko zawartości tekstowej - ZNACZNIE szybsze niż innerHTML
+  if (els.icon) els.icon.textContent = data.icon;
+  if (els.temp) els.temp.textContent = `${data.temperature}°C`;
+  if (els.description) els.description.textContent = data.description;
+  if (els.humidityLabel) els.humidityLabel.textContent = humidityLabel;
+  if (els.windLabel) els.windLabel.textContent = windLabel;
+  if (els.humidity) els.humidity.textContent = `${data.humidity}%`;
+  if (els.wind) els.wind.textContent = `${data.windSpeed} km/h`;
+
+  if (els.simulatedLabel) {
+    els.simulatedLabel.textContent = simulatedLabel;
+    els.simulatedLabel.style.display = data.simulated ? 'block' : 'none';
+  }
 
   // Dodaj klasę dla animacji wejścia
   displayElement.classList.add('weather-loaded');
@@ -194,16 +231,52 @@ async function updateWeatherWidget() {
   }
 }
 
+// Weather update interval management
+let weatherUpdateInterval = null;
+
+/**
+ * Rozpoczyna automatyczne aktualizacje pogody
+ */
+function startWeatherUpdates() {
+  if (weatherUpdateInterval) {
+    return; // Already running
+  }
+
+  const UPDATE_INTERVAL = 10 * 60 * 1000; // 10 minut
+
+  // Pierwsza aktualizacja natychmiast
+  updateWeatherWidget();
+
+  // Kolejne co 10 minut, ale tylko jeśli tab jest widoczny
+  weatherUpdateInterval = setInterval(() => {
+    if (!document.hidden) {
+      updateWeatherWidget();
+    }
+  }, UPDATE_INTERVAL);
+}
+
+/**
+ * Zatrzymuje automatyczne aktualizacje pogody
+ */
+function stopWeatherUpdates() {
+  if (weatherUpdateInterval) {
+    clearInterval(weatherUpdateInterval);
+    weatherUpdateInterval = null;
+  }
+}
+
 /**
  * Inicjalizuje widget pogody
  */
 export function initWeatherWidget() {
-  // Pierwsza aktualizacja
-  updateWeatherWidget();
+  startWeatherUpdates();
+}
 
-  // Aktualizuj co 10 minut
-  const UPDATE_INTERVAL = 10 * 60 * 1000;
-  setInterval(updateWeatherWidget, UPDATE_INTERVAL);
+/**
+ * Cleanup function
+ */
+export function cleanupWeatherWidget() {
+  stopWeatherUpdates();
 }
 
 /**
@@ -223,6 +296,20 @@ const autoStart = () => {
   } else {
     startWidget();
   }
+
+  // Page Visibility API - zatrzymaj updaty gdy tab ukryty
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopWeatherUpdates();
+    } else {
+      startWeatherUpdates();
+    }
+  });
+
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', () => {
+    cleanupWeatherWidget();
+  });
 };
 
 autoStart();
@@ -234,4 +321,6 @@ export const __test__ = {
   getWeatherTypeFromCode,
   getSimulatedWeather,
   renderWeatherWidget,
+  startWeatherUpdates,
+  stopWeatherUpdates,
 };
