@@ -236,5 +236,11 @@
   "weatherThunderstorm": "Burza",
   "weatherMist": "Mgła",
   "weatherFog": "Mgła",
-  "weatherDrizzle": "Mżawka"
+  "weatherDrizzle": "Mżawka",
+  "heroTitle": "Twoje Firmowe Radio 24/7",
+  "heroSubtitle": "Energetyczna dawka humoru, technologii i najlepszej muzyki",
+  "heroCta": "Uruchom Radio",
+  "heroListeners": "Słuchaczy",
+  "heroTracks": "Utworów",
+  "heroLive": "Live"
 }

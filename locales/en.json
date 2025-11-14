@@ -236,5 +236,11 @@
   "weatherThunderstorm": "Thunderstorm",
   "weatherMist": "Mist",
   "weatherFog": "Fog",
-  "weatherDrizzle": "Drizzle"
+  "weatherDrizzle": "Drizzle",
+  "heroTitle": "Your Company Radio 24/7",
+  "heroSubtitle": "An energetic dose of humor, technology and the best music",
+  "heroCta": "Start Radio",
+  "heroListeners": "Listeners",
+  "heroTracks": "Tracks",
+  "heroLive": "Live"
 }

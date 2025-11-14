@@ -57,6 +57,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
     <script type="module" src="config.js"></script>
+    <script src="theme-toggle.js"></script>
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -141,24 +142,33 @@
         <div class="app-header-inner">
             <img src="/images/logo.png" alt="Radio ETS" aria-hidden="true" class="app-logo" loading="lazy" width="200" height="80">
 
-            <!-- Language Switcher -->
-            <div id="language-switcher" class="language-switcher">
-                <button id="language-toggle" class="language-toggle" data-i18n-aria-label="languageSwitcher" aria-haspopup="true" aria-expanded="false">
-                    🌐 <span id="current-language">NL</span>
+            <!-- Theme & Language Controls -->
+            <div class="header-controls">
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="theme-toggle" data-i18n-aria-label="themeToggle" title="Toggle Light/Dark Mode">
+                    <span class="theme-icon theme-icon--dark">🌙</span>
+                    <span class="theme-icon theme-icon--light">☀️</span>
                 </button>
-                <div id="language-menu" class="language-menu" role="menu" aria-hidden="true">
-                    <button class="language-option" data-lang="nl" role="menuitem">
-                        🇳🇱 <span data-i18n-key="languageDutch">Nederlands</span>
+
+                <!-- Language Switcher -->
+                <div id="language-switcher" class="language-switcher">
+                    <button id="language-toggle" class="language-toggle" data-i18n-aria-label="languageSwitcher" aria-haspopup="true" aria-expanded="false">
+                        🌐 <span id="current-language">NL</span>
                     </button>
-                    <button class="language-option" data-lang="pl" role="menuitem">
-                        🇵🇱 <span data-i18n-key="languagePolish">Polski</span>
-                    </button>
-                    <button class="language-option" data-lang="en" role="menuitem">
-                        🇬🇧 <span data-i18n-key="languageEnglish">English</span>
-                    </button>
-                    <button class="language-option" data-lang="cs" role="menuitem">
-                        🇨🇿 <span data-i18n-key="languageCzech">Čeština</span>
-                    </button>
+                    <div id="language-menu" class="language-menu" role="menu" aria-hidden="true">
+                        <button class="language-option" data-lang="nl" role="menuitem">
+                            🇳🇱 <span data-i18n-key="languageDutch">Nederlands</span>
+                        </button>
+                        <button class="language-option" data-lang="pl" role="menuitem">
+                            🇵🇱 <span data-i18n-key="languagePolish">Polski</span>
+                        </button>
+                        <button class="language-option" data-lang="en" role="menuitem">
+                            🇬🇧 <span data-i18n-key="languageEnglish">English</span>
+                        </button>
+                        <button class="language-option" data-lang="cs" role="menuitem">
+                            🇨🇿 <span data-i18n-key="languageCzech">Čeština</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -249,19 +259,40 @@
             </aside>
 
             <main id="main-content">
-                <header>
-                    <h1>
-                        <a id="site-logo-link" href="#page-top" data-i18n-aria-label="logoLinkLabel">
-                            <img src="icons/favicon.svg" alt="" aria-hidden="true">
-                            Radio ETS
-                        </a>
-                    </h1>
-                    <p data-i18n-key="headerSubtitle"></p>
-                    <p id="listener-count-display"><span data-i18n-key="listenersLabel"></span> <span id="listener-count" aria-live="polite" role="status">...</span></p>
-                    <div style="margin-top: 1rem;">
-                        <a href="granulate-survey.html" class="cta-button primary" style="display: inline-block; text-align: center; text-decoration: none; padding: 0.75rem 1.5rem; font-size: 1.1rem; font-weight: bold; background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%); border-radius: 8px; box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4); transition: all 0.3s ease;" data-i18n-key="granulateSurveyCta" data-i18n-aria-label="granulateSurveyCtaLabel">🔧 Open enquête</a>
+                <!-- Hero Section -->
+                <section id="hero-section" class="hero-section">
+                    <div class="hero-content">
+                        <img src="/images/logo.svg" alt="Radio ETS Logo" class="hero-logo">
+                        <h1 class="hero-title" data-i18n-key="heroTitle">
+                            Twoje Firmowe Radio 24/7
+                        </h1>
+                        <p class="hero-subtitle" data-i18n-key="heroSubtitle">
+                            Energetyczna dawka humoru, technologii i najlepszej muzyki
+                        </p>
+                        <button id="hero-cta" class="hero-cta-button">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px;">
+                                <path d="M8 5v14l11-7-11-7z" />
+                            </svg>
+                            <span data-i18n-key="heroCta">Uruchom Radio</span>
+                        </button>
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <span class="stat-value" id="hero-listener-count">...</span>
+                                <span class="stat-label" data-i18n-key="heroListeners">Słuchaczy</span>
+                            </div>
+                            <div class="stat-divider">•</div>
+                            <div class="stat-item">
+                                <span class="stat-value">500+</span>
+                                <span class="stat-label" data-i18n-key="heroTracks">Utworów</span>
+                            </div>
+                            <div class="stat-divider">•</div>
+                            <div class="stat-item">
+                                <span class="stat-value">24/7</span>
+                                <span class="stat-label" data-i18n-key="heroLive">Live</span>
+                            </div>
+                        </div>
                     </div>
-                </header>
+                </section>
 
                 <!-- Weather Widget - Atmospheric Conditions -->
                 <section id="weather-section" class="content-box weather-section" aria-labelledby="weather-heading">
