@@ -236,5 +236,11 @@
   "weatherThunderstorm": "Bouřka",
   "weatherMist": "Mlha",
   "weatherFog": "Mlha",
-  "weatherDrizzle": "Mrholení"
+  "weatherDrizzle": "Mrholení",
+  "heroTitle": "Vaše Firemní Rádio 24/7",
+  "heroSubtitle": "Energická dávka humoru, technologie a nejlepší hudby",
+  "heroCta": "Spustit Rádio",
+  "heroListeners": "Posluchačů",
+  "heroTracks": "Skladeb",
+  "heroLive": "Live"
 }
