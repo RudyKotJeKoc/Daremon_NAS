@@ -7,8 +7,8 @@
 
 <IfModule mod_headers.c>
     # Force HTTPS with HSTS (HTTP Strict Transport Security)
-    # Uncomment when HTTPS is properly configured
-    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    # SECURITY: Enables HSTS to force HTTPS connections
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 
     # Prevent XSS attacks
     Header set X-XSS-Protection "1; mode=block"
@@ -26,19 +26,20 @@
     Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
 
     # Content Security Policy
-    # Adjust based on your needs - current settings allow GSAP CDN and Google Fonts
-    Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+    # SECURITY: Removed 'unsafe-inline' to prevent XSS attacks
+    # Added backend API endpoint to connect-src for backend integration
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self'; connect-src 'self' http://localhost:3001 https://api.daremon.nl; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
 </IfModule>
 
 # =====================================================
-# FORCE HTTPS (Uncomment when SSL is configured)
+# FORCE HTTPS (SECURITY: Enabled)
 # =====================================================
 
-# <IfModule mod_rewrite.c>
-#     RewriteEngine On
-#     RewriteCond %{HTTPS} off
-#     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-# </IfModule>
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
 
 # =====================================================
 # CACHING & PERFORMANCE

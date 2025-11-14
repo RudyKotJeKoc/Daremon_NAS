@@ -8,16 +8,17 @@ import { OfflineQueue } from './offline-queue.js';
 
 // API Configuration
 const API_CONFIG = {
-    // Base URL - can be overridden via environment variable
+    // Base URL - auto-detect based on environment
     baseUrl: typeof process !== 'undefined' && process.env?.API_URL
         ? process.env.API_URL
-        : 'https://api.daremon.nl',
+        : (window.location.hostname === 'localhost'
+            ? 'http://localhost:3001'
+            : 'https://api.daremon.nl'),
 
     // API Endpoints
     endpoints: {
         granulateSurvey: '/api/v1/surveys/granulate',
         employeeSurvey: '/api/v1/surveys/employee',
-        csrfToken: '/api/v1/csrf-token',
         healthCheck: '/api/v1/health'
     },
 
@@ -27,66 +28,17 @@ const API_CONFIG = {
     retryDelay: 2000, // Initial retry delay in ms
 
     // Feature flags
-    enableBackend: false, // Set to true when backend is available
+    enableBackend: true, // SECURITY: Backend enabled with httpOnly cookies
     enableOfflineQueue: true,
-    enableCsrfProtection: true,
 };
 
 // Initialize offline queue
 const offlineQueue = new OfflineQueue('daremon_survey_queue');
 
 /**
- * Get CSRF token from backend or generate client-side token
+ * SECURITY: CSRF protection is now handled by backend via httpOnly cookies
+ * No need for client-side token generation
  */
-async function getCsrfToken() {
-    if (!API_CONFIG.enableCsrfProtection) {
-        return null;
-    }
-
-    // Try to get token from backend
-    if (API_CONFIG.enableBackend) {
-        try {
-            const response = await fetchWithTimeout(
-                `${API_CONFIG.baseUrl}${API_CONFIG.endpoints.csrfToken}`,
-                {
-                    method: 'GET',
-                    credentials: 'include', // Include cookies
-                },
-                5000
-            );
-
-            if (response.ok) {
-                const data = await response.json();
-                return data.token;
-            }
-        } catch (error) {
-            console.warn('Failed to fetch CSRF token from backend:', error);
-        }
-    }
-
-    // Fallback: Generate client-side token
-    return generateClientToken();
-}
-
-/**
- * Generate client-side session token
- */
-function generateClientToken() {
-    const timestamp = Date.now();
-    const random = Math.random().toString(36).substring(2, 15);
-    const userAgent = navigator.userAgent.substring(0, 50);
-    const combined = `${timestamp}-${random}-${userAgent}`;
-
-    // Simple hash function
-    let hash = 0;
-    for (let i = 0; i < combined.length; i++) {
-        const char = combined.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
-        hash = hash & hash; // Convert to 32bit integer
-    }
-
-    return `client-${Math.abs(hash).toString(36)}-${timestamp}`;
-}
 
 /**
  * Submit survey to backend API
@@ -100,15 +52,10 @@ export async function submitSurvey(surveyType, data) {
         ? API_CONFIG.endpoints.granulateSurvey
         : API_CONFIG.endpoints.employeeSurvey;
 
-    // Get CSRF token
-    const csrfToken = await getCsrfToken();
-
-    // Prepare request payload
+    // Prepare request payload (SECURITY: No client-side tokens needed)
     const payload = {
         ...data,
-        csrfToken,
         clientTimestamp: new Date().toISOString(),
-        userAgent: navigator.userAgent,
         language: document.documentElement.lang || 'nl',
     };
 
@@ -176,10 +123,9 @@ async function submitWithRetry(endpoint, payload, attempt = 1) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-Token': payload.csrfToken || '',
                 'X-Client-Version': '1.0.0',
             },
-            credentials: 'include',
+            credentials: 'include', // SECURITY: Include httpOnly cookies
             body: JSON.stringify(payload),
         }, API_CONFIG.timeout);
 
