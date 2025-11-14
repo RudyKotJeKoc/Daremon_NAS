@@ -1,106 +1,72 @@
 # 📻 DAREMON Radio ETS
 
-> Nowoczesna aplikacja webowa Progressive Web App (PWA) - oficjalne firmowe radio internetowe DAREMON ETS z bogatymi funkcjami interaktywnymi
+> Nowoczesna Progressive Web App (PWA) - oficjalne firmowe radio internetowe z zaawansowanymi funkcjami interaktywnymi, wizualizacjami 3D i systemem ankiet
 
 [![License](https://img.shields.io/badge/license-ISC-blue.svg)](LICENSE)
 [![PWA](https://img.shields.io/badge/PWA-enabled-brightgreen.svg)](manifest.json)
-[![Service Worker](https://img.shields.io/badge/Service%20Worker-v10-orange.svg)](sw.js)
+[![Service Worker](https://img.shields.io/badge/Service%20Worker-v11-orange.svg)](sw.js)
 [![Tests](https://img.shields.io/badge/tests-23_suites-success.svg)](tests/)
-[![Lines of Code](https://img.shields.io/badge/lines_of_code-8100%2B-blue.svg)](#)
+[![Build Tool](https://img.shields.io/badge/Vite-6.3.5-646CFF.svg)](https://vitejs.dev/)
+[![Three.js](https://img.shields.io/badge/Three.js-0.170.0-000000.svg)](https://threejs.org/)
+[![i18n](https://img.shields.io/badge/languages-4-success.svg)](#)
+
+---
 
 ## 📋 Spis treści
 
-- [O projekcie](#-o-projekcie)
-- [Funkcje](#-funkcje)
-- [Stack technologiczny](#-stack-technologiczny)
-- [Instalacja](#-instalacja)
-- [Struktura projektu](#-struktura-projektu)
+- [O Projekcie](#-o-projekcie)
+- [Główne Funkcje](#-główne-funkcje)
+- [Wykryty Stos Technologiczny](#-wykryty-stos-technologiczny)
+- [Uruchomienie Lokalne (Quick Start)](#-uruchomienie-lokalne-quick-start)
+- [Struktura Projektu](#-struktura-projektu)
+- [Przegląd API](#-przegląd-api)
 - [Konfiguracja](#-konfiguracja)
-- [Użytkowanie](#-użytkowanie)
-- [Rozwój](#-rozwój)
-- [Skróty klawiszowe](#-skróty-klawiszowe)
-- [Wkład w projekt](#-wkład-w-projekt)
-- [Dodatkowa dokumentacja](#-dodatkowa-dokumentacja)
+- [Testowanie](#-testowanie)
+- [Dokumentacja](#-dokumentacja)
+- [Licencja](#-licencja)
 
-## 🎯 O projekcie
+---
 
-**DAREMON Radio ETS** to w pełni funkcjonalna aplikacja webowa symulująca profesjonalne radio firmowe, stworzona dla zespołu DAREMON. Projekt łączy nowoczesne technologie webowe z intuicyjnym interfejsem użytkownika, tworząc wciągające doświadczenie muzyczne dostępne zarówno online, jak i offline dzięki technologii PWA.
+## 🎯 O Projekcie
 
-### 🏢 Kontekst firmowy
+**DAREMON Radio ETS** to w pełni funkcjonalna aplikacja webowa typu **Progressive Web App (PWA)** stworzona jako oficjalne radio internetowe dla zespołu DAREMON ETS. Projekt łączy nowoczesne technologie webowe z intuicyjnym interfejsem użytkownika, oferując wciągające doświadczenie muzyczne dostępne zarówno **online, jak i offline**.
+
+### 🏢 Cel i Kontekst
 
 Aplikacja powstała jako wewnętrzne narzędzie dla zespołu DAREMON ETS, mające na celu:
-- Integrację zespołu poprzez wspólne słuchanie muzyki
-- Zwiększenie motywacji i atmosfery w miejscu pracy
-- Demonstrację umiejętności technicznych zespołu
-- Stworzenie platformy do komunikacji wewnętrznej (ankiety, wiadomości)
+- **Integrację zespołu** poprzez wspólne słuchanie muzyki i interakcje społecznościowe
+- **Zwiększenie motywacji** i poprawę atmosfery w miejscu pracy
+- **Demonstrację umiejętności technicznych** zespołu w zakresie nowoczesnych technologii webowych
+- **Platformę komunikacji wewnętrznej** - ankiety, wiadomości, feedback
 
-### Kluczowe cechy:
-- 🎵 **Inteligentny odtwarzacz audio** z płynnym crossfade między utworami (2s)
-- 🌐 **Wielojęzyczność** - pełna obsługa 4 języków (polski, niderlandzki, angielski, czeski) z automatycznym wykrywaniem
-- 📴 **Tryb offline** - pełna funkcjonalność bez połączenia z internetem dzięki Service Worker
-- 🎨 **Dynamiczne motywy** - zmienne motywy kolorystyczne (Arburg, Rave) z animacjami
-- 📊 **Wizualizacja audio** - efekty wizualne w czasie rzeczywistym (2D Canvas + 3D Three.js)
-- ⭐ **System ocen i wag** - możliwość oceniania i komentowania utworów z dynamicznym wpływem na częstotliwość odtwarzania
-- 💬 **Czat DJ z AI** - interaktywna komunikacja z automatycznymi odpowiedziami bota
-- 🗳️ **Ankiety słuchaczy** - interaktywne głosowania reagujące na wydarzenia w radiu
-- 👥 **Ankieta zespołu** - dedykowana ankieta dla pracowników DAREMON o przyszłości projektu
-- 📋 **Ankieta Granulate** - specjalistyczna ankieta dla systemu transportu granulatu
-- ⏱️ **Timery odliczające** - monitorowanie ważnych terminów firmowych
-- 🎙️ **Live Talk** - symulacja funkcji "mów do radia"
-- 🌤️ **Widget pogodowy** - wyświetlanie aktualnych warunków atmosferycznych
-- 👥 **Licznik słuchaczy** - symulacja liczby aktualnych słuchaczy w czasie rzeczywistym
+### 🎨 Architektura
 
-## ✨ Funkcje
+- **Typ aplikacji:** Multi-Page Application (MPA) z Progressive Web App
+- **Model:** Frontend-only z opcjonalną integracją backendu
+- **Strategia:** Offline-first approach z Service Worker
+- **Internacjonalizacja:** Pełna obsługa 4 języków (Polski, Niderlandzki, Angielski, Czeski)
 
-### Odtwarzacz audio
-- Automatyczne odtwarzanie playlisty z konfigurowalnymi utworami
-- Płynne przejścia między utworami (crossfade 2 sekundy)
-- Inteligentne zarządzanie historią odtwarzania (15 ostatnio odtworzonych)
-- Wsparcie dla różnych typów utworów (piosenki, jingle)
-- System wag określających częstotliwość odtwarzania
+---
+
+## ✨ Główne Funkcje
+
+### 🎵 Zaawansowany Odtwarzacz Audio
+- Inteligentny odtwarzacz z płynnym **crossfade** między utworami (2s)
+- Automatyczne zarządzanie playlistą z konfigurowalnymi utworami (500+ utworów)
+- System **wag** określających częstotliwość odtwarzania
 - Automatyczne wstawianie jingle co 4 utwory lub co 15 minut
-- Tryb cichych godzin (22:00 - 06:00)
-
-### Interfejs użytkownika
-- Responsywny design działający na wszystkich urządzeniach
+- Historia odtwarzania (15 ostatnio odtworzonych)
+- Wsparcie dla różnych formatów audio (MP3, OGG, WAV)
 - Sticky player - odtwarzacz zawsze widoczny podczas przewijania
-- Progress bar z możliwością przeskakiwania w utworze
 - Kontrola głośności z efektami wizualnymi
-- Tryb pełnoekranowy (TV mode)
-- Autoplay overlay z animowanym powitaniem
+- Progress bar z możliwością przeskakiwania w utworze
 
-### Funkcje społecznościowe i zarządzanie zespołem
-
-- **Złote Płyty** - lista najcenniejszych utworów w playliście
-- **Najwyżej ocenione** - rankingi utworów na podstawie ocen użytkowników
-- **Ostatnio grane** - historia 10 ostatnio odtworzonych utworów
-- **Wiadomości DJ** - możliwość wysyłania wiadomości z AI odpowiedziami
-- **Ankiety słuchaczy** - dynamiczne głosowania z różnymi typami pytań
-- **Ankieta zespołu DAREMON** - dedykowana ankieta pracownicza zbierająca opinie o:
-  - Kontynuacji pracy w okrojonym zespole
-  - Najbardziej przydatnych funkcjach aplikacji
-  - Pomysłach na nowe funkcje (edytor playlist, podcasty, czat, kalendarz, mini gry)
-  - Obszarach, w których pracownicy mogą pomóc (programowanie, design, muzyka, testowanie)
-  - Ogólnych pomysłach i sugestiach dotyczących rozwoju
-- **Ankieta Granulate** - specjalistyczna ankieta dla pracowników dotycząca systemu transportu granulatu:
-  - Ocena doświadczenia z systemem
-  - Najczęstsze problemy i wyzwania
-  - Zadowolenie z wydajności i jakości
-  - Propozycje ulepszeń
-  - Szkolenia i wsparcie techniczne
-- **Timery deadline** - wizualne odliczanie do ważnych terminów firmowych:
-  - Zamknięcie roku 2025 (31.12.2025)
-  - Raport kwartalny 2026 (30.04.2026)
-- **Live Talk** - funkcja symulująca "mów do radia" (przycisk mikrofonu)
-- **Widget pogodowy** - wyświetlanie aktualnych warunków atmosferycznych z ikonami
-- **Licznik słuchaczy** - dynamiczny licznik pokazujący liczbę aktywnych słuchaczy
-
-### Wizualizacje
-- **2D Canvas visualizer** - wizualizacja audio w czasie rzeczywistym z efektami:
+### 🎨 Wizualizacja Audio 2D/3D
+- **2D Canvas Visualizer** - wizualizacja audio w czasie rzeczywistym:
   - Promienie sunburst z centrum
-  - Słupki equalizera na dole ekranu
+  - Słupki equalizera
   - Spadające cząsteczki
-- **3D Three.js visualizer** (NOWE!) - zaawansowana wizualizacja 3D:
+- **3D Three.js Visualizer** - zaawansowana wizualizacja 3D:
   - Centralna kula reagująca na bas
   - 300 interaktywnych cząsteczek reprezentujących zakresy częstotliwości
   - OrbitControls dla interaktywnej kontroli kamery
@@ -108,251 +74,519 @@ Aplikacja powstała jako wewnętrzne narzędzie dla zespołu DAREMON ETS, mając
   - Progressive enhancement z fallback do 2D
 - Przełącznik 2D/3D w kontrolkach odtwarzacza
 - Animowane efekty świetlne (glow, burst, rays)
-- Dynamiczne logo z efektami GSAP
-- Pulsujące animacje like i przycisków
 
-### PWA Features
+### 🗳️ System Ankiet i Feedback
+- **Ankiety społecznościowe** - dynamiczne głosowania z różnymi typami pytań
+- **Ankieta pracownicza** - dedykowana ankieta dla zespołu DAREMON zbierająca opinie o:
+  - Kontynuacji pracy w zespole
+  - Najbardziej przydatnych funkcjach
+  - Pomysłach na nowe funkcje
+  - Obszarach wsparcia i pomocy
+- **Ankieta Granulate** - specjalistyczna ankieta systemu transportu granulatu:
+  - 6 sekcji tematycznych
+  - Różnorodne typy pytań (skale, wielokrotny wybór, tekst)
+  - Dedykowana strona z własnym designem
+- Offline-first approach - ankiety działają bez internetu
+- Przechowywanie wyników w IndexedDB
+
+### ⭐ System Ocen i Interakcji
+- Ocenianie utworów gwiazdkami (1-5)
+- Komentowanie utworów
+- System like/dislike
+- Dynamiczny wpływ ocen na częstotliwość odtwarzania
+- Rankingi utworów:
+  - Złote Płyty (najbardziej wartościowe)
+  - Najwyżej ocenione
+  - Ostatnio grane
+
+### 💬 Funkcje Społecznościowe
+- **Wiadomości DJ** - możliwość wysyłania wiadomości z AI odpowiedziami
+- **Live Talk** - symulacja funkcji "mów do radia"
+- **Licznik słuchaczy** - dynamiczny licznik pokazujący liczbę aktywnych słuchaczy:
+  - Symulacja uwzględniająca porę dnia i dzień tygodnia
+  - Możliwość integracji z rzeczywistym API
+  - Wsparcie dla WebSocket w celu aktualizacji na żywo
+  - Automatyczne pauzowanie gdy strona jest ukryta
+
+### 🌐 Wielojęzyczność (i18n)
+- Pełna obsługa **4 języków**: Polski, Niderlandzki, Angielski, Czeski
+- Automatyczne wykrywanie języka przeglądarki
+- Dynamiczne przełączanie języków bez przeładowania strony
+- Kompletne tłumaczenia wszystkich interfejsów
+
+### 📴 Progressive Web App (PWA)
 - Instalowalna jako aplikacja desktopowa/mobilna
-- Service Worker z cache-first strategią
-- Offline fallback dla zasobów
+- Service Worker v11 z cache-first strategią
+- Offline fallback dla wszystkich zasobów
 - Stale-while-revalidate dla playlisty i tłumaczeń
-- Manifest skonfigurowany (wymaga dodania ikon)
+- Manifest skonfigurowany z ikonami SVG
+- Wsparcie dla MediaSession API (kontrolki systemowe)
 
-**Uwaga**: Aby w pełni wykorzystać funkcje PWA, należy dodać ikony aplikacji:
-- `./icons/icon-192.png` (192x192)
-- `./icons/icon-512.png` (512x512)  
-- `./icons/favicon.svg`
+### 🎯 Dodatkowe Narzędzia
+- **Widget pogodowy** - wyświetlanie aktualnych warunków atmosferycznych
+- **Timery odliczające** - wizualne odliczanie do ważnych terminów firmowych
+- **Kalkulator VSO** - dedykowane narzędzie dla pracowników
+- **Platforma DAREMON.NL** - analiza polityki lokalnej z filtrowaniem i wyszukiwaniem
+- **Dynamiczne motywy** - zmienne motywy kolorystyczne (Arburg, Rave) z animacjami
+- **Tryb pełnoekranowy** (TV mode)
 
-Lub zaktualizować ścieżki w `manifest.json` i `sw.js` do istniejących ikon.
+---
 
-### Dodatkowe narzędzia
+## 🛠 Wykryty Stos Technologiczny
 
-#### Widget pogodowy
-- Wyświetlanie aktualnych warunków atmosferycznych
-- Ikony reprezentujące pogodę (słońce, chmury, deszcz, śnieg, burza, mgła)
-- Polskie i niderlandzkie opisy pogody
-- Integracja z interfejsem radiowym
+### Języki Programowania
+- **JavaScript (ES Modules)** - główny język projektu (50+ plików, ~8100 linii kodu)
+- **HTML5** - semantyczna struktura z ARIA accessibility
+- **CSS3** - nowoczesny styling z CSS Variables, Grid, Flexbox, animacjami (3500+ linii)
+- **Python** - skrypty pomocnicze (normalizacja nazw plików)
 
-#### Licznik słuchaczy
-- Symulacja liczby aktywnych słuchaczy w czasie rzeczywistym
-- Inteligentny algorytm uwzględniający porę dnia i dzień tygodnia
-- Możliwość integracji z rzeczywistym API
-- Wsparcie dla WebSocket w celu aktualizacji na żywo
-- Automatyczne pauzowanie gdy strona jest ukryta (optymalizacja baterii)
+### Build Tools & Package Managers
+- **Vite 6.3.5** - ultraszybki build tool i dev server z HMR
+- **pnpm 10.10.0** - wydajny package manager
+- **ES Modules** - natywne moduły JavaScript (type: "module")
 
-#### Ankieta Granulate
-Dedykowana ankieta dla pracowników systemu transportu granulatu:
-- 6 sekcji tematycznych (doświadczenie, problemy, wydajność, szkolenia, wsparcie, przyszłość)
-- Różne typy pytań (skale, wielokrotny wybór, tekst)
-- Dedykowana strona z własnym designem
-- Przechowywanie wyników lokalnie
+### Biblioteki i Frameworks
+- **Three.js 0.170.0** - renderowanie 3D i wizualizacje audio
+- **GSAP 3.12.2** - profesjonalna biblioteka animacji (Draggable, MotionPath)
 
-#### Platforma DAREMON.NL
-Niezależna platforma analiz lokalnego beleid (polityki lokalnej):
-- Profesjonalny design z holenderskimi akcentami kolorystycznymi
-- Strona główna z kategoriami analiz
-- Dedykowana strona analiz z filtrowaniem
-- System tagów i priorytetów
-- Responsywny design
-
-#### Kalkulator VSO
-- Dedykowana strona z kalkulatorem VSO
-- Narzędzie pomocnicze dla pracowników
-
-#### Skrypt Update Mottos
-- Automatyczne generowanie i aktualizacja mott dla utworów
-- Placeholdery dla okładek z konfigurowalnymi kolorami
-- Masowe operacje na playliście
-
-## 🛠 Stack technologiczny
-
-### Frontend
-- **HTML5** - semantyczna struktura z ARIA accessibility dla lepszej dostępności
-- **CSS3** - nowoczesny styling z CSS Variables, Grid, Flexbox, animacjami
-- **JavaScript (ES6+)** - moduły ES6, async/await, Promise, Web Audio API
-
-### Biblioteki i narzędzia
-- **Three.js 0.170.0** - potężna biblioteka 3D dla zaawansowanych wizualizacji audio z efektami cząsteczek
-- **GSAP 3.12.2** - profesjonalna biblioteka animacji (Draggable, MotionPath) dla płynnych efektów wizualnych
-- **Vite 6.3.5** - ultraszybki build tool i dev server z HMR (Hot Module Replacement)
-- **Vitest 1.6.0** - nowoczesny framework testowy kompatybilny z Vite
-- **pnpm 10.10.0** - wydajny package manager z lepszym zarządzaniem zależnościami
+### Testing Framework
+- **Vitest 1.6.0** - nowoczesny framework testowy
 - **jsdom 27.1.0** - symulacja DOM dla testów
+- **23 pliki testowe** - kompleksowe pokrycie testami
 
-### API i technologie
-- **Web Audio API** - zaawansowane przetwarzanie i analiza dźwięku w czasie rzeczywistym
-- **Canvas API** - renderowanie wizualizacji 2D audio
+### Web APIs & Technologie
+- **Web Audio API** - zaawansowane przetwarzanie dźwięku w czasie rzeczywistym
+- **Canvas API** - renderowanie wizualizacji 2D
 - **WebGL** - renderowanie 3D poprzez Three.js
 - **Service Workers** - offline functionality i cache management
-- **IndexedDB** - strukturalne lokalne przechowywanie danych (ratings, messages, survey results)
-- **LocalStorage** - przechowywanie ustawień użytkownika i preferencji
+- **IndexedDB** - strukturalne przechowywanie danych (ratings, messages, surveys)
+- **LocalStorage** - przechowywanie ustawień użytkownika
 - **Fetch API** - asynchroniczne ładowanie zasobów
 - **Intersection Observer API** - optymalizacja renderowania i lazy loading
 - **MediaSession API** - integracja z systemowymi kontrolkami multimedialnymi
 
-### Statystyki projektu
-- **~8100 linii kodu JavaScript** (bez node_modules)
-- **50 plików JavaScript** (moduły aplikacji)
-- **23 pliki testowe** (kompleksowe pokrycie testami)
-- **4 języki interfejsu** (polski, niderlandzki, angielski, czeski)
-- **~500 utworów** w domyślnej playliście (180KB JSON)
+### Serwer & Deployment
+- **Apache** - konfiguracja w `.htaccess`:
+  - Security headers (CSP, X-Frame-Options, HSTS)
+  - Caching strategies (HTML: no-cache, assets: 1 rok)
+  - Gzip/Brotli compression
+  - Hotlink protection dla domeny daremon.nl
 
-## 📦 Instalacja
+### Statystyki Projektu
+| Metryka | Wartość |
+|---------|---------|
+| **Linie kodu JavaScript** | ~8100+ |
+| **Pliki JavaScript** | 50+ modułów |
+| **Pliki testowe** | 23 suity testowe |
+| **Języki interfejsu** | 4 (PL, NL, EN, CS) |
+| **Utwory w playliście** | ~500 (180KB JSON) |
+| **Pliki dokumentacji** | 15+ plików Markdown |
 
-### Wymagania wstępne
+---
+
+## 🚀 Uruchomienie Lokalne (Quick Start)
+
+### Wymagania Wstępne
 - **Node.js** >= 18.0.0
 - **pnpm** >= 10.0.0 (lub npm/yarn jako alternatywa)
-- **Python 3** (opcjonalnie, dla skryptu normalizacji nazw plików `rename_files.py`)
 - **Przeglądarka** z obsługą Web Audio API, Canvas API i ES6+ (Chrome, Firefox, Edge, Safari)
 
-### Kroki instalacji
+### Kroki Instalacji
 
-1. **Sklonuj repozytorium**
 ```bash
+# 1. Sklonuj repozytorium
 git clone https://github.com/RudyKotJeKoc/Daremon_NAS.git
 cd Daremon_NAS
-```
 
-2. **Zainstaluj zależności**
-```bash
+# 2. Zainstaluj zależności
 pnpm install
-```
 
-3. **Uruchom serwer deweloperski**
-```bash
+# 3. Uruchom serwer deweloperski
 pnpm dev
+
+# 4. Otwórz w przeglądarce
+# http://localhost:5173
 ```
 
-4. **Otwórz w przeglądarce**
-```
-http://localhost:5173
-```
-
-### Build produkcyjny
+### Build Produkcyjny
 
 ```bash
+# Zbuduj aplikację dla produkcji
 pnpm build
+
+# Wynik będzie w katalogu dist/
 ```
 
-Zbudowane pliki znajdą się w katalogu `dist/`.
+### Dostępne Skrypty
 
-## 📁 Struktura projektu
+```bash
+# Development server z hot reload
+pnpm dev
+
+# Production build
+pnpm build
+
+# Uruchom testy
+pnpm test
+
+# Generuj manifest mediów dla pokazu slajdów
+pnpm run generate:media
+
+# Linting (placeholder)
+pnpm lint
+```
+
+### Wykryte Zależności
+
+#### Dependencies (package.json)
+```json
+{
+  "three": "^0.170.0"
+}
+```
+
+#### DevDependencies (package.json)
+```json
+{
+  "jsdom": "^27.1.0",
+  "vite": "^6.3.5",
+  "vitest": "^1.6.0"
+}
+```
+
+### Pierwsze Uruchomienie
+
+1. Kliknij **"Uruchom Radio"** na ekranie powitalnym
+2. Aplikacja załaduje playlistę i rozpocznie odtwarzanie
+3. Dostosuj głośność i ciesz się muzyką!
+4. Przełącz wizualizator między 2D/3D
+5. Oceń utwory, dodaj komentarze i weź udział w ankietach
+
+---
+
+## 📁 Struktura Projektu
+
+### Przegląd Najważniejszych Katalogów
 
 ```
 Daremon_NAS/
-├── index.html              # Główny plik HTML aplikacji (589 linii)
-├── app.js                  # Główna logika aplikacji (2134 linie)
-├── state.js                # Zarządzanie stanem aplikacji (31 linii)
-├── config.js               # Konfiguracja aplikacji - strategie, prefiksy (32 linie)
-├── script.js               # Dodatkowe skrypty pomocnicze (123 linie)
-├── media-utils.js          # Utilities dla obsługi mediów
-├── media-availability.js   # Sprawdzanie dostępności plików multimedialnych
-├── ui-utils.js             # UI utilities (generowanie elementów list)
-├── playlist-service.js     # Serwis obsługi playlisty (159 linii)
-├── track-metadata.js       # Metadata utworów
-├── music-scanner.js        # Automatyczne skanowanie katalogu muzyki
-├── poll-system.js          # System ankiet dla słuchaczy
-├── strategic-polls.js      # Strategiczne ankiety reaktywne
-├── slideshow.js            # Pokaz slajdów (obrazy/wideo jako okładki)
-├── slideshow-media.js      # Manifest mediów pokazu slajdów
-├── listener-count.js       # Licznik słuchaczy (symulacja)
-├── countdown-timers.js     # Timery odliczające do deadline'ów
-├── survey.js               # Ogólny system ankiet
-├── employee-survey.js      # Dedykowana ankieta pracownicza DAREMON
-├── weather-widget.js       # Widget wyświetlający aktualną pogodę
-├── update-mottos.js        # Skrypt aktualizacji mott dla utworów
-├── styles.css              # Style CSS (3224 linie)
-├── survey-styles.css       # Style dla ankiet
-├── polls.css               # Style dla systemu głosowań
-├── granulate-survey.css    # Style dla ankiety Granulate
-├── sw.js                   # Service Worker (v10) - offline support
-├── manifest.json           # PWA manifest
-├── playlist.json           # Konfiguracja playlisty (180KB, ~500 utworów)
-├── tracks.json             # Dodatkowe dane utworów (76KB)
-├── template_config.json    # Szablon konfiguracji
-├── rename_files.py         # Skrypt Python do normalizacji nazw plików
-├── polls.html              # Dedykowana strona dla ankiet społeczności
-├── granulate-survey.html   # Dedykowana ankieta systemu transportu granulatu
-├── vso-calculator.html     # Kalkulator VSO
-├── vite.config.js          # Konfiguracja Vite (wiele entry points)
+├── 📄 index.html              # Główna strona aplikacji (744 linie)
+├── 📄 app.js                  # Główna logika aplikacji (2097 linii)
+├── 📄 config.js               # Konfiguracja globalna (strategie, endpointy)
+├── 📄 state.js                # Zarządzanie stanem aplikacji
+├── 📄 playlist.json           # Konfiguracja playlisty (180KB, ~500 utworów)
+├── 📄 manifest.json           # PWA manifest
+├── 📄 sw.js                   # Service Worker v11 (offline support)
+├── 📄 vite.config.js          # Konfiguracja Vite (Multi-Page App)
 │
-├── locales/                # Tłumaczenia i18n (4 języki)
-│   ├── pl.json            # Język polski (kompletne tłumaczenia)
-│   ├── nl.json            # Język niderlandzki (kompletne tłumaczenia)
-│   ├── en.json            # Język angielski (kompletne tłumaczenia)
-│   └── cs.json            # Język czeski (kompletne tłumaczenia)
+├── 📂 locales/                # Tłumaczenia i18n (4 języki)
+│   ├── pl.json               # Polski
+│   ├── nl.json               # Niderlandzki
+│   ├── en.json               # Angielski
+│   └── cs.json               # Czeski
 │
-├── visualizer/             # Wizualizacje audio 3D
-│   ├── Visualizer3D.js            # Wizualizator 3D z Three.js
-│   ├── AudioVisualizerSwitch.js   # Przełącznik 2D/3D
-│   └── README.md                  # Dokumentacja techniczna wizualizatora
+├── 📂 visualizer/             # Wizualizacje audio 3D
+│   ├── Visualizer3D.js       # Wizualizator 3D z Three.js
+│   ├── AudioVisualizerSwitch.js  # Przełącznik 2D/3D
+│   └── README.md             # Dokumentacja techniczna
 │
-├── scripts/                # Skrypty pomocnicze
-│   └── generate-media-manifest.js # Generator manifestu mediów dla slideshow
+├── 📂 tests/                  # Testy jednostkowe (23 pliki)
+│   ├── config.test.js
+│   ├── crossfade.test.js
+│   ├── listener-count.test.js
+│   ├── media-availability.test.js
+│   ├── playlist-service.test.js
+│   ├── poll-system.test.js
+│   ├── visualizer-3d.test.js
+│   └── ... (17 więcej)
 │
-├── daremon/                # Platforma analiz DAREMON.NL
-│   ├── index.html         # Strona główna platformy
-│   ├── analizy.html       # Strona z analizami
-│   ├── styles.css         # Style platformy
-│   └── README.md          # Dokumentacja platformy
+├── 📂 scripts/                # Skrypty pomocnicze
+│   └── generate-media-manifest.js
 │
-├── icons/                  # Ikony PWA (format SVG)
-│   ├── icon-192.svg       # Ikona 192x192 (dowolny rozmiar, SVG)
-│   ├── icon-512.svg       # Ikona 512x512 (dowolny rozmiar, SVG)
-│   └── favicon.svg        # Favicon aplikacji
+├── 📂 docs/                   # Dokumentacja techniczna
+│   ├── API_DOCUMENTATION.md
+│   ├── BACKEND_INTEGRATION.md
+│   ├── PERFORMANCE.md
+│   ├── SECURITY.md
+│   └── WEBSITE_IMPROVEMENTS.md
 │
-├── music/                  # Katalog muzyki (pliki MP3)
-│   └── ... (numerowane pliki MP3)
-├── images/                 # Obrazy dla pokazu slajdów
-│   └── ... (PNG, JPG, WebP, SVG, GIF, AVIF)
-├── video/                  # Wideo dla pokazu slajdów
-│   └── ... (MP4, WebM, OGG, MOV)
+├── 📂 daremon/                # Platforma analiz DAREMON.NL
+│   ├── index.html
+│   ├── analizy.html
+│   └── styles.css
 │
-├── tests/                  # Testy jednostkowe (23 pliki testowe)
-│   ├── state.test.js                  # Testy stanu aplikacji
-│   ├── crossfade.test.js              # Testy funkcji crossfade
-│   ├── ui-utils.test.js               # Testy UI utilities
-│   ├── now-playing-layout.test.js     # Testy layoutu odtwarzacza
-│   ├── visualizer-3d.test.js          # Testy wizualizatora 3D
-│   ├── visualizer-regression.test.js  # Testy regresji wizualizatora
-│   ├── media-availability.test.js     # Testy dostępności mediów
-│   ├── media-files-loading.test.js    # Testy ładowania plików
-│   ├── media-utils-support.test.js    # Testy wsparcia formatów
-│   ├── url-encoding.test.js           # Testy kodowania URL
-│   ├── playlist-integration.test.js   # Testy integracji playlisty
-│   ├── playlist-service.test.js       # Testy serwisu playlisty
-│   ├── music-scanner.test.js          # Testy skanera muzyki
-│   ├── track-metadata.test.js         # Testy metadanych utworów
-│   ├── poll-system.test.js            # Testy systemu ankiet
-│   ├── polls.e2e.test.js              # Testy end-to-end ankiet
-│   ├── strategic-polls.test.js        # Testy strategicznych ankiet
-│   ├── slideshow.test.js              # Testy pokazu slajdów
-│   ├── listener-count.test.js         # Testy licznika słuchaczy (core)
-│   ├── listener-count-display.test.js # Testy wyświetlania licznika słuchaczy
-│   ├── locales-regression.test.js     # Testy regresji tłumaczeń
-│   ├── localstorage.test.js           # Testy LocalStorage
-│   └── config.test.js                 # Testy konfiguracji
+├── 📂 audio/                  # Pliki audio (kategorie)
+│   ├── projekty/
+│   ├── umiejetnosci/
+│   ├── wiedza/
+│   └── inne/
 │
-├── .vscode/                # Konfiguracja VS Code
-│   └── launch.json        # Konfiguracja debugowania
-├── .gitignore              # Ignorowane pliki Git
-├── package.json            # Zależności projektu i skrypty npm
-├── pnpm-lock.yaml          # Lock file dla pnpm
-│
-├── README.md                             # Dokumentacja główna (ten plik)
-├── IMPLEMENTATION-REPORT.md              # Raport wdrożenia funkcji
-├── MEDIA-AVAILABILITY-OPTIMIZATION.md    # Optymalizacja dostępności mediów
-├── MEDIA_INSTRUKCJA.md                   # Instrukcja dodawania mediów
-├── VISUALIZER-GUIDE.md                   # Quick Start Guide dla wizualizatora 3D
-├── LISTENER-COUNT-FEATURE.md             # Dokumentacja funkcji licznika słuchaczy
-└── RAPORT-LICZNIKA-SLUCHACZY.md          # Raport weryfikacji licznika słuchaczy
+├── 📂 music/                  # Katalog muzyki (MP3)
+├── 📂 video/                  # Pliki wideo
+├── 📂 images/                 # Obrazy dla pokazu slajdów
+└── 📂 icons/                  # Ikony PWA (SVG)
 ```
+
+### Kluczowe Moduły JavaScript
+
+| Plik | Przeznaczenie | Linie |
+|------|---------------|-------|
+| `app.js` | Główna logika aplikacji | 2097 |
+| `audio-player.js` | Odtwarzacz audio/video | - |
+| `playlist-service.js` | Zarządzanie playlistą | 159 |
+| `music-scanner.js` | Automatyczne skanowanie muzyki | - |
+| `media-availability.js` | Sprawdzanie dostępności mediów | - |
+| `track-metadata.js` | Metadane utworów | - |
+| `listener-count.js` | Licznik słuchaczy (symulacja) | - |
+| `poll-system.js` | System ankiet społecznościowych | - |
+| `strategic-polls.js` | Ankiety strategiczne | - |
+| `survey.js` | Ogólny system ankiet | - |
+| `employee-survey.js` | Ankieta pracownicza | - |
+| `granulate-survey.js` | Ankieta Granulate | - |
+| `weather-widget.js` | Widget pogodowy | - |
+| `countdown-timers.js` | Timery odliczające | - |
+| `language-switcher.js` | Przełącznik języków | - |
+| `offline-queue.js` | Kolejka offline | - |
+
+### Dodatkowe Strony HTML
+
+| Plik | Opis |
+|------|------|
+| `index.html` | Główna aplikacja radiowa |
+| `polls.html` | Dedykowana strona ankiet społecznościowych |
+| `granulate-survey.html` | Ankieta systemu transportu granulatu |
+| `vso-calculator.html` | Kalkulator VSO dla pracowników |
+| `audio-example.html` | Przykładowa strona odtwarzacza audio |
+| `daremon/index.html` | Platforma analiz DAREMON.NL |
+| `daremon/analizy.html` | Strona z analizami |
+
+---
+
+## 🔌 Przegląd API
+
+Aplikacja jest zaprojektowana jako **frontend-only** z opcjonalną integracją backendu. Poniżej wykryte endpointy API dostępne dla integracji.
+
+### Base URL
+```
+https://api.daremon.nl/api/v1
+```
+
+### Konfiguracja API (config.js)
+
+```javascript
+const DEFAULT_CONFIG = {
+  MUSIC_TRACKS_ENDPOINT: null,       // GET - Lista utworów (opcjonalne)
+  LISTENER_COUNT_ENDPOINT: null,     // GET - Licznik słuchaczy (opcjonalne)
+  LISTENER_COUNT_WS: null,           // WebSocket - Real-time licznik (opcjonalne)
+  // ... inne ustawienia
+};
+```
+
+### API Endpoints
+
+| Metoda | Ścieżka | Opis |
+|--------|---------|------|
+| `GET` | `/health` | Health check - sprawdzenie dostępności API |
+| `GET` | `/csrf-token` | Pobranie tokenu CSRF dla bezpiecznych formularzy |
+| `POST` | `/surveys/granulate` | Wysłanie ankiety systemu transportu granulatu |
+| `POST` | `/surveys/employee` | Wysłanie ankiety pracowniczej |
+| `GET` | `/api/music/tracks` | Pobranie listy utworów (opcjonalne) |
+| `GET` | `/api/listener-count` | Pobranie liczby słuchaczy (opcjonalne) |
+| `WebSocket` | `/ws/listener-count` | Real-time aktualizacja licznika słuchaczy |
+
+### 1. Health Check
+
+**Endpoint:** `GET /health`
+
+**Opis:** Sprawdzenie czy API jest dostępne
+
+**Response:**
+```json
+{
+  "status": "ok",
+  "version": "1.0.0",
+  "timestamp": "2025-01-14T12:00:00Z"
+}
+```
+
+### 2. Get CSRF Token
+
+**Endpoint:** `GET /csrf-token`
+
+**Opis:** Pobranie tokenu CSRF dla bezpiecznych formularzy
+
+**Headers:**
+```
+Cookie: sessionId=<session-cookie>
+```
+
+**Response:**
+```json
+{
+  "token": "abc123xyz789",
+  "expiresAt": "2025-01-14T13:00:00Z"
+}
+```
+
+### 3. Submit Granulate Survey
+
+**Endpoint:** `POST /surveys/granulate`
+
+**Opis:** Wysłanie ankiety systemu transportu granulatu
+
+**Headers:**
+```
+Content-Type: application/json
+X-CSRF-Token: <csrf-token>
+X-Client-Version: 1.0.0
+```
+
+**Request Body:**
+```json
+{
+  "timestamp": "2025-01-14T12:00:00Z",
+  "csrfToken": "abc123xyz789",
+  "experience": "6-12m",
+  "factory": "boxtel",
+  "role": "operator",
+  "interruptionFrequency": "several-week",
+  "systemProblems": ["blockage", "sensor-problems"],
+  "sensorsFunction": "mostly-yes",
+  "supplyContinuity": "good",
+  "trainingReceived": "yes-short",
+  "improvements": "Better sensor calibration needed",
+  "stressLevel": "sometimes"
+}
+```
+
+**Success Response (200 OK):**
+```json
+{
+  "success": true,
+  "message": "Survey submitted successfully",
+  "data": {
+    "id": "survey-12345",
+    "submittedAt": "2025-01-14T12:00:05Z"
+  }
+}
+```
+
+### 4. Submit Employee Survey
+
+**Endpoint:** `POST /surveys/employee`
+
+**Opis:** Wysłanie ankiety pracowniczej
+
+**Request Body:**
+```json
+{
+  "timestamp": "2025-01-14T12:00:00Z",
+  "csrfToken": "abc123xyz789",
+  "name": "Jan Kowalski",
+  "teamContinuation": "yes",
+  "daremonFeatures": ["radio", "visualizer", "surveys"],
+  "newFeatures": ["playlist-editor", "podcast"],
+  "helpAreas": ["testing", "ideas"],
+  "additionalIdeas": "Integracja ze Spotify"
+}
+```
+
+### 5. Get Music Tracks (Optional)
+
+**Endpoint:** `GET /api/music/tracks`
+
+**Opis:** Pobranie listy utworów z serwera (opcjonalne, fallback na lokalny playlist.json)
+
+**Response:**
+```json
+{
+  "tracks": [
+    {
+      "id": "track-1",
+      "title": "Tytuł utworu",
+      "artist": "Wykonawca",
+      "src": "/music/file.mp3",
+      "cover": "url-do-okładki",
+      "weight": 3,
+      "type": "song"
+    }
+  ]
+}
+```
+
+### 6. Get Listener Count (Optional)
+
+**Endpoint:** `GET /api/listener-count`
+
+**Opis:** Pobranie aktualnej liczby słuchaczy
+
+**Response:**
+```json
+{
+  "count": 42,
+  "timestamp": "2025-01-14T12:00:00Z"
+}
+```
+
+### 7. WebSocket: Listener Count (Optional)
+
+**Endpoint:** `WebSocket /ws/listener-count`
+
+**Opis:** Real-time aktualizacja licznika słuchaczy
+
+**Message format:**
+```json
+{
+  "type": "listener_count",
+  "count": 42,
+  "timestamp": "2025-01-14T12:00:00Z"
+}
+```
+
+### Offline-First Approach
+
+Aplikacja działa **w pełni offline** z wykorzystaniem:
+- **IndexedDB** - przechowywanie ocen, komentarzy, wyników ankiet
+- **LocalStorage** - ustawienia użytkownika, preferencje
+- **Service Worker** - cache zasobów, offline fallback
+- **Offline Queue** - kolejkowanie zapytań podczas braku internetu
+
+Wszystkie zapytania API są **opcjonalne** - aplikacja działa bez backendu, używając lokalnych danych.
+
+---
 
 ## ⚙️ Konfiguracja
 
-### playlist.json
+### config.js - Konfiguracja Globalna
 
-Główny plik konfiguracyjny dla odtwarzacza:
+```javascript
+const DEFAULT_CONFIG = {
+  PROJECT_NAME: 'DAREMON Radio ETS',
+  COMPANY_NAME: 'Firma',
+  STORAGE_PREFIX: 'daremon',
+
+  // Endpointy API (opcjonalne)
+  MUSIC_TRACKS_ENDPOINT: null,
+  LISTENER_COUNT_ENDPOINT: null,
+  LISTENER_COUNT_WS: null,
+
+  // Strategia sprawdzania dostępności mediów
+  // Opcje: 'lazy', 'skip', 'parallel', 'sequential'
+  MEDIA_AVAILABILITY_STRATEGY: 'lazy',
+  MEDIA_AVAILABILITY_CHUNK_SIZE: 50,
+};
+```
+
+### Strategie Sprawdzania Dostępności Mediów
+
+| Strategia | Opis | Wydajność | Zalecana dla |
+|-----------|------|-----------|--------------|
+| **`lazy`** | Sprawdzaj tylko przy odtwarzaniu | ~0s | Pliki lokalne, duże playlisty (domyślne) |
+| **`skip`** | Pomiń pliki lokalne, sprawdzaj tylko zdalne | ~4s | Mieszanka lokalnych i zdalnych |
+| **`parallel`** | Równoległe sprawdzanie w chunkach | ~20s | Playlisty ze zdalnych źródeł |
+| **`sequential`** | Jeden po drugim (legacy) | ~1000s | Nie zalecane |
+
+### playlist.json - Konfiguracja Playlisty
 
 ```json
 {
@@ -366,10 +600,6 @@ Główny plik konfiguracyjny dla odtwarzacza:
       "orMinutes": 15,
       "enabled": true
     },
-    "recent": {
-      "count": 10,
-      "trackIds": []
-    },
     "recentMemory": 15,
     "crossfadeSeconds": 2.0
   },
@@ -377,70 +607,7 @@ Główny plik konfiguracyjny dla odtwarzacza:
 }
 ```
 
-#### Parametry konfiguracji:
-- **quietHours** - godziny, w których nie odtwarzane są jingle
-- **jingle.everySongs** - częstotliwość jingle (co X utworów)
-- **jingle.orMinutes** - alternatywna częstotliwość (co Y minut)
-- **recentMemory** - liczba utworów zapamiętanych jako "ostatnio grane"
-- **crossfadeSeconds** - czas płynnego przejścia między utworami
-
-### config.js - Konfiguracja sprawdzania dostępności plików
-
-Aplikacja oferuje różne strategie sprawdzania dostępności plików multimedialnych, które można skonfigurować w `config.js`:
-
-```javascript
-MEDIA_AVAILABILITY_STRATEGY: 'lazy',  // domyślnie
-MEDIA_AVAILABILITY_CHUNK_SIZE: 50,    // dla strategii 'parallel'
-```
-
-#### Dostępne strategie:
-
-**1. `lazy` (domyślnie, najbardziej optymalne)**
-- Załaduj playlistę natychmiast bez sprawdzania dostępności plików
-- Sprawdzaj dostępność tylko przy próbie odtworzenia utworu
-- ⚡ Najszybsze - zero opóźnień przy ładowaniu
-- ✅ Zalecane dla lokalnych plików i dużych playlist (500+ utworów)
-
-**2. `skip` (optymalizacja dla plików lokalnych)**
-- Pomiń weryfikację HEAD dla plików lokalnych (ścieżki `./` i `../`)
-- Sprawdzaj tylko pliki zdalne (URLs `http://`, `https://`)
-- ⚡ Bardzo szybkie dla lokalnych playlist
-- ✅ Bezpieczniejsze niż `lazy`, gdy masz mieszankę lokalnych i zdalnych plików
-
-**3. `parallel` (równoległe sprawdzanie)**
-- Używa `Promise.all()` z limitowanymi chunkami (domyślnie 50 równolegle)
-- Zmniejsza czas sprawdzania z 500×2s do ~20s
-- ⚖️ Balans między szybkością a bezpieczeństwem
-- ✅ Dobre dla playlist ze zdalnych źródeł
-
-**4. `sequential` (legacy, najwolniejsze)**
-- Sprawdza pliki jeden po drugim
-- 500 utworów × 2s timeout = do 1000s (~16 minut)
-- 🐌 Nie zalecane dla dużych playlist
-- ℹ️ Zachowane dla kompatybilności wstecznej
-
-#### Przykład konfiguracji:
-
-```javascript
-// config.js
-const DEFAULT_CONFIG = {
-  // ... inne ustawienia ...
-  
-  // Wybierz strategię sprawdzania dostępności
-  MEDIA_AVAILABILITY_STRATEGY: 'lazy', // 'lazy' | 'skip' | 'parallel' | 'sequential'
-  
-  // Rozmiar chunka dla strategii 'parallel'
-  MEDIA_AVAILABILITY_CHUNK_SIZE: 50,
-};
-```
-
-**Porównanie wydajności** (dla 500 utworów):
-- `lazy`: ~0s (natychmiastowe ładowanie)
-- `skip`: ~4s (tylko pliki zdalne)
-- `parallel`: ~20s (50 równolegle × 2s timeout / 25 chunków)
-- `sequential`: ~1000s (500 × 2s timeout)
-
-### Struktura utworu:
+### Struktura Utworu
 
 ```json
 {
@@ -456,241 +623,106 @@ const DEFAULT_CONFIG = {
 }
 ```
 
-### Tłumaczenia (locales/)
+### Service Worker - Cache Strategy
 
-Pliki JSON z tłumaczeniami wszystkich tekstów w aplikacji:
-- `pl.json` - język polski
-- `nl.json` - język niderlandzki
-- `en.json` - język angielski
-- `cs.json` - język czeski
+```javascript
+// sw.js
+const CACHE_NAME = 'daremon-radio-v11';
 
-Automatyczne wykrywanie języka przeglądarki z fallback na niderlandzki.
+// Cache-first dla app shell
+// Stale-while-revalidate dla playlisty i tłumaczeń
+// Network-first dla plików audio
+```
 
-## 🎮 Użytkowanie
+---
 
-### Pierwsze uruchomienie
+## 🧪 Testowanie
 
-1. Kliknij **"Uruchom Radio"** na ekranie powitalnym
-2. Aplikacja załaduje playlistę i rozpocznie odtwarzanie
-3. Dostosuj głośność i ciesz się muzyką!
-
-### Podstawowe kontrolki
-
-- **Play/Pause** - Uruchom lub zatrzymaj odtwarzanie
-- **Next** - Przejdź do następnego utworu
-- **Like** - Oznacz utwór jako ulubiony
-- **Volume** - Dostosuj poziom głośności (0-100%)
-- **Progress Bar** - Kliknij aby przeskoczyć do wybranego momentu
-
-### Ocenianie utworów
-
-1. Kliknij na gwiazdki (1-5) podczas odtwarzania
-2. Opcjonalnie dodaj komentarz
-3. Kliknij "Wyślij Recenzję"
-4. Oceny są przechowywane lokalnie w IndexedDB
-
-### Ankiety słuchaczy
-
-1. Wybierz ankietę w panelu bocznym
-2. Odpowiedz zgodnie z typem pytania (pojedynczy wybór, wielokrotne odpowiedzi, skala lub tekst)
-3. Kliknij "Wyślij odpowiedź"
-4. Wyniki aktualizują się natychmiast po oddaniu głosu
-
-### Ankieta zespołu DAREMON
-
-Dedykowana ankieta pracownicza dostępna w panelu bocznym, która pozwala na:
-
-1. **Zbieranie opinii o kontynuacji projektu**:
-   - Czy pracownicy są zainteresowani pracą w okrojonym zespole?
-   - Opcje: Tak / Może / Nie
-
-2. **Ocenę przydatności funkcji**:
-   - Radio/Odtwarzacz muzyki
-   - Wizualizator audio (2D/3D)
-   - Ankiety i głosowania
-   - Wiadomości do DJ / Live Talk
-   - Motywy wizualne
-   - System ocen utworów
-
-3. **Pomysły na nowe funkcje**:
-   - Edytor playlist / kolejki utworów
-   - Podcasty / nagrania audio
-   - Czat na żywo
-   - Kalendarz wydarzeń / zmian
-   - Tablica ogłoszeń
-   - Mini gry / zabawy
-   - Inne propozycje (pole tekstowe)
-
-4. **Deklarację pomocy**:
-   - Programowanie / kod
-   - Projektowanie / grafika
-   - Muzyka / audio
-   - Testowanie / feedback
-   - Tworzenie treści
-   - Pomysły / koncepcje
-
-5. **Wolne uwagi i sugestie**:
-   - Obszerne pole tekstowe na dowolne pomysły i opinie
-
-**Wyniki ankiety** są dostępne dla wszystkich i pokazują:
-- Procentowe rozkłady odpowiedzi
-- Liczbę oddanych głosów
-- Najpopularniejsze wybory
-- Lista wszystkich uwag i pomysłów
-
-Ankieta jest **anonimowa** (imię opcjonalne) i przechowywana lokalnie w IndexedDB.
-
-### Wiadomości DJ
-
-1. Napisz wiadomość w polu tekstowym
-2. Kliknij "Wyślij Wiadomość"
-3. Otrzymasz automatyczną odpowiedź od DJ Bot
-4. Wszystkie wiadomości są tylko lokalne (demonstracja)
-
-## 🔧 Rozwój
-
-### Dostępne skrypty
+### Uruchamianie Testów
 
 ```bash
-# Development server
-pnpm dev
-# lub
-npm run dev
-
-# Production build
-pnpm build
-# lub
-npm run build
-
-# Uruchom testy
+# Uruchom wszystkie testy
 pnpm test
-# lub
-npm test
 
-# Generuj manifest mediów dla pokazu slajdów
-npm run generate:media
+# Testy w trybie watch
+pnpm test --watch
 
-# Linting (placeholder)
-pnpm lint
+# Coverage (raport pokrycia)
+pnpm test --coverage
 ```
 
-### Build Configuration
+### Pokrycie Testami (23 suity testowe)
 
-Projekt używa Vite z konfiguracją dla wielu stron:
-- `index.html` - główna aplikacja radiowa
-- `granulate-survey.html` - ankieta systemu Granulate
-- `polls.html` - dedykowana strona ankiet
+#### Podstawowa funkcjonalność
+- `config.test.js` - Walidacja konfiguracji
+- `state.test.js` - Zarządzanie stanem
+- `localstorage.test.js` - Przechowywanie lokalne
+- `locales-regression.test.js` - Testy tłumaczeń
 
-Wszystkie strony są budowane równocześnie podczas `npm run build`.
+#### Odtwarzacz audio
+- `crossfade.test.js` - Płynne przejścia
+- `listener-count.test.js` - Licznik słuchaczy
+- `listener-count-display.test.js` - Wyświetlanie licznika
 
-### Struktura kodu
+#### Playlista i media
+- `playlist-service.test.js` - Serwis playlisty
+- `playlist-integration.test.js` - Integracja playlisty
+- `music-scanner.test.js` - Skanowanie muzyki
+- `track-metadata.test.js` - Metadane utworów
+- `media-availability.test.js` - Dostępność plików
+- `media-files-loading.test.js` - Ładowanie mediów
+- `url-encoding.test.js` - Kodowanie URL
 
-#### app.js - Główne moduły:
+#### Wizualizacje
+- `visualizer-3d.test.js` - Wizualizator 3D
+- `visualizer-regression.test.js` - Regresja wizualizatora
+- `slideshow.test.js` - Pokaz slajdów
 
-1. **State Management** - zarządzanie stanem aplikacji
-2. **Audio Engine** - obsługa odtwarzania i crossfade
-3. **Playlist Manager** - logika kolejkowania utworów
-4. **UI Controllers** - kontrolery interfejsu użytkownika
-5. **i18n System** - system wielojęzyczności
-6. **Storage Manager** - IndexedDB i LocalStorage
-7. **Visualizer** - canvas-based wizualizacja
+#### UI i interakcje
+- `ui-utils.test.js` - Komponenty UI
+- `poll-system.test.js` - System ankiet
+- `polls.e2e.test.js` - End-to-end ankiety
+- `strategic-polls.test.js` - Ankiety strategiczne
+- `now-playing-layout.test.js` - Layout odtwarzacza
 
-#### Service Worker (sw.js):
+---
 
-- **Cache Strategy**: Cache-first dla app shell
-- **Stale-while-revalidate**: dla playlisty i tłumaczeń
-- **Network-first**: dla audio files
-- **Version**: v10 (automatyczne czyszczenie starych cache + instant update flow)
-- **Message Channel**: Wsparcie dla skipWaiting przy aktualizacji
+## 📚 Dokumentacja
 
-### Dodawanie nowych utworów
+Projekt zawiera obszerną dokumentację techniczną w osobnych plikach:
 
-1. Umieść pliki audio w lokalizacji dostępnej dla aplikacji (np. katalog `music/`)
-2. Dodaj wpis w `playlist.json`:
+### Dokumentacja Główna
+- **[README.md](README.md)** - Ten plik (przegląd projektu)
+- **[IMPLEMENTATION-REPORT.md](IMPLEMENTATION-REPORT.md)** - Raport wdrożenia funkcji
+- **[PERFORMANCE_AUDIT.md](PERFORMANCE_AUDIT.md)** - Audyt wydajności
 
-```json
-{
-  "id": "utwor-xxx",
-  "title": "Tytuł",
-  "artist": "Wykonawca",
-  "src": "./music/Utwor (xxx).mp3",
-  "cover": "url",
-  "tags": ["tag1", "tag2"],
-  "weight": 3,
-  "type": "song",
-  "golden": false
-}
-```
+### Dokumentacja Funkcji
+- **[MEDIA-AVAILABILITY-OPTIMIZATION.md](MEDIA-AVAILABILITY-OPTIMIZATION.md)** - Optymalizacja sprawdzania dostępności plików
+- **[MEDIA_INSTRUKCJA.md](MEDIA_INSTRUKCJA.md)** - Instrukcja dodawania obrazów i filmów
+- **[AUDIO_PLAYER_INSTRUKCJA.md](AUDIO_PLAYER_INSTRUKCJA.md)** - Instrukcja odtwarzacza
+- **[QUICK_START_AUDIO.md](QUICK_START_AUDIO.md)** - Szybki start z audio
 
-3. Jeśli dodajesz nowe zasoby do cache, zwiększ wersję cache w `sw.js`
-4. Przebuduj aplikację
+### Dokumentacja Wizualizatora
+- **[VISUALIZER-GUIDE.md](VISUALIZER-GUIDE.md)** - Quick Start Guide dla wizualizatora 3D
+- **[visualizer/README.md](visualizer/README.md)** - Szczegółowa dokumentacja techniczna
 
-### Dodawanie obrazów i filmów do pokazu slajdów
+### Dokumentacja Licznika Słuchaczy
+- **[LISTENER-COUNT-FEATURE.md](LISTENER-COUNT-FEATURE.md)** - Dokumentacja funkcji licznika
+- **[RAPORT-LICZNIKA-SLUCHACZY.md](RAPORT-LICZNIKA-SLUCHACZY.md)** - Raport weryfikacji
 
-Aplikacja automatycznie wykrywa i używa lokalnych plików multimedialnych dla pokazu slajdów:
+### Dokumentacja API i Backend
+- **[docs/API_DOCUMENTATION.md](docs/API_DOCUMENTATION.md)** - Pełna dokumentacja API
+- **[docs/BACKEND_INTEGRATION.md](docs/BACKEND_INTEGRATION.md)** - Integracja z backendem
+- **[docs/SECURITY.md](docs/SECURITY.md)** - Bezpieczeństwo
+- **[docs/PERFORMANCE.md](docs/PERFORMANCE.md)** - Wydajność
+- **[docs/WEBSITE_IMPROVEMENTS.md](docs/WEBSITE_IMPROVEMENTS.md)** - Ulepszenia
 
-1. **Dodaj pliki obrazów** do katalogu `images/`:
-   - Obsługiwane formaty: `.png`, `.jpg`, `.jpeg`, `.webp`, `.gif`, `.svg`, `.avif`
+### Dokumentacja Platformy
+- **[daremon/README.md](daremon/README.md)** - Platforma DAREMON.NL
 
-2. **Dodaj pliki wideo** do katalogu `video/`:
-   - Obsługiwane formaty: `.mp4`, `.webm`, `.ogg`, `.mov`
+---
 
-3. **Wygeneruj manifest mediów**:
-```bash
-npm run generate:media
-```
-
-4. **Przebuduj aplikację**:
-```bash
-npm run build
-```
-
-Aplikacja automatycznie użyje lokalnych plików. Jeśli żadne lokalne pliki nie zostaną znalezione, system przełączy się na zewnętrzne źródła mediów.
-
-### Normalizacja nazw plików multimedialnych
-
-Jeśli masz pliki z numerami bez spacji (np. `video1.mp4`, `image23.jpg`), możesz użyć skryptu Python do normalizacji:
-
-```bash
-# Podgląd zmian (dry run)
-python3 rename_files.py
-
-# Wykonanie zmian
-python3 rename_files.py -y
-```
-
-Skrypt przekształca:
-- `Daremon1.mp3` → `Daremon (1).mp3`
-- `image42.jpg` → `image (42).jpg`
-- `video7.mp4` → `video (7).mp4`
-
-**Limity domyślne**:
-- Muzyka: 200 plików
-- Obrazy: 61 plików
-- Wideo: 50 plików
-
-### Dodawanie nowych motywów
-
-1. Edytuj `styles.css` i dodaj nowy motyw:
-
-```css
-[data-theme="new-theme"] {
-    --primary-accent: #color1;
-    --secondary-accent: #color2;
-    --tertiary-accent: #color3;
-}
-```
-
-2. Dodaj przycisk w `index.html`:
-
-```html
-<button id="theme-new" data-i18n-aria-label="themeNewLabel"></button>
-```
-
-3. Dodaj tłumaczenia w `locales/*.json`
-4. Dodaj event listener w `app.js`
-
-## ⌨️ Skróty klawiszowe
+## ⌨️ Skróty Klawiszowe
 
 | Klawisz | Akcja |
 |---------|-------|
@@ -700,62 +732,9 @@ Skrypt przekształca:
 | `↑` | Zwiększ głośność |
 | `↓` | Zmniejsz głośność |
 
-## 🧪 Testowanie
+---
 
-Projekt wykorzystuje **Vitest** do testów jednostkowych i integracyjnych. Posiada kompleksowy zestaw **22 plików testowych** pokrywających wszystkie kluczowe funkcje aplikacji.
-
-### Uruchamianie testów
-
-```bash
-# Uruchom wszystkie testy
-pnpm test
-
-# Testy w trybie watch (automatyczne ponowne uruchomienie przy zmianach)
-pnpm test --watch
-
-# Coverage (raport pokrycia kodu testami)
-pnpm test --coverage
-```
-
-### Kategorie testów
-
-#### Testy podstawowej funkcjonalności:
-- `state.test.js` - zarządzanie stanem aplikacji
-- `config.test.js` - walidacja konfiguracji
-- `localstorage.test.js` - przechowywanie danych lokalnych
-- `locales-regression.test.js` - testy regresji systemu tłumaczeń
-
-#### Testy odtwarzacza audio:
-- `crossfade.test.js` - funkcja płynnego przejścia między utworami
-- `now-playing-layout.test.js` - layout odtwarzacza "teraz grane"
-- `listener-count.test.js` - symulacja licznika słuchaczy
-
-#### Testy playlisty i mediów:
-- `playlist-service.test.js` - serwis zarządzania playlistą
-- `playlist-integration.test.js` - integracja playlisty z aplikacją
-- `music-scanner.test.js` - automatyczne skanowanie katalogu muzyki
-- `track-metadata.test.js` - obsługa metadanych utworów
-- `media-availability.test.js` - sprawdzanie dostępności plików
-- `media-files-loading.test.js` - ładowanie plików multimedialnych
-- `media-utils-support.test.js` - wsparcie dla różnych formatów audio
-- `url-encoding.test.js` - poprawne kodowanie URL plików
-
-#### Testy wizualizacji:
-- `visualizer-3d.test.js` - wizualizator 3D Three.js
-- `visualizer-regression.test.js` - testy regresji wizualizatora
-- `slideshow.test.js` - pokaz slajdów (obrazy/wideo)
-
-#### Testy UI i interakcji:
-- `ui-utils.test.js` - komponenty interfejsu użytkownika
-- `poll-system.test.js` - system ankiet
-- `polls.e2e.test.js` - testy end-to-end ankiet
-- `strategic-polls.test.js` - strategiczne ankiety reaktywne
-
-### Przykładowe wyniki testów
-
-Wszystkie testy są regularnie uruchamiane i weryfikowane. Projekt ma na celu utrzymanie wysokiego pokrycia kodu testami, szczególnie dla krytycznych funkcji takich jak odtwarzanie audio, zarządzanie playlistą i wizualizacje.
-
-## 🤝 Wkład w projekt
+## 🤝 Wkład w Projekt
 
 Wkład w projekt jest mile widziany! Aby przyczynić się do rozwoju:
 
@@ -765,130 +744,54 @@ Wkład w projekt jest mile widziany! Aby przyczynić się do rozwoju:
 4. Push do brancha (`git push origin feature/amazing-feature`)
 5. Otwórz Pull Request
 
-### Wytyczne:
-- Zachowaj spójny styl kodu
+### Wytyczne
+- Zachowaj spójny styl kodu (ES6+, moduły)
 - Dodaj testy dla nowych funkcji
 - Aktualizuj dokumentację
 - Zwiększ wersję Service Worker po zmianach w cache
+
+---
 
 ## 📄 Licencja
 
 Projekt na licencji **ISC** - szczegóły w pliku LICENSE
 
-## 👥 Autorzy i zespół
+---
+
+## 👥 Autorzy
 
 - **Zespół DAREMON Solutions** - rozwój i utrzymanie
 - **Projekt wewnętrzny** - stworzony dla zespołu DAREMON ETS
 
-## 🎯 Cel projektu
+---
 
-Aplikacja została stworzona jako:
-- **Narzędzie integracji** - łączenie zespołu poprzez wspólne doświadczenia
-- **Demo technologiczne** - pokazanie umiejętności zespołu w zakresie nowoczesnych technologii webowych
-- **Platforma komunikacyjna** - umożliwienie zbierania opinii i pomysłów od zespołu
-- **Projekt open-source** - możliwość nauki i inspiracji dla innych
+## 🎯 Zastosowania
 
-Aplikacja jest w pełni funkcjonalna i może być używana jako:
+Aplikacja może być używana jako:
 - Firmowe radio internetowe
 - Odtwarzacz muzyki z zaawansowanymi funkcjami społecznościowymi
 - Szablon dla podobnych projektów webowych
 - Materiał edukacyjny dotyczący PWA, Web Audio API i nowoczesnych technologii webowych
+- Demo technologiczne - pokazanie umiejętności zespołu
+
+---
 
 ## 🙏 Podziękowania
 
 - **Three.js** - za potężną bibliotekę renderingu 3D
-- **GSAP** - za wspaniałą bibliotekę animacji i efektów wizualnych
+- **GSAP** - za wspaniałą bibliotekę animacji
 - **Vite** - za szybki i efektywny build tool
 - **Vitest** - za nowoczesny framework testowy
-- **Społeczność Open Source** - za inspirację, narzędzia i wsparcie
-- **Zespół DAREMON** - za wkład w rozwój projektu i testowanie
+- **Społeczność Open Source** - za inspirację i narzędzia
+- **Zespół DAREMON** - za wkład w rozwój projektu
+
+---
 
 ## 📞 Kontakt
 
 **DAREMON Radio ETS** - Projekt demonstracyjny i wewnętrzny dla zespołu DAREMON
 
-Repozytorium: [https://github.com/RudyKotJeKoc/Daremon_NAS](https://github.com/RudyKotJeKoc/Daremon_NAS)
-
-## 📚 Dodatkowa dokumentacja
-
-Projekt zawiera szczegółową dokumentację w osobnych plikach:
-
-- **[IMPLEMENTATION-REPORT.md](IMPLEMENTATION-REPORT.md)** - Kompletny raport wdrożenia funkcji, w tym:
-  - Usunięcie dokumentacji maszyn
-  - Automatyczne skanowanie muzyki
-  - System oceniania z wagami
-  - Implementacja wizualizatora 3D
-  - PWA install & update flow
-
-- **[MEDIA-AVAILABILITY-OPTIMIZATION.md](MEDIA-AVAILABILITY-OPTIMIZATION.md)** - Optymalizacja sprawdzania dostępności plików:
-  - Strategie: lazy, skip, parallel, sequential
-  - Porównanie wydajności (0s vs 1000s)
-  - Konfiguracja i najlepsze praktyki
-  - Testy wydajnościowe
-
-- **[MEDIA_INSTRUKCJA.md](MEDIA_INSTRUKCJA.md)** - Instrukcja dodawania obrazów i filmów:
-  - Jak działa system automatycznego wykrywania
-  - Krok po kroku dodawanie plików
-  - Obsługiwane formaty
-  - Generowanie manifestu mediów
-  - Obsługa podfolderów
-
-- **[VISUALIZER-GUIDE.md](VISUALIZER-GUIDE.md)** - Quick Start Guide dla wizualizatora 3D:
-  - Jak używać wizualizatora
-  - Kontrola kamery
-  - Wymagania systemowe
-  - Rozwiązywanie problemów
-
-- **[visualizer/README.md](visualizer/README.md)** - Szczegółowa dokumentacja techniczna wizualizatora:
-  - Architektura kodu
-  - Integracja z Web Audio API
-  - Optymalizacje wydajności
-  - Plany rozwoju
-
-- **[LISTENER-COUNT-FEATURE.md](LISTENER-COUNT-FEATURE.md)** - Dokumentacja funkcji licznika słuchaczy:
-  - Przegląd funkcjonalności
-  - Konfiguracja i integracja API
-  - Tryby działania (symulacja, API, WebSocket)
-  - Charakterystyka wydajności i dostępności
-
-- **[RAPORT-LICZNIKA-SLUCHACZY.md](RAPORT-LICZNIKA-SLUCHACZY.md)** - Raport weryfikacji licznika słuchaczy:
-  - Potwierdzenie działania funkcji
-  - Pokrycie testami
-  - Dowody i metryki jakości
-  - Instrukcje użytkowania
-
-- **[daremon/README.md](daremon/README.md)** - Dokumentacja platformy DAREMON.NL:
-  - Zasady designu i kolorystyka
-  - Struktura platformy analiz
-  - Elementy interfejsu
-  - Responsive design
-
-## 🌐 Dodatkowe strony
-
-Projekt zawiera kilka dedykowanych stron HTML poza główną aplikacją:
-
-### polls.html
-Dedykowana strona dla ankiet społecznościowych z:
-- Własnym interfejsem użytkownika
-- Systemem głosowania
-- Wyświetlaniem wyników
-
-### granulate-survey.html
-Specjalistyczna ankieta dla systemu transportu granulatu:
-- 6 sekcji tematycznych
-- Różnorodne typy pytań
-- Dedykowany design i CSS
-- Lokalne przechowywanie odpowiedzi
-
-### vso-calculator.html
-Narzędzie kalkulatora VSO dla pracowników.
-
-### daremon/index.html & daremon/analizy.html
-Platforma analiz polityki lokalnej DAREMON.NL:
-- Profesjonalny design z holenderską kolorystyką
-- System kategorii i tagów
-- Filtrowanie i wyszukiwanie analiz
-- Statystyki i credentials
+**Repozytorium:** [https://github.com/RudyKotJeKoc/Daremon_NAS](https://github.com/RudyKotJeKoc/Daremon_NAS)
 
 ---
 
