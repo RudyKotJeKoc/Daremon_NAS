@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5 Systeemobservaties | DAREMON</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Vijf systemische observaties over hulpbeleid die vragen oproepen. Niet beschuldigen, maar nadenken.">
+    <meta name="keywords" content="systeemanalyse, beleid, reflectie, hulp, economie">
+    <meta name="author" content="Dariusz Adamski">
+
+    <!-- Icons -->
+    <link rel="icon" href="../icons/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="../icons/icon-192.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .language-switcher {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 10px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 8px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            border-color: #ff6b35;
+            background: #fff5f2;
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            border-color: #ff6b35;
+        }
+
+        .truth-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border-left: 6px solid #ff6b35;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .truth-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .truth-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 800;
+            padding: 8px 20px;
+            border-radius: 25px;
+            margin-bottom: 1rem;
+        }
+
+        .truth-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 1rem 0;
+            line-height: 1.3;
+        }
+
+        .truth-question {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #555;
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: rgba(255, 107, 53, 0.05);
+            border-radius: 12px;
+            border-left: 4px solid #ff6b35;
+        }
+
+        .data-table {
+            width: 100%;
+            margin: 2rem 0;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .data-table th {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .highlight-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ff6b35;
+            display: block;
+            margin: 0.5rem 0;
+        }
+
+        .observation-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .observation-list li {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid #ff6b35;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .observation-list li:before {
+            content: "→";
+            color: #ff6b35;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .intro-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .intro-section p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .reflection-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            border: 2px solid #ffb74d;
+        }
+
+        .reflection-box h3 {
+            color: #e65100;
+            margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .language-switcher {
+                top: 60px;
+                right: 10px;
+                padding: 8px;
+            }
+
+            .lang-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+
+            .truth-card {
+                padding: 1.5rem;
+            }
+
+            .truth-title {
+                font-size: 1.4rem;
+            }
+
+            .intro-section h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="nl">🇳🇱 NL</button>
+        <button class="lang-btn" data-lang="pl">🇵🇱 PL</button>
+        <button class="lang-btn" data-lang="en">🇬🇧 EN</button>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="container nav">
+            <div class="logo">DAREMON</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="analizy.html">Analyses</a></li>
+                <li><a href="5-waarheden.html" class="active">5 Waarheden</a></li>
+                <li><a href="#about">Over</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container" style="margin-top: 2rem;">
+
+        <!-- ============================================ -->
+        <!-- NEDERLANDSE VERSIE -->
+        <!-- ============================================ -->
+        <div class="lang-content active" data-lang="nl">
+            <div class="intro-section">
+                <h1>🔍 Vijf Systeemobservaties</h1>
+                <p>
+                    Niet beschuldigen. Niet aanvallen. Alleen observeren en vragen stellen.<br>
+                    Vijf mechanismen die uitnodigen tot reflectie over hoe goed bedoelde systemen werken.
+                </p>
+            </div>
+
+            <!-- WAARHEID 1 -->
+            <article class="truth-card">
+                <span class="truth-number">OBSERVATIE #1</span>
+                <h2 class="truth-title">Wanneer Crisis een Economisch Ecosysteem Wordt</h2>
+
+                <div class="truth-question">
+                    "Als druk en haast een markt creëren, wie profiteert er dan van de urgentie?"
+                </div>
+
+                <p>
+                    Wanneer overheden onder tijdsdruk opereren, verandert hun onderhandelingspositie.
+                    COA, het Centraal Orgaan opvang asielzoekers, heeft dit publiekelijk erkend:
+                    <em>"zwakke onderhandelingspositie"</em> bij het huren van locaties.
+                </p>
+
+                <ul class="observation-list">
+                    <li><strong>Vastgoedeigenaren:</strong> Voormalig viersterrenhotel Mövenpick wordt AZC Pettelaarpark — langlopend contract onder tijdsdruk</li>
+                    <li><strong>Adviesbureaus:</strong> Elke vertraging (milieuonderzoek, stikstof, fauna) creëert vraag naar gespecialiseerde rapporten</li>
+                    <li><strong>Lokale uitvoerders:</strong> "Leefbaarheidsplannen" financieren contracten voor lokale bureaus (bijv. MTD Landschapsarchitecten)</li>
+                </ul>
+
+                <div class="reflection-box">
+                    <h3>💭 Reflectievraag</h3>
+                    <p>
+                        Wanneer één probleem meerdere nieuwe inkomstenstromen genereert,
+                        ontstaat er dan niet een onbedoelde prikkel om het probleem voort te laten bestaan?
+                    </p>
+                </div>
+            </article>
+
+            <!-- WAARHEID 2 -->
+            <article class="truth-card">
+                <span class="truth-number">OBSERVATIE #2</span>
+                <h2 class="truth-title">Het Paradox van Bescherming en Motivatie</h2>
+
+                <div class="truth-question">
+                    "Als de kosten van conflict geëxporteerd worden, hoe beïnvloedt dat de motivatie om vrede te sluiten?"
+                </div>
+
+                <p>
+                    In de economie bestaat het begrip <strong>"moral hazard"</strong> — wanneer iemand beschermd is
+                    tegen risico's en daarom minder voorzichtig handelt. Dit concept roept vragen op in de context van conflicten.
+                </p>
+
+                <p>
+                    <strong>Observatie uit Oekraïne (2025):</strong> In Kyiv functioneren cafés, culturele evenementen vinden plaats,
+                    de economie toont veerkracht. Tegelijkertijd wordt de EU Richtlijn Tijdelijke Bescherming (TPD) automatisch verlengd,
+                    met volledige verblijfs- en arbeidsrechten in heel Europa.
+                </p>
+
+                <ul class="observation-list">
+                    <li>Onderzoek toont: terugkeerwens daalt naarmate integratie in Nederland slaagt</li>
+                    <li>Europa absorbeert humanitaire kosten — huisvesting, zorg, uitkeringen</li>
+                    <li>Substantiële delen van het land zijn stabiel, maar het systeem faciliteert blijvend verblijf</li>
+                </ul>
+
+                <div class="reflection-box">
+                    <h3>💭 Reflectievraag</h3>
+                    <p>
+                        Wanneer hulp zo goed werkt dat terugkeer niet meer aantrekkelijk is,
+                        helpen we dan bij het oplossen van het conflict — of onbedoeld bij het bestendigen ervan?
+                    </p>
+                </div>
+            </article>
+
+            <!-- WAARHEID 3 -->
+            <article class="truth-card">
+                <span class="truth-number">OBSERVATIE #3</span>
+                <h2 class="truth-title">Wanneer Bijdrage Geen Prioriteit Meer Geeft</h2>
+
+                <div class="truth-question">
+                    "In een land met 400.000 woningtekort — wat signaleert het systeem aan werkende burgers?"
+                </div>
+
+                <p>
+                    <strong>Wettelijke prioriteit:</strong> "Statushouders" (personen met verblijfsvergunning) hebben
+                    wettelijke voorrang bij sociale woningbouw. Gemeenten zijn verplicht binnen een bepaalde termijn huisvesting te bieden.
+                </p>
+
+                <p>
+                    <strong>De praktijk:</strong>
+                </p>
+                <ul class="observation-list">
+                    <li>Iemand die 10 jaar werkt en belasting betaalt kan dakloos worden</li>
+                    <li>Iemand die net is aangekomen krijgt voorrang op jarenlange wachtlijsten</li>
+                    <li>Het systeem beloont niet-bijdrage met snellere toegang tot schaarse middelen</li>
+                </ul>
+
+                <div class="reflection-box">
+                    <h3>💭 Reflectievraag</h3>
+                    <p>
+                        Wanneer bijdrage aan de samenleving niet langer leidt tot toegang tot basisbehoeften,
+                        wat gebeurt er dan met het vertrouwen in het systeem?
+                    </p>
+                </div>
+            </article>
+
+            <!-- WAARHEID 4 -->
+            <article class="truth-card">
+                <span class="truth-number">OBSERVATIE #4</span>
+                <h2 class="truth-title">De Kostenanalyse: Miljard Euro Verschil</h2>
+
+                <div class="truth-question">
+                    "Waarom kiest de overheid bewust voor de optie die 3x duurder is?"
+                </div>
+
+                <p><strong>Officiële cijfers van COA:</strong></p>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Type opvang</th>
+                            <th>Kosten per persoon per jaar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Standaard AZC</strong></td>
+                            <td><span class="highlight-number">€30.500</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Noodopvang in hotel</strong></td>
+                            <td><span class="highlight-number">€91.000</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>
+                    <strong>COA's eigen conclusie:</strong> Stabiele, langetermijnplanning zou Nederlandse belastingbetalers
+                    <span style="color: #ff6b35; font-weight: 700;">ongeveer €1 miljard per jaar</span> kunnen besparen.
+                </p>
+
+                <ul class="observation-list">
+                    <li>Het geld wordt niet besteed aan hulp, maar aan politieke impasse</li>
+                    <li>Angst voor protesten zoals in Den Bosch leidt tot duurdere, "minder zichtbare" oplossingen</li>
+                    <li>Belastingbetalers financieren deze "chaos-belasting"</li>
+                </ul>
+
+                <div class="reflection-box">
+                    <h3>💭 Reflectievraag</h3>
+                    <p>
+                        Als systemen consistent kiezen voor 3x duurdere oplossingen uit angst voor maatschappelijke reacties,
+                        wie betaalt dan de prijs voor het vermijden van moeilijke maar noodzakelijke beslissingen?
+                    </p>
+                </div>
+            </article>
+
+            <!-- WAARHEID 5 -->
+            <article class="truth-card">
+                <span class="truth-number">OBSERVATIE #5</span>
+                <h2 class="truth-title">Wanneer Goedbedoelde Plannen Leiden tot Barricades</h2>
+
+                <div class="truth-question">
+                    "Als een overheid 100 politieagenten moet inzetten om haar eigen besluit te beschermen tegen haar eigen burgers —
+                    wat zegt dat over legitimiteit?"
+                </div>
+
+                <p><strong>Case study: 's-Hertogenbosch</strong></p>
+                <ul class="observation-list">
+                    <li>Gemeente keurt nieuw AZC goed voor 600 personen</li>
+                    <li><strong>387 formele bezwaren</strong> worden genegeerd</li>
+                    <li>Officieel protest van provincie Noord-Brabant wordt genegeerd</li>
+                    <li>Online dreigingen van "bestorming" leiden tot mobilisatie van <strong>~100 politieagenten</strong></li>
+                    <li>Mobiele eenheid (ME) uit Amsterdam wordt ingeroepen</li>
+                </ul>
+
+                <p>
+                    Het AZC wordt een "bliksemafleider" voor alle publieke frustratie: woningtekort, inflatie,
+                    het gevoel genegeerd te worden door autoriteiten.
+                </p>
+
+                <div class="reflection-box">
+                    <h3>💭 Reflectievraag</h3>
+                    <p>
+                        Wanneer beleid dat is geboren uit empathie leidt tot barricades en ME-inzet,
+                        is het dan tijd om te heroverwegen wat "helpen" werkelijk betekent?
+                    </p>
+                </div>
+            </article>
+
+            <!-- CONCLUSIE -->
+            <div class="intro-section">
+                <h2>🧩 Tot Nadenken</h2>
+                <p style="font-size: 1.1rem; line-height: 1.8;">
+                    Deze vijf observaties beschuldigen niemand. Ze nodigen uit tot reflectie over systemen
+                    die zijn ontworpen met goede intenties, maar onbedoelde gevolgen kunnen hebben.
+                </p>
+                <p style="font-size: 1.1rem; line-height: 1.8; margin-top: 1.5rem;">
+                    <em>"Als een systeem dat is ontworpen om een humanitaire crisis op te lossen een nieuwe crisis
+                    creëert in het gastland, is het dan niet tijd om opnieuw te definiëren wat 'helpen' betekent?"</em>
+                </p>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- POLSKA WERSJA -->
+        <!-- ============================================ -->
+        <div class="lang-content" data-lang="pl">
+            <div class="intro-section">
+                <h1>🔍 Pięć Obserwacji Systemowych</h1>
+                <p>
+                    Nie oskarżać. Nie atakować. Tylko obserwować i stawiać pytania.<br>
+                    Pięć mechanizmów, które zapraszają do refleksji nad tym, jak działają dobrze przemyślane systemy.
+                </p>
+            </div>
+
+            <!-- PRAWDA 1 -->
+            <article class="truth-card">
+                <span class="truth-number">OBSERWACJA #1</span>
+                <h2 class="truth-title">Gdy Kryzys Staje Się Ekosystemem Ekonomicznym</h2>
+
+                <div class="truth-question">
+                    "Jeśli presja i pośpiech tworzą rynek, kto odnosi korzyści z pilności?"
+                </div>
+
+                <p>
+                    Kiedy rządy działają pod presją czasu, ich pozycja negocjacyjna się zmienia.
+                    COA (Centralny Organ ds. Przyjmowania Azylantów) publicznie to przyznał:
+                    <em>"słaba pozycja negocjacyjna"</em> przy wynajmowaniu lokalizacji.
+                </p>
+
+                <ul class="observation-list">
+                    <li><strong>Właściciele nieruchomości:</strong> Były czterogwiazdkowy hotel Mövenpick staje się AZC Pettelaarpark — wieloletni kontrakt pod presją czasu</li>
+                    <li><strong>Firmy doradcze:</strong> Każde opóźnienie (badania środowiskowe, azot, fauna) tworzy zapotrzebowanie na specjalistyczne raporty</li>
+                    <li><strong>Lokalni wykonawcy:</strong> "Plany łagodzące" finansują kontrakty dla lokalnych firm (np. MTD Landschapsarchitecten)</li>
+                </ul>
+
+                <div class="reflection-box">
+                    <h3>💭 Pytanie do Refleksji</h3>
+                    <p>
+                        Gdy jeden problem generuje wiele nowych strumieni przychodów,
+                        czy nie powstaje nieumyślna zachęta do utrzymywania problemu?
+                    </p>
+                </div>
+            </article>
+
+            <!-- PRAWDA 2 -->
+            <article class="truth-card">
+                <span class="truth-number">OBSERWACJA #2</span>
+                <h2 class="truth-title">Paradoks Ochrony i Motywacji</h2>
+
+                <div class="truth-question">
+                    "Jeśli koszty konfliktu są eksportowane, jak wpływa to na motywację do zawarcia pokoju?"
+                </div>
+
+                <p>
+                    W ekonomii istnieje pojęcie <strong>"pokusy nadużycia" (moral hazard)</strong> — gdy ktoś jest chroniony
+                    przed ryzykiem i dlatego działa mniej ostrożnie. Ta koncepcja rodzi pytania w kontekście konfliktów.
+                </p>
+
+                <p>
+                    <strong>Obserwacja z Ukrainy (2025):</strong> W Kijowie funkcjonują kawiarnie, odbywają się wydarzenia kulturalne,
+                    gospodarka wykazuje odporność. Jednocześnie unijna Dyrektywa o Ochronie Tymczasowej (TPD) jest automatycznie przedłużana,
+                    z pełnymi prawami pobytu i pracy w całej Europie.
+                </p>
+
+                <ul class="observation-list">
+                    <li>Badania pokazują: chęć powrotu maleje wraz z udaną integracją w Holandii</li>
+                    <li>Europa absorbuje koszty humanitarne — mieszkania, opieka, świadczenia</li>
+                    <li>Znaczące części kraju są stabilne, ale system ułatwia stały pobyt</li>
+                </ul>
+
+                <div class="reflection-box">
+                    <h3>💭 Pytanie do Refleksji</h3>
+                    <p>
+                        Gdy pomoc działa tak dobrze, że powrót przestaje być atrakcyjny,
+                        czy pomagamy rozwiązać konflikt — czy nieumyślnie go utrwalamy?
+                    </p>
+                </div>
+            </article>
+
+            <!-- PRAWDA 3 -->
+            <article class="truth-card">
+                <span class="truth-number">OBSERWACJA #3</span>
+                <h2 class="truth-title">Gdy Wkład Nie Daje Już Priorytetu</h2>
+
+                <div class="truth-question">
+                    "W kraju z deficytem 400 000 mieszkań — co system sygnalizuje pracującym obywatelom?"
+                </div>
+
+                <p>
+                    <strong>Prawny priorytet:</strong> "Statushouders" (osoby z pozwoleniem na pobyt) mają
+                    prawny priorytet przy przydziale mieszkań socjalnych. Gminy są zobowiązane zapewnić mieszkanie w określonym czasie.
+                </p>
+
+                <p>
+                    <strong>Praktyka:</strong>
+                </p>
+                <ul class="observation-list">
+                    <li>Osoba pracująca przez 10 lat i płacąca podatki może stać się bezdomna</li>
+                    <li>Osoba, która właśnie przyjechała, otrzymuje pierwszeństwo na wieloletnich listach oczekujących</li>
+                    <li>System nagradza brak wkładu szybszym dostępem do rzadkich zasobów</li>
+                </ul>
+
+                <div class="reflection-box">
+                    <h3>💭 Pytanie do Refleksji</h3>
+                    <p>
+                        Gdy wkład w społeczeństwo nie prowadzi już do dostępu do podstawowych potrzeb,
+                        co dzieje się z zaufaniem do systemu?
+                    </p>
+                </div>
+            </article>
+
+            <!-- PRAWDA 4 -->
+            <article class="truth-card">
+                <span class="truth-number">OBSERWACJA #4</span>
+                <h2 class="truth-title">Analiza Kosztów: Miliard Euro Różnicy</h2>
+
+                <div class="truth-question">
+                    "Dlaczego rząd świadomie wybiera opcję 3x droższą?"
+                </div>
+
+                <p><strong>Oficjalne dane COA:</strong></p>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Rodzaj zakwaterowania</th>
+                            <th>Koszt na osobę rocznie</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Standardowy ośrodek AZC</strong></td>
+                            <td><span class="highlight-number">€30 500</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Zakwaterowanie awaryjne w hotelu</strong></td>
+                            <td><span class="highlight-number">€91 000</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>
+                    <strong>Własny wniosek COA:</strong> Stabilne, długoterminowe planowanie mogłoby zaoszczędzić holenderskim podatnikom
+                    <span style="color: #ff6b35; font-weight: 700;">około €1 miliarda rocznie</span>.
+                </p>
+
+                <ul class="observation-list">
+                    <li>Pieniądze nie są wydawane na pomoc, ale na polityczny impas</li>
+                    <li>Strach przed protestami jak w Den Bosch prowadzi do droższych, "mniej widocznych" rozwiązań</li>
+                    <li>Podatnicy finansują ten "podatek od chaosu"</li>
+                </ul>
+
+                <div class="reflection-box">
+                    <h3>💭 Pytanie do Refleksji</h3>
+                    <p>
+                        Jeśli systemy konsekwentnie wybierają rozwiązania 3x droższe z obawy przed reakcją społeczną,
+                        kto płaci cenę za unikanie trudnych, ale koniecznych decyzji?
+                    </p>
+                </div>
+            </article>
+
+            <!-- PRAWDA 5 -->
+            <article class="truth-card">
+                <span class="truth-number">OBSERWACJA #5</span>
+                <h2 class="truth-title">Gdy Dobre Intencje Prowadzą do Barykad</h2>
+
+                <div class="truth-question">
+                    "Jeśli rząd musi wysłać 100 policjantów, by chronić swoją decyzję przed własnymi obywatelami —
+                    co to mówi o legitymacji?"
+                </div>
+
+                <p><strong>Studium przypadku: 's-Hertogenbosch</strong></p>
+                <ul class="observation-list">
+                    <li>Gmina zatwierdza nowy ośrodek AZC dla 600 osób</li>
+                    <li><strong>387 formalnych sprzeciwów</strong> zostaje zignorowanych</li>
+                    <li>Oficjalny protest prowincji Brabancja Północna zostaje zignorowany</li>
+                    <li>Groźby online "szturmu" prowadzą do mobilizacji <strong>~100 policjantów</strong></li>
+                    <li>Jednostki prewencji (ME) z Amsterdamu zostają wezwane</li>
+                </ul>
+
+                <p>
+                    Ośrodek AZC staje się "piorunochronem" dla całej publicznej frustracji: deficyt mieszkaniowy, inflacja,
+                    poczucie bycia ignorowanym przez władze.
+                </p>
+
+                <div class="reflection-box">
+                    <h3>💭 Pytanie do Refleksji</h3>
+                    <p>
+                        Gdy polityka zrodzona z empatii prowadzi do barykad i jednostek prewencji,
+                        czy nie nadszedł czas, by przemyśleć, co naprawdę oznacza "pomagać"?
+                    </p>
+                </div>
+            </article>
+
+            <!-- PODSUMOWANIE -->
+            <div class="intro-section">
+                <h2>🧩 Do Przemyślenia</h2>
+                <p style="font-size: 1.1rem; line-height: 1.8;">
+                    Tych pięć obserwacji nikogo nie oskarża. Zapraszają do refleksji nad systemami,
+                    które zostały zaprojektowane z dobrymi intencjami, ale mogą mieć nieumyślne konsekwencje.
+                </p>
+                <p style="font-size: 1.1rem; line-height: 1.8; margin-top: 1.5rem;">
+                    <em>"Jeśli system zaprojektowany do rozwiązania kryzysu humanitarnego tworzy nowy kryzys
+                    w kraju goszczącym, czy nie nadszedł czas, by na nowo zdefiniować, co oznacza 'pomagać'?"</em>
+                </p>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- ENGLISH VERSION -->
+        <!-- ============================================ -->
+        <div class="lang-content" data-lang="en">
+            <div class="intro-section">
+                <h1>🔍 Five Systemic Observations</h1>
+                <p>
+                    Not to accuse. Not to attack. Only to observe and ask questions.<br>
+                    Five mechanisms that invite reflection on how well-intentioned systems operate.
+                </p>
+            </div>
+
+            <!-- TRUTH 1 -->
+            <article class="truth-card">
+                <span class="truth-number">OBSERVATION #1</span>
+                <h2 class="truth-title">When Crisis Becomes an Economic Ecosystem</h2>
+
+                <div class="truth-question">
+                    "If pressure and urgency create a market, who benefits from the rush?"
+                </div>
+
+                <p>
+                    When governments operate under time pressure, their negotiating position changes.
+                    COA (Central Agency for the Reception of Asylum Seekers) publicly acknowledged this:
+                    <em>"weak negotiating position"</em> when renting locations.
+                </p>
+
+                <ul class="observation-list">
+                    <li><strong>Property owners:</strong> Former four-star Mövenpick hotel becomes AZC Pettelaarpark — long-term contract under time pressure</li>
+                    <li><strong>Consulting firms:</strong> Each delay (environmental studies, nitrogen, fauna) creates demand for specialized reports</li>
+                    <li><strong>Local contractors:</strong> "Livability plans" fund contracts for local firms (e.g., MTD Landschapsarchitecten)</li>
+                </ul>
+
+                <div class="reflection-box">
+                    <h3>💭 Reflection Question</h3>
+                    <p>
+                        When one problem generates multiple new revenue streams,
+                        does an unintended incentive emerge to keep the problem alive?
+                    </p>
+                </div>
+            </article>
+
+            <!-- TRUTH 2 -->
+            <article class="truth-card">
+                <span class="truth-number">OBSERVATION #2</span>
+                <h2 class="truth-title">The Paradox of Protection and Motivation</h2>
+
+                <div class="truth-question">
+                    "If the costs of conflict are exported, how does that affect the motivation to make peace?"
+                </div>
+
+                <p>
+                    Economics has a concept called <strong>"moral hazard"</strong> — when someone is protected
+                    from risk and therefore acts less cautiously. This concept raises questions in the context of conflicts.
+                </p>
+
+                <p>
+                    <strong>Observation from Ukraine (2025):</strong> In Kyiv, cafés operate, cultural events take place,
+                    the economy shows resilience. Meanwhile, the EU Temporary Protection Directive (TPD) is automatically extended,
+                    with full residence and work rights across Europe.
+                </p>
+
+                <ul class="observation-list">
+                    <li>Research shows: willingness to return decreases as integration in the Netherlands succeeds</li>
+                    <li>Europe absorbs humanitarian costs — housing, care, benefits</li>
+                    <li>Substantial parts of the country are stable, yet the system facilitates permanent stay</li>
+                </ul>
+
+                <div class="reflection-box">
+                    <h3>💭 Reflection Question</h3>
+                    <p>
+                        When aid works so well that return becomes unattractive,
+                        are we helping resolve the conflict — or inadvertently perpetuating it?
+                    </p>
+                </div>
+            </article>
+
+            <!-- TRUTH 3 -->
+            <article class="truth-card">
+                <span class="truth-number">OBSERVATION #3</span>
+                <h2 class="truth-title">When Contribution No Longer Grants Priority</h2>
+
+                <div class="truth-question">
+                    "In a country with a 400,000 housing shortage — what does the system signal to working citizens?"
+                </div>
+
+                <p>
+                    <strong>Legal priority:</strong> "Statushouders" (people with residence permits) have
+                    legal priority in social housing allocation. Municipalities are obligated to provide housing within a set timeframe.
+                </p>
+
+                <p>
+                    <strong>In practice:</strong>
+                </p>
+                <ul class="observation-list">
+                    <li>Someone who works for 10 years and pays taxes can become homeless</li>
+                    <li>Someone who just arrived gets priority over years-long waiting lists</li>
+                    <li>The system rewards non-contribution with faster access to scarce resources</li>
+                </ul>
+
+                <div class="reflection-box">
+                    <h3>💭 Reflection Question</h3>
+                    <p>
+                        When contributing to society no longer leads to access to basic needs,
+                        what happens to trust in the system?
+                    </p>
+                </div>
+            </article>
+
+            <!-- TRUTH 4 -->
+            <article class="truth-card">
+                <span class="truth-number">OBSERVATION #4</span>
+                <h2 class="truth-title">The Cost Analysis: One Billion Euro Difference</h2>
+
+                <div class="truth-question">
+                    "Why does the government deliberately choose the option that costs 3x more?"
+                </div>
+
+                <p><strong>Official COA figures:</strong></p>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Type of accommodation</th>
+                            <th>Cost per person per year</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Standard AZC center</strong></td>
+                            <td><span class="highlight-number">€30,500</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Emergency hotel accommodation</strong></td>
+                            <td><span class="highlight-number">€91,000</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>
+                    <strong>COA's own conclusion:</strong> Stable, long-term planning could save Dutch taxpayers
+                    <span style="color: #ff6b35; font-weight: 700;">approximately €1 billion per year</span>.
+                </p>
+
+                <ul class="observation-list">
+                    <li>The money is not spent on aid, but on political impasse</li>
+                    <li>Fear of protests like in Den Bosch leads to more expensive, "less visible" solutions</li>
+                    <li>Taxpayers finance this "chaos tax"</li>
+                </ul>
+
+                <div class="reflection-box">
+                    <h3>💭 Reflection Question</h3>
+                    <p>
+                        If systems consistently choose 3x more expensive solutions out of fear of social reaction,
+                        who pays the price for avoiding difficult but necessary decisions?
+                    </p>
+                </div>
+            </article>
+
+            <!-- TRUTH 5 -->
+            <article class="truth-card">
+                <span class="truth-number">OBSERVATION #5</span>
+                <h2 class="truth-title">When Good Intentions Lead to Barricades</h2>
+
+                <div class="truth-question">
+                    "If a government must deploy 100 police officers to protect its own decision from its own citizens —
+                    what does that say about legitimacy?"
+                </div>
+
+                <p><strong>Case study: 's-Hertogenbosch</strong></p>
+                <ul class="observation-list">
+                    <li>Municipality approves new AZC for 600 people</li>
+                    <li><strong>387 formal objections</strong> are ignored</li>
+                    <li>Official protest from North Brabant province is ignored</li>
+                    <li>Online threats of "storming" lead to mobilization of <strong>~100 police officers</strong></li>
+                    <li>Mobile unit (ME) from Amsterdam is called in</li>
+                </ul>
+
+                <p>
+                    The AZC becomes a "lightning rod" for all public frustration: housing shortage, inflation,
+                    feeling ignored by authorities.
+                </p>
+
+                <div class="reflection-box">
+                    <h3>💭 Reflection Question</h3>
+                    <p>
+                        When policy born from empathy leads to barricades and riot police,
+                        isn't it time to reconsider what "helping" truly means?
+                    </p>
+                </div>
+            </article>
+
+            <!-- CONCLUSION -->
+            <div class="intro-section">
+                <h2>🧩 Food for Thought</h2>
+                <p style="font-size: 1.1rem; line-height: 1.8;">
+                    These five observations accuse no one. They invite reflection on systems
+                    designed with good intentions but may have unintended consequences.
+                </p>
+                <p style="font-size: 1.1rem; line-height: 1.8; margin-top: 1.5rem;">
+                    <em>"If a system designed to solve a humanitarian crisis creates a new crisis
+                    in the host country, isn't it time to redefine what 'helping' means?"</em>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div>
+                <h4>DAREMON</h4>
+                <p>
+                    Onafhankelijke analyse van lokaal beleid.<br>
+                    Gebaseerd op openbare data, WOO-verzoeken, en kritisch onderzoek.
+                </p>
+                <p style="margin-top:1rem;">
+                    📧 dariusz@adamski.tech<br>
+                    📍 Boxtel, Noord-Brabant
+                </p>
+            </div>
+            <div>
+                <h4>Navigatie</h4>
+                <p><a href="index.html">Home</a></p>
+                <p><a href="analizy.html">Analyses</a></p>
+                <p><a href="5-waarheden.html">5 Waarheden</a></p>
+                <p><a href="#about">Over</a></p>
+            </div>
+            <div>
+                <h4>Transparantie</h4>
+                <p><a href="#">Bronnen & Citaten</a></p>
+                <p><a href="#">WOO Verzoeken</a></p>
+                <p><a href="#">Disclaimer</a></p>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>
+                © 2025 DAREMON Analysis Project • CC BY-NC-SA 4.0<br>
+                Niet beschuldigen. Alleen observeren en vragen stellen.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Language Switching
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const langContents = document.querySelectorAll('.lang-content');
+
+        langButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+
+                // Update button states
+                langButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Update content visibility
+                langContents.forEach(content => {
+                    if (content.getAttribute('data-lang') === lang) {
+                        content.classList.add('active');
+                    } else {
+                        content.classList.remove('active');
+                    }
+                });
+
+                // Save preference
+                localStorage.setItem('preferredLanguage', lang);
+            });
+        });
+
+        // Load saved language preference
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang) {
+                const btn = document.querySelector(`.lang-btn[data-lang="${savedLang}"]`);
+                if (btn) btn.click();
+            }
+        });
+    </script>
+</body>
+</html>
