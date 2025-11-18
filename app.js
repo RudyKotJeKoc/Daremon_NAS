@@ -209,19 +209,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- INTERNATIONALISATIE (i18n) ---
     async function i18n_init() {
         try {
-            console.log('🌍 Wykrywanie języka...');
+            console.log('🌍 Taaldetectie...');
             const supportedLangs = ['nl', 'pl', 'en', 'cs'];
-            const rawNavigatorLanguage = typeof navigator === 'object' && typeof navigator.language === 'string' ? navigator.language : 'nl';
-            console.log('📍 navigator.language:', rawNavigatorLanguage);
-            const userLang = String(rawNavigatorLanguage).split('-')[0].toLowerCase();
             const savedLang = (() => { try { return (window.localStorage && localStorage.getItem('daremon_language')) || null; } catch { return null; } })();
-            console.log('📍 Wykryty język:', userLang, '| Zapisany język:', savedLang);
-            state.language = (savedLang && supportedLangs.includes(savedLang)) ? savedLang : (supportedLangs.includes(userLang) ? userLang : 'nl');
-            console.log('✅ Używany język:', state.language);
+            console.log('📍 Opgeslagen taal:', savedLang);
+            // Default to Dutch (nl) as main language, use saved preference if exists
+            state.language = (savedLang && supportedLangs.includes(savedLang)) ? savedLang : 'nl';
+            console.log('✅ Gebruikte taal:', state.language);
             document.documentElement.lang = state.language;
 
             const response = await fetch(`locales/${state.language}.json`);
-            if (!response.ok) throw new Error(`Nie znaleziono pliku: locales/${state.language}.json`);
+            if (!response.ok) throw new Error(`Bestand niet gevonden: locales/${state.language}.json`);
             state.translations = await response.json();
             try { window.localStorage && localStorage.setItem('daremon_language', state.language); } catch {}
 
@@ -231,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
             i18n_apply();
             window.daremonTranslate = (key, replacements = {}) => t(key, replacements);
         } catch (error) {
-            console.error("❌ Błąd ładowania tłumaczeń:", error);
+            console.error("❌ Fout bij laden vertalingen:", error);
             state.translations = {
                 loading: "Laden...",
                 startBtn: "Start Radio",
