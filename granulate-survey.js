@@ -4,6 +4,7 @@
  */
 
 import { submitSurvey } from './survey-api.js';
+import { escapeHtml, generateSessionToken } from './sanitize.js';
 
 const GRANULATE_SURVEY_STORAGE_KEY = 'daremon_granulate_survey_responses';
 
@@ -112,15 +113,6 @@ function handleGranulateSurveySubmit(event) {
 
     // Submit to backend API (with offline fallback)
     submitSurveyToBackend(response, form, submitButton);
-}
-
-/**
- * Generate a simple session token for basic CSRF-like protection
- */
-function generateSessionToken() {
-    const timestamp = Date.now();
-    const random = Math.random().toString(36).substring(2, 15);
-    return `${timestamp}-${random}`;
 }
 
 /**
@@ -741,15 +733,6 @@ function generateStatItem(label, count, total) {
             <span class="stat-value">${count} (${percentage}%)</span>
         </div>
     `;
-}
-
-/**
- * Escape HTML to prevent XSS
- */
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
 }
 
 // Export for use in app.js

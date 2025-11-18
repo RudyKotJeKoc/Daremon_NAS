@@ -55,7 +55,7 @@ export async function fetchPlaylist({
             try {
                 fallbackTracks = await scanner.loadFallbackPlaylist();
             } catch (fallbackError) {
-                // console.warn('Nie można załadować playlisty fallback:', fallbackError); // Removed: users don't need to see this
+                // Fallback playlist failed to load
             }
         }
 

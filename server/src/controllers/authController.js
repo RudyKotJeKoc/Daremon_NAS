@@ -14,7 +14,6 @@ import {
 import { validateUsername, validateEmail, validatePassword } from '../utils/validation.js';
 
 const BCRYPT_ROUNDS = parseInt(process.env.BCRYPT_ROUNDS) || 12;
-const COOKIE_SECRET = process.env.COOKIE_SECRET || 'CHANGE_THIS_IN_PRODUCTION';
 
 /**
  * Register new user
