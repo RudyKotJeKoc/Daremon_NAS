@@ -32,8 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Also sync hero CTA with start button if exists
     const heroCTA = document.getElementById('hero-cta');
     const startButton = document.getElementById('start-btn');
-    const heroListenerCount = document.getElementById('hero-listener-count');
-    const listenerCount = document.getElementById('listener-count');
 
     if (heroCTA && startButton) {
         heroCTA.addEventListener('click', () => {
@@ -49,19 +47,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Sync listener counts
-    if (listenerCount && heroListenerCount) {
-        const observer = new MutationObserver(() => {
-            heroListenerCount.textContent = listenerCount.textContent;
-        });
-
-        observer.observe(listenerCount, {
-            childList: true,
-            characterData: true,
-            subtree: true
-        });
-
-        // Initial sync
-        heroListenerCount.textContent = listenerCount.textContent;
-    }
+    // Listener count sync removed - using single element now
 });

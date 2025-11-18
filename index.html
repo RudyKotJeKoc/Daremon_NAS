@@ -208,36 +208,8 @@
             <aside id="side-panel" role="complementary" data-i18n-aria-label="sidePanelLabel">
                 <button id="menu-toggle" type="button" data-i18n-aria-label="menuToggleLabel" aria-controls="drawer-menu" aria-expanded="false" aria-haspopup="true">☰</button>
                 <nav id="drawer-menu" role="navigation" data-i18n-aria-label="drawerMenuLabel" aria-hidden="true" tabindex="-1">
-                    <section class="content-box">
-                        <h3 data-i18n-key="topRated"></h3>
-                        <ul id="top-rated-list" class="side-panel-list interactive-list"></ul>
-                    </section>
-
-                    <section class="content-box">
-                        <h3 data-i18n-key="messageToDJ"></h3>
-                        <form id="dj-message-form" novalidate>
-                            <label for="dj-message-input" class="visually-hidden" data-i18n-key="messageToDJ"></label>
-                            <textarea
-                                id="dj-message-input"
-                                name="message"
-                                rows="3"
-                                data-i18n-placeholder="djMessagePlaceholder"
-                                minlength="3"
-                                maxlength="200"
-                                required
-                                aria-required="true"
-                                aria-describedby="dj-message-hint"
-                                autocomplete="off"
-                                spellcheck="true"></textarea>
-                            <div id="dj-message-hint" class="form-hint" aria-live="polite"></div>
-                            <button type="submit" data-i18n-key="sendMessage"></button>
-                        </form>
-                        <ul id="messages-list" aria-live="polite"></ul>
-                        <p class="disclaimer-text">
-                            <span class="disclaimer-highlight" data-i18n-key="disclaimerHighlight"></span> <span data-i18n-key="disclaimerText"></span>
-                        </p>
-                    </section>
-
+                    <!-- Top Rated section removed -->
+                    <!-- DJ Message section removed -->
                     <!-- Song Dedications section removed - aplikacja uproszczona do core radio -->
 
                     <section class="content-box" id="live-talk-section">
@@ -277,7 +249,7 @@
                         </button>
                         <div class="hero-stats">
                             <div class="stat-item">
-                                <span class="stat-value" id="hero-listener-count">...</span>
+                                <span class="stat-value" id="listener-count">...</span>
                                 <span class="stat-label" data-i18n-key="heroListeners">Słuchaczy</span>
                             </div>
                             <div class="stat-divider">•</div>
@@ -507,13 +479,11 @@
                     <div id="polls-container" role="region" aria-live="polite" tabindex="-1" data-i18n-aria-label="pollsRegionLabel"></div>
                 </section>
 
-                <!-- Employee Survey Section -->
+                <!-- Employee Survey Section - Simplified -->
                 <section class="content-box survey-box">
-                    <h3 class="survey-title" data-i18n-key="employeeSurveyTitle">📋 Teamonderzoek</h3>
+                    <h3 class="survey-title" data-i18n-key="employeeSurveyTitle">📋 Snelle feedback</h3>
                     <div class="survey-intro">
-                        <p><strong data-i18n-key="employeeSurveyIntroStrong">Beste medewerkers!</strong></p>
-                        <p data-i18n-key="employeeSurveyIntro1">We willen graag uw mening horen over de voortzetting van ons project met een kleiner team en ideeën verzamelen voor de ontwikkeling van Daremon.</p>
-                        <p class="survey-note" data-i18n-key="employeeSurveyIntro2">De enquête is anoniem (naam optioneel) en helpt ons de toekomst beter te plannen.</p>
+                        <p data-i18n-key="employeeSurveyIntro1">Deel uw mening over Radio ETS.</p>
                     </div>
 
                     <!-- Survey Form -->
@@ -524,140 +494,45 @@
                         </div>
 
                         <div class="form-group">
-                            <label data-i18n-key="employeeSurveyTeamQuestion">Zou u willen doorgaan met werken in een kleiner team?</label>
+                            <label data-i18n-key="employeeSurveyTeamQuestion">Zou u Radio ETS willen blijven gebruiken?</label>
                             <div class="radio-group">
                                 <label class="radio-label">
                                     <input type="radio" name="team-continuation" value="yes" required>
-                                    <span data-i18n-key="employeeSurveyYes">Ja, ik ben geïnteresseerd</span>
+                                    <span data-i18n-key="employeeSurveyYes">Ja</span>
                                 </label>
                                 <label class="radio-label">
                                     <input type="radio" name="team-continuation" value="maybe" required>
-                                    <span data-i18n-key="employeeSurveyMaybe">Misschien, afhankelijk van de voorwaarden</span>
+                                    <span data-i18n-key="employeeSurveyMaybe">Misschien</span>
                                 </label>
                                 <label class="radio-label">
                                     <input type="radio" name="team-continuation" value="no" required>
-                                    <span data-i18n-key="employeeSurveyNo">Nee, bedankt</span>
+                                    <span data-i18n-key="employeeSurveyNo">Nee</span>
                                 </label>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label data-i18n-key="employeeSurveyFeaturesQuestion">Welke Daremon-functies vindt u het nuttigst? (selecteer alle toepasselijke)</label>
-                            <div class="checkbox-group">
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="daremon-features" value="radio">
-                                    <span data-i18n-key="employeeSurveyFeatureRadio">🎵 Radio / Muziekspeler</span>
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="daremon-features" value="visualizer">
-                                    <span data-i18n-key="employeeSurveyFeatureVisualizer">🌀 Audio visualizer (2D/3D)</span>
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="daremon-features" value="surveys">
-                                    <span data-i18n-key="employeeSurveyFeatureSurveys">📊 Enquêtes en stemmingen</span>
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="daremon-features" value="messaging">
-                                    <span data-i18n-key="employeeSurveyFeatureMessaging">💬 Berichten naar DJ / Live Talk</span>
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="daremon-features" value="themes">
-                                    <span data-i18n-key="employeeSurveyFeatureThemes">🎨 Visuele thema's</span>
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="daremon-features" value="ratings">
-                                    <span data-i18n-key="employeeSurveyFeatureRatings">⭐ Nummerbeoordelingssysteem</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label data-i18n-key="employeeSurveyNewFeaturesQuestion">Welke nieuwe functies zou u graag in Daremon zien?</label>
-                            <div class="checkbox-group">
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="new-features" value="playlist-editor">
-                                    <span data-i18n-key="employeeSurveyNewPlaylist">🎧 Afspeellijst editor / nummerwachtrij</span>
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="new-features" value="podcast">
-                                    <span data-i18n-key="employeeSurveyNewPodcast">🎙️ Podcasts / audio-opnames</span>
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="new-features" value="chat">
-                                    <span data-i18n-key="employeeSurveyNewChat">💭 Live chat</span>
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="new-features" value="calendar">
-                                    <span data-i18n-key="employeeSurveyNewCalendar">📅 Evenementenkalender / diensten</span>
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="new-features" value="news">
-                                    <span data-i18n-key="employeeSurveyNewNews">📰 Mededelingenbord</span>
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="new-features" value="games">
-                                    <span data-i18n-key="employeeSurveyNewGames">🎮 Mini games / activiteiten</span>
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="new-features" value="other">
-                                    <span data-i18n-key="employeeSurveyNewOther">Ander:</span>
-                                    <input type="text" class="inline-input" name="new-features-other" data-i18n-placeholder="employeeSurveyNewOtherPlaceholder">
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label data-i18n-key="employeeSurveyHelpAreasQuestion">Op welke gebieden kunt u helpen bij de ontwikkeling van Daremon?</label>
-                            <div class="checkbox-group">
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="help-areas" value="programming">
-                                    <span data-i18n-key="employeeSurveyHelpProgramming">💻 Programmeren / code</span>
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="help-areas" value="design">
-                                    <span data-i18n-key="employeeSurveyHelpDesign">🎨 Ontwerpen / graphics</span>
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="help-areas" value="music">
-                                    <span data-i18n-key="employeeSurveyHelpMusic">🎵 Muziek / audio</span>
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="help-areas" value="testing">
-                                    <span data-i18n-key="employeeSurveyHelpTesting">🔍 Testen / feedback</span>
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="help-areas" value="content">
-                                    <span data-i18n-key="employeeSurveyHelpContent">✍️ Inhoud creëren</span>
-                                </label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="help-areas" value="ideas">
-                                    <span data-i18n-key="employeeSurveyHelpIdeas">💡 Ideeën / concepten</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="emp-ideas" data-i18n-key="employeeSurveyIdeasLabel">Uw ideeën, opmerkingen of suggesties:</label>
-                            <textarea id="emp-ideas" name="ideas" rows="4" data-i18n-placeholder="employeeSurveyIdeasPlaceholder"></textarea>
+                            <label for="emp-ideas" data-i18n-key="employeeSurveyIdeasLabel">Opmerkingen:</label>
+                            <textarea id="emp-ideas" name="ideas" rows="3" data-i18n-placeholder="employeeSurveyIdeasPlaceholder"></textarea>
                         </div>
 
                         <div class="form-actions">
-                            <button type="submit" class="survey-submit-btn" data-i18n-key="employeeSurveySubmit">📤 Enquête verzenden</button>
-                            <button type="button" id="employee-survey-results-btn" class="survey-results-btn" data-i18n-key="employeeSurveyViewResults">📊 Bekijk resultaten</button>
+                            <button type="submit" class="survey-submit-btn" data-i18n-key="employeeSurveySubmit">📤 Verzenden</button>
+                            <button type="button" id="employee-survey-results-btn" class="survey-results-btn" data-i18n-key="employeeSurveyViewResults">📊 Resultaten</button>
                         </div>
                     </form>
 
                     <!-- Success Message -->
                     <div id="employee-survey-success" class="survey-message success-message hidden">
-                        <p><strong data-i18n-key="employeeSurveySuccessTitle">✅ Bedankt voor het invullen van de enquête!</strong></p>
-                        <p data-i18n-key="employeeSurveySuccessMessage">Uw mening is zeer belangrijk voor ons.</p>
+                        <p><strong data-i18n-key="employeeSurveySuccessTitle">✅ Bedankt!</strong></p>
+                        <p data-i18n-key="employeeSurveySuccessMessage">Uw feedback is ontvangen.</p>
                     </div>
 
                     <!-- Results Section -->
                     <div id="employee-survey-results" class="survey-results hidden">
-                        <h3 data-i18n-key="employeeSurveyResultsTitle">📊 Resultaten Teamonderzoek</h3>
+                        <h3 data-i18n-key="employeeSurveyResultsTitle">📊 Resultaten</h3>
                         <div id="employee-survey-results-content"></div>
-                        <button id="close-employee-results-btn" class="close-results-btn" data-i18n-key="employeeSurveyCloseResults">Sluit resultaten</button>
+                        <button id="close-employee-results-btn" class="close-results-btn" data-i18n-key="employeeSurveyCloseResults">Sluiten</button>
                     </div>
                 </section>
 
