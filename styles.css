@@ -2272,6 +2272,118 @@ header p {
     font-size: 0.8rem;
 }
 
+/* --- Top 10 Tracks - Bobra's Album Section --- */
+.bobra-top10-section {
+    position: relative;
+    background: linear-gradient(145deg, rgba(4, 19, 43, 0.9), rgba(9, 43, 86, 0.8));
+    border: 1px solid rgba(24, 160, 199, 0.4);
+}
+
+.bobra-top10-section .section-header {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.bobra-top10-section .section-header h2 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    color: var(--primary-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 20px rgba(24, 160, 199, 0.5);
+}
+
+.bobra-top10-section .section-intro {
+    color: var(--text-muted);
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    line-height: 1.6;
+}
+
+.bobra-top10-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.bobra-top10-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: linear-gradient(160deg, rgba(6, 25, 56, 0.7), rgba(4, 19, 43, 0.6));
+    border: 1px solid rgba(24, 160, 199, 0.25);
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.bobra-top10-item:hover {
+    background: linear-gradient(160deg, rgba(6, 25, 56, 0.9), rgba(4, 19, 43, 0.8));
+    border-color: rgba(24, 160, 199, 0.5);
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(24, 160, 199, 0.3);
+}
+
+.bobra-top10-item .track-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-accent);
+    min-width: 2.5rem;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(24, 160, 199, 0.6);
+}
+
+.bobra-top10-item .track-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.bobra-top10-item .track-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.bobra-top10-item .track-artist {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.bobra-top10-item .track-duration {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-family: 'Orbitron', monospace;
+    min-width: 3rem;
+    text-align: right;
+}
+
+/* Responsive adjustments for Top 10 */
+@media (max-width: 600px) {
+    .bobra-top10-item {
+        padding: 0.75rem;
+        gap: 0.75rem;
+    }
+
+    .bobra-top10-item .track-number {
+        font-size: 1.2rem;
+        min-width: 2rem;
+    }
+
+    .bobra-top10-item .track-title {
+        font-size: 0.9rem;
+    }
+
+    .bobra-top10-item .track-artist,
+    .bobra-top10-item .track-duration {
+        font-size: 0.75rem;
+    }
+}
+
 /* --- Autoplay & Fout Overlay --- */
 #start-btn { border: 3px solid var(--primary-accent); color: var(--primary-accent); }
 #start-btn:hover, #start-btn:disabled { background: var(--primary-accent); color: var(--bg-dark); box-shadow: 0 0 25px var(--primary-accent); }
