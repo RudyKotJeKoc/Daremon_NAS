@@ -34,20 +34,33 @@ export class AuthService {
      */
     async register(username, email, password) {
         try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000);
+
             const response = await fetch(
                 `${AUTH_CONFIG.apiBaseUrl}${AUTH_CONFIG.endpoints.register}`,
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, email, password })
+                    body: JSON.stringify({ username, email, password }),
+                    signal: controller.signal
                 }
             );
 
-            const data = await response.json();
+            clearTimeout(timeoutId);
 
             if (!response.ok) {
-                throw new Error(data.error || 'Registration failed');
+                let errorMessage = `HTTP ${response.status}`;
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.error || errorMessage;
+                } catch {
+                    errorMessage = await response.text().catch(() => errorMessage);
+                }
+                throw new Error(errorMessage);
             }
+
+            const data = await response.json();
 
             return {
                 success: true,
@@ -55,9 +68,10 @@ export class AuthService {
                 message: data.message
             };
         } catch (error) {
+            console.error('Registration error:', error);
             return {
                 success: false,
-                error: error.message
+                error: error.name === 'AbortError' ? 'Request timeout' : error.message
             };
         }
     }
@@ -68,21 +82,34 @@ export class AuthService {
      */
     async login(username, password) {
         try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000);
+
             const response = await fetch(
                 `${AUTH_CONFIG.apiBaseUrl}${AUTH_CONFIG.endpoints.login}`,
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include', // IMPORTANT: Include cookies
-                    body: JSON.stringify({ username, password })
+                    body: JSON.stringify({ username, password }),
+                    signal: controller.signal
                 }
             );
 
-            const data = await response.json();
+            clearTimeout(timeoutId);
 
             if (!response.ok) {
-                throw new Error(data.error || 'Login failed');
+                let errorMessage = `HTTP ${response.status}`;
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.error || errorMessage;
+                } catch {
+                    errorMessage = await response.text().catch(() => errorMessage);
+                }
+                throw new Error(errorMessage);
             }
+
+            const data = await response.json();
 
             this.user = data.user;
             this.isAuthenticated = true;
@@ -98,9 +125,10 @@ export class AuthService {
                 message: data.message
             };
         } catch (error) {
+            console.error('Login error:', error);
             return {
                 success: false,
-                error: error.message
+                error: error.name === 'AbortError' ? 'Request timeout' : error.message
             };
         }
     }
@@ -151,19 +179,32 @@ export class AuthService {
      */
     async refreshToken() {
         try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000);
+
             const response = await fetch(
                 `${AUTH_CONFIG.apiBaseUrl}${AUTH_CONFIG.endpoints.refresh}`,
                 {
                     method: 'POST',
-                    credentials: 'include'
+                    credentials: 'include',
+                    signal: controller.signal
                 }
             );
 
-            const data = await response.json();
+            clearTimeout(timeoutId);
 
             if (!response.ok) {
-                throw new Error(data.error || 'Token refresh failed');
+                let errorMessage = `HTTP ${response.status}`;
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.error || errorMessage;
+                } catch {
+                    errorMessage = await response.text().catch(() => errorMessage);
+                }
+                throw new Error(errorMessage);
             }
+
+            const data = await response.json();
 
             return {
                 success: true,
@@ -178,7 +219,7 @@ export class AuthService {
 
             return {
                 success: false,
-                error: error.message
+                error: error.name === 'AbortError' ? 'Request timeout' : error.message
             };
         }
     }

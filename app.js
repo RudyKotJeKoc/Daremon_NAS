@@ -514,7 +514,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Załaduj konfigurację z playlist.json (bez utworów)
             try {
-                const configResponse = await fetch('./playlist.json');
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+                const configResponse = await fetch('./playlist.json', {
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+
                 if (configResponse.ok) {
                     const configData = await configResponse.json();
                     state.config = configData.config || {};
@@ -969,10 +977,18 @@ document.addEventListener('DOMContentLoaded', () => {
         let isNotFound = false;
         if (source) {
             try {
-                const response = await fetch(source, { method: 'HEAD' });
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+                const response = await fetch(source, {
+                    method: 'HEAD',
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
                 isNotFound = response.status === 404;
             } catch (fetchError) {
-                // Could not verify audio source
+                // Could not verify audio source (timeout or network error)
             }
         }
 

@@ -51,12 +51,18 @@ async function fetchWeatherData() {
     const { latitude, longitude } = position.coords;
 
     // Użyj Open-Meteo API (darmowe, bez klucza)
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
     const response = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=auto`
+      `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=auto`,
+      { signal: controller.signal }
     );
 
+    clearTimeout(timeoutId);
+
     if (!response.ok) {
-      throw new Error('Błąd pobierania danych pogodowych');
+      throw new Error(`API error: ${response.status}`);
     }
 
     const data = await response.json();
