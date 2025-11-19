@@ -168,12 +168,15 @@ async function submitWithRetry(endpoint, payload, attempt = 1) {
  * Fetch with timeout
  */
 function fetchWithTimeout(url, options, timeout) {
-    return Promise.race([
-        fetch(url, options),
-        new Promise((_, reject) =>
-            setTimeout(() => reject(new Error('Request timeout')), timeout)
-        )
-    ]);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+    return fetch(url, {
+        ...options,
+        signal: controller.signal
+    }).finally(() => {
+        clearTimeout(timeoutId);
+    });
 }
 
 /**

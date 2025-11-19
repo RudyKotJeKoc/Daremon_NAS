@@ -471,7 +471,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             const data = await response.json();
                             return Array.isArray(data.tracks) ? data.tracks : [];
                         } catch (error) {
-                            // console.warn('Nie można załadować playlisty fallback:', error); // Removed: users don't need to see this
                             return [];
                         }
                     },
@@ -502,7 +501,6 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 trackMetadataMap = await loadTrackMetadata();
             } catch (metadataError) {
-                // console.warn('Nie udało się załadować metadanych z tracks.json:', metadataError); // Removed: users don't need to see this
                 trackMetadataMap = new Map();
             }
 
@@ -516,7 +514,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Załaduj konfigurację z playlist.json (bez utworów)
             try {
-                const configResponse = await fetch('./playlist.json');
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+                const configResponse = await fetch('./playlist.json', {
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+
                 if (configResponse.ok) {
                     const configData = await configResponse.json();
                     state.config = configData.config || {};
@@ -561,7 +567,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         try {
                             trackMetadataMap = await loadTrackMetadata();
                         } catch (metadataError) {
-                            // console.warn('Nie udało się załadować metadanych z tracks.json:', metadataError); // Removed: users don't need to see this
                             trackMetadataMap = new Map();
                         }
                         state.playlist = applyMetadataToPlaylist(normalized, trackMetadataMap);
@@ -571,7 +576,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         return;
                     }
                 } catch (cacheError) {
-                    // console.error('Cache fallback failed:', cacheError); // Removed: users don't need to see this
+                    // Fallback cache failed, will throw error
                 }
             }
 
@@ -754,12 +759,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const supported = isAudioSourceSupported(normalizedSrc, { audioElement });
         if (!supported) {
             markTrackAsFailed(track);
-            const trackLabel = getTrackLabel(track);
-            const message = `Nieobsługiwany format audio: ${trackLabel}`;
-            // console.warn(`${message} (${normalizedSrc})`); // Removed: users don't need to see this
-            // if (showError) {
-            //     displayError(message); // Removed: users don't need to see this
-            // }
             return null;
         }
 
@@ -966,9 +965,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (error && error.name === 'NotSupportedError' && failingTrack) {
             markTrackAsFailed(failingTrack);
-            const message = `Nieobsługiwany format audio: ${getTrackLabel(failingTrack)}`;
-            // console.error(message); // Removed: users don't need to see this
-            // displayError(message); // Removed: users don't need to see this
             setTimeout(playNextTrack, 0);
             return;
         }
@@ -981,10 +977,18 @@ document.addEventListener('DOMContentLoaded', () => {
         let isNotFound = false;
         if (source) {
             try {
-                const response = await fetch(source, { method: 'HEAD' });
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+                const response = await fetch(source, {
+                    method: 'HEAD',
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
                 isNotFound = response.status === 404;
             } catch (fetchError) {
-                // console.warn('Kon audiobron niet verifiëren:', fetchError); // Removed: users don't need to see this
+                // Could not verify audio source (timeout or network error)
             }
         }
 
@@ -1050,8 +1054,6 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             if (dom.player.title) dom.player.title.textContent = title;
             if (dom.player.artist) dom.player.artist.textContent = artist;
-            // Track cover is now handled by slideshow.js (images/videos from /images and /video)
-            // if (dom.player.cover) dom.player.cover.src = cover;
             if (dom.stickyPlayer.title) dom.stickyPlayer.title.textContent = title;
             if (dom.stickyPlayer.cover) dom.stickyPlayer.cover.src = cover;
             // Update header player

@@ -4,6 +4,7 @@
  */
 
 import { submitSurvey } from './survey-api.js';
+import { escapeHtml, generateSessionToken } from './sanitize.js';
 
 const EMPLOYEE_SURVEY_STORAGE_KEY = 'daremon_employee_survey_responses';
 
@@ -116,15 +117,6 @@ async function handleEmployeeSurveySubmit(event) {
             submitButton.textContent = '📤 Verzenden';
         }
     }
-}
-
-/**
- * Generate session token
- */
-function generateSessionToken() {
-    const timestamp = Date.now();
-    const random = Math.random().toString(36).substring(2, 15);
-    return `${timestamp}-${random}`;
 }
 
 /**
@@ -339,15 +331,6 @@ function generateEmployeeResultsHTML(responses) {
     `;
 
     return html;
-}
-
-/**
- * Escape HTML to prevent XSS
- */
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
 }
 
 // Export for use in app.js

@@ -3,6 +3,8 @@
  * Handles survey form submission and results display
  */
 
+import { escapeHtml } from './sanitize.js';
+
 const SURVEY_STORAGE_KEY = 'daremon_survey_responses';
 
 // Initialize survey system
@@ -235,15 +237,6 @@ function generateResultsHTML(responses) {
     `;
 
     return html;
-}
-
-/**
- * Escape HTML to prevent XSS
- */
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
 }
 
 // Export for use in app.js
