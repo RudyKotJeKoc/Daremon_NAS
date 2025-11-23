@@ -258,6 +258,13 @@
                     </div>
                 </section>
 
+                <!-- Media Slideshow Section - Videos and Images -->
+                <section id="slideshow-section" class="content-box slideshow-section">
+                    <div id="track-cover" class="track-cover-container">
+                        <!-- Slideshow images/videos will be rendered here -->
+                    </div>
+                </section>
+
                 <!-- Weather Widget - Atmospheric Conditions -->
                 <section id="weather-section" class="content-box weather-section" aria-labelledby="weather-heading">
                     <div class="weather-widget">
@@ -391,39 +398,36 @@
                 <section id="now-playing-section" class="content-box">
                     <div class="now-playing-layout">
                         <div id="player-ui">
-                            <div id="track-cover" class="track-cover-container">
-                                <!-- Slideshow images/videos will be rendered here -->
-                            </div>
                             <div id="track-info">
                                 <h2 id="track-title" aria-live="polite" data-i18n-key="trackTitleDefault"></h2>
-                            <h3 id="track-artist" data-i18n-key="trackArtistDefault"></h3>
-                            <div id="progress-container" role="slider" data-i18n-aria-label="progressBarLabel" tabindex="0">
-                                <div id="progress-bar"></div>
+                                <h3 id="track-artist" data-i18n-key="trackArtistDefault"></h3>
+                                <div id="progress-container" role="slider" data-i18n-aria-label="progressBarLabel" tabindex="0">
+                                    <div id="progress-bar"></div>
+                                </div>
+                                <div id="time-container">
+                                    <span id="current-time">0:00</span>
+                                    <span id="time-remaining">-0:00</span>
+                                </div>
+                                <div id="rating-section">
+                                    <div id="average-rating-display"></div>
+                                    <div class="star-rating" data-i18n-aria-label="ratingLabel"></div>
+                                    <form id="comment-form" class="hidden" novalidate>
+                                        <label for="comment-input" class="visually-hidden" data-i18n-key="commentPlaceholder"></label>
+                                        <textarea
+                                            id="comment-input"
+                                            data-i18n-placeholder="commentPlaceholder"
+                                            minlength="3"
+                                            maxlength="200"
+                                            required
+                                            aria-required="true"
+                                            aria-describedby="comment-hint"
+                                            autocomplete="off"
+                                            spellcheck="true"></textarea>
+                                        <div id="comment-hint" class="form-hint" aria-live="polite"></div>
+                                        <button type="submit" data-i18n-key="submitReview"></button>
+                                    </form>
+                                </div>
                             </div>
-                            <div id="time-container">
-                                <span id="current-time">0:00</span>
-                                <span id="time-remaining">-0:00</span>
-                            </div>
-                            <div id="rating-section">
-                                <div id="average-rating-display"></div>
-                                <div class="star-rating" data-i18n-aria-label="ratingLabel"></div>
-                                <form id="comment-form" class="hidden" novalidate>
-                                    <label for="comment-input" class="visually-hidden" data-i18n-key="commentPlaceholder"></label>
-                                    <textarea
-                                        id="comment-input"
-                                        data-i18n-placeholder="commentPlaceholder"
-                                        minlength="3"
-                                        maxlength="200"
-                                        required
-                                        aria-required="true"
-                                        aria-describedby="comment-hint"
-                                        autocomplete="off"
-                                        spellcheck="true"></textarea>
-                                    <div id="comment-hint" class="form-hint" aria-live="polite"></div>
-                                    <button type="submit" data-i18n-key="submitReview"></button>
-                                </form>
-                            </div>
-                        </div>
                         </div>
                     </div>
                     <div id="player-controls">
@@ -448,14 +452,9 @@
                             <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" data-i18n-aria-label="volumeLabel">
                             <span id="volume-percentage" class="volume-percentage">50%</span>
                         </div>
-                                                <button id="tv-mode-btn" class="control-btn" data-i18n-title="fullscreenTooltip" data-i18n-aria-label="fullscreenLabel" disabled>📺</button>
+                        <button id="tv-mode-btn" class="control-btn" data-i18n-title="fullscreenTooltip" data-i18n-aria-label="fullscreenLabel" disabled>📺</button>
                     </div>
                 </section>
-
-                <div id="slideshow-container" class="visually-hidden" aria-hidden="true"></div>
-
-                <!-- Slideshow container removed - now integrated into track-cover -->
-                <div id="slideshow-container" class="visually-hidden" aria-hidden="true"></div>
 
                 <!-- DAREMON HUB USUNIĘTY - UPROSZCZENIE APLIKACJI -->
                 <!-- Team moments removed - optymalizacja dla TV display -->
