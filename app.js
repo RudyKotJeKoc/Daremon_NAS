@@ -75,11 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
             djMessageForm: document.getElementById('dj-message-form'),
             djMessageInput: document.getElementById('dj-message-input'),
         },
-        liveTalk: {
-            btn: document.getElementById('live-talk-btn'),
-            status: document.getElementById('live-talk-status'),
-            feedback: document.getElementById('live-talk-feedback'),
-        },
+        // liveTalk section removed
         // strategic polls removed in simplified build
         // machineDocumentation section removed
         header: {
@@ -1432,94 +1428,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // song dedications feature removed in simplified build
 
-    // --- Live Talk Feature ---
-    const LIVE_TALK_STYLE = Object.freeze({
-        activeBackgroundColor: '#ff4444',
-        activeAnimation: 'pulse 1s infinite',
-        activeFeedbackColor: '#ff4444',
-        errorFeedbackColor: '#ff6b6b',
-        endedFeedbackColor: '#18a0c7'
-    });
-
-    let liveTalkStream = null;
-    let liveTalkRecording = false;
-    let liveTalkAudioContext = null;
-    let liveTalkSource = null;
-    let liveTalkDestination = null;
-
-    async function toggleLiveTalk() {
-        if (!dom.liveTalk.btn || !dom.liveTalk.status || !dom.liveTalk.feedback) {
-            console.warn('Live Talk DOM elements not found');
-            return;
-        }
-
-        if (!liveTalkRecording) {
-            // Start recording
-            try {
-                if (dom.liveTalk.feedback) {
-                    dom.liveTalk.feedback.textContent = t('liveTalkRequestMic');
-                    dom.liveTalk.feedback.style.color = '';
-                }
-
-                liveTalkStream = await navigator.mediaDevices.getUserMedia({
-                    audio: {
-                        echoCancellation: true,
-                        noiseSuppression: true,
-                        autoGainControl: true
-                    }
-                });
-
-                // Create audio context for live playback
-                if (!liveTalkAudioContext) {
-                    liveTalkAudioContext = new (window.AudioContext || window.webkitAudioContext)();
-                }
-
-                liveTalkSource = liveTalkAudioContext.createMediaStreamSource(liveTalkStream);
-                liveTalkDestination = liveTalkAudioContext.createMediaStreamDestination();
-
-                // Connect microphone to speakers (live monitoring)
-                liveTalkSource.connect(liveTalkAudioContext.destination);
-
-                liveTalkRecording = true;
-
-                dom.liveTalk.status.textContent = t('liveTalkLiveStatus');
-                dom.liveTalk.feedback.textContent = t('liveTalkLiveFeedback');
-                dom.liveTalk.feedback.style.color = LIVE_TALK_STYLE.activeFeedbackColor;
-                dom.liveTalk.btn.style.backgroundColor = LIVE_TALK_STYLE.activeBackgroundColor;
-                dom.liveTalk.btn.style.animation = LIVE_TALK_STYLE.activeAnimation;
-                dom.liveTalk.btn.setAttribute('aria-pressed', 'true');
-
-            } catch (error) {
-                console.error('Błąd dostępu do mikrofonu:', error);
-                dom.liveTalk.feedback.textContent = t('liveTalkErrorNoMic');
-                dom.liveTalk.feedback.style.color = LIVE_TALK_STYLE.errorFeedbackColor;
-                dom.liveTalk.status.textContent = t('liveTalkButtonIdle');
-                dom.liveTalk.btn.style.backgroundColor = '';
-                dom.liveTalk.btn.style.animation = '';
-                dom.liveTalk.btn.setAttribute('aria-pressed', 'false');
-            }
-        } else {
-            // Stop recording
-            if (liveTalkStream) {
-                liveTalkStream.getTracks().forEach(track => track.stop());
-                liveTalkStream = null;
-            }
-
-            if (liveTalkSource) {
-                liveTalkSource.disconnect();
-                liveTalkSource = null;
-            }
-
-            liveTalkRecording = false;
-
-            dom.liveTalk.status.textContent = t('liveTalkButtonIdle');
-            dom.liveTalk.feedback.textContent = t('liveTalkEnded');
-            dom.liveTalk.feedback.style.color = LIVE_TALK_STYLE.endedFeedbackColor;
-            dom.liveTalk.btn.style.backgroundColor = '';
-            dom.liveTalk.btn.style.animation = '';
-            dom.liveTalk.btn.setAttribute('aria-pressed', 'false');
-        }
-    }
+    // --- Live Talk Feature removed ---
 
     // --- Visualizer & Hulpprogramma's ---
     function scheduleVisualizerFrame() {
@@ -1814,10 +1723,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     if (dom.sidePanel.djMessageForm) dom.sidePanel.djMessageForm.addEventListener('submit', handleMessageSubmit);
 
-        // Live Talk
-        if (dom.liveTalk.btn) {
-            dom.liveTalk.btn.addEventListener('click', toggleLiveTalk);
-        }
+        // Live Talk removed
 
         if (dom.errorCloseBtn) dom.errorCloseBtn.addEventListener('click', () => {
             if (dom.errorOverlay) dom.errorOverlay.classList.add('hidden');
