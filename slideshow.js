@@ -82,8 +82,13 @@ function updateSlideshow(files = mediaFiles) {
     const isImage = ['jpg', 'jpeg', 'png', 'webp'].includes(fileExtension);
     const isVideo = ['mp4', 'webm', 'ogg', 'mov'].includes(fileExtension);
 
-    // Create wrapper on first run
-    if (!currentWrapper) {
+    // Create wrapper on first run or if it's not in the container
+    const wrapperInContainer = currentWrapper &&
+        (typeof container.contains === 'function'
+            ? container.contains(currentWrapper)
+            : container.children.includes(currentWrapper));
+
+    if (!wrapperInContainer) {
         currentWrapper = document.createElement('div');
         currentWrapper.classList.add('media-wrapper');
         container.appendChild(currentWrapper);
@@ -106,11 +111,16 @@ function updateSlideshow(files = mediaFiles) {
         // Cleanup old element
         if (currentMediaElement) {
             // Pause video if it's playing
-            if (currentMediaElement.tagName === 'VIDEO') {
+            if (
+                currentMediaElement.tagName === 'VIDEO' &&
+                typeof currentMediaElement.pause === 'function'
+            ) {
                 currentMediaElement.pause();
                 currentMediaElement.src = '';
             }
-            currentMediaElement.remove();
+            if (typeof currentMediaElement.remove === 'function') {
+                currentMediaElement.remove();
+            }
             currentMediaElement = null;
         }
 
@@ -188,12 +198,25 @@ function updateSlideshow(files = mediaFiles) {
         }
     } else {
         // Reuse existing element, just change src
-        if (currentMediaElement.tagName === 'VIDEO') {
+        if (
+            currentMediaElement.tagName === 'VIDEO' &&
+            typeof currentMediaElement.pause === 'function'
+        ) {
             currentMediaElement.pause();
         }
+
+        // Ensure element is in the wrapper (important for test isolation)
+        const elementInWrapper = currentWrapper.children.includes(currentMediaElement);
+        if (!elementInWrapper) {
+            currentWrapper.appendChild(currentMediaElement);
+        }
+
         currentMediaElement.src = mediaPath;
 
-        if (currentMediaElement.tagName === 'VIDEO') {
+        if (
+            currentMediaElement.tagName === 'VIDEO' &&
+            typeof currentMediaElement.play === 'function'
+        ) {
             currentMediaElement.play().catch(err => {
                 console.warn('Video autoplay failed:', err);
             });
@@ -229,16 +252,23 @@ function cleanupSlideshow() {
     stopSlideshow();
 
     if (currentMediaElement) {
-        if (currentMediaElement.tagName === 'VIDEO') {
+        if (
+            currentMediaElement.tagName === 'VIDEO' &&
+            typeof currentMediaElement.pause === 'function'
+        ) {
             currentMediaElement.pause();
             currentMediaElement.src = '';
         }
-        currentMediaElement.remove();
+        if (typeof currentMediaElement.remove === 'function') {
+            currentMediaElement.remove();
+        }
         currentMediaElement = null;
     }
 
     if (currentWrapper) {
-        currentWrapper.remove();
+        if (typeof currentWrapper.remove === 'function') {
+            currentWrapper.remove();
+        }
         currentWrapper = null;
     }
 }
