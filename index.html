@@ -211,15 +211,7 @@
                     <!-- Top Rated section removed -->
                     <!-- DJ Message section removed -->
                     <!-- Song Dedications section removed - aplikacja uproszczona do core radio -->
-
-                    <section class="content-box" id="live-talk-section">
-                        <h3 data-i18n-key="liveTalkTitle"></h3>
-                        <p class="section-intro" data-i18n-key="liveTalkIntro"></p>
-                        <button id="live-talk-btn" class="cta-button primary" type="button" data-i18n-aria-label="liveTalkButtonLabel" aria-pressed="false">
-                            🎙️ <span id="live-talk-status" data-i18n-key="liveTalkButtonIdle"></span>
-                        </button>
-                        <p id="live-talk-feedback" class="form-feedback" role="status" aria-live="polite" data-i18n-key="liveTalkFeedbackIdle"></p>
-                    </section>
+                    <!-- Live Talk section removed -->
 
                     <!-- Machine documentation section removed -->
                     <!-- Strategic polls section removed - aplikacja uproszczona do core radio -->
@@ -662,6 +654,207 @@
                                 <small data-i18n-key="beaverTransparency"></small>
                             </p>
                         </div>
+                    </div>
+                </section>
+
+                <!-- AI Models Educational Section -->
+                <section class="ai-education-section content-box">
+                    <h2 data-i18n-key="aiEducationTitle">🤖 Zrozumienie Modeli AI</h2>
+                    <p class="section-intro" data-i18n-key="aiEducationIntro">
+                        Poznaj różne modele sztucznej inteligencji, jak działają i do czego można je wykorzystać.
+                    </p>
+
+                    <div class="ai-models-grid">
+                        <!-- Large Language Models (LLMs) -->
+                        <div class="ai-model-card">
+                            <div class="ai-model-header">
+                                <span class="ai-model-icon">💬</span>
+                                <h3 data-i18n-key="aiLLMTitle">Duże Modele Językowe (LLM)</h3>
+                            </div>
+                            <div class="ai-model-content">
+                                <h4 data-i18n-key="aiHowItWorksTitle">Jak działają?</h4>
+                                <p data-i18n-key="aiLLMHowItWorks">
+                                    LLM to sieci neuronowe trenowane na ogromnych ilościach tekstu. Uczą się wzorców językowych,
+                                    kontekstu i znaczeń, przewidując kolejne słowa w sekwencji.
+                                </p>
+
+                                <h4 data-i18n-key="aiUseCasesTitle">Do czego służą?</h4>
+                                <ul>
+                                    <li data-i18n-key="aiLLMUse1">Generowanie i edycja tekstu</li>
+                                    <li data-i18n-key="aiLLMUse2">Tłumaczenia językowe</li>
+                                    <li data-i18n-key="aiLLMUse3">Odpowiadanie na pytania</li>
+                                    <li data-i18n-key="aiLLMUse4">Pisanie kodu i debugowanie</li>
+                                    <li data-i18n-key="aiLLMUse5">Podsumowywanie treści</li>
+                                </ul>
+
+                                <h4 data-i18n-key="aiLimitsTitle">Ograniczenia</h4>
+                                <ul class="ai-limitations">
+                                    <li data-i18n-key="aiLLMLimit1">Mogą generować nieprawdziwe informacje</li>
+                                    <li data-i18n-key="aiLLMLimit2">Wiedza ograniczona do daty treningu</li>
+                                    <li data-i18n-key="aiLLMLimit3">Brak prawdziwego rozumienia kontekstu</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Image Generation Models -->
+                        <div class="ai-model-card">
+                            <div class="ai-model-header">
+                                <span class="ai-model-icon">🎨</span>
+                                <h3 data-i18n-key="aiImageGenTitle">Modele Generowania Obrazów</h3>
+                            </div>
+                            <div class="ai-model-content">
+                                <h4 data-i18n-key="aiHowItWorksTitle">Jak działają?</h4>
+                                <p data-i18n-key="aiImageGenHowItWorks">
+                                    Modele takie jak DALL-E, Midjourney czy Stable Diffusion uczą się na milionach par
+                                    tekst-obraz, tworząc nowe obrazy na podstawie opisów tekstowych.
+                                </p>
+
+                                <h4 data-i18n-key="aiUseCasesTitle">Do czego służą?</h4>
+                                <ul>
+                                    <li data-i18n-key="aiImageGenUse1">Tworzenie ilustracji i grafik</li>
+                                    <li data-i18n-key="aiImageGenUse2">Prototypowanie designu</li>
+                                    <li data-i18n-key="aiImageGenUse3">Edycja i modyfikacja zdjęć</li>
+                                    <li data-i18n-key="aiImageGenUse4">Generowanie koncepcji artystycznych</li>
+                                </ul>
+
+                                <h4 data-i18n-key="aiLimitsTitle">Ograniczenia</h4>
+                                <ul class="ai-limitations">
+                                    <li data-i18n-key="aiImageGenLimit1">Problemy z tekstem w obrazach</li>
+                                    <li data-i18n-key="aiImageGenLimit2">Czasem nieprawidłowa anatomia</li>
+                                    <li data-i18n-key="aiImageGenLimit3">Kwestie praw autorskich</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Computer Vision Models -->
+                        <div class="ai-model-card">
+                            <div class="ai-model-header">
+                                <span class="ai-model-icon">👁️</span>
+                                <h3 data-i18n-key="aiVisionTitle">Modele Wizji Komputerowej</h3>
+                            </div>
+                            <div class="ai-model-content">
+                                <h4 data-i18n-key="aiHowItWorksTitle">Jak działają?</h4>
+                                <p data-i18n-key="aiVisionHowItWorks">
+                                    Wykorzystują sieci konwolucyjne (CNN) do analizy pikseli i rozpoznawania wzorców
+                                    wizualnych, obiektów i scen na obrazach i w wideo.
+                                </p>
+
+                                <h4 data-i18n-key="aiUseCasesTitle">Do czego służą?</h4>
+                                <ul>
+                                    <li data-i18n-key="aiVisionUse1">Rozpoznawanie obiektów i twarzy</li>
+                                    <li data-i18n-key="aiVisionUse2">Autonomiczne pojazdy</li>
+                                    <li data-i18n-key="aiVisionUse3">Diagnostyka medyczna</li>
+                                    <li data-i18n-key="aiVisionUse4">Kontrola jakości w produkcji</li>
+                                </ul>
+
+                                <h4 data-i18n-key="aiLimitsTitle">Ograniczenia</h4>
+                                <ul class="ai-limitations">
+                                    <li data-i18n-key="aiVisionLimit1">Wrażliwe na zmiany oświetlenia</li>
+                                    <li data-i18n-key="aiVisionLimit2">Trudności z nietypowymi perspektywami</li>
+                                    <li data-i18n-key="aiVisionLimit3">Wymaga dużo danych treningowych</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Audio/Speech Models -->
+                        <div class="ai-model-card">
+                            <div class="ai-model-header">
+                                <span class="ai-model-icon">🎵</span>
+                                <h3 data-i18n-key="aiAudioTitle">Modele Audio i Mowy</h3>
+                            </div>
+                            <div class="ai-model-content">
+                                <h4 data-i18n-key="aiHowItWorksTitle">Jak działają?</h4>
+                                <p data-i18n-key="aiAudioHowItWorks">
+                                    Analizują falę dźwiękową i jej cechy, rozpoznając mowę, muzykę i inne dźwięki.
+                                    Mogą również generować realistyczną mowę i muzykę.
+                                </p>
+
+                                <h4 data-i18n-key="aiUseCasesTitle">Do czego służą?</h4>
+                                <ul>
+                                    <li data-i18n-key="aiAudioUse1">Transkrypcja mowy na tekst</li>
+                                    <li data-i18n-key="aiAudioUse2">Synteza mowy (TTS)</li>
+                                    <li data-i18n-key="aiAudioUse3">Generowanie muzyki</li>
+                                    <li data-i18n-key="aiAudioUse4">Redukcja szumów</li>
+                                    <li data-i18n-key="aiAudioUse5">Rozpoznawanie emocji w głosie</li>
+                                </ul>
+
+                                <h4 data-i18n-key="aiLimitsTitle">Ograniczenia</h4>
+                                <ul class="ai-limitations">
+                                    <li data-i18n-key="aiAudioLimit1">Problemy z akcentami i dialektami</li>
+                                    <li data-i18n-key="aiAudioLimit2">Trudności w hałaśliwym środowisku</li>
+                                    <li data-i18n-key="aiAudioLimit3">Brak naturalnej intonacji w TTS</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Recommendation Systems -->
+                        <div class="ai-model-card">
+                            <div class="ai-model-header">
+                                <span class="ai-model-icon">🎯</span>
+                                <h3 data-i18n-key="aiRecommendationTitle">Systemy Rekomendacyjne</h3>
+                            </div>
+                            <div class="ai-model-content">
+                                <h4 data-i18n-key="aiHowItWorksTitle">Jak działają?</h4>
+                                <p data-i18n-key="aiRecommendationHowItWorks">
+                                    Analizują zachowania użytkowników i podobieństwa między produktami/treściami,
+                                    przewidując co może zainteresować użytkownika.
+                                </p>
+
+                                <h4 data-i18n-key="aiUseCasesTitle">Do czego służą?</h4>
+                                <ul>
+                                    <li data-i18n-key="aiRecommendationUse1">Sugestie produktów w e-commerce</li>
+                                    <li data-i18n-key="aiRecommendationUse2">Rekomendacje filmów i muzyki</li>
+                                    <li data-i18n-key="aiRecommendationUse3">Personalizacja treści</li>
+                                    <li data-i18n-key="aiRecommendationUse4">Targetowanie reklam</li>
+                                </ul>
+
+                                <h4 data-i18n-key="aiLimitsTitle">Ograniczenia</h4>
+                                <ul class="ai-limitations">
+                                    <li data-i18n-key="aiRecommendationLimit1">Efekt "bańki filtrującej"</li>
+                                    <li data-i18n-key="aiRecommendationLimit2">Problem "zimnego startu" dla nowych użytkowników</li>
+                                    <li data-i18n-key="aiRecommendationLimit3">Może wzmacniać istniejące uprzedzenia</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Predictive Analytics -->
+                        <div class="ai-model-card">
+                            <div class="ai-model-header">
+                                <span class="ai-model-icon">📊</span>
+                                <h3 data-i18n-key="aiPredictiveTitle">Analityka Predykcyjna</h3>
+                            </div>
+                            <div class="ai-model-content">
+                                <h4 data-i18n-key="aiHowItWorksTitle">Jak działają?</h4>
+                                <p data-i18n-key="aiPredictiveHowItWorks">
+                                    Wykorzystują dane historyczne i algorytmy uczenia maszynowego do przewidywania
+                                    przyszłych trendów, zachowań i wyników.
+                                </p>
+
+                                <h4 data-i18n-key="aiUseCasesTitle">Do czego służą?</h4>
+                                <ul>
+                                    <li data-i18n-key="aiPredictiveUse1">Prognozowanie sprzedaży</li>
+                                    <li data-i18n-key="aiPredictiveUse2">Przewidywanie awarii urządzeń</li>
+                                    <li data-i18n-key="aiPredictiveUse3">Ocena ryzyka kredytowego</li>
+                                    <li data-i18n-key="aiPredictiveUse4">Prognoza pogody</li>
+                                </ul>
+
+                                <h4 data-i18n-key="aiLimitsTitle">Ograniczenia</h4>
+                                <ul class="ai-limitations">
+                                    <li data-i18n-key="aiPredictiveLimit1">Zależność od jakości danych</li>
+                                    <li data-i18n-key="aiPredictiveLimit2">Nie radzi sobie z czarnymi łabędziami</li>
+                                    <li data-i18n-key="aiPredictiveLimit3">Może utrwalać błędy z przeszłości</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ai-ethics-notice">
+                        <h3 data-i18n-key="aiEthicsTitle">⚖️ Etyczne Wykorzystanie AI</h3>
+                        <p data-i18n-key="aiEthicsContent">
+                            Wszystkie modele AI mają swoje ograniczenia i mogą powielać uprzedzenia zawarte w danych treningowych.
+                            Ważne jest, aby używać ich odpowiedzialnie, weryfikować wyniki i być świadomym ich ograniczeń.
+                            AI to narzędzie wspomagające człowieka, nie jego zamiennik.
+                        </p>
                     </div>
                 </section>
             </main>

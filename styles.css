@@ -3978,3 +3978,227 @@ body.playing #track-cover {
         min-width: 160px;
     }
 }
+
+/* ============================================
+   AI EDUCATION SECTION
+   ============================================ */
+
+.ai-education-section {
+    margin: 3rem auto;
+    padding: 2.5rem;
+    max-width: 1200px;
+    background: linear-gradient(135deg, rgba(24, 160, 199, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(24, 160, 199, 0.2);
+    border-radius: 16px;
+}
+
+.ai-education-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #18a0c7;
+    font-weight: 700;
+}
+
+.ai-education-section .section-intro {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #b0b0b0;
+    margin-bottom: 2.5rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ai-models-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.ai-model-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.ai-model-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(24, 160, 199, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(24, 160, 199, 0.15);
+}
+
+.ai-model-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ai-model-icon {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.ai-model-header h3 {
+    font-size: 1.3rem;
+    margin: 0;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.ai-model-content h4 {
+    font-size: 1rem;
+    margin: 1.25rem 0 0.75rem 0;
+    color: #18a0c7;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+}
+
+.ai-model-content h4:first-child {
+    margin-top: 0;
+}
+
+.ai-model-content p {
+    color: #d0d0d0;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
+.ai-model-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+}
+
+.ai-model-content ul li {
+    padding: 0.5rem 0 0.5rem 1.75rem;
+    position: relative;
+    color: #c0c0c0;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+.ai-model-content ul li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #18a0c7;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.ai-model-content ul.ai-limitations li::before {
+    content: "⚠";
+    color: #ffaa44;
+}
+
+.ai-ethics-notice {
+    background: linear-gradient(135deg, rgba(255, 170, 68, 0.1) 0%, rgba(255, 170, 68, 0.05) 100%);
+    border: 1px solid rgba(255, 170, 68, 0.3);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.ai-ethics-notice h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #ffaa44;
+    font-weight: 600;
+}
+
+.ai-ethics-notice p {
+    color: #d0d0d0;
+    line-height: 1.7;
+    font-size: 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Mobile responsive styles for AI Education section */
+@media (max-width: 768px) {
+    .ai-education-section {
+        padding: 1.5rem;
+        margin: 2rem 1rem;
+    }
+
+    .ai-education-section h2 {
+        font-size: 1.8rem;
+    }
+
+    .ai-models-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .ai-model-card {
+        padding: 1.25rem;
+    }
+
+    .ai-model-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .ai-ethics-notice {
+        padding: 1.5rem;
+    }
+
+    .ai-ethics-notice h3 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .ai-education-section {
+        padding: 1rem;
+        margin: 1.5rem 0.5rem;
+    }
+
+    .ai-education-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .ai-education-section .section-intro {
+        font-size: 1rem;
+    }
+
+    .ai-model-icon {
+        font-size: 1.5rem;
+    }
+
+    .ai-model-header h3 {
+        font-size: 1rem;
+    }
+
+    .ai-model-content h4 {
+        font-size: 0.85rem;
+    }
+
+    .ai-model-content p,
+    .ai-model-content ul li {
+        font-size: 0.9rem;
+    }
+
+    .ai-ethics-notice {
+        padding: 1.25rem;
+    }
+
+    .ai-ethics-notice h3 {
+        font-size: 1.2rem;
+    }
+
+    .ai-ethics-notice p {
+        font-size: 0.9rem;
+    }
+}
