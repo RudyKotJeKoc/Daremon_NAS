@@ -19,22 +19,22 @@
     <link rel="stylesheet" href="./granulate-survey.css">
 </head>
 <body>
-    <div class="granulate-container">
-        <header class="granulate-header">
-            <h1>📋 Enquête Granulaattransportsysteem</h1>
-            <p class="subtitle">Systeem voor Productie en Onderhoud</p>
+    <main class="granulate-container" role="main" aria-label="Enquête granulaattransportsysteem">
+        <header class="granulate-header" role="banner">
+            <h1 id="granulate-survey-title">📋 Enquête Granulaattransportsysteem</h1>
+            <p class="subtitle" id="granulate-survey-description">Systeem voor Productie en Onderhoud</p>
             <p class="company-name">DAREMON ETS</p>
         </header>
 
         <!-- Success Message (Hidden by default) -->
-        <div id="granulate-survey-success" class="success-message hidden">
+        <div id="granulate-survey-success" class="success-message hidden" role="status" aria-live="polite" aria-hidden="true" tabindex="-1">
             <h3>✅ Hartelijk dank!</h3>
             <p>Uw antwoorden zijn succesvol opgeslagen.</p>
             <p>Uw feedback helpt ons een betrouwbaarder en gebruiksvriendelijker systeem te creëren.</p>
         </div>
 
         <!-- Survey Form -->
-        <form id="granulate-survey-form">
+        <form id="granulate-survey-form" role="form" aria-labelledby="granulate-survey-title" aria-describedby="granulate-survey-description">
 
             <!-- SECTIE 1: ALGEMENE ERVARING -->
             <div class="section-header">
@@ -543,8 +543,8 @@
 
             <!-- Form Actions -->
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary">📤 Enquête Verzenden</button>
-                <button type="button" id="granulate-survey-results-btn" class="btn btn-secondary">📊 Bekijk Resultaten</button>
+                <button type="submit" class="btn btn-primary" aria-label="Verzend enquête granulaattransportsysteem">📤 Enquête Verzenden</button>
+                <button type="button" id="granulate-survey-results-btn" class="btn btn-secondary" aria-label="Bekijk enquêteresultaten" aria-expanded="false" aria-controls="granulate-survey-results">📊 Bekijk Resultaten</button>
             </div>
 
             <div class="footer-note">
@@ -554,14 +554,14 @@
         </form>
 
         <!-- Results Section (Hidden by default) -->
-        <div id="granulate-survey-results" class="survey-results hidden">
-            <h3>📊 Enquêteresultaten</h3>
+        <div id="granulate-survey-results" class="survey-results hidden" role="region" aria-live="polite" aria-labelledby="granulate-survey-results-heading" aria-hidden="true" tabindex="-1">
+            <h3 id="granulate-survey-results-heading">📊 Enquêteresultaten</h3>
             <div id="granulate-survey-results-content"></div>
-            <button id="close-granulate-results-btn" class="btn btn-secondary" style="display: block; margin: 2rem auto 0;">
+            <button id="close-granulate-results-btn" class="btn btn-secondary" style="display: block; margin: 2rem auto 0;" aria-label="Sluit enquêteresultaten">
                 ✕ Sluit Resultaten
             </button>
         </div>
-    </div>
+    </main>
 
     <!-- JavaScript Module -->
     <script type="module">

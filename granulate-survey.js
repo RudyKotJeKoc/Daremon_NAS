@@ -7,11 +7,22 @@ import { submitSurvey } from './survey-api.js';
 import { escapeHtml, generateSessionToken } from './sanitize.js';
 
 const GRANULATE_SURVEY_STORAGE_KEY = 'daremon_granulate_survey_responses';
+const RESULTS_SECTION_ID = 'granulate-survey-results';
+const RESULTS_CONTENT_ID = 'granulate-survey-results-content';
+const RESULTS_BUTTON_ID = 'granulate-survey-results-btn';
+const SUCCESS_MESSAGE_TIMEOUT_MS = 5000;
+const FEEDBACK_REGION_ID = 'granulate-survey-feedback';
+
+function scrollElementIntoView(element, options) {
+    if (element && typeof element.scrollIntoView === 'function') {
+        element.scrollIntoView(options);
+    }
+}
 
 // Initialize granulate survey system
 export function initializeGranulateSurvey() {
     const form = document.getElementById('granulate-survey-form');
-    const resultsBtn = document.getElementById('granulate-survey-results-btn');
+    const resultsBtn = document.getElementById(RESULTS_BUTTON_ID);
     const closeResultsBtn = document.getElementById('close-granulate-results-btn');
 
     if (!form) {
@@ -19,11 +30,15 @@ export function initializeGranulateSurvey() {
         return;
     }
 
+    form.setAttribute('aria-live', 'polite');
+
     // Handle form submission
     form.addEventListener('submit', handleGranulateSurveySubmit);
 
     // Handle results button
     if (resultsBtn) {
+        resultsBtn.setAttribute('aria-controls', RESULTS_SECTION_ID);
+        resultsBtn.setAttribute('aria-expanded', 'false');
         resultsBtn.addEventListener('click', showGranulateSurveyResults);
     }
 
@@ -144,7 +159,7 @@ async function submitSurveyToBackend(response, form, submitButton) {
         form.reset();
 
         // Scroll to success message
-        document.getElementById('granulate-survey-success')?.scrollIntoView({
+        scrollElementIntoView(document.getElementById('granulate-survey-success'), {
             behavior: 'smooth',
             block: 'center'
         });
@@ -176,6 +191,10 @@ function showValidationError(message) {
     if (!errorDiv) {
         errorDiv = document.createElement('div');
         errorDiv.className = 'survey-validation-error';
+        errorDiv.id = FEEDBACK_REGION_ID;
+        errorDiv.setAttribute('role', 'alert');
+        errorDiv.setAttribute('aria-live', 'assertive');
+        errorDiv.tabIndex = -1;
         errorDiv.style.cssText = `
             background-color: rgba(239, 68, 68, 0.1);
             border: 2px solid rgba(239, 68, 68, 0.5);
@@ -189,11 +208,13 @@ function showValidationError(message) {
         const form = document.getElementById('granulate-survey-form');
         if (form) {
             form.insertBefore(errorDiv, form.firstChild);
+            form.setAttribute('aria-describedby', `${form.getAttribute('aria-describedby') || ''} ${FEEDBACK_REGION_ID}`.trim());
         }
     }
 
     errorDiv.textContent = `⚠️ ${message}`;
-    errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    scrollElementIntoView(errorDiv, { behavior: 'smooth', block: 'center' });
+    errorDiv.focus();
 
     // Remove after 5 seconds
     setTimeout(() => {
@@ -280,13 +301,18 @@ function showGranulateSuccessMessage() {
 
     if (successMsg && form) {
         form.classList.add('hidden');
+        form.setAttribute('aria-hidden', 'true');
         successMsg.classList.remove('hidden');
+        successMsg.setAttribute('aria-hidden', 'false');
+        successMsg.focus();
 
-        // Hide success message and show form again after 5 seconds
+        // Hide success message and show form again after timeout
         setTimeout(() => {
             successMsg.classList.add('hidden');
+            successMsg.setAttribute('aria-hidden', 'true');
             form.classList.remove('hidden');
-        }, 5000);
+            form.setAttribute('aria-hidden', 'false');
+        }, SUCCESS_MESSAGE_TIMEOUT_MS);
     }
 }
 
@@ -295,8 +321,9 @@ function showGranulateSuccessMessage() {
  */
 function showGranulateSurveyResults() {
     const responses = getGranulateSurveyResponses();
-    const resultsDiv = document.getElementById('granulate-survey-results');
-    const contentDiv = document.getElementById('granulate-survey-results-content');
+    const resultsDiv = document.getElementById(RESULTS_SECTION_ID);
+    const contentDiv = document.getElementById(RESULTS_CONTENT_ID);
+    const resultsButton = document.getElementById(RESULTS_BUTTON_ID);
 
     if (!resultsDiv || !contentDiv) return;
 
@@ -307,16 +334,26 @@ function showGranulateSurveyResults() {
     }
 
     resultsDiv.classList.remove('hidden');
-    resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    resultsDiv.setAttribute('aria-hidden', 'false');
+    resultsDiv.focus();
+    if (resultsButton) {
+        resultsButton.setAttribute('aria-expanded', 'true');
+    }
+    scrollElementIntoView(resultsDiv, { behavior: 'smooth', block: 'start' });
 }
 
 /**
  * Hide granulate survey results
  */
 function hideGranulateSurveyResults() {
-    const resultsDiv = document.getElementById('granulate-survey-results');
+    const resultsDiv = document.getElementById(RESULTS_SECTION_ID);
+    const resultsButton = document.getElementById(RESULTS_BUTTON_ID);
     if (resultsDiv) {
         resultsDiv.classList.add('hidden');
+        resultsDiv.setAttribute('aria-hidden', 'true');
+    }
+    if (resultsButton) {
+        resultsButton.setAttribute('aria-expanded', 'false');
     }
 }
 

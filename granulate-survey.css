@@ -226,6 +226,16 @@ body {
     border-color: #18A0C7;
 }
 
+.btn:focus-visible,
+.option-item:focus-within,
+.text-input:focus-visible,
+.textarea-input:focus-visible,
+.inline-text-input:focus-visible {
+    outline: 3px solid rgba(24, 160, 199, 0.7);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(24, 160, 199, 0.2);
+}
+
 .success-message {
     background: rgba(76, 175, 80, 0.2);
     border: 2px solid rgba(76, 175, 80, 0.6);
@@ -313,5 +323,27 @@ body {
 
     .option-item {
         padding: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .granulate-container {
+        padding: 1.5rem 1rem;
+    }
+
+    .granulate-header h1 {
+        font-size: 1.35rem;
+    }
+
+    .question-block {
+        padding: 1rem;
+    }
+
+    .question-text {
+        font-size: 0.95rem;
+    }
+
+    .btn {
+        letter-spacing: 0.25px;
     }
 }
