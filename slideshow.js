@@ -17,19 +17,37 @@ const externalMediaFiles = [
 const mediaFiles = [...generatedMediaFiles, ...externalMediaFiles];
 
 // Slideshow state management
-let slideshowInterval = null;
+let slideshowTimeout = null;
 let currentMediaElement = null;
 let currentWrapper = null;
 let errorCount = 0;
 const MAX_RETRIES = 3;
+let recentlyPlayedMedia = [];
+const MAX_RECENT_MEDIA = 10; // Keep track of last 10 media files to avoid repetition
+const IMAGE_DISPLAY_TIME = 8000; // 8 seconds for images
 
 function getRandomMedia(files = mediaFiles) {
     if (!Array.isArray(files) || files.length === 0) {
         return undefined;
     }
 
-    const randomIndex = Math.floor(Math.random() * files.length);
-    const filePath = files[randomIndex];
+    // Filter out recently played media to avoid repetition
+    let availableFiles = files.filter(file => !recentlyPlayedMedia.includes(file));
+
+    // If all files have been played recently, reset the history
+    if (availableFiles.length === 0) {
+        recentlyPlayedMedia = [];
+        availableFiles = files;
+    }
+
+    const randomIndex = Math.floor(Math.random() * availableFiles.length);
+    const filePath = availableFiles[randomIndex];
+
+    // Add to recently played list
+    recentlyPlayedMedia.push(filePath);
+    if (recentlyPlayedMedia.length > MAX_RECENT_MEDIA) {
+        recentlyPlayedMedia.shift(); // Remove oldest entry
+    }
 
     if (typeof filePath !== 'string') {
         return filePath;
@@ -41,6 +59,12 @@ function getRandomMedia(files = mediaFiles) {
 function updateSlideshow(files = mediaFiles) {
     if (typeof document === 'undefined') {
         return;
+    }
+
+    // Clear any existing timeout
+    if (slideshowTimeout) {
+        clearTimeout(slideshowTimeout);
+        slideshowTimeout = null;
     }
 
     // Render to track-cover instead of slideshow-container
@@ -127,7 +151,7 @@ function updateSlideshow(files = mediaFiles) {
             currentMediaElement = document.createElement('video');
             currentMediaElement.autoplay = true;
             currentMediaElement.muted = true;
-            currentMediaElement.loop = true;
+            currentMediaElement.loop = false; // Play only once
             currentMediaElement.playsInline = true;
             currentMediaElement.className = 'track-cover-media';
             currentMediaElement.setAttribute('aria-label', 'Wideo wyświetlane jako okładka utworu');
@@ -143,6 +167,11 @@ function updateSlideshow(files = mediaFiles) {
                 }
                 console.warn(`Failed to load video (attempt ${errorCount}/${MAX_RETRIES})`);
                 setTimeout(() => updateSlideshow(files), 1000 * errorCount);
+            }, { once: true });
+
+            // When video ends, move to next media
+            currentMediaElement.addEventListener('ended', () => {
+                updateSlideshow(files);
             }, { once: true });
 
             const handleVideoOrientation = () => {
@@ -170,23 +199,28 @@ function updateSlideshow(files = mediaFiles) {
             });
         }
     }
+
+    // Schedule next slideshow update only for images
+    // Videos will trigger update automatically when they end
+    if (isImage) {
+        slideshowTimeout = setTimeout(() => updateSlideshow(files), IMAGE_DISPLAY_TIME);
+    }
 }
 
 // Start slideshow with cleanup support
 function startSlideshow(files = mediaFiles) {
-    if (slideshowInterval) {
+    if (slideshowTimeout) {
         return; // Already running
     }
 
     updateSlideshow(files);
-    slideshowInterval = setInterval(() => updateSlideshow(files), 10000);
 }
 
 // Stop slideshow and cleanup
 function stopSlideshow() {
-    if (slideshowInterval) {
-        clearInterval(slideshowInterval);
-        slideshowInterval = null;
+    if (slideshowTimeout) {
+        clearTimeout(slideshowTimeout);
+        slideshowTimeout = null;
     }
 }
 
