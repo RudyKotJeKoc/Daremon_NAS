@@ -1819,6 +1819,19 @@ header p {
     object-fit: contain;
 }
 
+/* Slideshow section - positioned at the top of the page */
+.slideshow-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.slideshow-section #track-cover {
+    margin: 0 auto;
+}
+
 #track-info {
     flex-grow: 1;
     text-align: center;
