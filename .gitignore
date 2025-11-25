@@ -12,6 +12,9 @@ package-lock.json
 /.next/
 /out/
 
+# legacy site copy (source is in legacy-factory-site/)
+/public/legacy/
+
 # production
 /build
 /dist
