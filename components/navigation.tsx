@@ -38,6 +38,16 @@ export function Navigation() {
                 </Link>
               </li>
             ))}
+            <li>
+              <a
+                href="/legacy/index.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 text-sm font-semibold text-cyan-400 hover:text-cyan-200 transition"
+              >
+                ETS Radio
+              </a>
+            </li>
           </ul>
 
           {/* Mobile menu button - TODO: implement mobile menu */}
