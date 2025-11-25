@@ -141,6 +141,29 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ETS LEGACY section */}
+      <section className="max-w-4xl mx-auto px-4 pb-24">
+        <div className="border border-cyan-500/30 rounded-xl p-8 bg-slate-900/40 backdrop-blur-md shadow-[0_0_20px_rgba(0,255,255,0.15)]">
+          <h2 className="text-2xl font-semibold text-cyan-400 mb-3">
+            ETS-systeem & Radio (Legacy Interface)
+          </h2>
+
+          <p className="text-slate-300 max-w-2xl mb-6">
+            Toegang tot de originele neon-interface met afteltimers, industriële statusmodules,
+            visualisaties en het volledige ETS-radiosysteem.
+          </p>
+
+          <a
+            href="/legacy/index.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
+          >
+            Open ETS-systeem
+          </a>
+        </div>
+      </section>
+
       {/* Techniczny footer akcent */}
       <div className="max-w-4xl mx-auto px-4 pb-12">
         <div className="border-t border-cyan-500/20 pt-8 text-center">
