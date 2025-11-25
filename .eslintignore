@@ -1,0 +1,11 @@
+# Legacy factory site - DO NOT lint or modify
+legacy-factory-site/*
+
+# Build outputs
+out/*
+.next/*
+node_modules/*
+
+# Config files
+*.config.js
+*.config.ts

@@ -1,0 +1,11 @@
+# Legacy factory site - DO NOT format or modify
+legacy-factory-site/*
+
+# Build outputs
+out/*
+.next/*
+node_modules/*
+
+# Lock files
+pnpm-lock.yaml
+package-lock.json

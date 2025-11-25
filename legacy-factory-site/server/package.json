@@ -1,0 +1,30 @@
+{
+  "name": "daremon-nas-backend",
+  "version": "1.0.0",
+  "description": "Secure backend API for Daremon NAS with JWT authentication",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "init-db": "node src/scripts/initDatabase.js"
+  },
+  "keywords": ["daremon", "jwt", "express", "security"],
+  "author": "Daremon Team",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "bcrypt": "^5.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "cookie-parser": "^1.4.7",
+    "express-validator": "^7.2.0",
+    "helmet": "^8.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "better-sqlite3": "^11.8.1",
+    "express-rate-limit": "^7.4.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
