@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAREMON Radio — Ankiety</title>
+    <meta name="description" content="Odkryj aktualne ankiety społeczności DAREMON Radio i podziel się swoim głosem.">
+    <meta name="theme-color" content="#008878">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="polls.css">
+</head>
+<body class="polls-page">
+    <header class="polls-header" role="banner">
+        <a href="index.html" class="polls-logo" aria-label="Powrót do głównego odtwarzacza">
+            <span aria-hidden="true">🎧</span>
+            <strong>DAREMON Radio</strong>
+        </a>
+        <nav aria-label="Nawigacja pomocnicza">
+            <a href="index.html" aria-label="Wróć do odtwarzacza radia">Wróć do odtwarzacza</a>
+            <a href="#polls-container" aria-label="Przejdź do listy ankiet">Przejdź do ankiet</a>
+        </nav>
+    </header>
+
+    <main id="polls-main" class="polls-main" role="main">
+        <section id="polls-section" class="polls-section" aria-labelledby="polls-heading">
+            <div id="polls-success-banner" hidden>
+                <svg role="img" aria-label="Ankiety gotowe" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9.00006 16.2L4.80006 12L3.40006 13.4L9.00006 19L21.0001 7.00005L19.6001 5.60005L9.00006 16.2Z" />
+                </svg>
+                <p>Interaktywne ankiety są gotowe. Oddaj swój głos!</p>
+            </div>
+            <h1 id="polls-heading">Głos społeczności</h1>
+            <p class="polls-intro">
+                W tym miejscu zbieramy opinie naszych słuchaczy. Wybrane ankiety pomagają nam układać playlistę,
+                planować wydarzenia i ulepszać radio DAREMON. Każde głosowanie to cenna wskazówka dla zespołu.
+            </p>
+            <div id="polls-container" class="polls-container" aria-live="polite"></div>
+        </section>
+    </main>
+
+    <footer class="polls-footer" role="contentinfo">
+        <p>DAREMON Radio ETS &mdash; razem tworzymy najlepszy soundtrack do pracy.</p>
+    </footer>
+
+    <script type="module" src="poll-system.js"></script>
+    <script type="module" src="polls-page.js"></script>
+</body>
+</html>
