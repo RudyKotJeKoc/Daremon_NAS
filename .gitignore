@@ -1,4 +1,39 @@
+# dependencies
 node_modules/
-jules-scratch/
+/.pnp
+.pnp.js
+.yarn/install-state.gz
 package-lock.json
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+/dist
 dist/
+
+# misc
+.DS_Store
+*.pem
+jules-scratch/
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+.env
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
