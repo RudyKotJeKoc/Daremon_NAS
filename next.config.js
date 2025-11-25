@@ -1,11 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
   reactStrictMode: true,
-  i18n: {
-    locales: ['nl-NL'],
-    defaultLocale: 'nl-NL',
-  },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
