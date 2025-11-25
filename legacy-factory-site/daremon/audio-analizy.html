@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Analyses - Diepgaande Beleidsanalyses | DAREMON</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Luister naar diepgaande analyses over AZC-beleid, huisvesting en systemen. Audio analyses in Nederlands, Pools en Engels.">
+    <meta name="keywords" content="audio analyse, AZC, podcast, huisvesting, beleid, Noord-Brabant">
+    <meta name="author" content="Dariusz Adamski">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://daremon.nl/daremon/audio-analizy.html">
+    <meta property="og:title" content="Audio Analyses - Diepgaande Beleidsanalyses">
+    <meta property="og:description" content="Luister naar diepgaande analyses over AZC-beleid, huisvesting en systemen.">
+    <meta property="og:image" content="https://daremon.nl/images/logo.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Audio Analyses - Diepgaande Beleidsanalyses">
+    <meta name="twitter:description" content="Luister naar diepgaande analyses over AZC-beleid, huisvesting en systemen.">
+
+    <!-- Icons -->
+    <link rel="icon" href="../icons/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="../icons/icon-192.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../audio-player-styles.css">
+    <style>
+        .language-switcher {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 10px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 8px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            border-color: #ff6b35;
+            background: #fff5f2;
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            border-color: #ff6b35;
+        }
+
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .intro-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .intro-section p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .audio-section {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border-left: 6px solid #ff6b35;
+        }
+
+        .audio-section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .audio-section-description {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .coming-soon {
+            background: rgba(255, 193, 7, 0.1);
+            border: 2px solid #ffc107;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            color: #856404;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .language-switcher {
+                top: 60px;
+                right: 10px;
+                padding: 8px;
+            }
+
+            .lang-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+
+            .intro-section h1 {
+                font-size: 1.8rem;
+            }
+
+            .audio-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="nl">🇳🇱 NL</button>
+        <button class="lang-btn" data-lang="pl">🇵🇱 PL</button>
+        <button class="lang-btn" data-lang="en">🇬🇧 EN</button>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="container nav">
+            <div class="logo">DAREMON</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="analizy.html">Analyses</a></li>
+                <li><a href="5-waarheden.html">5 Waarheden</a></li>
+                <li><a href="audio-analizy.html" class="active">Audio</a></li>
+                <li><a href="#about">Over</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container" style="margin-top: 2rem;">
+
+        <!-- ============================================ -->
+        <!-- NEDERLANDSE VERSIE -->
+        <!-- ============================================ -->
+        <div class="lang-content active" data-lang="nl">
+            <div class="intro-section">
+                <h1>🎧 Audio Analyses</h1>
+                <p>
+                    Luister naar diepgaande analyses over AZC-beleid, huisvesting en systemische observaties.<br>
+                    Professioneel opgenomen uitleg die de waarheid achter de cijfers onthult.
+                </p>
+            </div>
+
+            <!-- Audio Section 1: Introduction to AZC System -->
+            <section class="audio-section">
+                <h2 class="audio-section-title">🔍 Introductie: Het AZC-Systeem Uitgelegd</h2>
+                <p class="audio-section-description">
+                    Een toegankelijke introductie tot het Nederlandse asielopvangsysteem. Wie is COA? Hoe werkt het proces?
+                    Wat zijn de kosten en waarom is het zo controversieel? Deze analyse legt de basis voor alle andere analyses.
+                </p>
+                <div id="audio-player-intro"></div>
+                <div class="coming-soon">
+                    🎙️ Opname in voorbereiding - verwacht binnenkort
+                </div>
+            </section>
+
+            <!-- Audio Section 2: 5 Systemic Truths -->
+            <section class="audio-section">
+                <h2 class="audio-section-title">💡 5 Systemische Waarhedenken – Volledige Naratie</h2>
+                <p class="audio-section-description">
+                    De volledige audio-versie van de "5 Waarheden" analyse. Van economische ecosystemen tot barricades –
+                    een 30-minuten durende diepgaande verkenning van systemische mechanismen die vragen oproepen.
+                </p>
+                <div id="audio-player-5truths"></div>
+                <div class="coming-soon">
+                    🎙️ Opname in voorbereiding - verwacht binnenkort
+                </div>
+            </section>
+
+            <!-- Audio Section 3: Cost Analysis -->
+            <section class="audio-section">
+                <h2 class="audio-section-title">💰 Kostenanalyse: Het Miljard Euro Vraagstuk</h2>
+                <p class="audio-section-description">
+                    Waarom kiest de overheid voor oplossingen die 3x duurder zijn? Een gedetailleerde analyse van de financiële
+                    stromen: €30.500 per persoon in standaard AZC vs. €91.000 in noodopvang. Inclusief vergelijking met hulp ter plaatse.
+                </p>
+                <div id="audio-player-costs"></div>
+                <div class="coming-soon">
+                    🎙️ Opname in voorbereiding - verwacht binnenkort
+                </div>
+            </section>
+
+            <!-- Audio Section 4: Housing Priority -->
+            <section class="audio-section">
+                <h2 class="audio-section-title">🏠 Woningmarkt: Prioriteit en Wachtlijsten</h2>
+                <p class="audio-section-description">
+                    De paradox van het woonbeleid: 5-7 jaar wachten voor lokale inwoners vs. 6 maanden voor statushouders.
+                    Wat is de juridische basis? Wat zijn de ethische implicaties? En waarom is het systeem zo ontworpen?
+                </p>
+                <div id="audio-player-housing"></div>
+                <div class="coming-soon">
+                    🎙️ Opname in voorbereiding - verwacht binnenkort
+                </div>
+            </section>
+
+            <!-- Audio Section 5: Case Study Den Bosch -->
+            <section class="audio-section">
+                <h2 class="audio-section-title">📍 Casestudy: 's-Hertogenbosch</h2>
+                <p class="audio-section-description">
+                    Van plan tot protest: hoe een nieuw AZC voor 600 personen leidde tot mobilisatie van 100 politieagenten.
+                    387 formele bezwaren genegeerd. Provincie Noord-Brabant protest genegeerd. Wat gebeurde er echt?
+                </p>
+                <div id="audio-player-denbosch"></div>
+                <div class="coming-soon">
+                    🎙️ Opname in voorbereiding - verwacht binnenkort
+                </div>
+            </section>
+
+            <!-- Audio Section 6: Ukraine Paradox -->
+            <section class="audio-section">
+                <h2 class="audio-section-title">🇺🇦 Het Oekraïne Paradox: Bescherming en Motivatie</h2>
+                <p class="audio-section-description">
+                    Wanneer hulp zo goed werkt dat terugkeer niet meer aantrekkelijk is – helpen we dan het conflict oplossen
+                    of onbedoeld bestendigen? Een diepgaande analyse van moral hazard in internationale hulpverlening.
+                </p>
+                <div id="audio-player-ukraine"></div>
+                <div class="coming-soon">
+                    🎙️ Opname in voorbereiding - verwacht binnenkort
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ============================================ -->
+        <!-- POLSKA WERSJA -->
+        <!-- ============================================ -->
+        <div class="lang-content" data-lang="pl">
+            <div class="intro-section">
+                <h1>🎧 Analizy Audio</h1>
+                <p>
+                    Posłuchaj dogłębnych analiz dotyczących polityki AZC, mieszkalnictwa i obserwacji systemowych.<br>
+                    Profesjonalnie nagrane wyjaśnienia ujawniające prawdę za liczbami.
+                </p>
+            </div>
+
+            <!-- Audio Section 1: Introduction to AZC System -->
+            <section class="audio-section">
+                <h2 class="audio-section-title">🔍 Wprowadzenie: System AZC Wyjaśniony</h2>
+                <p class="audio-section-description">
+                    Przystępne wprowadzenie do holenderskiego systemu przyjmowania azylantów. Czym jest COA? Jak działa proces?
+                    Ile to kosztuje i dlaczego jest tak kontrowersyjne? Ta analiza stanowi podstawę dla wszystkich innych.
+                </p>
+                <div id="audio-player-intro-pl"></div>
+                <div class="coming-soon">
+                    🎙️ Nagranie w przygotowaniu – wkrótce dostępne
+                </div>
+            </section>
+
+            <!-- Audio Section 2: 5 Systemic Truths -->
+            <section class="audio-section">
+                <h2 class="audio-section-title">💡 5 Prawd Systemowych – Pełna Narracja</h2>
+                <p class="audio-section-description">
+                    Pełna wersja audio analizy "5 Prawd". Od ekosystemów ekonomicznych po barykady –
+                    30-minutowa dogłębna eksploracja mechanizmów systemowych, które rodzą pytania.
+                </p>
+                <div id="audio-player-5truths-pl"></div>
+                <div class="coming-soon">
+                    🎙️ Nagranie w przygotowaniu – wkrótce dostępne
+                </div>
+            </section>
+
+            <!-- Audio Section 3: Cost Analysis -->
+            <section class="audio-section">
+                <h2 class="audio-section-title">💰 Analiza Kosztów: Kwestia Miliarda Euro</h2>
+                <p class="audio-section-description">
+                    Dlaczego rząd wybiera rozwiązania 3x droższe? Szczegółowa analiza przepływów finansowych:
+                    €30.500 na osobę w standardowym AZC vs. €91.000 w zakwaterowaniu awaryjnym. Z porównaniem pomocy na miejscu.
+                </p>
+                <div id="audio-player-costs-pl"></div>
+                <div class="coming-soon">
+                    🎙️ Nagranie w przygotowaniu – wkrótce dostępne
+                </div>
+            </section>
+
+            <!-- Audio Section 4: Housing Priority -->
+            <section class="audio-section">
+                <h2 class="audio-section-title">🏠 Rynek Mieszkaniowy: Priorytety i Listy Oczekujących</h2>
+                <p class="audio-section-description">
+                    Paradoks polityki mieszkaniowej: 5-7 lat oczekiwania dla lokalnych mieszkańców vs. 6 miesięcy dla statushouders.
+                    Jaka jest podstawa prawna? Jakie są implikacje etyczne? I dlaczego system jest tak zaprojektowany?
+                </p>
+                <div id="audio-player-housing-pl"></div>
+                <div class="coming-soon">
+                    🎙️ Nagranie w przygotowaniu – wkrótce dostępne
+                </div>
+            </section>
+
+            <!-- Audio Section 5: Case Study Den Bosch -->
+            <section class="audio-section">
+                <h2 class="audio-section-title">📍 Studium Przypadku: 's-Hertogenbosch</h2>
+                <p class="audio-section-description">
+                    Od planu do protestu: jak nowy ośrodek AZC dla 600 osób doprowadził do mobilizacji 100 policjantów.
+                    387 formalnych sprzeciwów zignorowanych. Protest prowincji Brabancja Północna zignorowany. Co się naprawdę stało?
+                </p>
+                <div id="audio-player-denbosch-pl"></div>
+                <div class="coming-soon">
+                    🎙️ Nagranie w przygotowaniu – wkrótce dostępne
+                </div>
+            </section>
+
+            <!-- Audio Section 6: Ukraine Paradox -->
+            <section class="audio-section">
+                <h2 class="audio-section-title">🇺🇦 Paradoks Ukraiński: Ochrona i Motywacja</h2>
+                <p class="audio-section-description">
+                    Gdy pomoc działa tak dobrze, że powrót przestaje być atrakcyjny – czy pomagamy rozwiązać konflikt
+                    czy nieumyślnie go utrwalamy? Dogłębna analiza pokusa nadużycia w międzynarodowej pomocy humanitarnej.
+                </p>
+                <div id="audio-player-ukraine-pl"></div>
+                <div class="coming-soon">
+                    🎙️ Nagranie w przygotowaniu – wkrótce dostępne
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ============================================ -->
+        <!-- ENGLISH VERSION -->
+        <!-- ============================================ -->
+        <div class="lang-content" data-lang="en">
+            <div class="intro-section">
+                <h1>🎧 Audio Analyses</h1>
+                <p>
+                    Listen to in-depth analyses about AZC policy, housing and systemic observations.<br>
+                    Professionally recorded explanations revealing the truth behind the numbers.
+                </p>
+            </div>
+
+            <!-- Audio Section 1: Introduction to AZC System -->
+            <section class="audio-section">
+                <h2 class="audio-section-title">🔍 Introduction: The AZC System Explained</h2>
+                <p class="audio-section-description">
+                    An accessible introduction to the Dutch asylum reception system. What is COA? How does the process work?
+                    What are the costs and why is it so controversial? This analysis lays the foundation for all other analyses.
+                </p>
+                <div id="audio-player-intro-en"></div>
+                <div class="coming-soon">
+                    🎙️ Recording in preparation - expected soon
+                </div>
+            </section>
+
+            <!-- Audio Section 2: 5 Systemic Truths -->
+            <section class="audio-section">
+                <h2 class="audio-section-title">💡 5 Systemic Observations – Full Narration</h2>
+                <p class="audio-section-description">
+                    The complete audio version of the "5 Truths" analysis. From economic ecosystems to barricades –
+                    a 30-minute in-depth exploration of systemic mechanisms that raise questions.
+                </p>
+                <div id="audio-player-5truths-en"></div>
+                <div class="coming-soon">
+                    🎙️ Recording in preparation - expected soon
+                </div>
+            </section>
+
+            <!-- Audio Section 3: Cost Analysis -->
+            <section class="audio-section">
+                <h2 class="audio-section-title">💰 Cost Analysis: The Billion Euro Question</h2>
+                <p class="audio-section-description">
+                    Why does the government choose solutions that are 3x more expensive? A detailed analysis of financial
+                    flows: €30,500 per person in standard AZC vs. €91,000 in emergency accommodation. Including comparison with aid in place.
+                </p>
+                <div id="audio-player-costs-en"></div>
+                <div class="coming-soon">
+                    🎙️ Recording in preparation - expected soon
+                </div>
+            </section>
+
+            <!-- Audio Section 4: Housing Priority -->
+            <section class="audio-section">
+                <h2 class="audio-section-title">🏠 Housing Market: Priority and Waiting Lists</h2>
+                <p class="audio-section-description">
+                    The paradox of housing policy: 5-7 years waiting for local residents vs. 6 months for statushouders.
+                    What is the legal basis? What are the ethical implications? And why is the system designed this way?
+                </p>
+                <div id="audio-player-housing-en"></div>
+                <div class="coming-soon">
+                    🎙️ Recording in preparation - expected soon
+                </div>
+            </section>
+
+            <!-- Audio Section 5: Case Study Den Bosch -->
+            <section class="audio-section">
+                <h2 class="audio-section-title">📍 Case Study: 's-Hertogenbosch</h2>
+                <p class="audio-section-description">
+                    From plan to protest: how a new AZC for 600 people led to mobilization of 100 police officers.
+                    387 formal objections ignored. North Brabant province protest ignored. What really happened?
+                </p>
+                <div id="audio-player-denbosch-en"></div>
+                <div class="coming-soon">
+                    🎙️ Recording in preparation - expected soon
+                </div>
+            </section>
+
+            <!-- Audio Section 6: Ukraine Paradox -->
+            <section class="audio-section">
+                <h2 class="audio-section-title">🇺🇦 The Ukraine Paradox: Protection and Motivation</h2>
+                <p class="audio-section-description">
+                    When aid works so well that return becomes unattractive – are we helping resolve the conflict
+                    or inadvertently perpetuating it? An in-depth analysis of moral hazard in international humanitarian aid.
+                </p>
+                <div id="audio-player-ukraine-en"></div>
+                <div class="coming-soon">
+                    🎙️ Recording in preparation - expected soon
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div>
+                <h4>DAREMON</h4>
+                <p>
+                    Onafhankelijke analyse van lokaal beleid.<br>
+                    Gebaseerd op openbare data, WOO-verzoeken, en kritisch onderzoek.
+                </p>
+                <p style="margin-top:1rem;">
+                    📧 dariusz@adamski.tech<br>
+                    📍 Boxtel, Noord-Brabant
+                </p>
+            </div>
+            <div>
+                <h4>Navigatie</h4>
+                <p><a href="index.html">Home</a></p>
+                <p><a href="analizy.html">Analyses</a></p>
+                <p><a href="5-waarheden.html">5 Waarheden</a></p>
+                <p><a href="audio-analizy.html">Audio</a></p>
+                <p><a href="#about">Over</a></p>
+            </div>
+            <div>
+                <h4>Transparantie</h4>
+                <p><a href="#">Bronnen & Citaten</a></p>
+                <p><a href="#">WOO Verzoeken</a></p>
+                <p><a href="#">Disclaimer</a></p>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>
+                © 2025 DAREMON Analysis Project • CC BY-NC-SA 4.0<br>
+                Niet beschuldigen. Alleen observeren en vragen stellen.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Language Switching
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const langContents = document.querySelectorAll('.lang-content');
+
+        langButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+
+                // Update button states
+                langButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Update content visibility
+                langContents.forEach(content => {
+                    if (content.getAttribute('data-lang') === lang) {
+                        content.classList.add('active');
+                    } else {
+                        content.classList.remove('active');
+                    }
+                });
+
+                // Save preference
+                localStorage.setItem('preferredLanguage', lang);
+            });
+        });
+
+        // Load saved language preference
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang) {
+                const btn = document.querySelector(`.lang-btn[data-lang="${savedLang}"]`);
+                if (btn) btn.click();
+            }
+        });
+
+        // TODO: Initialize audio players when audio files are ready
+        // Example configuration (uncomment and customize when audio files are available):
+        /*
+        import SectionAudioPlayer from '../audio-player.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Dutch version
+            new SectionAudioPlayer('audio-player-intro', {
+                sectionTitle: 'Introductie AZC Systeem',
+                tracks: [
+                    {
+                        title: 'Deel 1: Wat is COA?',
+                        src: 'audio/daremon/intro-deel1-nl.mp3',
+                        duration: '5:30'
+                    }
+                ]
+            });
+
+            // Polish version
+            new SectionAudioPlayer('audio-player-intro-pl', {
+                sectionTitle: 'Wprowadzenie do Systemu AZC',
+                tracks: [
+                    {
+                        title: 'Część 1: Czym jest COA?',
+                        src: 'audio/daremon/intro-deel1-pl.mp3',
+                        duration: '5:30'
+                    }
+                ]
+            });
+
+            // English version
+            new SectionAudioPlayer('audio-player-intro-en', {
+                sectionTitle: 'Introduction to AZC System',
+                tracks: [
+                    {
+                        title: 'Part 1: What is COA?',
+                        src: 'audio/daremon/intro-part1-en.mp3',
+                        duration: '5:30'
+                    }
+                ]
+            });
+        });
+        */
+    </script>
+</body>
+</html>

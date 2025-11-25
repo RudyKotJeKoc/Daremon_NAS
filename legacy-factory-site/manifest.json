@@ -1,0 +1,44 @@
+{
+  "name": "DAREMON Radio ETS",
+  "short_name": "DAREMON Radio",
+  "description": "Het officiële bedrijfsradiostation DAREMON ETS",
+  "start_url": "./",
+  "display": "standalone",
+  "scope": "./",
+  "background_color": "#1A1A1A",
+  "theme_color": "#008878",
+  "icons": [
+    {
+      "src": "./icons/icon-192.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-512.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Ankiety społeczności",
+      "short_name": "Ankiety",
+      "description": "Przejdź bezpośrednio do ankiet społeczności DAREMON Radio.",
+      "url": "./polls.html",
+      "icons": [
+        {
+          "src": "./icons/icon-192.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio ETS - Het officiële bedrijfsradiostation 24/7</title>
+    
+    <meta name="description" content="Het officiële bedrijfsradiostation. Een energieke dosis humor, technologie en de beste muziek. Luister live!">
+    <meta name="theme-color" content="#1A1A1A">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- SEO Metadata -->
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Radio ETS Team">
+    <meta name="keywords" content="radio ETS, bedrijfsradio, muziek, webradio, live stream">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://daremon.nl/">
+    <meta property="og:title" content="Radio ETS - Bedrijfsradio met Humor en Energie">
+    <meta property="og:description" content="Het officiële bedrijfsradiostation. Een energieke dosis humor, technologie en de beste muziek. Luister live!">
+    <meta property="og:image" content="/images/fallback-radio-og.svg">
+    <meta property="og:image:alt" content="Radio ETS Logo">
+    <meta property="og:site_name" content="Radio ETS">
+    <meta property="og:locale" content="nl_NL">
+    <meta property="og:locale:alternate" content="pl_PL">
+    <meta property="og:locale:alternate" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Radio ETS - Bedrijfsradio met Humor en Energie">
+    <meta name="twitter:description" content="Het officiële bedrijfsradiostation. Luister live!">
+    <meta name="twitter:image" content="/images/fallback-radio-og.svg">
+
+    <!-- Icons -->
+    <link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="icons/icon-192.svg">
+
+    <!-- Language Alternates -->
+    <link rel="alternate" hreflang="nl" href="https://daremon.nl/">
+    <link rel="alternate" hreflang="pl" href="https://daremon.nl/?lang=pl">
+    <link rel="alternate" hreflang="en" href="https://daremon.nl/?lang=en">
+    <link rel="alternate" hreflang="cs" href="https://daremon.nl/?lang=cs">
+    <link rel="alternate" hreflang="x-default" href="https://daremon.nl/">
+
+    <!-- Fonts and Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="survey-styles.css">
+    
+    <!-- GSAP Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
+    <script type="module" src="config.js"></script>
+    <script src="theme-toggle.js"></script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://daremon.nl/#website",
+          "url": "https://daremon.nl/",
+          "name": "Radio ETS",
+          "description": "Het officiële bedrijfsradiostation. Een energieke dosis humor, technologie en de beste muziek.",
+          "inLanguage": ["nl", "pl", "en", "cs"],
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://daremon.nl/?s={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://daremon.nl/#organization",
+          "name": "Radio ETS",
+          "url": "https://daremon.nl/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://daremon.nl/images/logo.png",
+            "width": 512,
+            "height": 512
+          },
+          "sameAs": []
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://daremon.nl/#webpage",
+          "url": "https://daremon.nl/",
+          "name": "Radio ETS - Bedrijfsradio met Humor en Energie",
+          "isPartOf": {
+            "@id": "https://daremon.nl/#website"
+          },
+          "about": {
+            "@id": "https://daremon.nl/#organization"
+          },
+          "description": "Het officiële bedrijfsradiostation. Een energieke dosis humor, technologie en de beste muziek. Luister live!",
+          "inLanguage": "nl"
+        },
+        {
+          "@type": "RadioStation",
+          "name": "Radio ETS",
+          "description": "Bedrijfsradio met humor, technologie en zorgvuldig geselecteerde muziek",
+          "url": "https://daremon.nl/",
+          "broadcastFrequency": "Online streaming"
+        }
+      ]
+    }
+    </script>
+</head>
+<body data-theme="arburg">
+
+    <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true">
+        <defs>
+            <symbol id="icon-play" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7-11-7z" />
+            </symbol>
+            <symbol id="icon-pause" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 5h4v14H6zM14 5h4v14h-4z" />
+            </symbol>
+            <symbol id="icon-stop" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 6h12v12H6z" />
+            </symbol>
+            <symbol id="icon-next" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M5 5v14l9-7-9-7zm10 0h2v14h-2z" />
+            </symbol>
+            <symbol id="icon-like" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6 4 4 6.5 4c1.74 0 3.41 1.01 4.22 2.61C11.09 5.01 12.76 4 14.5 4 17 4 19 6 19 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </symbol>
+        </defs>
+    </svg>
+    
+    <div id="offline-indicator" class="hidden" aria-live="assertive" data-i18n-key="offlineMessage"></div>
+    <header id="app-header" class="app-header" role="banner">
+        <div class="app-header-inner">
+            <img src="/images/logo.png" alt="Radio ETS" aria-hidden="true" class="app-logo" loading="lazy" width="200" height="80">
+
+            <!-- Theme & Language Controls -->
+            <div class="header-controls">
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="theme-toggle" data-i18n-aria-label="themeToggle" title="Toggle Light/Dark Mode">
+                    <span class="theme-icon theme-icon--dark">🌙</span>
+                    <span class="theme-icon theme-icon--light">☀️</span>
+                </button>
+
+                <!-- Language Switcher -->
+                <div id="language-switcher" class="language-switcher">
+                    <button id="language-toggle" class="language-toggle" data-i18n-aria-label="languageSwitcher" aria-haspopup="true" aria-expanded="false">
+                        🌐 <span id="current-language">NL</span>
+                    </button>
+                    <div id="language-menu" class="language-menu" role="menu" aria-hidden="true">
+                        <button class="language-option" data-lang="nl" role="menuitem">
+                            🇳🇱 <span data-i18n-key="languageDutch">Nederlands</span>
+                        </button>
+                        <button class="language-option" data-lang="pl" role="menuitem">
+                            🇵🇱 <span data-i18n-key="languagePolish">Polski</span>
+                        </button>
+                        <button class="language-option" data-lang="en" role="menuitem">
+                            🇬🇧 <span data-i18n-key="languageEnglish">English</span>
+                        </button>
+                        <button class="language-option" data-lang="cs" role="menuitem">
+                            🇨🇿 <span data-i18n-key="languageCzech">Čeština</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compact Radio Player in Header -->
+            <div id="header-player" class="header-player">
+                <img id="header-track-cover" src="/images/fallback-header.svg" alt="Albumhoes" class="header-track-cover" data-i18n-alt="trackCoverAlt" loading="lazy" width="48" height="48">
+                <div id="header-player-info" class="header-player-info">
+                    <h5 id="header-track-title" data-i18n-key="trackTitleDefault">Radio ETS</h5>
+                    <div id="header-progress-container" class="header-progress-container">
+                        <div id="header-progress-bar" class="header-progress-bar"></div>
+                    </div>
+                </div>
+                <div id="header-player-controls" class="header-player-controls">
+                    <button id="header-play-pause-btn" class="control-btn control-btn--header control-btn--icon-only" data-i18n-aria-label="playPauseLabel">
+                        <svg class="control-btn__icon" aria-hidden="true" focusable="false">
+                            <use href="#icon-play"></use>
+                        </svg>
+                    </button>
+                    <button id="header-next-btn" class="control-btn control-btn--header control-btn--icon-only" data-i18n-aria-label="nextLabel">
+                        <svg class="control-btn__icon" aria-hidden="true" focusable="false">
+                            <use href="#icon-next"></use>
+                        </svg>
+                    </button>
+                    <div id="header-volume-control" class="header-volume-control" data-i18n-title="volumeTooltip">
+                        <span class="volume-icon">🔊</span>
+                        <input type="range" id="header-volume-slider" min="0" max="1" step="0.01" value="0.5" data-i18n-aria-label="volumeLabel">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="app-container">
+        <!-- Main Radio Player View -->
+        <div id="radio-view">
+            
+            <!-- ZMIANA: Panel boczny przeniesiony na lewą stronę -->
+            <aside id="side-panel" role="complementary" data-i18n-aria-label="sidePanelLabel">
+                <button id="menu-toggle" type="button" data-i18n-aria-label="menuToggleLabel" aria-controls="drawer-menu" aria-expanded="false" aria-haspopup="true">☰</button>
+                <nav id="drawer-menu" role="navigation" data-i18n-aria-label="drawerMenuLabel" aria-hidden="true" tabindex="-1">
+                    <!-- Top Rated section removed -->
+                    <!-- DJ Message section removed -->
+                    <!-- Song Dedications section removed - aplikacja uproszczona do core radio -->
+                    <!-- Live Talk section removed -->
+
+                    <!-- Machine documentation section removed -->
+                    <!-- Strategic polls section removed - aplikacja uproszczona do core radio -->
+                    <!-- VSO Calculator section removed - aplikacja uproszczona do core radio -->
+                    <!-- Polls section removed - optymalizacja dla wyświetlania TV -->
+
+                    <!-- Photo Gallery usunięta - aplikacja uproszczona do core radio -->
+                </nav>
+            </aside>
+
+            <main id="main-content">
+                <!-- Hero Section -->
+                <section id="hero-section" class="hero-section">
+                    <div class="hero-content">
+                        <img src="/images/logo.svg" alt="Radio ETS Logo" class="hero-logo">
+                        <h1 class="hero-title" data-i18n-key="heroTitle">
+                            Twoje Firmowe Radio 24/7
+                        </h1>
+                        <p class="hero-subtitle" data-i18n-key="heroSubtitle">
+                            Energetyczna dawka humoru, technologii i najlepszej muzyki
+                        </p>
+                        <button id="hero-cta" class="hero-cta-button">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px;">
+                                <path d="M8 5v14l11-7-11-7z" />
+                            </svg>
+                            <span data-i18n-key="heroCta">Uruchom Radio</span>
+                        </button>
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <span class="stat-value" id="listener-count">...</span>
+                                <span class="stat-label" data-i18n-key="heroListeners">Słuchaczy</span>
+                            </div>
+                            <div class="stat-divider">•</div>
+                            <div class="stat-item">
+                                <span class="stat-value">500+</span>
+                                <span class="stat-label" data-i18n-key="heroTracks">Utworów</span>
+                            </div>
+                            <div class="stat-divider">•</div>
+                            <div class="stat-item">
+                                <span class="stat-value">24/7</span>
+                                <span class="stat-label" data-i18n-key="heroLive">Live</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Weather Widget - Atmospheric Conditions -->
+                <section id="weather-section" class="content-box weather-section" aria-labelledby="weather-heading">
+                    <div class="weather-widget">
+                        <div class="weather-frame">
+                            <div class="weather-header">
+                                <span class="weather-icon">🌤️</span>
+                                <h2 id="weather-heading" data-i18n-key="weatherWidgetTitle">ATMOSFERISCHE OMSTANDIGHEDEN</h2>
+                            </div>
+                            <div id="weather-display" class="weather-display">
+                                <div class="weather-loading" data-i18n-key="weatherLoading">Weergegevens laden...</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CRITICAL: Three-Phase Factory Shutdown System -->
+                <section id="deadlines-section" class="content-box power-system-section" aria-labelledby="deadlines-heading">
+                    <div class="power-system-header">
+                        <h2 id="deadlines-heading">
+                            <span class="power-icon">🔌</span>
+                            <span data-i18n-key="shutdownSystemTitle">DRIEFASIG FABRIEKSSLUITING SYSTEEM</span>
+                            <span class="power-icon">🔌</span>
+                        </h2>
+                        <div class="system-status">
+                            <span class="status-indicator warning"></span>
+                            <span class="status-text" data-i18n-key="shutdownSystemStatus">SLUITING IN UITVOERING</span>
+                        </div>
+                    </div>
+
+                    <div class="phases-grid">
+                        <!-- FAZA L2 -->
+                        <article class="phase-panel phase-l2" data-deadline-id="phase-l2">
+                            <div class="panel-frame">
+                                <div class="panel-header">
+                                    <div class="phase-badge">
+                                        <span class="phase-label">🔌 L2</span>
+                                        <span class="voltage-display">OFFLINE</span>
+                                    </div>
+                                    <div class="phase-status">
+                                        <div class="led-indicator black"></div>
+                                    </div>
+                                </div>
+
+                                <div class="phase-info">
+                                    <h3 class="phase-title" data-i18n-key="phaseL2Label">FASE L2 - ONTKOPPELING</h3>
+                                    <p class="phase-description" data-i18n-key="phaseL2Description">Stopzetting van de tweede productiefase</p>
+                                    <p class="phase-deadline" data-i18n-key="phaseL2Deadline">31.01.2026 23:59:59</p>
+                                </div>
+
+                                <div class="days-counter">
+                                    <div class="counter-label" data-i18n-key="daysRemaining">RESTERENDE DAGEN</div>
+                                    <div class="counter-value">
+                                        <span class="days-remaining">000</span>
+                                    </div>
+                                </div>
+
+                                <div class="timer-lcd" role="timer" aria-live="polite">
+                                    <div class="lcd-display">
+                                        <span class="timer-value" data-time-remaining>00:00:00:00</span>
+                                    </div>
+                                    <div class="lcd-label">DD:HH:MM:SS</div>
+                                </div>
+
+                                <div class="timer-bar" aria-hidden="true">
+                                    <div class="power-bar">
+                                        <div class="power-bar-bg">
+                                            <div class="timer-fill"></div>
+                                            <div class="power-bar-glow"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer">
+                                    <span class="circuit-label">OBWÓD #002</span>
+                                    <span class="power-rating">16A</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- FAZA L3 -->
+                        <article class="phase-panel phase-l3 phase-critical" data-deadline-id="phase-l3">
+                            <div class="panel-frame">
+                                <div class="panel-header">
+                                    <div class="phase-badge">
+                                        <span class="phase-label">🔌 L3</span>
+                                        <span class="voltage-display">OFFLINE</span>
+                                    </div>
+                                    <div class="phase-status">
+                                        <div class="led-indicator red"></div>
+                                    </div>
+                                </div>
+
+                                <div class="phase-info">
+                                    <h3 class="phase-title" data-i18n-key="phaseL3Label">FASE L3 - GAME OVER</h3>
+                                    <p class="phase-description" data-i18n-key="phaseL3Description">Definitieve fabriekssluiting</p>
+                                    <p class="phase-deadline" data-i18n-key="phaseL3Deadline">30.04.2026 23:59:59</p>
+                                </div>
+
+                                <div class="days-counter">
+                                    <div class="counter-label" data-i18n-key="daysRemaining">RESTERENDE DAGEN</div>
+                                    <div class="counter-value">
+                                        <span class="days-remaining">000</span>
+                                    </div>
+                                </div>
+
+                                <div class="timer-lcd" role="timer" aria-live="polite">
+                                    <div class="lcd-display">
+                                        <span class="timer-value" data-time-remaining>00:00:00:00</span>
+                                    </div>
+                                    <div class="lcd-label">DD:HH:MM:SS</div>
+                                </div>
+
+                                <div class="timer-bar" aria-hidden="true">
+                                    <div class="power-bar">
+                                        <div class="power-bar-bg">
+                                            <div class="timer-fill"></div>
+                                            <div class="power-bar-glow"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer">
+                                    <span class="circuit-label">OBWÓD #003</span>
+                                    <span class="power-rating">16A</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section id="now-playing-section" class="content-box">
+                    <div class="now-playing-layout">
+                        <div id="track-cover" class="track-cover-container">
+                            <!-- Slideshow images/videos will be rendered here -->
+                        </div>
+                        <div id="player-ui">
+                            <div id="track-info">
+                                <h2 id="track-title" aria-live="polite" data-i18n-key="trackTitleDefault"></h2>
+                                <h3 id="track-artist" data-i18n-key="trackArtistDefault"></h3>
+                                <div id="progress-container" role="slider" data-i18n-aria-label="progressBarLabel" tabindex="0">
+                                    <div id="progress-bar"></div>
+                                </div>
+                                <div id="time-container">
+                                    <span id="current-time">0:00</span>
+                                    <span id="time-remaining">-0:00</span>
+                                </div>
+                                <div id="rating-section">
+                                    <div id="average-rating-display"></div>
+                                    <div class="star-rating" data-i18n-aria-label="ratingLabel"></div>
+                                    <form id="comment-form" class="hidden" novalidate>
+                                        <label for="comment-input" class="visually-hidden" data-i18n-key="commentPlaceholder"></label>
+                                        <textarea
+                                            id="comment-input"
+                                            data-i18n-placeholder="commentPlaceholder"
+                                            minlength="3"
+                                            maxlength="200"
+                                            required
+                                            aria-required="true"
+                                            aria-describedby="comment-hint"
+                                            autocomplete="off"
+                                            spellcheck="true"></textarea>
+                                        <div id="comment-hint" class="form-hint" aria-live="polite"></div>
+                                        <button type="submit" data-i18n-key="submitReview"></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="player-controls">
+                        <button id="play-pause-btn" class="control-btn control-btn--large" data-i18n-title="playPauseTooltip" data-i18n-aria-label="playPauseLabel">
+                            <svg class="control-btn__icon" aria-hidden="true" focusable="false">
+                                <use href="#icon-play"></use>
+                            </svg>
+                        </button>
+                        <button id="next-btn" class="control-btn control-btn--icon-only" data-i18n-title="nextTooltip" data-i18n-aria-label="nextLabel">
+                            <svg class="control-btn__icon" aria-hidden="true" focusable="false">
+                                <use href="#icon-next"></use>
+                            </svg>
+                        </button>
+                        <button id="like-btn" class="control-btn control-btn--with-label" data-i18n-title="likeTooltip" data-i18n-aria-label="likeLabel">
+                            <svg class="control-btn__icon" aria-hidden="true" focusable="false">
+                                <use href="#icon-like"></use>
+                            </svg>
+                            <span id="like-count" class="control-btn__label">0</span>
+                        </button>
+                        <div id="volume-control" data-i18n-title="volumeTooltip">
+                            <span id="volume-icon" class="volume-icon">🔊</span>
+                            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" data-i18n-aria-label="volumeLabel">
+                            <span id="volume-percentage" class="volume-percentage">50%</span>
+                        </div>
+                        <button id="tv-mode-btn" class="control-btn" data-i18n-title="fullscreenTooltip" data-i18n-aria-label="fullscreenLabel" disabled>📺</button>
+                    </div>
+                </section>
+
+                <!-- DAREMON HUB USUNIĘTY - UPROSZCZENIE APLIKACJI -->
+                <!-- Team moments removed - optymalizacja dla TV display -->
+                <!-- Video library removed - optymalizacja dla TV display -->
+
+                <!-- Top 10 Tracks - Bobra's Album -->
+                <section id="bobra-top10-section" class="content-box bobra-top10-section" aria-labelledby="bobra-top10-heading">
+                    <div class="section-header">
+                        <h2 id="bobra-top10-heading" data-i18n-key="bobraTop10Title">🎵 Top 10 Utworów - Płyta Bobra</h2>
+                        <p class="section-intro" data-i18n-key="bobraTop10Intro">Najlepsze hity z legendarnej płyty DJ Bobra - kultowe utwory, które definiują nasz sound!</p>
+                    </div>
+                    <div id="bobra-top10-list" class="bobra-top10-list">
+                        <!-- Top 10 tracks will be populated here -->
+                        <div class="bobra-top10-item">
+                            <span class="track-number">1</span>
+                            <div class="track-info">
+                                <span class="track-title">Example Track 1</span>
+                                <span class="track-artist">DJ Bobro</span>
+                            </div>
+                            <span class="track-duration">3:45</span>
+                        </div>
+                        <div class="bobra-top10-item">
+                            <span class="track-number">2</span>
+                            <div class="track-info">
+                                <span class="track-title">Example Track 2</span>
+                                <span class="track-artist">DJ Bobro</span>
+                            </div>
+                            <span class="track-duration">4:12</span>
+                        </div>
+                        <div class="bobra-top10-item">
+                            <span class="track-number">3</span>
+                            <div class="track-info">
+                                <span class="track-title">Example Track 3</span>
+                                <span class="track-artist">DJ Bobro</span>
+                            </div>
+                            <span class="track-duration">3:58</span>
+                        </div>
+                        <div class="bobra-top10-item">
+                            <span class="track-number">4</span>
+                            <div class="track-info">
+                                <span class="track-title">Example Track 4</span>
+                                <span class="track-artist">DJ Bobro</span>
+                            </div>
+                            <span class="track-duration">4:33</span>
+                        </div>
+                        <div class="bobra-top10-item">
+                            <span class="track-number">5</span>
+                            <div class="track-info">
+                                <span class="track-title">Example Track 5</span>
+                                <span class="track-artist">DJ Bobro</span>
+                            </div>
+                            <span class="track-duration">3:21</span>
+                        </div>
+                        <div class="bobra-top10-item">
+                            <span class="track-number">6</span>
+                            <div class="track-info">
+                                <span class="track-title">Example Track 6</span>
+                                <span class="track-artist">DJ Bobro</span>
+                            </div>
+                            <span class="track-duration">4:05</span>
+                        </div>
+                        <div class="bobra-top10-item">
+                            <span class="track-number">7</span>
+                            <div class="track-info">
+                                <span class="track-title">Example Track 7</span>
+                                <span class="track-artist">DJ Bobro</span>
+                            </div>
+                            <span class="track-duration">3:47</span>
+                        </div>
+                        <div class="bobra-top10-item">
+                            <span class="track-number">8</span>
+                            <div class="track-info">
+                                <span class="track-title">Example Track 8</span>
+                                <span class="track-artist">DJ Bobro</span>
+                            </div>
+                            <span class="track-duration">4:18</span>
+                        </div>
+                        <div class="bobra-top10-item">
+                            <span class="track-number">9</span>
+                            <div class="track-info">
+                                <span class="track-title">Example Track 9</span>
+                                <span class="track-artist">DJ Bobro</span>
+                            </div>
+                            <span class="track-duration">3:52</span>
+                        </div>
+                        <div class="bobra-top10-item">
+                            <span class="track-number">10</span>
+                            <div class="track-info">
+                                <span class="track-title">Example Track 10</span>
+                                <span class="track-artist">DJ Bobro</span>
+                            </div>
+                            <span class="track-duration">4:28</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Consolidated Polls & Surveys Section -->
+                <section id="polls-section" class="content-box" aria-labelledby="polls-heading">
+                    <div class="section-header">
+                        <h2 id="polls-heading" data-i18n-key="pollsHeading">Ankiety i Głosowania</h2>
+                        <p data-i18n-key="pollsDescription">Podziel się swoją opinią! Wszystkie ankiety w jednym miejscu.</p>
+                    </div>
+                    <button id="polls-cta" class="cta-button primary" type="button" data-i18n-key="pollsCta" data-i18n-aria-label="pollsCtaLabel"></button>
+                    <div id="polls-container" role="region" aria-live="polite" tabindex="-1" data-i18n-aria-label="pollsRegionLabel"></div>
+                </section>
+
+                <!-- Employee Survey Section - Simplified -->
+                <section class="content-box survey-box">
+                    <h3 class="survey-title" data-i18n-key="employeeSurveyTitle">📋 Snelle feedback</h3>
+                    <div class="survey-intro">
+                        <p data-i18n-key="employeeSurveyIntro1">Deel uw mening over Radio ETS.</p>
+                    </div>
+
+                    <!-- Survey Form -->
+                    <form id="employee-survey-form" class="survey-form">
+                        <div class="form-group">
+                            <label for="emp-name" data-i18n-key="employeeSurveyNameLabel">Naam (optioneel):</label>
+                            <input type="text" id="emp-name" name="name" data-i18n-placeholder="employeeSurveyNamePlaceholder">
+                        </div>
+
+                        <div class="form-group">
+                            <label data-i18n-key="employeeSurveyTeamQuestion">Zou u Radio ETS willen blijven gebruiken?</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="team-continuation" value="yes" required>
+                                    <span data-i18n-key="employeeSurveyYes">Ja</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="team-continuation" value="maybe" required>
+                                    <span data-i18n-key="employeeSurveyMaybe">Misschien</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="team-continuation" value="no" required>
+                                    <span data-i18n-key="employeeSurveyNo">Nee</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="emp-ideas" data-i18n-key="employeeSurveyIdeasLabel">Opmerkingen:</label>
+                            <textarea id="emp-ideas" name="ideas" rows="3" data-i18n-placeholder="employeeSurveyIdeasPlaceholder"></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="survey-submit-btn" data-i18n-key="employeeSurveySubmit">📤 Verzenden</button>
+                            <button type="button" id="employee-survey-results-btn" class="survey-results-btn" data-i18n-key="employeeSurveyViewResults">📊 Resultaten</button>
+                        </div>
+                    </form>
+
+                    <!-- Success Message -->
+                    <div id="employee-survey-success" class="survey-message success-message hidden">
+                        <p><strong data-i18n-key="employeeSurveySuccessTitle">✅ Bedankt!</strong></p>
+                        <p data-i18n-key="employeeSurveySuccessMessage">Uw feedback is ontvangen.</p>
+                    </div>
+
+                    <!-- Results Section -->
+                    <div id="employee-survey-results" class="survey-results hidden">
+                        <h3 data-i18n-key="employeeSurveyResultsTitle">📊 Resultaten</h3>
+                        <div id="employee-survey-results-content"></div>
+                        <button id="close-employee-results-btn" class="close-results-btn" data-i18n-key="employeeSurveyCloseResults">Sluiten</button>
+                    </div>
+                </section>
+
+                <div id="hotkeys-info" data-i18n-key="hotkeysInfo"></div>
+                <div id="install-banner" class="hidden" role="region" aria-live="polite">
+                    <button id="install-btn" class="control-btn">⬇️ Zainstaluj aplikację</button>
+                </div>
+
+                <!-- Beaver Fundraiser -->
+                <section class="content-box beaver-fundraiser">
+                    <h2 class="beaver-title" data-i18n-key="beaverTitleCompact"></h2>
+
+                    <div class="beaver-story-compact">
+                        <p class="beaver-intro" data-i18n-key="beaverIntroCompact"></p>
+
+                        <p class="beaver-quote" data-i18n-key="beaverQuote"></p>
+
+                        <p class="beaver-desc" data-i18n-key="beaverDesc"></p>
+
+                        <div class="beaver-donate-options">
+                            <h3 data-i18n-key="beaverSupportTitleCompact"></h3>
+                            <p class="paypal-link-section">
+                                <a href="https://paypal.me/daremonnl" target="_blank" rel="noopener" class="paypal-button">
+                                    💳 paypal.me/daremonnl
+                                </a>
+                            </p>
+
+                            <div class="donation-amounts">
+                                <a href="https://paypal.me/daremonnl/5" target="_blank" rel="noopener" class="donation-btn" data-i18n-key="beaverDonation5"></a>
+                                <a href="https://paypal.me/daremonnl/10" target="_blank" rel="noopener" class="donation-btn" data-i18n-key="beaverDonation10"></a>
+                                <a href="https://paypal.me/daremonnl/50" target="_blank" rel="noopener" class="donation-btn" data-i18n-key="beaverDonation50"></a>
+                                <a href="https://paypal.me/daremonnl" target="_blank" rel="noopener" class="donation-btn" data-i18n-key="beaverDonationCustom"></a>
+                            </div>
+
+                            <p class="beaver-transparency">
+                                <small data-i18n-key="beaverTransparency"></small>
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- AI Models Educational Section -->
+                <section class="ai-education-section content-box">
+                    <h2 data-i18n-key="aiEducationTitle">🤖 Zrozumienie Modeli AI</h2>
+                    <p class="section-intro" data-i18n-key="aiEducationIntro">
+                        Poznaj różne modele sztucznej inteligencji, jak działają i do czego można je wykorzystać.
+                    </p>
+
+                    <div class="ai-models-grid">
+                        <!-- Large Language Models (LLMs) -->
+                        <div class="ai-model-card">
+                            <div class="ai-model-header">
+                                <span class="ai-model-icon">💬</span>
+                                <h3 data-i18n-key="aiLLMTitle">Duże Modele Językowe (LLM)</h3>
+                            </div>
+                            <div class="ai-model-content">
+                                <h4 data-i18n-key="aiHowItWorksTitle">Jak działają?</h4>
+                                <p data-i18n-key="aiLLMHowItWorks">
+                                    LLM to sieci neuronowe trenowane na ogromnych ilościach tekstu. Uczą się wzorców językowych,
+                                    kontekstu i znaczeń, przewidując kolejne słowa w sekwencji.
+                                </p>
+
+                                <h4 data-i18n-key="aiUseCasesTitle">Do czego służą?</h4>
+                                <ul>
+                                    <li data-i18n-key="aiLLMUse1">Generowanie i edycja tekstu</li>
+                                    <li data-i18n-key="aiLLMUse2">Tłumaczenia językowe</li>
+                                    <li data-i18n-key="aiLLMUse3">Odpowiadanie na pytania</li>
+                                    <li data-i18n-key="aiLLMUse4">Pisanie kodu i debugowanie</li>
+                                    <li data-i18n-key="aiLLMUse5">Podsumowywanie treści</li>
+                                </ul>
+
+                                <h4 data-i18n-key="aiLimitsTitle">Ograniczenia</h4>
+                                <ul class="ai-limitations">
+                                    <li data-i18n-key="aiLLMLimit1">Mogą generować nieprawdziwe informacje</li>
+                                    <li data-i18n-key="aiLLMLimit2">Wiedza ograniczona do daty treningu</li>
+                                    <li data-i18n-key="aiLLMLimit3">Brak prawdziwego rozumienia kontekstu</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Image Generation Models -->
+                        <div class="ai-model-card">
+                            <div class="ai-model-header">
+                                <span class="ai-model-icon">🎨</span>
+                                <h3 data-i18n-key="aiImageGenTitle">Modele Generowania Obrazów</h3>
+                            </div>
+                            <div class="ai-model-content">
+                                <h4 data-i18n-key="aiHowItWorksTitle">Jak działają?</h4>
+                                <p data-i18n-key="aiImageGenHowItWorks">
+                                    Modele takie jak DALL-E, Midjourney czy Stable Diffusion uczą się na milionach par
+                                    tekst-obraz, tworząc nowe obrazy na podstawie opisów tekstowych.
+                                </p>
+
+                                <h4 data-i18n-key="aiUseCasesTitle">Do czego służą?</h4>
+                                <ul>
+                                    <li data-i18n-key="aiImageGenUse1">Tworzenie ilustracji i grafik</li>
+                                    <li data-i18n-key="aiImageGenUse2">Prototypowanie designu</li>
+                                    <li data-i18n-key="aiImageGenUse3">Edycja i modyfikacja zdjęć</li>
+                                    <li data-i18n-key="aiImageGenUse4">Generowanie koncepcji artystycznych</li>
+                                </ul>
+
+                                <h4 data-i18n-key="aiLimitsTitle">Ograniczenia</h4>
+                                <ul class="ai-limitations">
+                                    <li data-i18n-key="aiImageGenLimit1">Problemy z tekstem w obrazach</li>
+                                    <li data-i18n-key="aiImageGenLimit2">Czasem nieprawidłowa anatomia</li>
+                                    <li data-i18n-key="aiImageGenLimit3">Kwestie praw autorskich</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Computer Vision Models -->
+                        <div class="ai-model-card">
+                            <div class="ai-model-header">
+                                <span class="ai-model-icon">👁️</span>
+                                <h3 data-i18n-key="aiVisionTitle">Modele Wizji Komputerowej</h3>
+                            </div>
+                            <div class="ai-model-content">
+                                <h4 data-i18n-key="aiHowItWorksTitle">Jak działają?</h4>
+                                <p data-i18n-key="aiVisionHowItWorks">
+                                    Wykorzystują sieci konwolucyjne (CNN) do analizy pikseli i rozpoznawania wzorców
+                                    wizualnych, obiektów i scen na obrazach i w wideo.
+                                </p>
+
+                                <h4 data-i18n-key="aiUseCasesTitle">Do czego służą?</h4>
+                                <ul>
+                                    <li data-i18n-key="aiVisionUse1">Rozpoznawanie obiektów i twarzy</li>
+                                    <li data-i18n-key="aiVisionUse2">Autonomiczne pojazdy</li>
+                                    <li data-i18n-key="aiVisionUse3">Diagnostyka medyczna</li>
+                                    <li data-i18n-key="aiVisionUse4">Kontrola jakości w produkcji</li>
+                                </ul>
+
+                                <h4 data-i18n-key="aiLimitsTitle">Ograniczenia</h4>
+                                <ul class="ai-limitations">
+                                    <li data-i18n-key="aiVisionLimit1">Wrażliwe na zmiany oświetlenia</li>
+                                    <li data-i18n-key="aiVisionLimit2">Trudności z nietypowymi perspektywami</li>
+                                    <li data-i18n-key="aiVisionLimit3">Wymaga dużo danych treningowych</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Audio/Speech Models -->
+                        <div class="ai-model-card">
+                            <div class="ai-model-header">
+                                <span class="ai-model-icon">🎵</span>
+                                <h3 data-i18n-key="aiAudioTitle">Modele Audio i Mowy</h3>
+                            </div>
+                            <div class="ai-model-content">
+                                <h4 data-i18n-key="aiHowItWorksTitle">Jak działają?</h4>
+                                <p data-i18n-key="aiAudioHowItWorks">
+                                    Analizują falę dźwiękową i jej cechy, rozpoznając mowę, muzykę i inne dźwięki.
+                                    Mogą również generować realistyczną mowę i muzykę.
+                                </p>
+
+                                <h4 data-i18n-key="aiUseCasesTitle">Do czego służą?</h4>
+                                <ul>
+                                    <li data-i18n-key="aiAudioUse1">Transkrypcja mowy na tekst</li>
+                                    <li data-i18n-key="aiAudioUse2">Synteza mowy (TTS)</li>
+                                    <li data-i18n-key="aiAudioUse3">Generowanie muzyki</li>
+                                    <li data-i18n-key="aiAudioUse4">Redukcja szumów</li>
+                                    <li data-i18n-key="aiAudioUse5">Rozpoznawanie emocji w głosie</li>
+                                </ul>
+
+                                <h4 data-i18n-key="aiLimitsTitle">Ograniczenia</h4>
+                                <ul class="ai-limitations">
+                                    <li data-i18n-key="aiAudioLimit1">Problemy z akcentami i dialektami</li>
+                                    <li data-i18n-key="aiAudioLimit2">Trudności w hałaśliwym środowisku</li>
+                                    <li data-i18n-key="aiAudioLimit3">Brak naturalnej intonacji w TTS</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Recommendation Systems -->
+                        <div class="ai-model-card">
+                            <div class="ai-model-header">
+                                <span class="ai-model-icon">🎯</span>
+                                <h3 data-i18n-key="aiRecommendationTitle">Systemy Rekomendacyjne</h3>
+                            </div>
+                            <div class="ai-model-content">
+                                <h4 data-i18n-key="aiHowItWorksTitle">Jak działają?</h4>
+                                <p data-i18n-key="aiRecommendationHowItWorks">
+                                    Analizują zachowania użytkowników i podobieństwa między produktami/treściami,
+                                    przewidując co może zainteresować użytkownika.
+                                </p>
+
+                                <h4 data-i18n-key="aiUseCasesTitle">Do czego służą?</h4>
+                                <ul>
+                                    <li data-i18n-key="aiRecommendationUse1">Sugestie produktów w e-commerce</li>
+                                    <li data-i18n-key="aiRecommendationUse2">Rekomendacje filmów i muzyki</li>
+                                    <li data-i18n-key="aiRecommendationUse3">Personalizacja treści</li>
+                                    <li data-i18n-key="aiRecommendationUse4">Targetowanie reklam</li>
+                                </ul>
+
+                                <h4 data-i18n-key="aiLimitsTitle">Ograniczenia</h4>
+                                <ul class="ai-limitations">
+                                    <li data-i18n-key="aiRecommendationLimit1">Efekt "bańki filtrującej"</li>
+                                    <li data-i18n-key="aiRecommendationLimit2">Problem "zimnego startu" dla nowych użytkowników</li>
+                                    <li data-i18n-key="aiRecommendationLimit3">Może wzmacniać istniejące uprzedzenia</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Predictive Analytics -->
+                        <div class="ai-model-card">
+                            <div class="ai-model-header">
+                                <span class="ai-model-icon">📊</span>
+                                <h3 data-i18n-key="aiPredictiveTitle">Analityka Predykcyjna</h3>
+                            </div>
+                            <div class="ai-model-content">
+                                <h4 data-i18n-key="aiHowItWorksTitle">Jak działają?</h4>
+                                <p data-i18n-key="aiPredictiveHowItWorks">
+                                    Wykorzystują dane historyczne i algorytmy uczenia maszynowego do przewidywania
+                                    przyszłych trendów, zachowań i wyników.
+                                </p>
+
+                                <h4 data-i18n-key="aiUseCasesTitle">Do czego służą?</h4>
+                                <ul>
+                                    <li data-i18n-key="aiPredictiveUse1">Prognozowanie sprzedaży</li>
+                                    <li data-i18n-key="aiPredictiveUse2">Przewidywanie awarii urządzeń</li>
+                                    <li data-i18n-key="aiPredictiveUse3">Ocena ryzyka kredytowego</li>
+                                    <li data-i18n-key="aiPredictiveUse4">Prognoza pogody</li>
+                                </ul>
+
+                                <h4 data-i18n-key="aiLimitsTitle">Ograniczenia</h4>
+                                <ul class="ai-limitations">
+                                    <li data-i18n-key="aiPredictiveLimit1">Zależność od jakości danych</li>
+                                    <li data-i18n-key="aiPredictiveLimit2">Nie radzi sobie z czarnymi łabędziami</li>
+                                    <li data-i18n-key="aiPredictiveLimit3">Może utrwalać błędy z przeszłości</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ai-ethics-notice">
+                        <h3 data-i18n-key="aiEthicsTitle">⚖️ Etyczne Wykorzystanie AI</h3>
+                        <p data-i18n-key="aiEthicsContent">
+                            Wszystkie modele AI mają swoje ograniczenia i mogą powielać uprzedzenia zawarte w danych treningowych.
+                            Ważne jest, aby używać ich odpowiedzialnie, weryfikować wyniki i być świadomym ich ograniczeń.
+                            AI to narzędzie wspomagające człowieka, nie jego zamiennik.
+                        </p>
+                    </div>
+                </section>
+            </main>
+
+        </div>
+        
+    </div>
+
+    <div id="sticky-player">
+        <img src="/images/logo.png" alt="Radio ETS" aria-hidden="true" class="sticky-player-logo" loading="lazy" width="120" height="48">
+        <img id="sticky-track-cover" src="/images/fallback-sticky.svg" alt="Albumhoes" data-i18n-alt="stickyTrackCoverAlt" loading="lazy" width="40" height="40">
+        <div id="sticky-player-info">
+            <h5 id="sticky-track-title" data-i18n-key="trackTitleDefault"></h5>
+             <div id="sticky-progress-container">
+                <div id="sticky-progress-bar"></div>
+            </div>
+        </div>
+        <div id="sticky-player-controls">
+            <button id="sticky-play-pause-btn" class="control-btn control-btn--sticky control-btn--icon-only" data-i18n-aria-label="playPauseLabel">
+                <svg class="control-btn__icon" aria-hidden="true" focusable="false">
+                    <use href="#icon-play"></use>
+                </svg>
+            </button>
+            <button id="sticky-next-btn" class="control-btn control-btn--sticky control-btn--icon-only" data-i18n-aria-label="nextLabel">
+                <svg class="control-btn__icon" aria-hidden="true" focusable="false">
+                    <use href="#icon-next"></use>
+                </svg>
+            </button>
+        </div>
+    </div>
+    
+    <div id="autoplay-overlay" role="dialog" aria-modal="true" aria-live="polite" aria-labelledby="welcome-greeting">
+        <video id="intro-video" src="video/logo.mp4" playsinline muted autoplay aria-hidden="true"></video>
+        <p id="welcome-greeting"></p>
+    </div>
+
+    <div id="error-overlay" class="hidden">
+        <div id="error-message-box">
+             <div id="error-message"></div>
+             <button id="error-retry-btn" class="hidden" data-i18n-key="retryBtn"></button>
+             <button id="error-close-btn">OK</button>
+        </div>
+    </div>
+    
+    <noscript>
+        <div style="background-color: #0d0d0d; color: white; text-align: center; padding: 2rem; font-family: sans-serif;">
+            <h1>DAREMON Radio ETS</h1>
+            <p data-i18n-key="noScript"></p>
+        </div>
+    </noscript>
+
+    <footer id="main-footer">
+        <p data-i18n-key="footerDisclaimer"></p>
+        <p class="disclaimer-text" data-i18n-key="footerDisclaimer2"></p>
+    </footer>
+
+    <script type="module" src="music-scanner.js"></script>
+    <script type="module" src="slideshow.js"></script>
+    <script type="module" src="survey.js"></script>
+    <script type="module" src="employee-survey.js"></script>
+    <script type="module" src="countdown-timers.js"></script>
+    <script type="module" src="weather-widget.js"></script>
+    <script type="module" src="language-switcher.js"></script>
+    <script type="module" src="survey-api.js"></script>
+    <script type="module" src="script.js"></script>
+    <script type="module" src="app.js"></script>
+    <script type="module">
+        // Initialize language switcher and survey API after DOM is ready
+        import { initializeLanguageSwitcher } from './language-switcher.js';
+        import { initializeSurveyAPI } from './survey-api.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeLanguageSwitcher();
+            initializeSurveyAPI();
+        });
+    </script>
+</body>
+</html>
