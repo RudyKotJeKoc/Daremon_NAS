@@ -81,47 +81,45 @@ const casussen = [
 
 export default function CasussenPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        <div className="text-center space-y-4 mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-100">Casussen</h1>
-          <p className="text-xl text-cyan-400 font-light">
-            Concrete voorbeelden van hoe wij complexe systemen analyseren. Namen en details zijn
-            geanonimiseerd, maar de analyses zijn echt.
-          </p>
-        </div>
+    <div className="container mx-auto px-4 py-12">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl font-bold mb-6">Casussen</h1>
+        <p className="text-xl text-muted-foreground mb-12">
+          Concrete voorbeelden van hoe wij complexe systemen analyseren. Namen en details zijn
+          geanonimiseerd, maar de analyses zijn echt.
+        </p>
 
         <div className="space-y-12">
           {casussen.map((casus, index) => (
-            <article key={index} className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
-              <div className="mb-6">
-                <span className="inline-block px-3 py-1 text-sm bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 rounded-full mb-3">
+            <article key={index} className="pb-12 border-b last:border-b-0">
+              <div className="mb-4">
+                <span className="inline-block px-3 py-1 text-sm bg-muted rounded-full mb-3">
                   {casus.categorie}
                 </span>
-                <h2 className="text-3xl font-bold text-slate-100 mb-3">{casus.titel}</h2>
+                <h2 className="text-3xl font-bold mb-3">{casus.titel}</h2>
               </div>
 
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-semibold text-slate-100 mb-2">Situatie</h3>
-                  <p className="text-slate-300">{casus.samenvatting}</p>
+                  <h3 className="text-lg font-semibold mb-2">Situatie</h3>
+                  <p className="text-muted-foreground">{casus.samenvatting}</p>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-slate-100 mb-3">Bevindingen</h3>
+                  <h3 className="text-lg font-semibold mb-2">Bevindingen</h3>
                   <ul className="space-y-2">
                     {casus.bevindingen.map((bevinding, i) => (
-                      <li key={i} className="flex items-start text-slate-300">
-                        <span className="mr-3 text-cyan-400 flex-shrink-0">▸</span>
+                      <li key={i} className="flex items-start text-muted-foreground">
+                        <span className="mr-2 text-primary">→</span>
                         <span>{bevinding}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="border border-cyan-500/20 rounded-lg p-4 bg-slate-900/40">
-                  <h3 className="text-lg font-semibold text-slate-100 mb-2">Resultaat</h3>
-                  <p className="text-slate-300">{casus.resultaat}</p>
+                <div className="p-4 bg-muted rounded-lg">
+                  <h3 className="text-lg font-semibold mb-2">Resultaat</h3>
+                  <p className="text-muted-foreground">{casus.resultaat}</p>
                 </div>
               </div>
             </article>
@@ -129,10 +127,10 @@ export default function CasussenPage() {
         </div>
 
         {/* Disclaimer */}
-        <section className="mt-12">
-          <div className="border border-cyan-500/20 rounded-lg p-6 bg-slate-900/40 backdrop-blur-md">
-            <h3 className="font-semibold text-slate-100 mb-2">Over deze casussen</h3>
-            <p className="text-sm text-slate-400">
+        <section className="mt-12 pt-12 border-t">
+          <div className="p-6 bg-muted rounded-lg">
+            <h3 className="font-semibold mb-2">Over deze casussen</h3>
+            <p className="text-sm text-muted-foreground">
               Alle hier beschreven casussen zijn gebaseerd op werkelijke analyses. Namen,
               locaties en specifieke details zijn aangepast om vertrouwelijkheid te waarborgen.
               De methodologische aanpak en conclusies zijn authentiek.
@@ -141,19 +139,17 @@ export default function CasussenPage() {
         </section>
 
         {/* CTA */}
-        <section className="text-center mt-12">
-          <div className="border border-cyan-500/30 rounded-lg p-8 bg-slate-900/40 backdrop-blur-md">
-            <h2 className="text-2xl font-bold text-slate-100 mb-4">Een vergelijkbare situatie?</h2>
-            <p className="text-slate-300 mb-6">
-              Neem contact op om te bespreken hoe wij kunnen helpen.
-            </p>
-            <Link
-              href="/contact"
-              className="inline-block px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
-            >
-              Neem contact op
-            </Link>
-          </div>
+        <section className="text-center pt-12 border-t mt-12">
+          <h2 className="text-2xl font-bold mb-4">Een vergelijkbare situatie?</h2>
+          <p className="text-muted-foreground mb-6">
+            Neem contact op om te bespreken hoe wij kunnen helpen.
+          </p>
+          <Link
+            href="/contact"
+            className="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+          >
+            Neem contact op
+          </Link>
         </section>
       </div>
     </div>

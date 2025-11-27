@@ -16,10 +16,10 @@ export function Navigation() {
   const pathname = usePathname()
 
   return (
-    <nav className="border-b border-cyan-500/20 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
+    <nav className="border-b">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="font-bold text-xl text-slate-100 hover:text-cyan-400 transition">
+          <Link href="/" className="font-bold text-xl">
             Daremon
           </Link>
 
@@ -28,10 +28,10 @@ export function Navigation() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`transition-colors ${
+                  className={`transition-colors hover:text-primary ${
                     pathname === item.href
-                      ? 'text-cyan-400 font-medium'
-                      : 'text-slate-300 hover:text-cyan-400'
+                      ? 'text-foreground font-medium'
+                      : 'text-muted-foreground'
                   }`}
                 >
                   {item.label}
@@ -43,7 +43,7 @@ export function Navigation() {
                 href="/legacy/index.html"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 text-sm font-semibold bg-cyan-600 hover:bg-cyan-500 text-black rounded-lg shadow-[0_0_15px_rgba(0,255,255,0.3)] transition"
+                className="px-4 py-2 text-sm font-semibold text-cyan-400 hover:text-cyan-200 transition"
               >
                 ETS Radio
               </a>
@@ -51,7 +51,7 @@ export function Navigation() {
           </ul>
 
           {/* Mobile menu button - TODO: implement mobile menu */}
-          <button className="md:hidden text-slate-300 hover:text-cyan-400 transition">
+          <button className="md:hidden">
             <span className="sr-only">Menu</span>
             <svg
               className="w-6 h-6"
