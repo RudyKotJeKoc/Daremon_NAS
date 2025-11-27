@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Tabs } from '@/components/tabs'
 
 export const metadata: Metadata = {
   title: 'Methodiek & AI – Daremon',
@@ -7,429 +8,145 @@ export const metadata: Metadata = {
 }
 
 export default function MethodiekPage() {
-  return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold mb-6">Methodiek & AI</h1>
-        <p className="text-xl text-muted-foreground mb-12">
-          Hoe wij data, AI-modellen en praktijkervaring combineren om tot een helder beeld van een
-          systeem te komen.
-        </p>
+  const tabs = [
+    {
+      id: 'methodiek',
+      label: 'Onze methodiek',
+      content: <MethodiekTab />,
+    },
+    {
+      id: 'ai-rol',
+      label: 'Rola AI',
+      content: <AIRoleTab />,
+    },
+    {
+      id: 'ai-ecosystem',
+      label: 'AI Ecosysteem',
+      content: <AIEcosystemTab />,
+    },
+  ]
 
-        {/* Kernprincipes */}
-        <section className="mb-16 pb-16 border-b">
-          <h2 className="text-3xl font-bold mb-6">Onze aanpak</h2>
-          <p className="text-muted-foreground leading-relaxed mb-8">
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+      <div className="max-w-4xl mx-auto px-4 py-12">
+        {/* Header */}
+        <div className="text-center space-y-4 mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-100">Methodiek & AI</h1>
+          <p className="text-xl text-cyan-400 font-light">
+            Hoe wij data, AI-modellen en praktijkervaring combineren om tot een helder beeld van een
+            systeem te komen.
+          </p>
+        </div>
+
+        {/* Tabs */}
+        <Tabs tabs={tabs} defaultTab="methodiek" />
+
+        {/* CTA */}
+        <section className="text-center mt-16">
+          <div className="border border-cyan-500/30 rounded-lg p-8 bg-slate-900/40 backdrop-blur-md">
+            <h2 className="text-2xl font-bold text-slate-100 mb-4">Vragen over onze aanpak?</h2>
+            <p className="text-slate-300 mb-6">
+              Neem contact op voor meer informatie over hoe wij werken.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-block px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
+            >
+              Neem contact op
+            </Link>
+          </div>
+        </section>
+      </div>
+    </div>
+  )
+}
+
+// Tab 1: Methodiek
+function MethodiekTab() {
+  return (
+    <>
+      {/* Kernprincipes */}
+      <section className="mb-16">
+        <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+          <h2 className="text-3xl font-bold text-slate-100 mb-6 border-b border-cyan-500/30 pb-4">
+            Onze aanpak
+          </h2>
+          <p className="text-slate-300 leading-relaxed mb-8">
             Elk complex systeem vraagt om een mix van technische kennis, kritische analyse en
             praktische ervaring. Wij werken niet met standaard-checklists, maar met een flexibele
             methodiek die zich aanpast aan de situatie.
           </p>
 
           <div className="space-y-6">
-            <div className="p-6 border rounded-lg">
-              <h3 className="text-xl font-semibold mb-3">1. Systeemdenken</h3>
-              <p className="text-muted-foreground">
+            <div className="border border-cyan-500/20 rounded-lg p-6 bg-slate-900/40">
+              <h3 className="text-xl font-semibold text-slate-100 mb-3 flex items-start gap-3">
+                <span className="text-cyan-400 flex-shrink-0">1.</span>
+                Systeemdenken
+              </h3>
+              <p className="text-slate-300">
                 We benaderen problemen als onderdelen van grotere systemen. Een "simpele" storing
                 kan voortkomen uit organisatiecultuur, verouderde procedures of verkeerde prikkels.
                 We zoeken naar de werkelijke oorzaken, niet de symptomen.
               </p>
             </div>
 
-            <div className="p-6 border rounded-lg">
-              <h3 className="text-xl font-semibold mb-3">2. Data-gedreven maar niet data-blind</h3>
-              <p className="text-muted-foreground">
+            <div className="border border-cyan-500/20 rounded-lg p-6 bg-slate-900/40">
+              <h3 className="text-xl font-semibold text-slate-100 mb-3 flex items-start gap-3">
+                <span className="text-cyan-400 flex-shrink-0">2.</span>
+                Data-gedreven maar niet data-blind
+              </h3>
+              <p className="text-slate-300">
                 Data is waardevol, maar vertelt niet het hele verhaal. We combineren kwantitatieve
                 analyses met kwalitatief onderzoek: interviews, observaties, documentanalyse.
                 Wat zeggen de cijfers? En wat zeggen de mensen die met het systeem werken?
               </p>
             </div>
 
-            <div className="p-6 border rounded-lg">
-              <h3 className="text-xl font-semibold mb-3">3. Kritische blik op macht en belangen</h3>
-              <p className="text-muted-foreground">
+            <div className="border border-cyan-500/20 rounded-lg p-6 bg-slate-900/40">
+              <h3 className="text-xl font-semibold text-slate-100 mb-3 flex items-start gap-3">
+                <span className="text-cyan-400 flex-shrink-0">3.</span>
+                Kritische blik op macht en belangen
+              </h3>
+              <p className="text-slate-300">
                 Elk systeem heeft stakeholders met verschillende belangen. Wij vragen niet alleen
                 "hoe werkt dit?", maar ook "voor wie werkt dit?" en "wie profiteert van de huidige
                 situatie?". Dat maakt onze analyses scherper en realistischer.
               </p>
             </div>
 
-            <div className="p-6 border rounded-lg">
-              <h3 className="text-xl font-semibold mb-3">4. Praktische uitvoerbaarheid</h3>
-              <p className="text-muted-foreground">
+            <div className="border border-cyan-500/20 rounded-lg p-6 bg-slate-900/40">
+              <h3 className="text-xl font-semibold text-slate-100 mb-3 flex items-start gap-3">
+                <span className="text-cyan-400 flex-shrink-0">4.</span>
+                Praktische uitvoerbaarheid
+              </h3>
+              <p className="text-slate-300">
                 Een analyse is pas nuttig als hij leidt tot actie. Onze aanbevelingen zijn
                 realistisch, rekening houdend met organisatiecultuur, budgetten en politieke
                 realiteit. Geen utopische plannen, maar concrete stappen.
               </p>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* AI & Tools */}
-        <section className="mb-16 pb-16 border-b">
-          <h2 className="text-3xl font-bold mb-6">De rol van AI</h2>
-          <p className="text-muted-foreground leading-relaxed mb-8">
-            AI is een krachtig instrument, maar geen wondermiddel. Wij gebruiken AI-tools op
-            specifieke punten in ons analyseproces – altijd onder menselijke controle en met
-            een kritische blik.
-          </p>
-
-          <h3 className="text-xl font-semibold mb-4">Waar wij AI inzetten:</h3>
-
-          <div className="space-y-6 mb-8">
-            <div>
-              <h4 className="font-semibold mb-2">📊 Data-analyse en patroonherkenning</h4>
-              <p className="text-muted-foreground">
-                Bij grote datasets (onderhoudslogboeken, processtappen, communicatie) gebruiken
-                we AI om patronen te ontdekken die anders niet opvallen. Bijvoorbeeld: "waarom
-                vallen machines vaker uit op dinsdagen?" of "welke combinatie van factoren leidt
-                tot vertraging?".
-              </p>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-2">📝 Tekstanalyse en discoursonderzoek</h4>
-              <p className="text-muted-foreground">
-                Bij narratieve analyses scannen we grote hoeveelheden tekst (beleidsdocumenten,
-                nieuwsartikelen, social media) om te zien welke frames en begrippen dominant zijn.
-                AI helpt bij de eerste scan, wij doen de interpretatie.
-              </p>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-2">🔍 Scenarioanalyse en simulatie</h4>
-              <p className="text-muted-foreground">
-                Bij strategisch advies kunnen we AI gebruiken om te simuleren wat er gebeurt als
-                bepaalde variabelen veranderen. "Wat als we onderhoudsintervallen verdubbelen?"
-                of "Wat als dit beleid landelijk wordt uitgerold?".
-              </p>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-2">💡 Kennisassistentie en literatuuronderzoek</h4>
-              <p className="text-muted-foreground">
-                AI-tools helpen ons snel relevante wetenschappelijke literatuur, technische normen
-                en best practices te vinden. Dit bespaart tijd en zorgt ervoor dat we geen
-                belangrijke bronnen missen.
-              </p>
-            </div>
-          </div>
-
-          <div className="p-6 bg-muted rounded-lg">
-            <h4 className="font-semibold mb-2">⚠️ Wat AI niet doet</h4>
-            <p className="text-muted-foreground mb-3">
-              AI levert geen kant-en-klare oplossingen. Het geeft signalen, suggesties en
-              patronen – maar de interpretatie, afweging en uiteindelijke conclusies komen van
-              menselijke analisten met domeinkennis en kritisch vermogen.
-            </p>
-            <p className="text-muted-foreground">
-              Wij geloven niet in "black box" AI. Als we een AI-tool gebruiken, kunnen we
-              uitleggen waarom en hoe, en we nemen de verantwoordelijkheid voor de conclusies.
-            </p>
-          </div>
-        </section>
-
-        {/* AI Ecosysteem */}
-        <section className="mb-16 pb-16 border-b">
-          <h2 className="text-3xl font-bold mb-6">Ons AI-ecosysteem</h2>
-          <p className="text-muted-foreground leading-relaxed mb-8">
-            We gebruiken verschillende AI-tools voor verschillende taken. Elk model heeft zijn eigen
-            sterke punten en wordt ingezet waar het het meest effectief is. Hieronder een overzicht
-            van ons volledige AI-ecosysteem.
-          </p>
-
-          <div className="space-y-6 mb-12">
-            {/* ChatGPT */}
-            <div className="p-6 border-2 border-primary rounded-lg">
-              <div className="flex items-start gap-3 mb-3">
-                <span className="text-2xl">🧠</span>
-                <div>
-                  <h3 className="text-xl font-bold text-primary">ChatGPT — Analyse, Logica, Documenten, Strategie</h3>
-                  <p className="text-sm font-semibold text-muted-foreground">Rola: mózg główny</p>
-                </div>
-              </div>
-              <p className="text-muted-foreground mb-3">
-                <strong>Styl:</strong> racjonalny, precyzyjny, technisch
-              </p>
-              <div>
-                <p className="font-semibold mb-2">Zastosowania:</p>
-                <ul className="text-muted-foreground text-sm space-y-1 list-disc list-inside">
-                  <li>Analiza prawna / psychologiczna / instytucjonalna</li>
-                  <li>Raporty dla psychologa</li>
-                  <li>Dokumenty formalne, pisma, petycje, odwołania</li>
-                  <li>Analiza absurdów w pracy</li>
-                  <li>Spójność narracji w projektach (Daremon, Polana Kłamstw)</li>
-                  <li>Zaawansowana elektronika, automatyka, embedded (ESP, czujniki, roboty)</li>
-                  <li>Projektowanie systemów</li>
-                  <li>Tworzenie promptów</li>
-                </ul>
-              </div>
-              <p className="mt-3 text-sm italic text-primary">
-                Cel: najważniejszy model do decyzji i analizy
-              </p>
-            </div>
-
-            {/* Claude */}
-            <div className="p-6 border-2 border-blue-500 rounded-lg">
-              <div className="flex items-start gap-3 mb-3">
-                <span className="text-2xl">✍️</span>
-                <div>
-                  <h3 className="text-xl font-bold text-blue-600">Claude — Redakcja, Humanistyczny Ton, Empatyczność</h3>
-                  <p className="text-sm font-semibold text-muted-foreground">Rola: redaktor elegancki, dyplomata</p>
-                </div>
-              </div>
-              <p className="text-muted-foreground mb-3">
-                <strong>Styl:</strong> miękki, ludzki, inteligentny
-              </p>
-              <div>
-                <p className="font-semibold mb-2">Zastosowania:</p>
-                <ul className="text-muted-foreground text-sm space-y-1 list-disc list-inside">
-                  <li>Wygładzanie maili i tekstów społecznie wrażliwych</li>
-                  <li>Dopisanie „ludzkiej" warstwy do twardego dokumentu</li>
-                  <li>Narracje symboliczne, psychologiczne, literackie</li>
-                  <li>Dyplomatyczne wersje wiadomości</li>
-                  <li>Upraszczanie treści dla odbiorców o niższej percepcji</li>
-                </ul>
-              </div>
-              <p className="mt-3 text-sm italic text-blue-600">
-                Cel: PR wewnętrzny i zewnętrzny
-              </p>
-            </div>
-
-            {/* Grok */}
-            <div className="p-6 border-2 border-red-500 rounded-lg">
-              <div className="flex items-start gap-3 mb-3">
-                <span className="text-2xl">⚡</span>
-                <div>
-                  <h3 className="text-xl font-bold text-red-600">Grok — Ironia, Sarkazm, Detektor Absurdu</h3>
-                  <p className="text-sm font-semibold text-muted-foreground">Rola: czarne lustro, analizator nonsensów</p>
-                </div>
-              </div>
-              <p className="text-muted-foreground mb-3">
-                <strong>Styl:</strong> cięty, dosadny, kontrolowana bezczelność
-              </p>
-              <div>
-                <p className="font-semibold mb-2">Zastosowania:</p>
-                <ul className="text-muted-foreground text-sm space-y-1 list-disc list-inside">
-                  <li>Ostra analiza absurdów w pracy, instytucjach</li>
-                  <li>„Druga wersja" maili — brutalnie szczera</li>
-                  <li>Memy, satyra, humor, alternatywne dramatyczne narracje</li>
-                  <li>Wyłapywanie logicznych fałszów, manipulacji</li>
-                  <li>Łamanie hipokryzji i narracji</li>
-                </ul>
-              </div>
-              <p className="mt-3 text-sm italic text-red-600">
-                Cel: prawda bez filtra, wersje „B – tylko do wglądu"
-              </p>
-            </div>
-
-            {/* Gemini */}
-            <div className="p-6 border-2 border-purple-500 rounded-lg">
-              <div className="flex items-start gap-3 mb-3">
-                <span className="text-2xl">🔷</span>
-                <div>
-                  <h3 className="text-xl font-bold text-purple-600">Gemini — Systemy, Warianty, Struktury, Plany</h3>
-                  <p className="text-sm font-semibold text-muted-foreground">Rola: architekt alternatyw i szerokich analiz</p>
-                </div>
-              </div>
-              <p className="text-muted-foreground mb-3">
-                <strong>Styl:</strong> neutralny, syntetyczny, systemowy
-              </p>
-              <div>
-                <p className="font-semibold mb-2">Zastosowania:</p>
-                <ul className="text-muted-foreground text-sm space-y-1 list-disc list-inside">
-                  <li>Generowanie wariantów projektów (A/B/C/D)</li>
-                  <li>Mapowanie dużych zbiorów danych (czaty, projekty)</li>
-                  <li>Budowa struktur, diagramów, workflow</li>
-                  <li>Analiza szeroka (całe środowisko, przebiegi decyzji, scenariusze)</li>
-                  <li>Brainstorming techniczny i organizacyjny</li>
-                </ul>
-              </div>
-              <p className="mt-3 text-sm italic text-purple-600">
-                Cel: architekt systemów i strategii
-              </p>
-            </div>
-
-            {/* NotebookLM */}
-            <div className="p-6 border-2 border-amber-500 rounded-lg">
-              <div className="flex items-start gap-3 mb-3">
-                <span className="text-2xl">📚</span>
-                <div>
-                  <h3 className="text-xl font-bold text-amber-600">NotebookLM — Analiza Długich Dokumentów, Archiwum, Memory OS</h3>
-                  <p className="text-sm font-semibold text-muted-foreground">Rola: narzędzie do przetwarzania dużych i wielu dokumentów naraz</p>
-                </div>
-              </div>
-              <p className="text-muted-foreground mb-3">
-                <strong>Styl:</strong> encyklopedyczno-analityczny
-              </p>
-              <div>
-                <p className="font-semibold mb-2">Zastosowania:</p>
-                <ul className="text-muted-foreground text-sm space-y-1 list-disc list-inside">
-                  <li>Analiza akt spraw (cywilna, karna, historia rodzinna)</li>
-                  <li>Analiza korespondencji, umów, plików PDF</li>
-                  <li>„Repozytorium pamięci" — pliki i notatki</li>
-                  <li>Generowanie spójnych podsumowań i powiązań</li>
-                  <li>Odciążenie od przeglądania setek stron akt</li>
-                </ul>
-              </div>
-              <p className="mt-3 text-sm italic text-amber-600">
-                Cel: czytnik pamięci i archiwum
-              </p>
-            </div>
-
-            {/* GitHub Copilot */}
-            <div className="p-6 border-2 border-slate-600 rounded-lg">
-              <div className="flex items-start gap-3 mb-3">
-                <span className="text-2xl">💻</span>
-                <div>
-                  <h3 className="text-xl font-bold text-slate-700">GitHub Copilot — Kod, Algorytmy, Architektura Oprogramowania</h3>
-                  <p className="text-sm font-semibold text-muted-foreground">Rola: współprogramista i generator kodu</p>
-                </div>
-              </div>
-              <p className="text-muted-foreground mb-3">
-                <strong>Styl:</strong> szybki, kod-centric
-              </p>
-              <div>
-                <p className="font-semibold mb-2">Zastosowania:</p>
-                <ul className="text-muted-foreground text-sm space-y-1 list-disc list-inside">
-                  <li>Kod do ESP/Arduino/ESPHome</li>
-                  <li>Kod do Raspberry Pi (Python)</li>
-                  <li>Next.js / React / Node.js</li>
-                  <li>Generowanie backendów, integracji API</li>
-                  <li>Analiza błędów, linting, refaktoryzacja</li>
-                  <li>Prototypy ML/AI</li>
-                </ul>
-              </div>
-              <p className="mt-3 text-sm italic text-slate-600">
-                Cel: maszyna do pisania kodu i prototypów
-              </p>
-            </div>
-
-            {/* ElevenLabs */}
-            <div className="p-6 border-2 border-green-500 rounded-lg">
-              <div className="flex items-start gap-3 mb-3">
-                <span className="text-2xl">🎙️</span>
-                <div>
-                  <h3 className="text-xl font-bold text-green-600">ElevenLabs — Głos, Komunikaty, Narrator Systemu</h3>
-                  <p className="text-sm font-semibold text-muted-foreground">Rola: generator audio i osobowości głosowych</p>
-                </div>
-              </div>
-              <p className="text-muted-foreground mb-3">
-                <strong>Styl:</strong> dowolny — naturalny, neutralny, dramatyczny, szeptany
-              </p>
-              <div>
-                <p className="font-semibold mb-2">Zastosowania:</p>
-                <ul className="text-muted-foreground text-sm space-y-1 list-disc list-inside">
-                  <li>Komunikaty dla systemów domowych (Home Assistant / Echo Unit)</li>
-                  <li>Dźwięki dla inteligentnego dzwonka</li>
-                  <li>Głosy narracyjne do projektów</li>
-                  <li>Synteza postaci AI (np. głos Daremon)</li>
-                  <li>Generowanie komunikatów "inteligentnych" do eksperymentów</li>
-                </ul>
-              </div>
-              <p className="mt-3 text-sm italic text-green-600">
-                Cel: warstwa dźwiękowa ekosystemu
-              </p>
-            </div>
-
-            {/* Suno */}
-            <div className="p-6 border-2 border-pink-500 rounded-lg">
-              <div className="flex items-start gap-3 mb-3">
-                <span className="text-2xl">🎵</span>
-                <div>
-                  <h3 className="text-xl font-bold text-pink-600">Suno — Muzyka, Podkłady, Efekty, Humor</h3>
-                  <p className="text-sm font-semibold text-muted-foreground">Rola: kompozytor i generator audio kreatywnego</p>
-                </div>
-              </div>
-              <p className="text-muted-foreground mb-3">
-                <strong>Styl:</strong> muzyczny, dowolny gatunek
-              </p>
-              <div>
-                <p className="font-semibold mb-2">Zastosowania:</p>
-                <ul className="text-muted-foreground text-sm space-y-1 list-disc list-inside">
-                  <li>Podkłady do filmów i systemów monitoringowych</li>
-                  <li>Piosenki satyryczne</li>
-                  <li>Melodie do projektów (Echo Unit, lampka, wibracje)</li>
-                  <li>Krótkie sygnały dźwiękowe (status maszyny: idle / error / run)</li>
-                  <li>Humorystyczne piosenki do memów</li>
-                </ul>
-              </div>
-              <p className="mt-3 text-sm italic text-pink-600">
-                Cel: audio kreatywne i „podkłady świata Daremon"
-              </p>
-            </div>
-          </div>
-
-          {/* Szybka mapa */}
-          <div className="p-8 bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg border-2 border-primary/20">
-            <h3 className="text-2xl font-bold mb-6 text-center">Zbiorcza mapa – „Kto do czego"</h3>
-            <div className="grid md:grid-cols-2 gap-4 text-sm">
-              <div className="flex gap-3 items-start">
-                <span className="text-lg">🧠</span>
-                <div>
-                  <strong className="text-primary">ChatGPT:</strong> analiza, dokumenty, logika, strategia
-                </div>
-              </div>
-              <div className="flex gap-3 items-start">
-                <span className="text-lg">✍️</span>
-                <div>
-                  <strong className="text-blue-600">Claude:</strong> redakcja, ludzki ton, dyplomacja
-                </div>
-              </div>
-              <div className="flex gap-3 items-start">
-                <span className="text-lg">⚡</span>
-                <div>
-                  <strong className="text-red-600">Grok:</strong> sarkazm, krytyka, demontaż absurdów
-                </div>
-              </div>
-              <div className="flex gap-3 items-start">
-                <span className="text-lg">🔷</span>
-                <div>
-                  <strong className="text-purple-600">Gemini:</strong> warianty, struktury, architektury
-                </div>
-              </div>
-              <div className="flex gap-3 items-start">
-                <span className="text-lg">📚</span>
-                <div>
-                  <strong className="text-amber-600">NotebookLM:</strong> analiza plików, akta, pamięć projektu
-                </div>
-              </div>
-              <div className="flex gap-3 items-start">
-                <span className="text-lg">💻</span>
-                <div>
-                  <strong className="text-slate-600">Copilot:</strong> kod, algorytmy, automatyka programistyczna
-                </div>
-              </div>
-              <div className="flex gap-3 items-start">
-                <span className="text-lg">🎙️</span>
-                <div>
-                  <strong className="text-green-600">ElevenLabs:</strong> głos, komunikaty
-                </div>
-              </div>
-              <div className="flex gap-3 items-start">
-                <span className="text-lg">🎵</span>
-                <div>
-                  <strong className="text-pink-600">Suno:</strong> muzyka, podkłady, humor, dźwięki systemowe
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Proces */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-6">Ons proces</h2>
-          <p className="text-muted-foreground leading-relaxed mb-8">
+      {/* Proces */}
+      <section className="mb-8">
+        <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+          <h2 className="text-3xl font-bold text-slate-100 mb-6 border-b border-cyan-500/30 pb-4">
+            Ons proces
+          </h2>
+          <p className="text-slate-300 leading-relaxed mb-8">
             Elk project is anders, maar over het algemeen volgen we deze stappen:
           </p>
 
           <div className="space-y-4">
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
+              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-cyan-600 text-black flex items-center justify-center font-bold text-lg">
                 1
               </div>
               <div>
-                <h3 className="font-semibold mb-1">Intake en probleemdefiniëring</h3>
-                <p className="text-muted-foreground">
+                <h3 className="font-semibold text-slate-100 mb-1">Intake en probleemdefiniëring</h3>
+                <p className="text-slate-300">
                   Wat is het probleem? Wat is de context? Wie zijn de stakeholders? We stellen
                   veel vragen om het werkelijke probleem te begrijpen.
                 </p>
@@ -437,12 +154,12 @@ export default function MethodiekPage() {
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
+              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-cyan-600 text-black flex items-center justify-center font-bold text-lg">
                 2
               </div>
               <div>
-                <h3 className="font-semibold mb-1">Dataverzameling en verkenning</h3>
-                <p className="text-muted-foreground">
+                <h3 className="font-semibold text-slate-100 mb-1">Dataverzameling en verkenning</h3>
+                <p className="text-slate-300">
                   We verzamelen relevante data: documenten, datasets, interviews, observaties.
                   We kijken breed, want vaak zit de oplossing op een onverwachte plek.
                 </p>
@@ -450,12 +167,12 @@ export default function MethodiekPage() {
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
+              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-cyan-600 text-black flex items-center justify-center font-bold text-lg">
                 3
               </div>
               <div>
-                <h3 className="font-semibold mb-1">Analyse en synthese</h3>
-                <p className="text-muted-foreground">
+                <h3 className="font-semibold text-slate-100 mb-1">Analyse en synthese</h3>
+                <p className="text-slate-300">
                   We analyseren de data, ontleden het systeem en zoeken naar patronen, zwakke
                   punten en kansen. Dit is waar AI-tools kunnen helpen, maar altijd onder
                   menselijke regie.
@@ -464,12 +181,12 @@ export default function MethodiekPage() {
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
+              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-cyan-600 text-black flex items-center justify-center font-bold text-lg">
                 4
               </div>
               <div>
-                <h3 className="font-semibold mb-1">Rapportage en advies</h3>
-                <p className="text-muted-foreground">
+                <h3 className="font-semibold text-slate-100 mb-1">Rapportage en advies</h3>
+                <p className="text-slate-300">
                   We leveren een helder rapport met bevindingen en aanbevelingen. Geen jargon,
                   geen onnodige bulk. Alleen wat u nodig heeft om verder te komen.
                 </p>
@@ -477,34 +194,274 @@ export default function MethodiekPage() {
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
+              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-cyan-600 text-black flex items-center justify-center font-bold text-lg">
                 5
               </div>
               <div>
-                <h3 className="font-semibold mb-1">Implementatieondersteuning (optioneel)</h3>
-                <p className="text-muted-foreground">
+                <h3 className="font-semibold text-slate-100 mb-1">Implementatieondersteuning (optioneel)</h3>
+                <p className="text-slate-300">
                   Op verzoek kunnen we helpen bij de implementatie van aanbevelingen, of
                   aanvullende analyses doen als de situatie verandert.
                 </p>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
+    </>
+  )
+}
 
-        {/* CTA */}
-        <section className="text-center pt-12 border-t">
-          <h2 className="text-2xl font-bold mb-4">Vragen over onze aanpak?</h2>
-          <p className="text-muted-foreground mb-6">
-            Neem contact op voor meer informatie over hoe wij werken.
+// Tab 2: AI Role
+function AIRoleTab() {
+  return (
+    <section className="mb-8">
+      <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+        <h2 className="text-3xl font-bold text-slate-100 mb-6 border-b border-cyan-500/30 pb-4">
+          De rol van AI
+        </h2>
+        <p className="text-slate-300 leading-relaxed mb-8">
+          AI is een krachtig instrument, maar geen wondermiddel. Wij gebruiken AI-tools op
+          specifieke punten in ons analyseproces – altijd onder menselijke controle en met
+          een kritische blik.
+        </p>
+
+        <h3 className="text-xl font-semibold text-slate-100 mb-4">Waar wij AI inzetten:</h3>
+
+        <div className="space-y-6 mb-8">
+          <div>
+            <h4 className="font-semibold text-cyan-400 mb-2">📊 Data-analyse en patroonherkenning</h4>
+            <p className="text-slate-300">
+              Bij grote datasets (onderhoudslogboeken, processtappen, communicatie) gebruiken
+              we AI om patronen te ontdekken die anders niet opvallen. Bijvoorbeeld: "waarom
+              vallen machines vaker uit op dinsdagen?" of "welke combinatie van factoren leidt
+              tot vertraging?".
+            </p>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-cyan-400 mb-2">📝 Tekstanalyse en discoursonderzoek</h4>
+            <p className="text-slate-300">
+              Bij narratieve analyses scannen we grote hoeveelheden tekst (beleidsdocumenten,
+              nieuwsartikelen, social media) om te zien welke frames en begrippen dominant zijn.
+              AI helpt bij de eerste scan, wij doen de interpretatie.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-cyan-400 mb-2">🔍 Scenarioanalyse en simulatie</h4>
+            <p className="text-slate-300">
+              Bij strategisch advies kunnen we AI gebruiken om te simuleren wat er gebeurt als
+              bepaalde variabelen veranderen. "Wat als we onderhoudsintervallen verdubbelen?"
+              of "Wat als dit beleid landelijk wordt uitgerold?".
+            </p>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-cyan-400 mb-2">💡 Kennisassistentie en literatuuronderzoek</h4>
+            <p className="text-slate-300">
+              AI-tools helpen ons snel relevante wetenschappelijke literatuur, technische normen
+              en best practices te vinden. Dit bespaart tijd en zorgt ervoor dat we geen
+              belangrijke bronnen missen.
+            </p>
+          </div>
+        </div>
+
+        <div className="border border-cyan-500/20 rounded-lg p-6 bg-slate-900/40">
+          <h4 className="font-semibold text-slate-100 mb-2">⚠️ Wat AI niet doet</h4>
+          <p className="text-slate-300 mb-3">
+            AI levert geen kant-en-klare oplossingen. Het geeft signalen, suggesties en
+            patronen – maar de interpretatie, afweging en uiteindelijke conclusies komen van
+            menselijke analisten met domeinkennis en kritisch vermogen.
           </p>
-          <Link
-            href="/contact"
-            className="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
-          >
-            Neem contact op
-          </Link>
-        </section>
+          <p className="text-slate-300">
+            Wij geloven niet in "black box" AI. Als we een AI-tool gebruiken, kunnen we
+            uitleggen waarom en hoe, en we nemen de verantwoordelijkheid voor de conclusies.
+          </p>
+        </div>
       </div>
-    </div>
+    </section>
+  )
+}
+
+// Tab 3: AI Ecosystem (continued in next message due to length)
+function AIEcosystemTab() {
+  return (
+    <section className="mb-8">
+      <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+        <h2 className="text-3xl font-bold text-slate-100 mb-6 border-b border-cyan-500/30 pb-4">
+          Ons AI-ecosysteem
+        </h2>
+        <p className="text-slate-300 leading-relaxed mb-8">
+          We gebruiken verschillende AI-tools voor verschillende taken. Elk model heeft zijn eigen
+          sterke punten en wordt ingezet waar het het meest effectief is.
+        </p>
+
+        <div className="space-y-6 mb-12">
+          {/* ChatGPT */}
+          <div className="border-2 border-cyan-500/50 rounded-lg p-6 bg-slate-900/60">
+            <div className="flex items-start gap-3 mb-3">
+              <span className="text-2xl">🧠</span>
+              <div>
+                <h3 className="text-xl font-bold text-cyan-400">ChatGPT — Analyse, Logica, Documenten, Strategie</h3>
+                <p className="text-sm font-semibold text-slate-400">Rola: mózg główny</p>
+              </div>
+            </div>
+            <p className="text-slate-300 mb-3">
+              <strong>Styl:</strong> racjonalny, precyzyjny, techniczny
+            </p>
+            <div>
+              <p className="font-semibold text-slate-100 mb-2">Zastosowania:</p>
+              <ul className="text-slate-300 text-sm space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-cyan-400 flex-shrink-0">▸</span>
+                  <span>Analiza prawna / psychologiczna / instytucjonalna</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-cyan-400 flex-shrink-0">▸</span>
+                  <span>Dokumenty formalne, pisma, petycje, odwołania</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-cyan-400 flex-shrink-0">▸</span>
+                  <span>Zaawansowana elektronika, automatyka, embedded</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-cyan-400 flex-shrink-0">▸</span>
+                  <span>Projektowanie systemów i tworzenie promptów</span>
+                </li>
+              </ul>
+            </div>
+            <p className="mt-3 text-sm italic text-cyan-400">
+              Cel: najważniejszy model do decyzji i analizy
+            </p>
+          </div>
+
+          {/* Claude */}
+          <div className="border-2 border-blue-500/50 rounded-lg p-6 bg-slate-900/60">
+            <div className="flex items-start gap-3 mb-3">
+              <span className="text-2xl">✍️</span>
+              <div>
+                <h3 className="text-xl font-bold text-blue-400">Claude — Redakcja, Humanistyczny Ton</h3>
+                <p className="text-sm font-semibold text-slate-400">Rola: redaktor elegancki, dyplomata</p>
+              </div>
+            </div>
+            <p className="text-slate-300 mb-3">
+              <strong>Styl:</strong> miękki, ludzki, inteligentny
+            </p>
+            <div>
+              <p className="font-semibold text-slate-100 mb-2">Zastosowania:</p>
+              <ul className="text-slate-300 text-sm space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 flex-shrink-0">▸</span>
+                  <span>Wygładzanie tekstów społecznie wrażliwych</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 flex-shrink-0">▸</span>
+                  <span>Narracje symboliczne, psychologiczne, literackie</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 flex-shrink-0">▸</span>
+                  <span>Dyplomatyczne wersje wiadomości</span>
+                </li>
+              </ul>
+            </div>
+            <p className="mt-3 text-sm italic text-blue-400">
+              Cel: PR wewnętrzny i zewnętrzny
+            </p>
+          </div>
+
+          {/* Grok */}
+          <div className="border-2 border-red-500/50 rounded-lg p-6 bg-slate-900/60">
+            <div className="flex items-start gap-3 mb-3">
+              <span className="text-2xl">⚡</span>
+              <div>
+                <h3 className="text-xl font-bold text-red-400">Grok — Ironia, Sarkazm, Detektor Absurdu</h3>
+                <p className="text-sm font-semibold text-slate-400">Rola: czarne lustro</p>
+              </div>
+            </div>
+            <p className="text-slate-300 mb-3">
+              <strong>Styl:</strong> cięty, dosadny, kontrolowana bezczelność
+            </p>
+            <div>
+              <p className="font-semibold text-slate-100 mb-2">Zastosowania:</p>
+              <ul className="text-slate-300 text-sm space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-red-400 flex-shrink-0">▸</span>
+                  <span>Analiza absurdów w pracy, instytucjach</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-400 flex-shrink-0">▸</span>
+                  <span>Wyłapywanie logicznych fałszów, manipulacji</span>
+                </li>
+              </ul>
+            </div>
+            <p className="mt-3 text-sm italic text-red-400">
+              Cel: prawda bez filtra
+            </p>
+          </div>
+
+          {/* Gemini */}
+          <div className="border-2 border-purple-500/50 rounded-lg p-6 bg-slate-900/60">
+            <div className="flex items-start gap-3 mb-3">
+              <span className="text-2xl">🔷</span>
+              <div>
+                <h3 className="text-xl font-bold text-purple-400">Gemini — Systemy, Warianty, Struktury</h3>
+                <p className="text-sm font-semibold text-slate-400">Rola: architekt alternatyw</p>
+              </div>
+            </div>
+            <p className="text-slate-300 mb-3">
+              <strong>Styl:</strong> neutralny, syntetyczny, systemowy
+            </p>
+            <div>
+              <p className="font-semibold text-slate-100 mb-2">Zastosowania:</p>
+              <ul className="text-slate-300 text-sm space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-purple-400 flex-shrink-0">▸</span>
+                  <span>Generowanie wariantów projektów (A/B/C/D)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-purple-400 flex-shrink-0">▸</span>
+                  <span>Budowa struktur, diagramów, workflow</span>
+                </li>
+              </ul>
+            </div>
+            <p className="mt-3 text-sm italic text-purple-400">
+              Cel: architekt systemów i strategii
+            </p>
+          </div>
+
+          {/* Additional tools summary */}
+          <div className="border border-cyan-500/20 rounded-lg p-6 bg-slate-900/40">
+            <h4 className="font-semibold text-slate-100 mb-3">Inne narzędzia w naszym ekosystemie:</h4>
+            <div className="grid md:grid-cols-2 gap-3 text-sm text-slate-300">
+              <div className="flex items-start gap-2">
+                <span className="text-amber-400">📚</span>
+                <div>
+                  <strong className="text-amber-400">NotebookLM:</strong> Analiza dokumentów i archiwum
+                </div>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-slate-400">💻</span>
+                <div>
+                  <strong className="text-slate-400">Copilot:</strong> Kod i prototypy
+                </div>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-green-400">🎙️</span>
+                <div>
+                  <strong className="text-green-400">ElevenLabs:</strong> Głos i komunikaty
+                </div>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-pink-400">🎵</span>
+                <div>
+                  <strong className="text-pink-400">Suno:</strong> Muzyka i podkłady
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }
