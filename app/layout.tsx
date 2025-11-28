@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Navigation } from "@/components/navigation";
+import { ErrorBoundary } from "@/components/error-boundary";
+import { WebVitals } from "@/components/web-vitals";
 
 export const metadata: Metadata = {
   title: "Daremon – Bureau voor Systeem- en Narratieve Analyse",
@@ -23,15 +25,18 @@ export default function RootLayout({
   return (
     <html lang="nl-NL">
       <body className="font-sans antialiased">
-        <Navigation />
-        <main>{children}</main>
-        <footer className="border-t mt-20">
-          <div className="container mx-auto px-4 py-8">
-            <p className="text-center text-muted-foreground text-sm">
-              © {new Date().getFullYear()} Daremon – Bureau voor Systeem- en Narratieve Analyse
-            </p>
-          </div>
-        </footer>
+        <ErrorBoundary>
+          <WebVitals />
+          <Navigation />
+          <main>{children}</main>
+          <footer className="border-t mt-20">
+            <div className="container mx-auto px-4 py-8">
+              <p className="text-center text-muted-foreground text-sm">
+                © {new Date().getFullYear()} Daremon – Bureau voor Systeem- en Narratieve Analyse
+              </p>
+            </div>
+          </footer>
+        </ErrorBoundary>
       </body>
     </html>
   );
