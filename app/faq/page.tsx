@@ -1,10 +1,11 @@
+'use client'
+
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
 
-export const metadata: Metadata = {
-  title: 'Veelgestelde Vragen – Daremon',
-  description: 'Antwoorden op veelgestelde vragen over onze diensten, werkwijze, kosten en projecten.',
-}
+// Note: metadata export removed because this is now a client component
+// Metadata should be handled by parent layout or moved to a separate component
 
 const faqCategories = [
   {
@@ -132,12 +133,62 @@ const faqCategories = [
 ]
 
 export default function FAQPage() {
+  const [activeSection, setActiveSection] = useState<string>('')
+
+  // Scroll spy effect
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = faqCategories.map(cat => {
+        const id = cat.category.toLowerCase().replace(/\s+/g, '-')
+        const element = document.getElementById(id)
+        if (element) {
+          const rect = element.getBoundingClientRect()
+          return {
+            id,
+            top: rect.top,
+            bottom: rect.bottom
+          }
+        }
+        return null
+      }).filter(Boolean)
+
+      // Find which section is currently in view
+      const current = sections.find(section =>
+        section && section.top <= 150 && section.bottom > 150
+      )
+
+      if (current) {
+        setActiveSection(current.id)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    handleScroll() // Initial check
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const scrollToSection = (categoryId: string) => {
+    const element = document.getElementById(categoryId)
+    if (element) {
+      const offset = 100
+      const bodyRect = document.body.getBoundingClientRect().top
+      const elementRect = element.getBoundingClientRect().top
+      const elementPosition = elementRect - bodyRect
+      const offsetPosition = elementPosition - offset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
       <main id="main-content" role="main">
-        <div className="max-w-4xl mx-auto px-5 sm:px-6 md:px-8 py-8 sm:py-12">
-          {/* Header */}
-          <div className="text-center space-y-3 sm:space-y-4 mb-12 sm:mb-16">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8 py-8 sm:py-12">
+          {/* Header - spans full width */}
+          <div className="lg:col-span-2 text-center space-y-3 sm:space-y-4 mb-12 sm:mb-16">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-100">
               Veelgestelde Vragen
             </h1>
@@ -146,13 +197,53 @@ export default function FAQPage() {
             </p>
           </div>
 
+          <div className="lg:grid lg:grid-cols-[250px_1fr] lg:gap-8 xl:gap-12">
+            {/* Sticky Table of Contents - Desktop only */}
+            <aside className="hidden lg:block" aria-label="Inhoudsopgave">
+              <nav className="sticky top-24 space-y-1">
+                <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3 px-3">
+                  Inhoud
+                </h2>
+                <ul className="space-y-1" role="list">
+                  {faqCategories.map((cat) => {
+                    const id = cat.category.toLowerCase().replace(/\s+/g, '-')
+                    const isActive = activeSection === id
+                    return (
+                      <li key={id}>
+                        <button
+                          onClick={() => scrollToSection(id)}
+                          className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all focus:outline-none focus:ring-2 focus:ring-cyan-400 ${
+                            isActive
+                              ? 'bg-cyan-500/20 text-cyan-400 font-semibold border-l-4 border-cyan-400'
+                              : 'text-slate-400 hover:text-cyan-400 hover:bg-slate-800/50 border-l-4 border-transparent'
+                          }`}
+                          aria-current={isActive ? 'location' : undefined}
+                        >
+                          {cat.category}
+                        </button>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </nav>
+            </aside>
+
+            {/* Main Content */}
+            <div>
+
           {/* FAQ Categories */}
           <div className="space-y-8 sm:space-y-12">
-            {faqCategories.map((category, categoryIndex) => (
-              <section key={categoryIndex} className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-5 sm:p-6 md:p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
-                <h2 className="text-2xl sm:text-3xl font-bold text-slate-100 mb-5 sm:mb-6 border-b border-cyan-500/30 pb-3 sm:pb-4">
-                  {category.category}
-                </h2>
+            {faqCategories.map((category, categoryIndex) => {
+              const sectionId = category.category.toLowerCase().replace(/\s+/g, '-')
+              return (
+                <section
+                  key={categoryIndex}
+                  id={sectionId}
+                  className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-5 sm:p-6 md:p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)] scroll-mt-24"
+                >
+                  <h2 className="text-2xl sm:text-3xl font-bold text-slate-100 mb-5 sm:mb-6 border-b border-cyan-500/30 pb-3 sm:pb-4">
+                    {category.category}
+                  </h2>
 
                 <div className="space-y-5 sm:space-y-6">
                   {category.questions.map((item, index) => (
@@ -168,34 +259,37 @@ export default function FAQPage() {
                   ))}
                 </div>
               </section>
-            ))}
+              )
+            })}
           </div>
 
-          {/* Niet gevonden */}
-          <section className="mt-12 sm:mt-16">
-            <div className="border border-cyan-500/30 rounded-lg p-6 sm:p-8 bg-slate-900/40 backdrop-blur-md text-center">
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-100 mb-3 sm:mb-4">
-                Staat uw vraag er niet bij?
-              </h2>
-              <p className="text-slate-300 text-sm sm:text-base mb-5 sm:mb-6 leading-relaxed max-w-2xl mx-auto">
-                Neem gerust contact op. We beantwoorden alle vragen graag in een vrijblijvend gesprek.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                <Link
-                  href="/contact"
-                  className="inline-block px-5 sm:px-6 py-3 min-h-[44px] bg-cyan-600 hover:bg-cyan-500 text-black font-bold text-sm sm:text-base rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-950"
-                >
-                  Neem contact op
-                </Link>
-                <Link
-                  href="/diensten"
-                  className="inline-block px-5 sm:px-6 py-3 min-h-[44px] border border-cyan-500/30 hover:bg-cyan-500/10 text-cyan-400 font-semibold text-sm sm:text-base rounded-lg transition focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-950"
-                >
-                  Bekijk onze diensten
-                </Link>
-              </div>
+              {/* Niet gevonden */}
+              <section className="mt-12 sm:mt-16">
+                <div className="border border-cyan-500/30 rounded-lg p-6 sm:p-8 bg-slate-900/40 backdrop-blur-md text-center">
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-100 mb-3 sm:mb-4">
+                    Staat uw vraag er niet bij?
+                  </h2>
+                  <p className="text-slate-300 text-sm sm:text-base mb-5 sm:mb-6 leading-relaxed max-w-2xl mx-auto">
+                    Neem gerust contact op. We beantwoorden alle vragen graag in een vrijblijvend gesprek.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                    <Link
+                      href="/contact"
+                      className="inline-block px-5 sm:px-6 py-3 min-h-[44px] bg-cyan-600 hover:bg-cyan-500 text-black font-bold text-sm sm:text-base rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-950"
+                    >
+                      Neem contact op
+                    </Link>
+                    <Link
+                      href="/diensten"
+                      className="inline-block px-5 sm:px-6 py-3 min-h-[44px] border border-cyan-500/30 hover:bg-cyan-500/10 text-cyan-400 font-semibold text-sm sm:text-base rounded-lg transition focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-950"
+                    >
+                      Bekijk onze diensten
+                    </Link>
+                  </div>
+                </div>
+              </section>
             </div>
-          </section>
+          </div>
         </div>
       </main>
     </div>
