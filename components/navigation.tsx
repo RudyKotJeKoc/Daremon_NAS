@@ -10,6 +10,7 @@ const navItems = [
   { href: '/casussen', label: 'Casussen' },
   { href: '/methodiek', label: 'Methodiek & AI' },
   { href: '/over', label: 'Over het bureau' },
+  { href: '/faq', label: 'FAQ' },
   { href: '/contact', label: 'Contact' },
 ]
 
