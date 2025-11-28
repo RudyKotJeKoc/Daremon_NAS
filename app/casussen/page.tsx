@@ -1,10 +1,11 @@
+'use client'
+
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { useState } from 'react'
 
-export const metadata: Metadata = {
-  title: 'Casussen – Daremon',
-  description: 'Concrete voorbeelden van systeemanalyses: van fabriekssluitingen tot verzekeringsclaims en AZC-problematiek.',
-}
+// Note: metadata export removed because this is now a client component
+// Metadata should be handled by parent layout or moved to a separate component
 
 const casussen = [
   {
@@ -80,6 +81,16 @@ const casussen = [
 ]
 
 export default function CasussenPage() {
+  const [selectedCategory, setSelectedCategory] = useState<string>('Alle')
+
+  // Extract unique categories
+  const categories = ['Alle', ...Array.from(new Set(casussen.map(c => c.categorie)))]
+
+  // Filter casussen based on selected category
+  const filteredCasussen = selectedCategory === 'Alle'
+    ? casussen
+    : casussen.filter(c => c.categorie === selectedCategory)
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
       <main id="main-content" role="main">
@@ -92,8 +103,33 @@ export default function CasussenPage() {
           </p>
         </div>
 
+        {/* Category Filter */}
+        <div className="mb-8 sm:mb-12">
+          <div className="flex flex-wrap gap-2 sm:gap-3 justify-center" role="group" aria-label="Filter casussen op categorie">
+            {categories.map(category => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4 sm:px-5 py-2 sm:py-2.5 min-h-[44px] rounded-lg text-sm sm:text-base font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-950 ${
+                  selectedCategory === category
+                    ? 'bg-cyan-600 text-black shadow-[0_0_15px_rgba(0,255,255,0.4)]'
+                    : 'bg-slate-800/50 text-slate-300 border border-cyan-500/30 hover:bg-cyan-500/10 hover:text-cyan-400'
+                }`}
+                aria-pressed={selectedCategory === category}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
+          {/* Results count */}
+          <p className="text-center mt-4 text-sm text-slate-400" role="status" aria-live="polite">
+            {filteredCasussen.length} {filteredCasussen.length === 1 ? 'casus' : 'casussen'} gevonden
+          </p>
+        </div>
+
         <div className="space-y-8 sm:space-y-12">
-          {casussen.map((casus, index) => (
+          {filteredCasussen.map((casus, index) => (
             <article key={index} className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-5 sm:p-6 md:p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
               <div className="mb-5 sm:mb-6">
                 <span className="inline-block px-3 py-1 text-xs sm:text-sm bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 rounded-full mb-3">
