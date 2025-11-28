@@ -50,11 +50,20 @@ export default function DienstenPage() {
             </ul>
 
             <div className="border border-cyan-500/20 rounded-lg p-4 sm:p-5 bg-slate-900/40">
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-3">
                 <strong className="text-cyan-400">Voorbeeld:</strong> Een fabrieksluiting dreigt omdat een machine steeds
                 uitvalt. Wij ontdekken dat het niet aan de machine ligt, maar aan een gebrekkige
                 onderhoudsprocedure die gebaseerd is op verouderde aannames.
               </p>
+              <Link
+                href="/diensten/technische-analyse"
+                className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 text-sm font-semibold transition"
+              >
+                Lees meer over technische analyse
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
             </div>
           </div>
         </section>
