@@ -1,10 +1,11 @@
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
-      {/* Hero Section */}
-      <section className="max-w-4xl mx-auto px-5 sm:px-6 md:px-8 pt-16 sm:pt-20 pb-12 sm:pb-16">
+      <main id="main-content" role="main">
+        {/* Hero Section */}
+        <section className="max-w-4xl mx-auto px-5 sm:px-6 md:px-8 pt-16 sm:pt-20 pb-12 sm:pb-16" aria-labelledby="hero-heading">
         <div className="text-center space-y-4 sm:space-y-6">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight">
+          <h1 id="hero-heading" className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight">
             <span className="text-slate-100">Daremon</span>
             <span className="block mt-2 text-2xl sm:text-3xl md:text-4xl font-normal text-slate-300">
               Bureau voor Technische Analyse & Automatisering
@@ -172,6 +173,7 @@ export default function HomePage() {
           </p>
         </div>
       </div>
+      </main>
     </div>
   )
 }

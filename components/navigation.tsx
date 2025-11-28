@@ -45,39 +45,53 @@ export function Navigation() {
   }, [mobileMenuOpen])
 
   return (
-    <nav className="border-b border-cyan-500/20 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+    <>
+      {/* Skip to main content link for keyboard navigation */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-cyan-600 focus:text-black focus:font-bold focus:rounded-lg focus:shadow-lg"
+      >
+        Skip to main content
+      </a>
+
+      <nav className="border-b border-cyan-500/20 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50" role="navigation" aria-label="Main navigation">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link
             href="/"
-            className="font-bold text-xl text-slate-100 hover:text-cyan-400 transition"
+            className="font-bold text-xl text-slate-100 hover:text-cyan-400 transition focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-950 rounded"
+            aria-label="Daremon homepage"
           >
             Daremon
           </Link>
 
           {/* Desktop Navigation */}
-          <ul className="hidden md:flex items-center gap-6">
+          <ul className="hidden md:flex items-center gap-6" role="menubar">
             {navItems.map((item) => (
-              <li key={item.href}>
+              <li key={item.href} role="none">
                 <Link
                   href={item.href}
-                  className={`transition-colors ${
+                  role="menuitem"
+                  className={`transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded px-2 py-1 ${
                     pathname === item.href
                       ? 'text-cyan-400 font-medium'
                       : 'text-slate-300 hover:text-cyan-400'
                   }`}
+                  aria-current={pathname === item.href ? 'page' : undefined}
                 >
                   {item.label}
                 </Link>
               </li>
             ))}
-            <li>
+            <li role="none">
               <a
                 href="/legacy/index.html"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 text-sm font-semibold bg-cyan-600 hover:bg-cyan-500 text-black rounded-lg shadow-[0_0_15px_rgba(0,255,255,0.3)] transition"
+                role="menuitem"
+                className="px-4 py-2 text-sm font-semibold bg-cyan-600 hover:bg-cyan-500 text-black rounded-lg shadow-[0_0_15px_rgba(0,255,255,0.3)] transition focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-950"
+                aria-label="Open ETS Radio system (opens in new window)"
               >
                 ETS Radio
               </a>
@@ -137,19 +151,21 @@ export function Navigation() {
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <nav className="flex flex-col h-full">
+        <nav className="flex flex-col h-full" aria-label="Mobile navigation menu">
           {/* Navigation Links */}
-          <ul className="flex-1 py-4 space-y-1 overflow-y-auto">
+          <ul className="flex-1 py-4 space-y-1 overflow-y-auto" role="menu">
             {navItems.map((item) => (
-              <li key={item.href}>
+              <li key={item.href} role="none">
                 <Link
                   href={item.href}
-                  className={`block px-6 py-3 transition-colors ${
+                  role="menuitem"
+                  className={`block px-6 py-3 transition-colors focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-400 ${
                     pathname === item.href
                       ? 'bg-cyan-500/10 text-cyan-400 border-l-4 border-cyan-400 font-medium'
                       : 'text-slate-300 hover:bg-slate-800 hover:text-cyan-400 border-l-4 border-transparent'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
+                  aria-current={pathname === item.href ? 'page' : undefined}
                 >
                   {item.label}
                 </Link>
@@ -163,19 +179,21 @@ export function Navigation() {
               href="/legacy/index.html"
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full px-4 py-3 text-center text-sm font-semibold bg-cyan-600 hover:bg-cyan-500 text-black rounded-lg shadow-[0_0_15px_rgba(0,255,255,0.3)] transition"
+              className="block w-full px-4 py-3 text-center text-sm font-semibold bg-cyan-600 hover:bg-cyan-500 text-black rounded-lg shadow-[0_0_15px_rgba(0,255,255,0.3)] transition focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-900"
               onClick={() => setMobileMenuOpen(false)}
+              aria-label="Open ETS Radio system (opens in new window)"
             >
               ETS Radio
             </a>
           </div>
 
           {/* Close hint */}
-          <div className="p-4 text-center text-xs text-slate-500">
+          <div className="p-4 text-center text-xs text-slate-500" role="status" aria-live="polite">
             Druk op ESC om te sluiten
           </div>
         </nav>
       </div>
     </nav>
+    </>
   )
 }

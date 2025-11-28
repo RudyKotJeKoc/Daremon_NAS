@@ -9,6 +9,7 @@ export const metadata: Metadata = {
 export default function DienstenPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+      <main id="main-content" role="main">
       <div className="max-w-4xl mx-auto px-5 sm:px-6 md:px-8 py-8 sm:py-12">
         <div className="text-center space-y-3 sm:space-y-4 mb-12 sm:mb-16">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-100">Diensten</h1>
@@ -193,6 +194,7 @@ export default function DienstenPage() {
           </div>
         </section>
       </div>
+      </main>
     </div>
   )
 }
