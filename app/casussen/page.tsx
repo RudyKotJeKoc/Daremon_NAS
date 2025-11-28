@@ -82,36 +82,36 @@ const casussen = [
 export default function CasussenPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        <div className="text-center space-y-4 mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-100">Casussen</h1>
-          <p className="text-xl text-cyan-400 font-light">
+      <div className="max-w-4xl mx-auto px-5 sm:px-6 md:px-8 py-8 sm:py-12">
+        <div className="text-center space-y-3 sm:space-y-4 mb-12 sm:mb-16">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-100">Casussen</h1>
+          <p className="text-lg sm:text-xl text-cyan-400 font-light leading-relaxed">
             Concrete voorbeelden van hoe wij complexe systemen analyseren. Namen en details zijn
             geanonimiseerd, maar de analyses zijn echt.
           </p>
         </div>
 
-        <div className="space-y-12">
+        <div className="space-y-8 sm:space-y-12">
           {casussen.map((casus, index) => (
-            <article key={index} className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
-              <div className="mb-6">
-                <span className="inline-block px-3 py-1 text-sm bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 rounded-full mb-3">
+            <article key={index} className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-5 sm:p-6 md:p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+              <div className="mb-5 sm:mb-6">
+                <span className="inline-block px-3 py-1 text-xs sm:text-sm bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 rounded-full mb-3">
                   {casus.categorie}
                 </span>
-                <h2 className="text-3xl font-bold text-slate-100 mb-3">{casus.titel}</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold text-slate-100 mb-2 sm:mb-3">{casus.titel}</h2>
               </div>
 
-              <div className="space-y-6">
+              <div className="space-y-5 sm:space-y-6">
                 <div>
-                  <h3 className="text-lg font-semibold text-slate-100 mb-2">Situatie</h3>
-                  <p className="text-slate-300">{casus.samenvatting}</p>
+                  <h3 className="text-base sm:text-lg font-semibold text-slate-100 mb-2">Situatie</h3>
+                  <p className="text-slate-300 text-sm sm:text-base leading-relaxed">{casus.samenvatting}</p>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-slate-100 mb-3">Bevindingen</h3>
+                  <h3 className="text-base sm:text-lg font-semibold text-slate-100 mb-2 sm:mb-3">Bevindingen</h3>
                   <ul className="space-y-2">
                     {casus.bevindingen.map((bevinding, i) => (
-                      <li key={i} className="flex items-start text-slate-300">
+                      <li key={i} className="flex items-start text-slate-300 text-sm sm:text-base">
                         <span className="mr-3 text-cyan-400 flex-shrink-0">▸</span>
                         <span>{bevinding}</span>
                       </li>
@@ -119,9 +119,9 @@ export default function CasussenPage() {
                   </ul>
                 </div>
 
-                <div className="border border-cyan-500/20 rounded-lg p-4 bg-slate-900/40">
-                  <h3 className="text-lg font-semibold text-slate-100 mb-2">Resultaat</h3>
-                  <p className="text-slate-300">{casus.resultaat}</p>
+                <div className="border border-cyan-500/20 rounded-lg p-4 sm:p-5 bg-slate-900/40">
+                  <h3 className="text-base sm:text-lg font-semibold text-slate-100 mb-2">Resultaat</h3>
+                  <p className="text-slate-300 text-sm sm:text-base leading-relaxed">{casus.resultaat}</p>
                 </div>
               </div>
             </article>
@@ -129,10 +129,10 @@ export default function CasussenPage() {
         </div>
 
         {/* Disclaimer */}
-        <section className="mt-12">
-          <div className="border border-cyan-500/20 rounded-lg p-6 bg-slate-900/40 backdrop-blur-md">
-            <h3 className="font-semibold text-slate-100 mb-2">Over deze casussen</h3>
-            <p className="text-sm text-slate-400">
+        <section className="mt-8 sm:mt-12">
+          <div className="border border-cyan-500/20 rounded-lg p-5 sm:p-6 bg-slate-900/40 backdrop-blur-md">
+            <h3 className="font-semibold text-slate-100 text-base sm:text-lg mb-2">Over deze casussen</h3>
+            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
               Alle hier beschreven casussen zijn gebaseerd op werkelijke analyses. Namen,
               locaties en specifieke details zijn aangepast om vertrouwelijkheid te waarborgen.
               De methodologische aanpak en conclusies zijn authentiek.
@@ -141,15 +141,15 @@ export default function CasussenPage() {
         </section>
 
         {/* CTA */}
-        <section className="text-center mt-12">
-          <div className="border border-cyan-500/30 rounded-lg p-8 bg-slate-900/40 backdrop-blur-md">
-            <h2 className="text-2xl font-bold text-slate-100 mb-4">Een vergelijkbare situatie?</h2>
-            <p className="text-slate-300 mb-6">
+        <section className="text-center mt-8 sm:mt-12">
+          <div className="border border-cyan-500/30 rounded-lg p-6 sm:p-8 bg-slate-900/40 backdrop-blur-md">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-100 mb-3 sm:mb-4">Een vergelijkbare situatie?</h2>
+            <p className="text-slate-300 text-sm sm:text-base mb-5 sm:mb-6 leading-relaxed">
               Neem contact op om te bespreken hoe wij kunnen helpen.
             </p>
             <Link
               href="/contact"
-              className="inline-block px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
+              className="inline-block px-5 sm:px-6 py-3 min-h-[44px] bg-cyan-600 hover:bg-cyan-500 text-black font-bold text-sm sm:text-base rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
             >
               Neem contact op
             </Link>
