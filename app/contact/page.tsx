@@ -3,7 +3,7 @@ import { ContactForm } from '@/components/contact-form'
 
 export const metadata: Metadata = {
   title: 'Contact – Daremon',
-  description: 'Neem contact op met Daremon voor een vrijblijvend gesprek over uw situatie.',
+  description: 'Neem contact op als je nieuwsgierig bent naar dit AI-experiment. Geen commerciële diensten.',
 }
 
 export default function ContactPage() {
@@ -13,62 +13,77 @@ export default function ContactPage() {
         <div className="text-center space-y-4 mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-slate-100">Contact</h1>
           <p className="text-xl text-cyan-400 font-light">
-            Heeft u een complex systeem dat begrepen moet worden? Neem contact op voor een
-            vrijblijvend gesprek.
+            Nieuwsgierig naar dit AI-experiment? Je kunt contact opnemen om te praten over ideeën.
           </p>
         </div>
+
+        {/* DISCLAIMER */}
+        <section className="mb-12">
+          <div className="backdrop-blur-sm bg-amber-950/40 border border-amber-500/50 rounded-lg p-6 shadow-[0_0_15px_rgba(255,191,0,0.2)]">
+            <h2 className="text-xl font-bold text-amber-300 mb-3 flex items-center gap-3">
+              <span className="text-2xl">ℹ</span>
+              Dit is geen zakelijk contactformulier
+            </h2>
+            <div className="space-y-2 text-slate-200 text-sm leading-relaxed">
+              <p>
+                Daremon is een experimenteel AI-narratief project, <strong className="text-amber-300">geen bedrijf</strong>.
+                Contact opnemen is mogelijk om te praten over ideeën of het experiment zelf, maar
+                <strong> niet om diensten af te nemen, offertes aan te vragen of opdrachten te geven</strong>.
+              </p>
+              <p>
+                Als je een zakelijke vraag hebt of op zoek bent naar professionele dienstverlening,
+                is dit niet de juiste plek.
+              </p>
+            </div>
+          </div>
+        </section>
 
         <div className="grid md:grid-cols-2 gap-12">
           {/* Contact informatie */}
           <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
-            <h2 className="text-2xl font-bold text-slate-100 mb-6">Neem contact op</h2>
+            <h2 className="text-2xl font-bold text-slate-100 mb-6">Over contact</h2>
             <div className="space-y-6 text-slate-300">
               <p className="leading-relaxed">
-                Bij voorkeur starten we met een kort kennismakingsgesprek (telefonisch of per
-                videocall) om te bepalen of we kunnen helpen en wat de beste aanpak is.
+                Als je vragen hebt over dit AI-experiment, de achterliggende ideeën of gewoon
+                nieuwsgierig bent naar het project, kun je een bericht sturen.
               </p>
 
               <div>
                 <h3 className="font-semibold text-slate-100 mb-3 flex items-start gap-3">
                   <span className="text-cyan-400 flex-shrink-0">▸</span>
-                  Wat kunt u verwachten?
+                  Wat kun je verwachten?
                 </h3>
                 <ul className="space-y-2 text-sm text-slate-300">
                   <li className="flex items-start gap-3">
                     <span className="text-cyan-400 text-2xl flex-shrink-0">•</span>
-                    <span>Reactie binnen 2 werkdagen</span>
+                    <span>Een persoonlijke reactie (mogelijk vertraagd)</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-cyan-400 text-2xl flex-shrink-0">•</span>
-                    <span>Vrijblijvend kennismakingsgesprek</span>
+                    <span>Geen commerciële benadering</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-cyan-400 text-2xl flex-shrink-0">•</span>
-                    <span>Geen verplichtingen of commerciële druk</span>
+                    <span>Geen offertes of zakelijke voorstellen</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-cyan-400 text-2xl flex-shrink-0">•</span>
-                    <span>Duidelijke offerte als we verder gaan</span>
+                    <span>Mogelijk een interessant gesprek over AI en verhalen</span>
                   </li>
                 </ul>
               </div>
 
-              <div>
-                <h3 className="font-semibold text-slate-100 mb-2">Vertrouwelijkheid</h3>
-                <p className="text-sm text-slate-300">
-                  Alle informatie die u deelt wordt strikt vertrouwelijk behandeld. Ook als er
-                  uiteindelijk geen opdracht uit voortkomt.
-                </p>
-              </div>
-
               <div className="border border-cyan-500/20 rounded-lg p-4 bg-slate-900/40">
-                <h3 className="font-semibold text-slate-100 mb-2">Direct contact</h3>
+                <h3 className="font-semibold text-slate-100 mb-2">E-mail</h3>
                 <p className="text-sm mb-2 text-slate-300">
-                  Voor spoedeisende zaken of vragen over lopende projecten:
+                  Voor vragen over dit project:
                 </p>
                 <p className="text-sm text-slate-200">
-                  <strong className="text-cyan-400">E-mail:</strong> info@daremon.nl<br />
-                  <strong className="text-cyan-400">Telefoon:</strong> +31 (0)6 12345678
+                  <strong className="text-cyan-400">E-mail:</strong> info@daremon.nl
+                </p>
+                <p className="text-xs text-slate-400 mt-3 italic">
+                  Let op: Dit is geen zakelijke contactmogelijkheid. Commerciële vragen
+                  kunnen mogelijk niet beantwoord worden.
                 </p>
               </div>
             </div>
@@ -91,23 +106,22 @@ export default function ContactPage() {
               <div>
                 <h3 className="font-semibold text-slate-100 mb-2 flex items-start gap-3">
                   <span className="text-cyan-400 flex-shrink-0">▸</span>
-                  Wat zijn typische projectduren?
+                  Kan ik diensten afnemen of een project laten uitvoeren?
                 </h3>
                 <p className="text-slate-300 text-sm ml-6">
-                  Dat hangt sterk af van de complexiteit. Een snelle faalanalyse kan in een paar
-                  dagen, een grondige organisatieanalyse kan enkele weken duren. We bespreken dit
-                  altijd vooraf.
+                  Nee. Daremon is geen bedrijf en biedt geen commerciële diensten aan. Dit is een
+                  experimenteel AI-project zonder zakelijke activiteiten.
                 </p>
               </div>
 
               <div>
                 <h3 className="font-semibold text-slate-100 mb-2 flex items-start gap-3">
                   <span className="text-cyan-400 flex-shrink-0">▸</span>
-                  Werken jullie alleen in Nederland?
+                  Kunnen jullie een analyse of adviesrapport maken?
                 </h3>
                 <p className="text-slate-300 text-sm ml-6">
-                  Primair wel, maar voor specifieke opdrachten werken we ook internationaal (Engels
-                  en Pools mogelijk).
+                  Nee. De "analyses" en "rapporten" op deze site zijn fictieve AI-gegenereerde verhalen,
+                  geen echte diensten. Er is geen team of organisatie die dit soort werk uitvoert.
                 </p>
               </div>
 
@@ -117,20 +131,30 @@ export default function ContactPage() {
                   Wat zijn de kosten?
                 </h3>
                 <p className="text-slate-300 text-sm ml-6">
-                  We werken met transparante uurtarieven en maken altijd vooraf een offerte. Geen
-                  verborgen kosten of verrassingen achteraf.
+                  Er zijn geen kosten, omdat er geen diensten zijn. Dit is een gratis experimenteel
+                  project zonder commerciële basis.
                 </p>
               </div>
 
               <div>
                 <h3 className="font-semibold text-slate-100 mb-2 flex items-start gap-3">
                   <span className="text-cyan-400 flex-shrink-0">▸</span>
-                  Kan ik een second opinion aanvragen?
+                  Waarom kun je dan wel contact opnemen?
                 </h3>
                 <p className="text-slate-300 text-sm ml-6">
-                  Ja, we doen regelmatig second opinions op analyses van anderen. Of u nu twijfelt
-                  aan een adviesrapport, een technische expertise of een beleidsanalyse – we kijken
-                  kritisch mee.
+                  Contact is mogelijk voor vragen over het AI-experiment zelf, de achterliggende ideeën,
+                  of gewoon uit nieuwsgierigheid. Niet voor zakelijke vragen of diensten.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-semibold text-slate-100 mb-2 flex items-start gap-3">
+                  <span className="text-cyan-400 flex-shrink-0">▸</span>
+                  Wie beheert dit project?
+                </h3>
+                <p className="text-slate-300 text-sm ml-6">
+                  Dit is een persoonlijk AI-experiment om gedachten te ordenen en metaforische verhalen
+                  te genereren. Er is geen bureau, geen team en geen bedrijfsstructuur.
                 </p>
               </div>
             </div>
