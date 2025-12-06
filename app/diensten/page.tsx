@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Hypothetische scenario's – Daremon',
-  description: 'Fictieve scenario's gegenereerd door AI: technische systemen, instituties, narratieven en analyses. Geen echte diensten.',
+  title: "Hypothetische scenario's – Daremon",
+  description: "Fictieve scenario's gegenereerd door AI: technische systemen, instituties, narratieven en analyses. Geen echte diensten.",
 }
 
 export default function DienstenPage() {
