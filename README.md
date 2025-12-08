@@ -795,4 +795,4 @@ Aplikacja może być używana jako:
 
 ---
 
-**Uwaga**: To jest aplikacja demonstracyjna stworzona do celów edukacyjnych. Wszystkie funkcje komunikacji (wiadomości DJ, ankiety) działają tylko lokalnie i nie są wysyłane do rzeczywistego serwera.
+**Nota**: DAREMON Radio ETS to osobisty projekt demonstracyjny i eksperymentalny. Funkcje komunikacji (wiadomości DJ, ankiety) działają lokalnie.

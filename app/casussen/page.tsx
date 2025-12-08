@@ -86,31 +86,9 @@ export default function CasussenPage() {
         <div className="text-center space-y-4 mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-slate-100">Fictieve verhalen</h1>
           <p className="text-xl text-cyan-400 font-light">
-            AI-gegenereerde verhalen over hypothetische systemen en organisaties. Dit zijn geen echte casussen.
+            AI-gegenereerde verhalen over hypothetische systemen en organisaties.
           </p>
         </div>
-
-        {/* DISCLAIMER */}
-        <section className="mb-12">
-          <div className="backdrop-blur-sm bg-red-950/30 border border-red-500/50 rounded-lg p-6 shadow-[0_0_15px_rgba(255,0,0,0.2)]">
-            <h2 className="text-2xl font-bold text-red-300 mb-3 flex items-center gap-3">
-              <span className="text-2xl">⚠</span>
-              Fictieve verhalen – Geen echte klanten of projecten
-            </h2>
-            <div className="space-y-2 text-slate-200 text-sm leading-relaxed">
-              <p>
-                De onderstaande "casussen" zijn <strong>fictieve verhalen gegenereerd door AI</strong>.
-                Het zijn <strong className="text-red-300">geen echte projecten</strong>, er zijn <strong className="text-red-300">geen
-                echte klanten</strong>, en er zijn <strong className="text-red-300">geen werkelijke analyses</strong> uitgevoerd.
-              </p>
-              <p>
-                Deze verhalen zijn bedoeld als metaforische baśnie (sprookjes/fabels) die algemene patronen
-                in organisaties en systemen illustreren. Elke overeenkomst met echte gebeurtenissen, personen
-                of organisaties is toevallig of metaforisch.
-              </p>
-            </div>
-          </div>
-        </section>
 
         <div className="space-y-12">
           {casussen.map((casus, index) => (
@@ -149,29 +127,12 @@ export default function CasussenPage() {
           ))}
         </div>
 
-        {/* Disclaimer */}
-        <section className="mt-12">
-          <div className="border border-amber-500/40 rounded-lg p-6 bg-amber-950/20 backdrop-blur-md">
-            <h3 className="font-semibold text-amber-300 mb-2">Over deze verhalen</h3>
-            <p className="text-sm text-slate-300 leading-relaxed">
-              Deze "casussen" zijn <strong>volledig fictief</strong> en gegenereerd door AI-systemen.
-              Ze zijn <strong>niet gebaseerd op werkelijke analyses, klanten of projecten</strong>.
-              De verhalen dienen als metaforische illustraties van algemene patronen in systemen
-              en organisaties, maar representeren geen echte expertise of ervaringen.
-            </p>
-            <p className="text-xs text-slate-400 mt-2 italic">
-              AI-gegenereerde content • Geen zakelijke documentatie • Fictief narratief project
-            </p>
-          </div>
-        </section>
-
         {/* CTA */}
         <section className="text-center mt-12">
           <div className="border border-cyan-500/30 rounded-lg p-8 bg-slate-900/40 backdrop-blur-md">
             <h2 className="text-2xl font-bold text-slate-100 mb-4">Vragen over dit project?</h2>
             <p className="text-slate-300 mb-6">
               Als je nieuwsgierig bent naar dit AI-experiment, kun je contact opnemen.
-              Dit is echter geen aanbod voor commerciële diensten.
             </p>
             <Link
               href="/contact"

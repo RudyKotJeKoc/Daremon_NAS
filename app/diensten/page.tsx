@@ -13,31 +13,9 @@ export default function DienstenPage() {
         <div className="text-center space-y-4 mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-slate-100">Hypothetische scenario's</h1>
           <p className="text-xl text-cyan-400 font-light">
-            AI-gegenereerde concepten en fictieve analysetypen. Dit zijn geen echte diensten.
+            AI-gegenereerde concepten en fictieve analysetypen.
           </p>
         </div>
-
-        {/* DISCLAIMER */}
-        <section className="mb-16">
-          <div className="backdrop-blur-sm bg-amber-950/40 border border-amber-500/50 rounded-lg p-6 shadow-[0_0_15px_rgba(255,191,0,0.2)]">
-            <h2 className="text-2xl font-bold text-amber-300 mb-3 flex items-center gap-3">
-              <span className="text-2xl">⚠</span>
-              Fictief aanbod – Geen echte diensten
-            </h2>
-            <div className="space-y-2 text-slate-200 text-sm leading-relaxed">
-              <p>
-                De onderstaande beschrijvingen zijn <strong>hypothetische scenario's gegenereerd door AI</strong>.
-                Ze vormen <strong className="text-amber-300">geen commercieel aanbod</strong> en zijn niet gebaseerd
-                op echte expertise of bedrijfsactiviteiten.
-              </p>
-              <p>
-                Behandel deze teksten als <strong>fictieve concepten</strong> en <strong>gedachte-experimenten</strong>,
-                niet als diensten die je kunt afnemen. Er is geen team, geen organisatie en geen proces om deze
-                "analyses" daadwerkelijk uit te voeren.
-              </p>
-            </div>
-          </div>
-        </section>
 
         {/* Scenario 1 */}
         <section className="mb-16">
@@ -45,9 +23,6 @@ export default function DienstenPage() {
             <h2 className="text-3xl font-bold text-slate-100 mb-4">
               Scenario: Analyse van technische systemen
             </h2>
-            <p className="text-slate-300 leading-relaxed mb-4 italic text-sm border-l-2 border-slate-600 pl-4">
-              Dit is een AI-gegenereerd hypothetisch scenario. Het beschrijft geen echte dienst.
-            </p>
             <p className="text-slate-300 leading-relaxed mb-6">
               In dit fictieve scenario zou een "bureau" technische systemen analyseren – fabrieken,
               productielijnen, onderhoudsstrategieën. Het zou complexe machines bestuderen met hun
@@ -91,9 +66,6 @@ export default function DienstenPage() {
             <h2 className="text-3xl font-bold text-slate-100 mb-4">
               Scenario: Analyse van instituties en procedures
             </h2>
-            <p className="text-slate-300 leading-relaxed mb-4 italic text-sm border-l-2 border-slate-600 pl-4">
-              Dit is een AI-gegenereerd hypothetisch scenario. Het beschrijft geen echte dienst.
-            </p>
             <p className="text-slate-300 leading-relaxed mb-6">
               In dit fictieve concept worden organisaties behandeld als systemen met structuren, regels en
               verborgen logica. Een hypothetische analyse zou zichtbaar maken hoe instituties "echt werken"
@@ -137,9 +109,6 @@ export default function DienstenPage() {
             <h2 className="text-3xl font-bold text-slate-100 mb-4">
               Scenario: Narratieve en belangenanalyse
             </h2>
-            <p className="text-slate-300 leading-relaxed mb-4 italic text-sm border-l-2 border-slate-600 pl-4">
-              Dit is een AI-gegenereerd hypothetisch scenario. Het beschrijft geen echte dienst.
-            </p>
             <p className="text-slate-300 leading-relaxed mb-6">
               In dit fictieve concept worden verhalen geanalyseerd als machtsinstrumenten. Een hypothetische
               analyse zou ontleden hoe verhalen bepalen wat "logisch" lijkt, wie "geloofwaardig" is en
@@ -183,9 +152,6 @@ export default function DienstenPage() {
             <h2 className="text-3xl font-bold text-slate-100 mb-4">
               Scenario: Strategische adviesrapporten
             </h2>
-            <p className="text-slate-300 leading-relaxed mb-4 italic text-sm border-l-2 border-slate-600 pl-4">
-              Dit is een AI-gegenereerd hypothetisch scenario. Het beschrijft geen echte dienst.
-            </p>
             <p className="text-slate-300 leading-relaxed mb-6">
               In dit fictieve concept zou analyse leiden tot "concrete adviezen". Een hypothetisch rapport
               zou heldere aanbevelingen bevatten – althans, in theorie.
@@ -228,7 +194,6 @@ export default function DienstenPage() {
             <h2 className="text-2xl font-bold text-slate-100 mb-4">Nieuwsgierig naar dit project?</h2>
             <p className="text-slate-300 mb-6">
               Als je vragen hebt over dit AI-experiment of gewoon wilt praten over ideeën, kun je contact opnemen.
-              Maar dit is geen commercieel aanbod en er zijn geen diensten te "bestellen".
             </p>
             <Link
               href="/contact"
