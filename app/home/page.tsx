@@ -20,32 +20,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* DISCLAIMER */}
-      <section className="max-w-4xl mx-auto px-4 py-8">
-        <div className="backdrop-blur-sm bg-red-950/30 border border-red-500/50 rounded-lg p-8 shadow-[0_0_15px_rgba(255,0,0,0.2)]">
-          <h2 className="text-2xl font-bold text-red-300 mb-4 flex items-center gap-3">
-            <span className="text-3xl">⚠</span>
-            Dit is geen bedrijf
-          </h2>
-          <div className="space-y-3 text-slate-200 leading-relaxed">
-            <p className="font-semibold">
-              Daremon is <strong className="text-red-300">geen bedrijf</strong>, <strong className="text-red-300">geen
-              plan om een bedrijf te starten</strong>, en biedt <strong className="text-red-300">geen commerciële
-              diensten</strong> aan.
-            </p>
-            <p>
-              Deze website is een <strong>experimenteel AI-narratief project</strong> waarin fictieve verhalen,
-              metaforische scenario's en hypothetische analyses worden gegenereerd door kunstmatige intelligentie.
-            </p>
-            <p className="text-sm text-slate-300">
-              Alle beschrijvingen zijn <strong>fictief</strong>. Er is geen team, geen organisatie,
-              geen klanten en geen zakelijke activiteit. Behandel dit als een literair experiment, niet als
-              een bedrijfswebsite.
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* Wat is dit eigenlijk? */}
       <section className="max-w-4xl mx-auto px-4 py-16">
         <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
@@ -92,10 +66,6 @@ export default function HomePage() {
                 </span>
               </li>
             </ul>
-
-            <p className="pt-4 text-slate-400">
-              Het project dient geen zakelijk doel en is niet bedoeld als commerciële activiteit.
-            </p>
           </div>
         </div>
       </section>
@@ -115,9 +85,6 @@ export default function HomePage() {
             <p>
               Het past bij de metaforische verhalen die hier worden gegenereerd – verhalen over
               onderliggende processen, verborgen structuren en systemen die "op de achtergrond draaien".
-            </p>
-            <p className="text-slate-400 text-sm">
-              Maar nogmaals: dit is een <strong>literaire keuze</strong>, geen zakelijke naam of merk.
             </p>
           </div>
         </div>
@@ -160,13 +127,6 @@ export default function HomePage() {
                 </p>
               </div>
             </div>
-          </div>
-
-          <div className="mt-8 pt-6 border-t border-cyan-500/20">
-            <p className="text-slate-400 text-sm italic">
-              Let op: Niets op deze site vormt een commercieel aanbod, professioneel advies of
-              zakelijke documentatie. Alles is fictie.
-            </p>
           </div>
         </div>
       </section>

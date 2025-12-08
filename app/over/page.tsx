@@ -17,31 +17,6 @@ export default function OverPage() {
           </p>
         </div>
 
-        {/* Disclaimer */}
-        <section className="mb-16">
-          <div className="backdrop-blur-sm bg-red-950/30 border border-red-500/50 rounded-lg p-8 shadow-[0_0_15px_rgba(255,0,0,0.2)]">
-            <h2 className="text-2xl font-bold text-red-300 mb-4 flex items-center gap-3">
-              <span className="text-3xl">⚠</span>
-              Belangrijke waarschuwing
-            </h2>
-            <div className="space-y-3 text-slate-200 leading-relaxed">
-              <p className="font-semibold">
-                Daremon is <strong className="text-red-300">geen bedrijf</strong> en <strong className="text-red-300">geen plan om een bedrijf te starten</strong>.
-              </p>
-              <p>
-                Deze website en alle inhoud zijn een <strong>experimenteel narratief project</strong> waarin
-                kunstmatige intelligentie (AI) wordt gebruikt om fictieve verhalen, metaforische scenario's
-                en hypothetische analyses te genereren.
-              </p>
-              <p className="text-sm">
-                Alle beschrijvingen van "diensten", "casussen", "klanten" en "projecten" zijn
-                <strong> fictief</strong> of <strong>metaforisch</strong>. Ze vormen geen aanbod, geen
-                commerciële activiteit en geen bewijs van zakelijke plannen.
-              </p>
-            </div>
-          </div>
-        </section>
-
         {/* Wat is dit eigenlijk? */}
         <section className="mb-16">
           <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
@@ -112,18 +87,6 @@ export default function OverPage() {
                   corresponderen met concrete plannen of acties.
                 </p>
               </div>
-
-              <div>
-                <h3 className="text-xl font-semibold text-slate-100 mb-3 flex items-start gap-3">
-                  <span className="text-cyan-400 flex-shrink-0">▸</span>
-                  Geen echte expertise
-                </h3>
-                <p className="text-slate-300 leading-relaxed">
-                  Hoewel de AI-gegenereerde teksten soms klinken alsof ze van een expert komen, zijn
-                  het fictieve constructies. Ze zijn gebaseerd op patronen in de trainingsdata van de
-                  AI, niet op daadwerkelijke professionele ervaring of gecertificeerde expertise.
-                </p>
-              </div>
             </div>
           </div>
         </section>
@@ -148,20 +111,6 @@ export default function OverPage() {
                   <li>Exploratieve analyses zonder praktische toepassing</li>
                 </ul>
               </div>
-              <div className="bg-red-950/20 border border-red-800/50 rounded-lg p-4 my-4">
-                <p className="text-red-300 font-semibold mb-2">Interpreteer de inhoud NIET als:</p>
-                <ul className="list-disc list-inside space-y-1 text-slate-300">
-                  <li>Een aanbod van commerciële diensten</li>
-                  <li>Bewijs van zakelijke activiteiten of plannen</li>
-                  <li>Professionele expertise of advies</li>
-                  <li>Documentatie van echte projecten of klanten</li>
-                  <li>Een poging om klanten of opdrachten te werven</li>
-                </ul>
-              </div>
-              <p>
-                Als je iets interessants vindt in de teksten, is dat prima – maar besef dat het
-                <strong> geen basis vormt voor zakelijke verwachtingen of contractuele afspraken</strong>.
-              </p>
             </div>
           </div>
         </section>
@@ -180,7 +129,6 @@ export default function OverPage() {
               <p>
                 Deze naam past bij de metaforische verhalen die hier worden gegenereerd – verhalen over
                 onderliggende processen, verborgen structuren en systemen die op de achtergrond draaien.
-                Maar het is een <strong>literaire keuze</strong>, geen zakelijke naam.
               </p>
             </div>
           </div>
@@ -192,7 +140,7 @@ export default function OverPage() {
             <h2 className="text-2xl font-bold text-slate-100 mb-4">Vragen over dit project?</h2>
             <p className="text-slate-300 mb-6">
               Als je nieuwsgierig bent naar dit experiment of gewoon wilt praten over ideeën,
-              kun je contact opnemen. Maar verwacht geen zakelijke voorstellen of offertes.
+              kun je contact opnemen.
             </p>
             <Link
               href="/contact"
