@@ -61,13 +61,6 @@ export const translations = {
         'Analiza procesów, kinematyka maszyn, autorskie audio wolne od praw autorskich i wizualizacje AI — zbudowane na tej samej technologii, którą widzisz na tej stronie.',
       ctaQuote: 'Zapytaj o wycenę',
       ctaPortfolio: 'Zobacz portfolio',
-      competenciesHeading: 'Zaplecze techniczne',
-      competencies: [
-        { tytul: 'PLC Siemens', opis: 'Programowanie, diagnostyka i dokumentacja logiki sterowników linii produkcyjnych.' },
-        { tytul: 'Arburg', opis: 'Analiza cykli wtryskarek — parametry procesowe, wady powierzchniowe, optymalizacja.' },
-        { tytul: 'Yaskawa Motoman', opis: 'Trajektorie i strefy robocze robotów przemysłowych w komórkach zrobotyzowanych.' },
-        { tytul: 'MIM', opis: 'Metal Injection Molding — kinematyka wypełniania formy i przepływu granulatu.' },
-      ],
       portfolioHeading: 'Portfolio & Case Studies',
       portfolioLink: 'Pełne case studies →',
       audioLabHeading: 'Audio Lab',
@@ -87,6 +80,184 @@ export const translations = {
       contactHeading: 'Masz proces, maszynę lub incydent do udokumentowania?',
       contactText: 'Opisz projekt, a przygotujemy wstępną wycenę montażu, analizy lub wizualizacji.',
       contactCta: 'Przejdź do kontaktu',
+    },
+    diensten: {
+      heroTitle: 'Usługi',
+      heroLead: 'Specjalistyczny montaż wideo i analiza procesów, dopasowane do formatu i odbiorcy.',
+      items: [
+        {
+          tytul: 'Montaż analiz mechanicznych',
+          opis: 'Rozbiór procesu, maszyny lub incydentu na materiale źródłowym — czytelny montaż 16:9 do dokumentacji technicznej i szkoleń.',
+          bullets: [
+            'Synchronizacja z dokumentacją techniczną',
+            'Spowolnienia i adnotacje klatka po klatce',
+            'Wersje do archiwizacji i szkoleń wewnętrznych',
+          ],
+        },
+        {
+          tytul: 'Shorts i Reels',
+          opis: 'Skrócone, pionowe wersje materiałów technicznych — pod social media i szybką komunikację wewnętrzną.',
+          bullets: [
+            'Format 9:16',
+            'Napisy i oznaczenia kluczowych momentów',
+            'Wersje pod LinkedIn, Instagram i kanały wewnętrzne',
+          ],
+        },
+        {
+          tytul: 'Wizualizacje AI',
+          opis: 'Renderowane komputerowo wizualizacje procesów trudnych do sfilmowania — przepływy, strefy robocze, symulacje.',
+          bullets: [
+            'Wizualizacja stref bezpieczeństwa i zasięgu robotów',
+            'Symulacje przepływu materiału i granulatu',
+            'Materiały poglądowe dla klientów i audytorów',
+          ],
+        },
+        {
+          tytul: 'Audio Lab — autorska ścieżka dźwiękowa',
+          opis: 'Muzyka i udźwiękowienie tworzone od podstaw — zero ryzyka Content ID przy publikacji.',
+          bullets: [
+            'Ścieżki dopasowane do tempa montażu',
+            'Pełne prawa do wykorzystania komercyjnego',
+            'Wizualizacja 3D reagująca na dźwięk — zobacz w Audio Lab na stronie głównej',
+          ],
+        },
+      ],
+      ctaHeading: 'Masz projekt do wyceny?',
+      ctaText: 'Opisz proces, maszynę lub format, który Cię interesuje — odezwiemy się z konkretną propozycją.',
+      ctaButton: 'Przejdź do kontaktu',
+    },
+    casussen: {
+      heroTitle: 'Case Studies',
+      heroLead: 'Wybrane projekty montażowe i analityczne — sytuacja, ustalenia, rezultat.',
+      situationLabel: 'Sytuacja',
+      findingsLabel: 'Ustalenia',
+      resultLabel: 'Rezultat',
+      items: [
+        {
+          tytul: 'Diagnostyka przestojów linii MIM',
+          kategoria: 'MIM',
+          sytuacja:
+            'Producent elementów MIM zgłosił powtarzające się, trudne do zdiagnozowania przestoje na jednym z etapów formowania.',
+          ustalenia: [
+            'Nagrania klatka po klatce ujawniły moment powstawania mikropęknięć w formie',
+            'Zestawienie z parametrami procesu wskazało okno czasowe odpowiedzialne za większość usterek',
+            'Materiał posłużył zespołowi utrzymania ruchu jako punkt odniesienia do korekty parametrów',
+          ],
+          rezultat: 'Skrócenie czasu diagnozowania kolejnych przestojów i gotowy materiał szkoleniowy dla nowych operatorów.',
+        },
+        {
+          tytul: 'Dokumentacja wdrożenia komórki Yaskawa Motoman',
+          kategoria: 'Robotyka',
+          sytuacja:
+            'Integrator robotyki potrzebował materiału dokumentującego uruchomienie nowej komórki zrobotyzowanej — do odbioru technicznego i szkolenia operatorów.',
+          ustalenia: [
+            'Nagranie pełnego cyklu z ujęciami synchronicznymi z dwóch kamer',
+            'Nałożona telemetria osi ułatwiła odbiór techniczny',
+            'Materiał wykorzystano też jako element oferty integratora dla kolejnych klientów',
+          ],
+          rezultat: 'Skrócony czas odbioru technicznego i gotowy materiał marketingowo-szkoleniowy w jednym.',
+        },
+        {
+          tytul: 'Analiza cyklu wtrysku Arburg pod kątem wad powierzchniowych',
+          kategoria: 'Arburg',
+          sytuacja: 'Nawracające, mikroskopijne wady powierzchniowe na elementach wtryskiwanych, trudne do uchwycenia gołym okiem.',
+          ustalenia: [
+            'Makrorejestracja w zwolnionym tempie ujawniła moment powstawania defektu przy przełączeniu ciśnienia',
+            'Zestawienie z logiem parametrów maszyny zawęziło listę przyczyn do dwóch parametrów',
+            'Krótka wersja (short) posłużyła do szybkiego uzgodnienia zmian z zespołem zmianowym',
+          ],
+          rezultat: 'Ograniczenie liczby braków bez przestoju linii na dodatkowe testy.',
+        },
+        {
+          tytul: 'Wizualizacja pracy zespołu wysiewającego',
+          kategoria: 'Agro',
+          sytuacja:
+            'Producent maszyn rolniczych potrzebował poglądowego materiału tłumaczącego zasadę działania zespołu wysiewającego klientom i dystrybutorom.',
+          ustalenia: [
+            'Połączenie nagrania rzeczywistego z wizualizacją AI przekroju mechanizmu',
+            'Materiał przygotowany w dwóch formatach — pełna wersja 16:9 i skrócony reel',
+            'Dystrybutorzy wykorzystali materiał bez dodatkowego udziału producenta',
+          ],
+          rezultat: 'Jeden materiał wideo zastąpił wielostronicową instrukcję poglądową.',
+        },
+      ],
+      ctaHeading: 'Masz podobny projekt?',
+      ctaText: 'Opisz sytuację — powiemy, jak podeszlibyśmy do montażu lub analizy.',
+      ctaButton: 'Przejdź do kontaktu',
+    },
+    over: {
+      heroTitle: 'O nas',
+      heroLead: 'Inżynieria i montaż wideo pod jednym dachem.',
+      sections: [
+        {
+          tytul: 'Kim jesteśmy',
+          body:
+            'DAREMON Engineering łączy ponad 15 lat doświadczenia w elektryce i automatyce przemysłowej z montażem wideo i narzędziami AI. Powstaliśmy z przekonania, że najlepiej o procesie technicznym opowie ktoś, kto sam go rozumie od strony inżynierskiej — nie tylko montażowej.',
+        },
+        {
+          tytul: 'Skąd ta wiedza',
+          body:
+            'Programowanie sterowników PLC Siemens, diagnostyka wtryskarek Arburg, wdrożenia robotów Yaskawa Motoman i praca z technologią MIM — to zaplecze techniczne, które pozwala nam rozumieć materiał źródłowy zanim zaczniemy montaż, a nie tylko ładnie go poskładać.',
+        },
+        {
+          tytul: 'Dlaczego wideo i AI',
+          body:
+            'Część procesów przemysłowych trudno opisać słowami albo pokazać gołym okiem — kinematyka robota, mikropęknięcie w formie, przepływ granulatu. Montaż wideo i wizualizacje AI pozwalają pokazać to, co inaczej zostałoby tylko w dokumentacji tekstowej.',
+        },
+        {
+          tytul: 'Skąd nazwa DAREMON',
+          body:
+            'Nazwa nawiązuje do "daemon" — procesu działającego w tle, który utrzymuje system w ruchu. Dokładnie tak rozumiemy naszą rolę: dokumentujemy i analizujemy procesy, które napędzają produkcję, nawet jeśli zwykle pozostają niewidoczne.',
+        },
+      ],
+      ctaHeading: 'Chcesz porozmawiać o projekcie?',
+      ctaText: 'Napisz, czym się zajmujesz i co chcesz pokazać — odpowiemy z konkretami.',
+      ctaButton: 'Przejdź do kontaktu',
+    },
+    methodiek: {
+      heroTitle: 'Metodyka i AI',
+      heroLead: 'Jak łączymy analizę techniczną, montaż i narzędzia AI, żeby materiał był rzetelny i czytelny.',
+      tabProcess: 'Nasz proces',
+      tabAi: 'Rola AI',
+      processHeading: 'Jak pracujemy',
+      processSteps: [
+        {
+          tytul: 'Briefing i analiza źródeł',
+          opis: 'Przeglądamy materiał źródłowy i dokumentację techniczną, żeby zrozumieć proces zanim zaczniemy montaż.',
+        },
+        {
+          tytul: 'Montaż i synchronizacja',
+          opis: 'Montujemy materiał z uwzględnieniem parametrów procesowych i dokumentacji — tak, by obraz zgadzał się z danymi.',
+        },
+        {
+          tytul: 'Wizualizacja i udźwiękowienie',
+          opis: 'Tam, gdzie to zasadne, dodajemy wizualizacje AI i autorską ścieżkę dźwiękową wolną od Content ID.',
+        },
+        {
+          tytul: 'Dostawa i wsparcie',
+          opis: 'Materiał trafia w formacie dopasowanym do odbiorcy, z możliwością korekt po pierwszym przeglądzie.',
+        },
+      ],
+      aiHeading: 'Gdzie realnie pomaga nam AI',
+      aiIntro:
+        'AI jest narzędziem, nie autorem materiału. Korzystamy z niej w konkretnych, ograniczonych zadaniach — decyzje montażowe i interpretacja procesu zawsze pozostają po naszej stronie.',
+      aiPoints: [
+        {
+          tytul: 'Wizualizacje 3D',
+          opis: 'Silnik Three.js pomaga pokazać strefy robocze, trajektorie i przepływy, których nie da się łatwo sfilmować.',
+        },
+        {
+          tytul: 'Autorskie audio',
+          opis: 'Narzędzia generatywne wspierają komponowanie ścieżek dźwiękowych wolnych od roszczeń Content ID.',
+        },
+        {
+          tytul: 'Wstępna selekcja materiału',
+          opis: 'Przy długich nagraniach źródłowych AI pomaga wskazać momenty warte bliższej analizy — ostateczny wybór należy do montażysty.',
+        },
+      ],
+      ctaHeading: 'Masz pytania o naszą metodykę?',
+      ctaText: 'Chętnie opowiemy, jak podeszlibyśmy do Twojego materiału.',
+      ctaButton: 'Przejdź do kontaktu',
     },
   },
   nl: {
@@ -147,13 +318,6 @@ export const translations = {
         'Procesanalyse, kinematica van machines, auteursrechtvrije audio en AI-visualisaties — gebouwd op dezelfde technologie die je op deze pagina ziet.',
       ctaQuote: 'Vraag een offerte aan',
       ctaPortfolio: 'Bekijk portfolio',
-      competenciesHeading: 'Technisch fundament',
-      competencies: [
-        { tytul: 'PLC Siemens', opis: 'Programmeren, diagnose en documentatie van besturingslogica voor productielijnen.' },
-        { tytul: 'Arburg', opis: 'Analyse van spuitgietcycli — procesparameters, oppervlaktedefecten, optimalisatie.' },
-        { tytul: 'Yaskawa Motoman', opis: 'Trajecten en werkzones van industriële robots in geautomatiseerde cellen.' },
-        { tytul: 'MIM', opis: 'Metal Injection Molding — kinematica van matrijsvulling en granulaatstroom.' },
-      ],
       portfolioHeading: 'Portfolio & Case Studies',
       portfolioLink: 'Alle case studies →',
       audioLabHeading: 'Audio Lab',
@@ -173,6 +337,184 @@ export const translations = {
       contactHeading: 'Heb je een proces, machine of incident dat gedocumenteerd moet worden?',
       contactText: 'Beschrijf je project en we stellen een eerste inschatting op voor montage, analyse of visualisatie.',
       contactCta: 'Naar contact',
+    },
+    diensten: {
+      heroTitle: 'Diensten',
+      heroLead: 'Gespecialiseerde videomontage en procesanalyse, afgestemd op formaat en doelgroep.',
+      items: [
+        {
+          tytul: 'Montage van mechanische analyses',
+          opis: 'Ontleding van een proces, machine of incident op basis van bronmateriaal — heldere 16:9-montage voor technische documentatie en training.',
+          bullets: [
+            'Synchronisatie met technische documentatie',
+            'Vertragingen en annotaties per frame',
+            'Versies voor archivering en interne trainingen',
+          ],
+        },
+        {
+          tytul: 'Shorts en Reels',
+          opis: 'Verkorte, verticale versies van technisch materiaal — voor social media en snelle interne communicatie.',
+          bullets: [
+            'Formaat 9:16',
+            'Ondertitels en markeringen van kernmomenten',
+            'Versies voor LinkedIn, Instagram en interne kanalen',
+          ],
+        },
+        {
+          tytul: 'AI-visualisaties',
+          opis: 'Computergerenderde visualisaties van processen die moeilijk te filmen zijn — stromen, werkzones, simulaties.',
+          bullets: [
+            'Visualisatie van veiligheidszones en robotbereik',
+            'Simulaties van materiaal- en granulaatstroom',
+            'Toelichtend materiaal voor klanten en auditors',
+          ],
+        },
+        {
+          tytul: 'Audio Lab — eigen soundtrack',
+          opis: 'Muziek en geluid vanaf nul opgebouwd — geen Content ID-risico bij publicatie.',
+          bullets: [
+            'Soundtracks afgestemd op het montagetempo',
+            'Volledige rechten voor commercieel gebruik',
+            '3D-visualisatie die reageert op geluid — te zien in Audio Lab op de homepage',
+          ],
+        },
+      ],
+      ctaHeading: 'Heb je een project dat een offerte nodig heeft?',
+      ctaText: 'Beschrijf het proces, de machine of het formaat dat je voor ogen hebt — we komen met een concreet voorstel.',
+      ctaButton: 'Naar contact',
+    },
+    casussen: {
+      heroTitle: 'Case Studies',
+      heroLead: 'Een selectie van montage- en analyseprojecten — situatie, bevindingen, resultaat.',
+      situationLabel: 'Situatie',
+      findingsLabel: 'Bevindingen',
+      resultLabel: 'Resultaat',
+      items: [
+        {
+          tytul: 'Diagnose van stilstanden op een MIM-lijn',
+          kategoria: 'MIM',
+          sytuacja:
+            'Een producent van MIM-onderdelen meldde terugkerende, moeilijk te diagnosticeren stilstanden bij één van de vormstappen.',
+          ustalenia: [
+            'Frame-voor-frame opnames toonden het moment waarop microscheurtjes in de matrijs ontstonden',
+            'Vergelijking met procesparameters wees een tijdvenster aan dat verantwoordelijk was voor de meeste storingen',
+            'Het materiaal diende het onderhoudsteam als referentie voor het bijstellen van parameters',
+          ],
+          rezultat: 'Kortere diagnosetijd bij volgende stilstanden en direct bruikbaar trainingsmateriaal voor nieuwe operators.',
+        },
+        {
+          tytul: 'Documentatie van de inbedrijfstelling van een Yaskawa Motoman-cel',
+          kategoria: 'Robotica',
+          sytuacja:
+            'Een systeemintegrator had materiaal nodig om de inbedrijfstelling van een nieuwe robotcel te documenteren — voor technische oplevering en operatorstraining.',
+          ustalenia: [
+            'Opname van de volledige cyclus met gesynchroniseerde beelden vanuit twee camera\'s',
+            'Overgelegde astelemetrie vereenvoudigde de technische oplevering',
+            'Het materiaal werd ook gebruikt als onderdeel van het aanbod van de integrator naar andere klanten',
+          ],
+          rezultat: 'Kortere opleveringstijd en in één keer bruikbaar marketing- en trainingsmateriaal.',
+        },
+        {
+          tytul: 'Analyse van een Arburg-spuitgietcyclus op oppervlaktedefecten',
+          kategoria: 'Arburg',
+          sytuacja: 'Terugkerende, microscopisch kleine oppervlaktedefecten op spuitgegoten onderdelen, met het blote oog nauwelijks te zien.',
+          ustalenia: [
+            'Vertraagde macro-opnames toonden het moment waarop het defect ontstond bij de drukomschakeling',
+            'Vergelijking met het machineparameterlog beperkte de mogelijke oorzaken tot twee parameters',
+            'Een korte versie (short) werd gebruikt om wijzigingen snel af te stemmen met de ploeg',
+          ],
+          rezultat: 'Minder uitval zonder de lijn stil te leggen voor extra tests.',
+        },
+        {
+          tytul: 'Visualisatie van de werking van een zaai-unit',
+          kategoria: 'Agro',
+          sytuacja:
+            'Een fabrikant van landbouwmachines had toelichtend materiaal nodig om de werking van een zaai-unit uit te leggen aan klanten en distributeurs.',
+          ustalenia: [
+            'Combinatie van echte beelden met een AI-visualisatie van de doorsnede van het mechanisme',
+            'Materiaal geleverd in twee formaten — volledige 16:9-versie en verkorte reel',
+            'Distributeurs konden het materiaal zelfstandig gebruiken, zonder extra inzet van de fabrikant',
+          ],
+          rezultat: 'Eén video verving een meerpagina toelichtende handleiding.',
+        },
+      ],
+      ctaHeading: 'Heb je een vergelijkbaar project?',
+      ctaText: 'Beschrijf de situatie — we laten weten hoe we de montage of analyse zouden aanpakken.',
+      ctaButton: 'Naar contact',
+    },
+    over: {
+      heroTitle: 'Over ons',
+      heroLead: 'Engineering en videomontage onder één dak.',
+      sections: [
+        {
+          tytul: 'Wie we zijn',
+          body:
+            'DAREMON Engineering combineert meer dan 15 jaar ervaring in elektrotechniek en industriële automatisering met videomontage en AI-tools. We zijn ontstaan vanuit de overtuiging dat een technisch proces het best wordt verteld door iemand die het ook vanuit technisch oogpunt begrijpt — niet alleen als monteur van beeldmateriaal.',
+        },
+        {
+          tytul: 'Waar die kennis vandaan komt',
+          body:
+            'Programmeren van Siemens PLC-besturingen, diagnose van Arburg-spuitgietmachines, inbedrijfstelling van Yaskawa Motoman-robots en werken met MIM-technologie — dat technische fundament stelt ons in staat het bronmateriaal te begrijpen voordat we beginnen te monteren, niet alleen het mooi aan elkaar te knippen.',
+        },
+        {
+          tytul: 'Waarom video en AI',
+          body:
+            'Sommige industriële processen zijn moeilijk in woorden te vatten of met het blote oog te zien — de kinematica van een robot, een microscheurtje in een matrijs, de stroom van granulaat. Videomontage en AI-visualisaties tonen wat anders alleen in tekstuele documentatie zou blijven staan.',
+        },
+        {
+          tytul: 'Waar de naam DAREMON vandaan komt',
+          body:
+            'De naam verwijst naar "daemon" — een achtergrondproces dat een systeem draaiende houdt. Precies zo zien wij onze rol: we documenteren en analyseren de processen die de productie aandrijven, ook als die meestal onzichtbaar blijven.',
+        },
+      ],
+      ctaHeading: 'Wil je over een project praten?',
+      ctaText: 'Laat weten waar je mee bezig bent en wat je wilt laten zien — we reageren met concrete opties.',
+      ctaButton: 'Naar contact',
+    },
+    methodiek: {
+      heroTitle: 'Methodiek & AI',
+      heroLead: 'Hoe we technische analyse, montage en AI-tools combineren tot betrouwbaar en helder materiaal.',
+      tabProcess: 'Onze werkwijze',
+      tabAi: 'Rol van AI',
+      processHeading: 'Hoe we werken',
+      processSteps: [
+        {
+          tytul: 'Briefing en analyse van bronmateriaal',
+          opis: 'We bekijken het bronmateriaal en de technische documentatie om het proces te begrijpen voordat we gaan monteren.',
+        },
+        {
+          tytul: 'Montage en synchronisatie',
+          opis: 'We monteren met oog voor procesparameters en documentatie — zodat beeld en data kloppen.',
+        },
+        {
+          tytul: 'Visualisatie en geluid',
+          opis: 'Waar zinvol voegen we AI-visualisaties toe en een eigen soundtrack zonder Content ID-risico.',
+        },
+        {
+          tytul: 'Levering en nazorg',
+          opis: 'Het materiaal wordt geleverd in het gewenste formaat, met ruimte voor correcties na de eerste review.',
+        },
+      ],
+      aiHeading: 'Waar AI ons echt helpt',
+      aiIntro:
+        'AI is een hulpmiddel, geen auteur van het materiaal. We zetten het in voor specifieke, afgebakende taken — montagebeslissingen en interpretatie van het proces blijven altijd bij ons.',
+      aiPoints: [
+        {
+          tytul: '3D-visualisaties',
+          opis: 'De Three.js-engine helpt werkzones, trajecten en stromen te tonen die lastig te filmen zijn.',
+        },
+        {
+          tytul: 'Eigen audio',
+          opis: 'Generatieve tools ondersteunen het componeren van soundtracks zonder Content ID-claims.',
+        },
+        {
+          tytul: 'Eerste selectie van materiaal',
+          opis: 'Bij lange bronopnames helpt AI momenten aan te wijzen die nadere analyse verdienen — de uiteindelijke keuze blijft aan de monteur.',
+        },
+      ],
+      ctaHeading: 'Vragen over onze methodiek?',
+      ctaText: 'We lichten graag toe hoe we jouw materiaal zouden aanpakken.',
+      ctaButton: 'Naar contact',
     },
   },
 } as const satisfies Record<Language, unknown>

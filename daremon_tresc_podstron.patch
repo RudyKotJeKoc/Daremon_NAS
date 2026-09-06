@@ -1,0 +1,1767 @@
+diff --git a/app/casussen/casussen-content.tsx b/app/casussen/casussen-content.tsx
+new file mode 100644
+index 0000000..663cce7
+--- /dev/null
++++ b/app/casussen/casussen-content.tsx
+@@ -0,0 +1,72 @@
++'use client'
++
++import Link from 'next/link'
++import { useT } from '@/lib/i18n'
++
++export function CasussenContent() {
++  const t = useT()
++
++  return (
++    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
++      <div className="max-w-4xl mx-auto px-4 py-12">
++        <div className="text-center space-y-4 mb-16">
++          <h1 className="text-4xl md:text-5xl font-bold text-slate-100">{t.casussen.heroTitle}</h1>
++          <p className="text-xl text-cyan-400 font-light">{t.casussen.heroLead}</p>
++        </div>
++
++        <div className="space-y-12">
++          {t.casussen.items.map((casus) => (
++            <article
++              key={casus.tytul}
++              className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]"
++            >
++              <div className="mb-6">
++                <span className="inline-block px-3 py-1 text-sm bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 rounded-full mb-3">
++                  {casus.kategoria}
++                </span>
++                <h2 className="text-3xl font-bold text-slate-100 mb-3">{casus.tytul}</h2>
++              </div>
++
++              <div className="space-y-6">
++                <div>
++                  <h3 className="text-lg font-semibold text-slate-100 mb-2">{t.casussen.situationLabel}</h3>
++                  <p className="text-slate-300">{casus.sytuacja}</p>
++                </div>
++
++                <div>
++                  <h3 className="text-lg font-semibold text-slate-100 mb-3">{t.casussen.findingsLabel}</h3>
++                  <ul className="space-y-2">
++                    {casus.ustalenia.map((finding) => (
++                      <li key={finding} className="flex items-start text-slate-300">
++                        <span className="mr-3 text-cyan-400 flex-shrink-0">▸</span>
++                        <span>{finding}</span>
++                      </li>
++                    ))}
++                  </ul>
++                </div>
++
++                <div className="border border-cyan-500/20 rounded-lg p-4 bg-slate-900/40">
++                  <h3 className="text-lg font-semibold text-slate-100 mb-2">{t.casussen.resultLabel}</h3>
++                  <p className="text-slate-300">{casus.rezultat}</p>
++                </div>
++              </div>
++            </article>
++          ))}
++        </div>
++
++        <section className="text-center mt-12">
++          <div className="border border-cyan-500/30 rounded-lg p-8 bg-slate-900/40 backdrop-blur-md">
++            <h2 className="text-2xl font-bold text-slate-100 mb-4">{t.casussen.ctaHeading}</h2>
++            <p className="text-slate-300 mb-6">{t.casussen.ctaText}</p>
++            <Link
++              href="/contact"
++              className="inline-block px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
++            >
++              {t.casussen.ctaButton}
++            </Link>
++          </div>
++        </section>
++      </div>
++    </div>
++  )
++}
+diff --git a/app/casussen/page.tsx b/app/casussen/page.tsx
+index 9f15cee..99cc043 100644
+--- a/app/casussen/page.tsx
++++ b/app/casussen/page.tsx
+@@ -1,148 +1,11 @@
+ import type { Metadata } from 'next'
+-import Link from 'next/link'
++import { CasussenContent } from './casussen-content'
+ 
+ export const metadata: Metadata = {
+-  title: 'Fictieve verhalen – Daremon',
+-  description: 'AI-gegenereerde fictieve verhalen en baśnie over systemen en organisaties. Geen echte casussen of klanten.',
++  title: 'Case Studies – DAREMON Engineering',
++  description: 'Projecten in technische videomontage en procesanalyse: MIM, robotica, Arburg en agro.',
+ }
+ 
+-const casussen = [
+-  {
+-    titel: 'Fabrieksluiting en onderhoudsstrategie',
+-    categorie: 'Technische systeemanalyse',
+-    samenvatting:
+-      'Een productiebedrijf staat op het punt een fabriek te sluiten wegens "onbetrouwbare machines". Hoge onderhoudskosten en frequente storingen maken de locatie onrendabel.',
+-    bevindingen: [
+-      'De machines zelf zijn technisch in orde',
+-      'De onderhoudsstrategie is gebaseerd op verouderde aannames uit de jaren 90',
+-      'Onderhoudsintervallen zijn te kort, waardoor juist extra slijtage ontstaat',
+-      'Documentatie is slecht bijgehouden, waardoor elke storing lang duurt',
+-    ],
+-    resultaat:
+-      'Door aanpassing van de onderhoudsstrategie en verbetering van de documentatie dalen de kosten met 40%. De fabriek blijft open.',
+-  },
+-  {
+-    titel: 'Schadeclaim en verzekeraar',
+-    categorie: 'Institutionele analyse',
+-    samenvatting:
+-      'Een bedrijf krijgt na een brand een schadeclaim afgewezen door de verzekeraar. Reden: "onvoldoende onderhoud". Het bedrijf beweert juist bovengemiddeld goed onderhouden te hebben.',
+-    bevindingen: [
+-      'Verzekeraar hanteert een definitie van "onderhoud" die nergens officieel is vastgelegd',
+-      'Het bedrijf volgde branche-standaarden, maar dat is volgens verzekeraar "onvoldoende"',
+-      'In de polisvoorwaarden staat geen eenduidige norm',
+-      'Er is een belangenconflict: verzekeraar bespaart geld door claims af te wijzen',
+-    ],
+-    resultaat:
+-      'Met een analyse van de polisvoorwaarden, branche-standaarden en institutionele logica wordt aangetoond dat de afwijzing onterecht is. Claim wordt alsnog uitbetaald.',
+-  },
+-  {
+-    titel: 'AZC, huisvesting en lokale weerstand',
+-    categorie: 'Narratieve analyse',
+-    samenvatting:
+-      'Een gemeente wil een asielzoekerscentrum (AZC) openen, maar stuift op heftig verzet van omwonenden. De verhalen over "overlast", "veiligheid" en "leefbaarheid" lopen wild uiteen.',
+-    bevindingen: [
+-      'Gemeente communiceert vooral in juridische en beleidsmatige taal ("we moeten")',
+-      'Omwonenden gebruiken emotionele en ervaringsgerichte taal ("onze wijk")',
+-      'Landelijke media versterken een specifiek frame: "boze burgers vs. elite"',
+-      'Lokale belangengroepen hebben economische motieven (vastgoedwaarde) maar framen het als "veiligheid"',
+-    ],
+-    resultaat:
+-      'Door alle verhalen naast elkaar te leggen ontstaat inzicht in de werkelijke spanningen. Dit helpt de gemeente om gerichter te communiceren en reële zorgen te onderscheiden van strategische framing.',
+-  },
+-  {
+-    titel: 'IT-implementatie die faalt',
+-    categorie: 'Institutionele en technische analyse',
+-    samenvatting:
+-      'Een organisatie heeft miljoenen geïnvesteerd in een nieuw IT-systeem. Na twee jaar werkt het nog steeds niet. Het softwarebedrijf wijst naar de klant, de klant wijst naar de software.',
+-    bevindingen: [
+-      'Het systeem is technisch prima, maar sluit niet aan op de werkprocessen',
+-      'Bij aanbesteding zijn cruciale vragen niet gesteld over interne procedures',
+-      'De organisatie heeft geen helder beeld van haar eigen processen',
+-      'Softwareleverancier heeft standaard-oplossing verkocht zonder maatwerk',
+-    ],
+-    resultaat:
+-      'Analyse toont aan dat beide partijen verantwoordelijk zijn. Er wordt een stappenplan gemaakt om eerst de interne processen helder te krijgen, daarna de software daarop aan te passen.',
+-  },
+-  {
+-    titel: 'Energietransitie en belangenverstrengeling',
+-    categorie: 'Narratieve en institutionele analyse',
+-    samenvatting:
+-      'Een provincie wil versneld overstappen op duurzame energie, maar elke beslissing leidt tot conflict. Windmolens, zonneparken, biomassa – alles stuit op verzet of juridische procedures.',
+-    bevindingen: [
+-      'Er zijn minstens vijf verschillende definities van "duurzaam" in omloop',
+-      'Verschillende partijen hebben tegenstrijdige belangen maar gebruiken dezelfde taal',
+-      'Provinciale procedures zijn zo ingericht dat elke partij een veto heeft',
+-      'Landelijke doelen worden lokaal als "opgelegd" ervaren, wat weerstand veroorzaakt',
+-    ],
+-    resultaat:
+-      'Door de belangenkaart helder te maken en procedures te analyseren, ontstaat inzicht in waarom besluitvorming vastloopt. Dit helpt de provincie om realistischer doelen te stellen en beter te communiceren.',
+-  },
+-]
+-
+ export default function CasussenPage() {
+-  return (
+-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+-      <div className="max-w-4xl mx-auto px-4 py-12">
+-        <div className="text-center space-y-4 mb-16">
+-          <h1 className="text-4xl md:text-5xl font-bold text-slate-100">Fictieve verhalen</h1>
+-          <p className="text-xl text-cyan-400 font-light">
+-            AI-gegenereerde verhalen over hypothetische systemen en organisaties.
+-          </p>
+-        </div>
+-
+-        <div className="space-y-12">
+-          {casussen.map((casus, index) => (
+-            <article key={index} className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+-              <div className="mb-6">
+-                <span className="inline-block px-3 py-1 text-sm bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 rounded-full mb-3">
+-                  {casus.categorie}
+-                </span>
+-                <h2 className="text-3xl font-bold text-slate-100 mb-3">{casus.titel}</h2>
+-              </div>
+-
+-              <div className="space-y-6">
+-                <div>
+-                  <h3 className="text-lg font-semibold text-slate-100 mb-2">Situatie</h3>
+-                  <p className="text-slate-300">{casus.samenvatting}</p>
+-                </div>
+-
+-                <div>
+-                  <h3 className="text-lg font-semibold text-slate-100 mb-3">Bevindingen</h3>
+-                  <ul className="space-y-2">
+-                    {casus.bevindingen.map((bevinding, i) => (
+-                      <li key={i} className="flex items-start text-slate-300">
+-                        <span className="mr-3 text-cyan-400 flex-shrink-0">▸</span>
+-                        <span>{bevinding}</span>
+-                      </li>
+-                    ))}
+-                  </ul>
+-                </div>
+-
+-                <div className="border border-cyan-500/20 rounded-lg p-4 bg-slate-900/40">
+-                  <h3 className="text-lg font-semibold text-slate-100 mb-2">Resultaat</h3>
+-                  <p className="text-slate-300">{casus.resultaat}</p>
+-                </div>
+-              </div>
+-            </article>
+-          ))}
+-        </div>
+-
+-        {/* CTA */}
+-        <section className="text-center mt-12">
+-          <div className="border border-cyan-500/30 rounded-lg p-8 bg-slate-900/40 backdrop-blur-md">
+-            <h2 className="text-2xl font-bold text-slate-100 mb-4">Vragen over dit project?</h2>
+-            <p className="text-slate-300 mb-6">
+-              Als je nieuwsgierig bent naar dit AI-experiment, kun je contact opnemen.
+-            </p>
+-            <Link
+-              href="/contact"
+-              className="inline-block px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
+-            >
+-              Neem contact op
+-            </Link>
+-          </div>
+-        </section>
+-      </div>
+-    </div>
+-  )
++  return <CasussenContent />
+ }
+diff --git a/app/diensten/diensten-content.tsx b/app/diensten/diensten-content.tsx
+new file mode 100644
+index 0000000..c1460fe
+--- /dev/null
++++ b/app/diensten/diensten-content.tsx
+@@ -0,0 +1,52 @@
++'use client'
++
++import Link from 'next/link'
++import { useT } from '@/lib/i18n'
++
++export function DienstenContent() {
++  const t = useT()
++
++  return (
++    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
++      <div className="max-w-4xl mx-auto px-4 py-12">
++        <div className="text-center space-y-4 mb-16">
++          <h1 className="text-4xl md:text-5xl font-bold text-slate-100">{t.diensten.heroTitle}</h1>
++          <p className="text-xl text-cyan-400 font-light">{t.diensten.heroLead}</p>
++        </div>
++
++        <div className="space-y-8">
++          {t.diensten.items.map((item) => (
++            <section
++              key={item.tytul}
++              className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]"
++            >
++              <h2 className="text-2xl md:text-3xl font-bold text-slate-100 mb-4">{item.tytul}</h2>
++              <p className="text-slate-300 leading-relaxed mb-6">{item.opis}</p>
++              <ul className="space-y-3 text-slate-200">
++                {item.bullets.map((bullet) => (
++                  <li key={bullet} className="flex items-start gap-3">
++                    <span className="text-cyan-400 mt-1 flex-shrink-0">▸</span>
++                    <span>{bullet}</span>
++                  </li>
++                ))}
++              </ul>
++            </section>
++          ))}
++        </div>
++
++        <section className="text-center mt-16">
++          <div className="border border-cyan-500/30 rounded-lg p-8 bg-slate-900/40 backdrop-blur-md">
++            <h2 className="text-2xl font-bold text-slate-100 mb-4">{t.diensten.ctaHeading}</h2>
++            <p className="text-slate-300 mb-6">{t.diensten.ctaText}</p>
++            <Link
++              href="/contact"
++              className="inline-block px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
++            >
++              {t.diensten.ctaButton}
++            </Link>
++          </div>
++        </section>
++      </div>
++    </div>
++  )
++}
+diff --git a/app/diensten/page.tsx b/app/diensten/page.tsx
+index 855b333..296ae4a 100644
+--- a/app/diensten/page.tsx
++++ b/app/diensten/page.tsx
+@@ -1,209 +1,12 @@
+ import type { Metadata } from 'next'
+-import Link from 'next/link'
++import { DienstenContent } from './diensten-content'
+ 
+ export const metadata: Metadata = {
+-  title: "Hypothetische scenario's – Daremon",
+-  description: "Fictieve scenario's gegenereerd door AI: technische systemen, instituties, narratieven en analyses. Geen echte diensten.",
++  title: 'Diensten – DAREMON Engineering',
++  description:
++    'Technische videomontage, shorts, AI-visualisaties en een eigen Audio Lab voor de mechanische, industriële en agrarische sector.',
+ }
+ 
+ export default function DienstenPage() {
+-  return (
+-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+-      <div className="max-w-4xl mx-auto px-4 py-12">
+-        <div className="text-center space-y-4 mb-16">
+-          <h1 className="text-4xl md:text-5xl font-bold text-slate-100">Hypothetische scenario's</h1>
+-          <p className="text-xl text-cyan-400 font-light">
+-            AI-gegenereerde concepten en fictieve analysetypen.
+-          </p>
+-        </div>
+-
+-        {/* Scenario 1 */}
+-        <section className="mb-16">
+-          <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+-            <h2 className="text-3xl font-bold text-slate-100 mb-4">
+-              Scenario: Analyse van technische systemen
+-            </h2>
+-            <p className="text-slate-300 leading-relaxed mb-6">
+-              In dit fictieve scenario zou een "bureau" technische systemen analyseren – fabrieken,
+-              productielijnen, onderhoudsstrategieën. Het zou complexe machines bestuderen met hun
+-              logica, zwakke punten en hypothetische optimaliseringsmogelijkheden.
+-            </p>
+-
+-            <h3 className="text-xl font-semibold text-slate-100 mb-3">Wat zo'n fictieve dienst zou omvatten:</h3>
+-            <ul className="space-y-3 text-slate-200 mb-6">
+-              <li className="flex items-start gap-3">
+-                <span className="text-cyan-400 mt-1 flex-shrink-0">▸</span>
+-                <span>Faalanalyse – waarom is iets misgegaan en hoe voorkomen we herhaling?</span>
+-              </li>
+-              <li className="flex items-start gap-3">
+-                <span className="text-cyan-400 mt-1 flex-shrink-0">▸</span>
+-                <span>Onderhoudsstrategie – hoe houd je systemen draaiend zonder onnodig geld te verbranden?</span>
+-              </li>
+-              <li className="flex items-start gap-3">
+-                <span className="text-cyan-400 mt-1 flex-shrink-0">▸</span>
+-                <span>Procesoptimalisatie – waar zitten de bottlenecks en hoe los je ze op?</span>
+-              </li>
+-              <li className="flex items-start gap-3">
+-                <span className="text-cyan-400 mt-1 flex-shrink-0">▸</span>
+-                <span>Due diligence – is dit systeem wat het lijkt te zijn?</span>
+-              </li>
+-            </ul>
+-
+-            <div className="border border-cyan-500/20 rounded-lg p-4 bg-slate-900/40">
+-              <p className="text-sm text-slate-300">
+-                <strong className="text-cyan-400">Fictief voorbeeld:</strong> Een fabrieksluiting dreigt omdat een machine steeds
+-                uitvalt. In dit scenario zou een analist ontdekken dat het niet aan de machine ligt, maar aan een gebrekkige
+-                onderhoudsprocedure die gebaseerd is op verouderde aannames.
+-                <em className="text-slate-500 block mt-2">(Dit is een AI-gegenereerd verhaal, geen echte case.)</em>
+-              </p>
+-            </div>
+-          </div>
+-        </section>
+-
+-        {/* Scenario 2 */}
+-        <section className="mb-16">
+-          <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+-            <h2 className="text-3xl font-bold text-slate-100 mb-4">
+-              Scenario: Analyse van instituties en procedures
+-            </h2>
+-            <p className="text-slate-300 leading-relaxed mb-6">
+-              In dit fictieve concept worden organisaties behandeld als systemen met structuren, regels en
+-              verborgen logica. Een hypothetische analyse zou zichtbaar maken hoe instituties "echt werken"
+-              – althans, in een fictief scenario.
+-            </p>
+-
+-            <h3 className="text-xl font-semibold text-slate-100 mb-3">Wat zo'n fictieve analyse zou omvatten:</h3>
+-            <ul className="space-y-3 text-slate-200 mb-6">
+-              <li className="flex items-start gap-3">
+-                <span className="text-cyan-400 mt-1 flex-shrink-0">▸</span>
+-                <span>Procedureanalyse – waar lopen processen vast en waarom?</span>
+-              </li>
+-              <li className="flex items-start gap-3">
+-                <span className="text-cyan-400 mt-1 flex-shrink-0">▸</span>
+-                <span>Besluitvormingsstructuren – wie beslist werkelijk en op basis waarvan?</span>
+-              </li>
+-              <li className="flex items-start gap-3">
+-                <span className="text-cyan-400 mt-1 flex-shrink-0">▸</span>
+-                <span>Organisatiecultuur – welke ongeschreven regels bepalen het gedrag?</span>
+-              </li>
+-              <li className="flex items-start gap-3">
+-                <span className="text-cyan-400 mt-1 flex-shrink-0">▸</span>
+-                <span>Implementatie-evaluatie – waarom werkt beleid niet zoals bedoeld?</span>
+-              </li>
+-            </ul>
+-
+-            <div className="border border-cyan-500/20 rounded-lg p-4 bg-slate-900/40">
+-              <p className="text-sm text-slate-300">
+-                <strong className="text-cyan-400">Fictief voorbeeld:</strong> Een gemeente krijgt klachten over trage vergunningverlening.
+-                In dit hypothetische scenario zou een analist het proces bestuderen en drie overbodige controle-stappen
+-                ontdekken die er 20 jaar geleden zijn ingevoegd voor een probleem dat niet meer bestaat.
+-                <em className="text-slate-500 block mt-2">(Dit is een AI-gegenereerd verhaal, geen echte case.)</em>
+-              </p>
+-            </div>
+-          </div>
+-        </section>
+-
+-        {/* Scenario 3 */}
+-        <section className="mb-16">
+-          <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+-            <h2 className="text-3xl font-bold text-slate-100 mb-4">
+-              Scenario: Narratieve en belangenanalyse
+-            </h2>
+-            <p className="text-slate-300 leading-relaxed mb-6">
+-              In dit fictieve concept worden verhalen geanalyseerd als machtsinstrumenten. Een hypothetische
+-              analyse zou ontleden hoe verhalen bepalen wat "logisch" lijkt, wie "geloofwaardig" is en
+-              welke oplossingen "realistisch" zijn.
+-            </p>
+-
+-            <h3 className="text-xl font-semibold text-slate-100 mb-3">Wat zo'n fictieve analyse zou omvatten:</h3>
+-            <ul className="space-y-3 text-slate-200 mb-6">
+-              <li className="flex items-start gap-3">
+-                <span className="text-cyan-400 mt-1 flex-shrink-0">▸</span>
+-                <span>Discoursanalyse – welke taal wordt gebruikt en wat betekent dat?</span>
+-              </li>
+-              <li className="flex items-start gap-3">
+-                <span className="text-cyan-400 mt-1 flex-shrink-0">▸</span>
+-                <span>Belangenkaart – wie profiteert van welk verhaal?</span>
+-              </li>
+-              <li className="flex items-start gap-3">
+-                <span className="text-cyan-400 mt-1 flex-shrink-0">▸</span>
+-                <span>Framing-onderzoek – hoe wordt een probleem gedefinieerd en wie bepaalt dat?</span>
+-              </li>
+-              <li className="flex items-start gap-3">
+-                <span className="text-cyan-400 mt-1 flex-shrink-0">▸</span>
+-                <span>Mediastrategieën – hoe worden verhalen verspreid en versterkt?</span>
+-              </li>
+-            </ul>
+-
+-            <div className="border border-cyan-500/20 rounded-lg p-4 bg-slate-900/40">
+-              <p className="text-sm text-slate-300">
+-                <strong className="text-cyan-400">Fictief voorbeeld:</strong> Een nieuwe woonontwikkeling stuit op verzet. In dit
+-                hypothetische scenario zou een analist de verhalen van bewoners, ontwikkelaar en gemeente bestuderen en
+-                ontdekken dat alle partijen verschillende definities hanteren van "leefbaarheid" – elk met hun eigen agenda.
+-                <em className="text-slate-500 block mt-2">(Dit is een AI-gegenereerd verhaal, geen echte case.)</em>
+-              </p>
+-            </div>
+-          </div>
+-        </section>
+-
+-        {/* Scenario 4 */}
+-        <section className="mb-16">
+-          <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+-            <h2 className="text-3xl font-bold text-slate-100 mb-4">
+-              Scenario: Strategische adviesrapporten
+-            </h2>
+-            <p className="text-slate-300 leading-relaxed mb-6">
+-              In dit fictieve concept zou analyse leiden tot "concrete adviezen". Een hypothetisch rapport
+-              zou heldere aanbevelingen bevatten – althans, in theorie.
+-            </p>
+-
+-            <h3 className="text-xl font-semibold text-slate-100 mb-3">Wat zo'n fictief rapport zou bevatten:</h3>
+-            <ul className="space-y-3 text-slate-200 mb-6">
+-              <li className="flex items-start gap-3">
+-                <span className="text-cyan-400 mt-1 flex-shrink-0">▸</span>
+-                <span>Een hypothetische analyse van een systeem en zijn zwakke punten</span>
+-              </li>
+-              <li className="flex items-start gap-3">
+-                <span className="text-cyan-400 mt-1 flex-shrink-0">▸</span>
+-                <span>Fictieve aanbevelingen die in theorie uitvoerbaar zouden zijn</span>
+-              </li>
+-              <li className="flex items-start gap-3">
+-                <span className="text-cyan-400 mt-1 flex-shrink-0">▸</span>
+-                <span>Speculatieve risicoanalyse – wat zou er mis kunnen gaan?</span>
+-              </li>
+-              <li className="flex items-start gap-3">
+-                <span className="text-cyan-400 mt-1 flex-shrink-0">▸</span>
+-                <span>Taal die AI denkt dat managers en techneuten begrijpen</span>
+-              </li>
+-            </ul>
+-
+-            <div className="border border-cyan-500/20 rounded-lg p-4 bg-slate-900/40">
+-              <p className="text-sm text-slate-300">
+-                <strong className="text-cyan-400">Fictieve aanpak:</strong> In dit scenario zou er geen geloof zijn in
+-                standaardoplossingen. Elk systeem zou uniek zijn en om maatwerk vragen. Het advies zou gebaseerd zijn
+-                op... fictieve expertise.
+-                <em className="text-slate-500 block mt-2">(Dit is een AI-gegenereerd concept, geen echte methodologie.)</em>
+-              </p>
+-            </div>
+-          </div>
+-        </section>
+-
+-        {/* CTA */}
+-        <section className="text-center">
+-          <div className="border border-cyan-500/30 rounded-lg p-8 bg-slate-900/40 backdrop-blur-md">
+-            <h2 className="text-2xl font-bold text-slate-100 mb-4">Nieuwsgierig naar dit project?</h2>
+-            <p className="text-slate-300 mb-6">
+-              Als je vragen hebt over dit AI-experiment of gewoon wilt praten over ideeën, kun je contact opnemen.
+-            </p>
+-            <Link
+-              href="/contact"
+-              className="inline-block px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
+-            >
+-              Neem contact op
+-            </Link>
+-          </div>
+-        </section>
+-      </div>
+-    </div>
+-  )
++  return <DienstenContent />
+ }
+diff --git a/app/home/page.tsx b/app/home/page.tsx
+index 805703b..e3b90b0 100644
+--- a/app/home/page.tsx
++++ b/app/home/page.tsx
+@@ -47,26 +47,7 @@ export default function HomePage() {
+         </div>
+       </section>
+ 
+-      {/* Strefa 2 — Pasek kompetencji */}
+-      <section className="max-w-5xl mx-auto px-4 py-16">
+-        <h2 className="text-2xl font-semibold text-slate-100 mb-8 text-center">
+-          {t.home.competenciesHeading}
+-        </h2>
+-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+-          {t.home.competencies.map((k) => (
+-            <div
+-              key={k.tytul}
+-              className="backdrop-blur-sm bg-slate-900/50 border border-amber-500/20 rounded-lg p-5 hover:border-amber-500/40 transition-colors"
+-            >
+-              <div className="h-1.5 w-8 rounded-full bg-amber-500/60 mb-3" />
+-              <h3 className="text-slate-100 font-semibold mb-1.5">{k.tytul}</h3>
+-              <p className="text-sm text-slate-400 leading-relaxed">{k.opis}</p>
+-            </div>
+-          ))}
+-        </div>
+-      </section>
+-
+-      {/* Strefa 3 — Portfolio & Case Studies */}
++      {/* Strefa 2 — Portfolio & Case Studies (bezpośrednio pod Hero) */}
+       <section id="portfolio" className="max-w-6xl mx-auto px-4 py-16 scroll-mt-20">
+         <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-6 md:p-8 shadow-[0_0_15px_rgba(0,255,255,0.15)]">
+           <div className="flex flex-wrap items-end justify-between gap-4 mb-8 border-b border-cyan-500/30 pb-4">
+@@ -79,7 +60,7 @@ export default function HomePage() {
+         </div>
+       </section>
+ 
+-      {/* Strefa 4 — Audio Lab / Visualizer */}
++      {/* Strefa 3 — Audio Lab / Visualizer */}
+       <section className="max-w-5xl mx-auto px-4 py-16">
+         <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-6 md:p-8 shadow-[0_0_15px_rgba(0,255,255,0.15)]">
+           <h2 className="text-3xl font-semibold text-slate-100 mb-3 border-b border-cyan-500/30 pb-4">
+@@ -90,7 +71,7 @@ export default function HomePage() {
+         </div>
+       </section>
+ 
+-      {/* Strefa 5 — Proces / metodyka */}
++      {/* Strefa 4 — Proces / metodyka */}
+       <section className="max-w-5xl mx-auto px-4 py-16">
+         <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/20 rounded-lg p-6 md:p-8">
+           <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+@@ -115,7 +96,7 @@ export default function HomePage() {
+         </div>
+       </section>
+ 
+-      {/* Strefa 6 — Radio ETS jako strefa multimedialna */}
++      {/* Strefa 5 — Radio ETS jako strefa multimedialna */}
+       <section className="max-w-4xl mx-auto px-4 pb-24">
+         <div className="border border-cyan-500/30 rounded-xl p-8 bg-slate-900/40 backdrop-blur-md shadow-[0_0_20px_rgba(0,255,255,0.15)]">
+           <h2 className="text-2xl font-semibold text-cyan-400 mb-3">{t.home.radioHeading}</h2>
+@@ -131,7 +112,7 @@ export default function HomePage() {
+         </div>
+       </section>
+ 
+-      {/* Strefa 7 — Kontakt / wycena */}
++      {/* Strefa 6 — Kontakt / wycena */}
+       <section className="max-w-4xl mx-auto px-4 pb-24">
+         <div className="text-center border-t border-cyan-500/20 pt-12">
+           <h2 className="text-2xl font-semibold text-slate-100 mb-3">{t.home.contactHeading}</h2>
+diff --git a/app/methodiek/methodiek-content.tsx b/app/methodiek/methodiek-content.tsx
+new file mode 100644
+index 0000000..dee55ae
+--- /dev/null
++++ b/app/methodiek/methodiek-content.tsx
+@@ -0,0 +1,86 @@
++'use client'
++
++import Link from 'next/link'
++import { Tabs } from '@/components/tabs'
++import { useT } from '@/lib/i18n'
++
++export function MethodiekContent() {
++  const t = useT()
++
++  const tabs = [
++    {
++      id: 'proces',
++      label: t.methodiek.tabProcess,
++      content: (
++        <section className="mb-8">
++          <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
++            <h2 className="text-3xl font-bold text-slate-100 mb-6 border-b border-cyan-500/30 pb-4">
++              {t.methodiek.processHeading}
++            </h2>
++            <div className="space-y-4">
++              {t.methodiek.processSteps.map((step, i) => (
++                <div key={step.tytul} className="flex gap-4">
++                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-cyan-600 text-black flex items-center justify-center font-bold text-lg">
++                    {i + 1}
++                  </div>
++                  <div>
++                    <h3 className="font-semibold text-slate-100 mb-1">{step.tytul}</h3>
++                    <p className="text-slate-300">{step.opis}</p>
++                  </div>
++                </div>
++              ))}
++            </div>
++          </div>
++        </section>
++      ),
++    },
++    {
++      id: 'ai',
++      label: t.methodiek.tabAi,
++      content: (
++        <section className="mb-8">
++          <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
++            <h2 className="text-3xl font-bold text-slate-100 mb-6 border-b border-cyan-500/30 pb-4">
++              {t.methodiek.aiHeading}
++            </h2>
++            <p className="text-slate-300 leading-relaxed mb-8">{t.methodiek.aiIntro}</p>
++            <div className="space-y-6">
++              {t.methodiek.aiPoints.map((point) => (
++                <div key={point.tytul} className="border border-cyan-500/20 rounded-lg p-6 bg-slate-900/40">
++                  <h3 className="font-semibold text-cyan-400 mb-2">{point.tytul}</h3>
++                  <p className="text-slate-300">{point.opis}</p>
++                </div>
++              ))}
++            </div>
++          </div>
++        </section>
++      ),
++    },
++  ]
++
++  return (
++    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
++      <div className="max-w-4xl mx-auto px-4 py-12">
++        <div className="text-center space-y-4 mb-12">
++          <h1 className="text-4xl md:text-5xl font-bold text-slate-100">{t.methodiek.heroTitle}</h1>
++          <p className="text-xl text-cyan-400 font-light">{t.methodiek.heroLead}</p>
++        </div>
++
++        <Tabs tabs={tabs} defaultTab="proces" />
++
++        <section className="text-center mt-16">
++          <div className="border border-cyan-500/30 rounded-lg p-8 bg-slate-900/40 backdrop-blur-md">
++            <h2 className="text-2xl font-bold text-slate-100 mb-4">{t.methodiek.ctaHeading}</h2>
++            <p className="text-slate-300 mb-6">{t.methodiek.ctaText}</p>
++            <Link
++              href="/contact"
++              className="inline-block px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
++            >
++              {t.methodiek.ctaButton}
++            </Link>
++          </div>
++        </section>
++      </div>
++    </div>
++  )
++}
+diff --git a/app/methodiek/page.tsx b/app/methodiek/page.tsx
+index 8c54a21..513bcd8 100644
+--- a/app/methodiek/page.tsx
++++ b/app/methodiek/page.tsx
+@@ -1,467 +1,11 @@
+ import type { Metadata } from 'next'
+-import Link from 'next/link'
+-import { Tabs } from '@/components/tabs'
++import { MethodiekContent } from './methodiek-content'
+ 
+ export const metadata: Metadata = {
+-  title: 'Methodiek & AI – Daremon',
+-  description: 'Hoe wij data, AI-modellen en praktijkervaring combineren om tot een helder beeld van een systeem te komen.',
++  title: 'Methodiek & AI – DAREMON Engineering',
++  description: 'Hoe we technische analyse, montage en AI-tools combineren tot betrouwbaar videomateriaal.',
+ }
+ 
+ export default function MethodiekPage() {
+-  const tabs = [
+-    {
+-      id: 'methodiek',
+-      label: 'Onze methodiek',
+-      content: <MethodiekTab />,
+-    },
+-    {
+-      id: 'ai-rol',
+-      label: 'Rola AI',
+-      content: <AIRoleTab />,
+-    },
+-    {
+-      id: 'ai-ecosystem',
+-      label: 'AI Ecosysteem',
+-      content: <AIEcosystemTab />,
+-    },
+-  ]
+-
+-  return (
+-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+-      <div className="max-w-4xl mx-auto px-4 py-12">
+-        {/* Header */}
+-        <div className="text-center space-y-4 mb-12">
+-          <h1 className="text-4xl md:text-5xl font-bold text-slate-100">Methodiek & AI</h1>
+-          <p className="text-xl text-cyan-400 font-light">
+-            Hoe wij data, AI-modellen en praktijkervaring combineren om tot een helder beeld van een
+-            systeem te komen.
+-          </p>
+-        </div>
+-
+-        {/* Tabs */}
+-        <Tabs tabs={tabs} defaultTab="methodiek" />
+-
+-        {/* CTA */}
+-        <section className="text-center mt-16">
+-          <div className="border border-cyan-500/30 rounded-lg p-8 bg-slate-900/40 backdrop-blur-md">
+-            <h2 className="text-2xl font-bold text-slate-100 mb-4">Vragen over onze aanpak?</h2>
+-            <p className="text-slate-300 mb-6">
+-              Neem contact op voor meer informatie over hoe wij werken.
+-            </p>
+-            <Link
+-              href="/contact"
+-              className="inline-block px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
+-            >
+-              Neem contact op
+-            </Link>
+-          </div>
+-        </section>
+-      </div>
+-    </div>
+-  )
+-}
+-
+-// Tab 1: Methodiek
+-function MethodiekTab() {
+-  return (
+-    <>
+-      {/* Kernprincipes */}
+-      <section className="mb-16">
+-        <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+-          <h2 className="text-3xl font-bold text-slate-100 mb-6 border-b border-cyan-500/30 pb-4">
+-            Onze aanpak
+-          </h2>
+-          <p className="text-slate-300 leading-relaxed mb-8">
+-            Elk complex systeem vraagt om een mix van technische kennis, kritische analyse en
+-            praktische ervaring. Wij werken niet met standaard-checklists, maar met een flexibele
+-            methodiek die zich aanpast aan de situatie.
+-          </p>
+-
+-          <div className="space-y-6">
+-            <div className="border border-cyan-500/20 rounded-lg p-6 bg-slate-900/40">
+-              <h3 className="text-xl font-semibold text-slate-100 mb-3 flex items-start gap-3">
+-                <span className="text-cyan-400 flex-shrink-0">1.</span>
+-                Systeemdenken
+-              </h3>
+-              <p className="text-slate-300">
+-                We benaderen problemen als onderdelen van grotere systemen. Een "simpele" storing
+-                kan voortkomen uit organisatiecultuur, verouderde procedures of verkeerde prikkels.
+-                We zoeken naar de werkelijke oorzaken, niet de symptomen.
+-              </p>
+-            </div>
+-
+-            <div className="border border-cyan-500/20 rounded-lg p-6 bg-slate-900/40">
+-              <h3 className="text-xl font-semibold text-slate-100 mb-3 flex items-start gap-3">
+-                <span className="text-cyan-400 flex-shrink-0">2.</span>
+-                Data-gedreven maar niet data-blind
+-              </h3>
+-              <p className="text-slate-300">
+-                Data is waardevol, maar vertelt niet het hele verhaal. We combineren kwantitatieve
+-                analyses met kwalitatief onderzoek: interviews, observaties, documentanalyse.
+-                Wat zeggen de cijfers? En wat zeggen de mensen die met het systeem werken?
+-              </p>
+-            </div>
+-
+-            <div className="border border-cyan-500/20 rounded-lg p-6 bg-slate-900/40">
+-              <h3 className="text-xl font-semibold text-slate-100 mb-3 flex items-start gap-3">
+-                <span className="text-cyan-400 flex-shrink-0">3.</span>
+-                Kritische blik op macht en belangen
+-              </h3>
+-              <p className="text-slate-300">
+-                Elk systeem heeft stakeholders met verschillende belangen. Wij vragen niet alleen
+-                "hoe werkt dit?", maar ook "voor wie werkt dit?" en "wie profiteert van de huidige
+-                situatie?". Dat maakt onze analyses scherper en realistischer.
+-              </p>
+-            </div>
+-
+-            <div className="border border-cyan-500/20 rounded-lg p-6 bg-slate-900/40">
+-              <h3 className="text-xl font-semibold text-slate-100 mb-3 flex items-start gap-3">
+-                <span className="text-cyan-400 flex-shrink-0">4.</span>
+-                Praktische uitvoerbaarheid
+-              </h3>
+-              <p className="text-slate-300">
+-                Een analyse is pas nuttig als hij leidt tot actie. Onze aanbevelingen zijn
+-                realistisch, rekening houdend met organisatiecultuur, budgetten en politieke
+-                realiteit. Geen utopische plannen, maar concrete stappen.
+-              </p>
+-            </div>
+-          </div>
+-        </div>
+-      </section>
+-
+-      {/* Proces */}
+-      <section className="mb-8">
+-        <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+-          <h2 className="text-3xl font-bold text-slate-100 mb-6 border-b border-cyan-500/30 pb-4">
+-            Ons proces
+-          </h2>
+-          <p className="text-slate-300 leading-relaxed mb-8">
+-            Elk project is anders, maar over het algemeen volgen we deze stappen:
+-          </p>
+-
+-          <div className="space-y-4">
+-            <div className="flex gap-4">
+-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-cyan-600 text-black flex items-center justify-center font-bold text-lg">
+-                1
+-              </div>
+-              <div>
+-                <h3 className="font-semibold text-slate-100 mb-1">Intake en probleemdefiniëring</h3>
+-                <p className="text-slate-300">
+-                  Wat is het probleem? Wat is de context? Wie zijn de stakeholders? We stellen
+-                  veel vragen om het werkelijke probleem te begrijpen.
+-                </p>
+-              </div>
+-            </div>
+-
+-            <div className="flex gap-4">
+-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-cyan-600 text-black flex items-center justify-center font-bold text-lg">
+-                2
+-              </div>
+-              <div>
+-                <h3 className="font-semibold text-slate-100 mb-1">Dataverzameling en verkenning</h3>
+-                <p className="text-slate-300">
+-                  We verzamelen relevante data: documenten, datasets, interviews, observaties.
+-                  We kijken breed, want vaak zit de oplossing op een onverwachte plek.
+-                </p>
+-              </div>
+-            </div>
+-
+-            <div className="flex gap-4">
+-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-cyan-600 text-black flex items-center justify-center font-bold text-lg">
+-                3
+-              </div>
+-              <div>
+-                <h3 className="font-semibold text-slate-100 mb-1">Analyse en synthese</h3>
+-                <p className="text-slate-300">
+-                  We analyseren de data, ontleden het systeem en zoeken naar patronen, zwakke
+-                  punten en kansen. Dit is waar AI-tools kunnen helpen, maar altijd onder
+-                  menselijke regie.
+-                </p>
+-              </div>
+-            </div>
+-
+-            <div className="flex gap-4">
+-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-cyan-600 text-black flex items-center justify-center font-bold text-lg">
+-                4
+-              </div>
+-              <div>
+-                <h3 className="font-semibold text-slate-100 mb-1">Rapportage en advies</h3>
+-                <p className="text-slate-300">
+-                  We leveren een helder rapport met bevindingen en aanbevelingen. Geen jargon,
+-                  geen onnodige bulk. Alleen wat u nodig heeft om verder te komen.
+-                </p>
+-              </div>
+-            </div>
+-
+-            <div className="flex gap-4">
+-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-cyan-600 text-black flex items-center justify-center font-bold text-lg">
+-                5
+-              </div>
+-              <div>
+-                <h3 className="font-semibold text-slate-100 mb-1">Implementatieondersteuning (optioneel)</h3>
+-                <p className="text-slate-300">
+-                  Op verzoek kunnen we helpen bij de implementatie van aanbevelingen, of
+-                  aanvullende analyses doen als de situatie verandert.
+-                </p>
+-              </div>
+-            </div>
+-          </div>
+-        </div>
+-      </section>
+-    </>
+-  )
+-}
+-
+-// Tab 2: AI Role
+-function AIRoleTab() {
+-  return (
+-    <section className="mb-8">
+-      <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+-        <h2 className="text-3xl font-bold text-slate-100 mb-6 border-b border-cyan-500/30 pb-4">
+-          De rol van AI
+-        </h2>
+-        <p className="text-slate-300 leading-relaxed mb-8">
+-          AI is een krachtig instrument, maar geen wondermiddel. Wij gebruiken AI-tools op
+-          specifieke punten in ons analyseproces – altijd onder menselijke controle en met
+-          een kritische blik.
+-        </p>
+-
+-        <h3 className="text-xl font-semibold text-slate-100 mb-4">Waar wij AI inzetten:</h3>
+-
+-        <div className="space-y-6 mb-8">
+-          <div>
+-            <h4 className="font-semibold text-cyan-400 mb-2">📊 Data-analyse en patroonherkenning</h4>
+-            <p className="text-slate-300">
+-              Bij grote datasets (onderhoudslogboeken, processtappen, communicatie) gebruiken
+-              we AI om patronen te ontdekken die anders niet opvallen. Bijvoorbeeld: "waarom
+-              vallen machines vaker uit op dinsdagen?" of "welke combinatie van factoren leidt
+-              tot vertraging?".
+-            </p>
+-          </div>
+-
+-          <div>
+-            <h4 className="font-semibold text-cyan-400 mb-2">📝 Tekstanalyse en discoursonderzoek</h4>
+-            <p className="text-slate-300">
+-              Bij narratieve analyses scannen we grote hoeveelheden tekst (beleidsdocumenten,
+-              nieuwsartikelen, social media) om te zien welke frames en begrippen dominant zijn.
+-              AI helpt bij de eerste scan, wij doen de interpretatie.
+-            </p>
+-          </div>
+-
+-          <div>
+-            <h4 className="font-semibold text-cyan-400 mb-2">🔍 Scenarioanalyse en simulatie</h4>
+-            <p className="text-slate-300">
+-              Bij strategisch advies kunnen we AI gebruiken om te simuleren wat er gebeurt als
+-              bepaalde variabelen veranderen. "Wat als we onderhoudsintervallen verdubbelen?"
+-              of "Wat als dit beleid landelijk wordt uitgerold?".
+-            </p>
+-          </div>
+-
+-          <div>
+-            <h4 className="font-semibold text-cyan-400 mb-2">💡 Kennisassistentie en literatuuronderzoek</h4>
+-            <p className="text-slate-300">
+-              AI-tools helpen ons snel relevante wetenschappelijke literatuur, technische normen
+-              en best practices te vinden. Dit bespaart tijd en zorgt ervoor dat we geen
+-              belangrijke bronnen missen.
+-            </p>
+-          </div>
+-        </div>
+-
+-        <div className="border border-cyan-500/20 rounded-lg p-6 bg-slate-900/40">
+-          <h4 className="font-semibold text-slate-100 mb-2">⚠️ Wat AI niet doet</h4>
+-          <p className="text-slate-300 mb-3">
+-            AI levert geen kant-en-klare oplossingen. Het geeft signalen, suggesties en
+-            patronen – maar de interpretatie, afweging en uiteindelijke conclusies komen van
+-            menselijke analisten met domeinkennis en kritisch vermogen.
+-          </p>
+-          <p className="text-slate-300">
+-            Wij geloven niet in "black box" AI. Als we een AI-tool gebruiken, kunnen we
+-            uitleggen waarom en hoe, en we nemen de verantwoordelijkheid voor de conclusies.
+-          </p>
+-        </div>
+-      </div>
+-    </section>
+-  )
+-}
+-
+-// Tab 3: AI Ecosystem (continued in next message due to length)
+-function AIEcosystemTab() {
+-  return (
+-    <section className="mb-8">
+-      <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+-        <h2 className="text-3xl font-bold text-slate-100 mb-6 border-b border-cyan-500/30 pb-4">
+-          Ons AI-ecosysteem
+-        </h2>
+-        <p className="text-slate-300 leading-relaxed mb-8">
+-          We gebruiken verschillende AI-tools voor verschillende taken. Elk model heeft zijn eigen
+-          sterke punten en wordt ingezet waar het het meest effectief is.
+-        </p>
+-
+-        <div className="space-y-6 mb-12">
+-          {/* ChatGPT */}
+-          <div className="border-2 border-cyan-500/50 rounded-lg p-6 bg-slate-900/60">
+-            <div className="flex items-start gap-3 mb-3">
+-              <span className="text-2xl">🧠</span>
+-              <div>
+-                <h3 className="text-xl font-bold text-cyan-400">ChatGPT — Analyse, Logica, Documenten, Strategie</h3>
+-                <p className="text-sm font-semibold text-slate-400">Rola: mózg główny</p>
+-              </div>
+-            </div>
+-            <p className="text-slate-300 mb-3">
+-              <strong>Styl:</strong> racjonalny, precyzyjny, techniczny
+-            </p>
+-            <div>
+-              <p className="font-semibold text-slate-100 mb-2">Zastosowania:</p>
+-              <ul className="text-slate-300 text-sm space-y-1">
+-                <li className="flex items-start gap-2">
+-                  <span className="text-cyan-400 flex-shrink-0">▸</span>
+-                  <span>Analiza prawna / psychologiczna / instytucjonalna</span>
+-                </li>
+-                <li className="flex items-start gap-2">
+-                  <span className="text-cyan-400 flex-shrink-0">▸</span>
+-                  <span>Dokumenty formalne, pisma, petycje, odwołania</span>
+-                </li>
+-                <li className="flex items-start gap-2">
+-                  <span className="text-cyan-400 flex-shrink-0">▸</span>
+-                  <span>Zaawansowana elektronika, automatyka, embedded</span>
+-                </li>
+-                <li className="flex items-start gap-2">
+-                  <span className="text-cyan-400 flex-shrink-0">▸</span>
+-                  <span>Projektowanie systemów i tworzenie promptów</span>
+-                </li>
+-              </ul>
+-            </div>
+-            <p className="mt-3 text-sm italic text-cyan-400">
+-              Cel: najważniejszy model do decyzji i analizy
+-            </p>
+-          </div>
+-
+-          {/* Claude */}
+-          <div className="border-2 border-blue-500/50 rounded-lg p-6 bg-slate-900/60">
+-            <div className="flex items-start gap-3 mb-3">
+-              <span className="text-2xl">✍️</span>
+-              <div>
+-                <h3 className="text-xl font-bold text-blue-400">Claude — Redakcja, Humanistyczny Ton</h3>
+-                <p className="text-sm font-semibold text-slate-400">Rola: redaktor elegancki, dyplomata</p>
+-              </div>
+-            </div>
+-            <p className="text-slate-300 mb-3">
+-              <strong>Styl:</strong> miękki, ludzki, inteligentny
+-            </p>
+-            <div>
+-              <p className="font-semibold text-slate-100 mb-2">Zastosowania:</p>
+-              <ul className="text-slate-300 text-sm space-y-1">
+-                <li className="flex items-start gap-2">
+-                  <span className="text-blue-400 flex-shrink-0">▸</span>
+-                  <span>Wygładzanie tekstów społecznie wrażliwych</span>
+-                </li>
+-                <li className="flex items-start gap-2">
+-                  <span className="text-blue-400 flex-shrink-0">▸</span>
+-                  <span>Narracje symboliczne, psychologiczne, literackie</span>
+-                </li>
+-                <li className="flex items-start gap-2">
+-                  <span className="text-blue-400 flex-shrink-0">▸</span>
+-                  <span>Dyplomatyczne wersje wiadomości</span>
+-                </li>
+-              </ul>
+-            </div>
+-            <p className="mt-3 text-sm italic text-blue-400">
+-              Cel: PR wewnętrzny i zewnętrzny
+-            </p>
+-          </div>
+-
+-          {/* Grok */}
+-          <div className="border-2 border-red-500/50 rounded-lg p-6 bg-slate-900/60">
+-            <div className="flex items-start gap-3 mb-3">
+-              <span className="text-2xl">⚡</span>
+-              <div>
+-                <h3 className="text-xl font-bold text-red-400">Grok — Ironia, Sarkazm, Detektor Absurdu</h3>
+-                <p className="text-sm font-semibold text-slate-400">Rola: czarne lustro</p>
+-              </div>
+-            </div>
+-            <p className="text-slate-300 mb-3">
+-              <strong>Styl:</strong> cięty, dosadny, kontrolowana bezczelność
+-            </p>
+-            <div>
+-              <p className="font-semibold text-slate-100 mb-2">Zastosowania:</p>
+-              <ul className="text-slate-300 text-sm space-y-1">
+-                <li className="flex items-start gap-2">
+-                  <span className="text-red-400 flex-shrink-0">▸</span>
+-                  <span>Analiza absurdów w pracy, instytucjach</span>
+-                </li>
+-                <li className="flex items-start gap-2">
+-                  <span className="text-red-400 flex-shrink-0">▸</span>
+-                  <span>Wyłapywanie logicznych fałszów, manipulacji</span>
+-                </li>
+-              </ul>
+-            </div>
+-            <p className="mt-3 text-sm italic text-red-400">
+-              Cel: prawda bez filtra
+-            </p>
+-          </div>
+-
+-          {/* Gemini */}
+-          <div className="border-2 border-purple-500/50 rounded-lg p-6 bg-slate-900/60">
+-            <div className="flex items-start gap-3 mb-3">
+-              <span className="text-2xl">🔷</span>
+-              <div>
+-                <h3 className="text-xl font-bold text-purple-400">Gemini — Systemy, Warianty, Struktury</h3>
+-                <p className="text-sm font-semibold text-slate-400">Rola: architekt alternatyw</p>
+-              </div>
+-            </div>
+-            <p className="text-slate-300 mb-3">
+-              <strong>Styl:</strong> neutralny, syntetyczny, systemowy
+-            </p>
+-            <div>
+-              <p className="font-semibold text-slate-100 mb-2">Zastosowania:</p>
+-              <ul className="text-slate-300 text-sm space-y-1">
+-                <li className="flex items-start gap-2">
+-                  <span className="text-purple-400 flex-shrink-0">▸</span>
+-                  <span>Generowanie wariantów projektów (A/B/C/D)</span>
+-                </li>
+-                <li className="flex items-start gap-2">
+-                  <span className="text-purple-400 flex-shrink-0">▸</span>
+-                  <span>Budowa struktur, diagramów, workflow</span>
+-                </li>
+-              </ul>
+-            </div>
+-            <p className="mt-3 text-sm italic text-purple-400">
+-              Cel: architekt systemów i strategii
+-            </p>
+-          </div>
+-
+-          {/* Additional tools summary */}
+-          <div className="border border-cyan-500/20 rounded-lg p-6 bg-slate-900/40">
+-            <h4 className="font-semibold text-slate-100 mb-3">Inne narzędzia w naszym ekosystemie:</h4>
+-            <div className="grid md:grid-cols-2 gap-3 text-sm text-slate-300">
+-              <div className="flex items-start gap-2">
+-                <span className="text-amber-400">📚</span>
+-                <div>
+-                  <strong className="text-amber-400">NotebookLM:</strong> Analiza dokumentów i archiwum
+-                </div>
+-              </div>
+-              <div className="flex items-start gap-2">
+-                <span className="text-slate-400">💻</span>
+-                <div>
+-                  <strong className="text-slate-400">Copilot:</strong> Kod i prototypy
+-                </div>
+-              </div>
+-              <div className="flex items-start gap-2">
+-                <span className="text-green-400">🎙️</span>
+-                <div>
+-                  <strong className="text-green-400">ElevenLabs:</strong> Głos i komunikaty
+-                </div>
+-              </div>
+-              <div className="flex items-start gap-2">
+-                <span className="text-pink-400">🎵</span>
+-                <div>
+-                  <strong className="text-pink-400">Suno:</strong> Muzyka i podkłady
+-                </div>
+-              </div>
+-            </div>
+-          </div>
+-        </div>
+-      </div>
+-    </section>
+-  )
++  return <MethodiekContent />
+ }
+diff --git a/app/over/over-content.tsx b/app/over/over-content.tsx
+new file mode 100644
+index 0000000..2d95224
+--- /dev/null
++++ b/app/over/over-content.tsx
+@@ -0,0 +1,46 @@
++'use client'
++
++import Link from 'next/link'
++import { useT } from '@/lib/i18n'
++
++export function OverContent() {
++  const t = useT()
++
++  return (
++    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
++      <div className="max-w-4xl mx-auto px-4 py-12">
++        <div className="text-center space-y-4 mb-16">
++          <h1 className="text-4xl md:text-5xl font-bold text-slate-100">{t.over.heroTitle}</h1>
++          <p className="text-xl text-cyan-400 font-light">{t.over.heroLead}</p>
++        </div>
++
++        <div className="space-y-8">
++          {t.over.sections.map((section) => (
++            <section
++              key={section.tytul}
++              className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]"
++            >
++              <h2 className="text-2xl md:text-3xl font-bold text-slate-100 mb-4 border-b border-cyan-500/30 pb-4">
++                {section.tytul}
++              </h2>
++              <p className="text-slate-300 leading-relaxed">{section.body}</p>
++            </section>
++          ))}
++        </div>
++
++        <section className="text-center mt-16">
++          <div className="border border-cyan-500/30 rounded-lg p-8 bg-slate-900/40 backdrop-blur-md">
++            <h2 className="text-2xl font-bold text-slate-100 mb-4">{t.over.ctaHeading}</h2>
++            <p className="text-slate-300 mb-6">{t.over.ctaText}</p>
++            <Link
++              href="/contact"
++              className="inline-block px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
++            >
++              {t.over.ctaButton}
++            </Link>
++          </div>
++        </section>
++      </div>
++    </div>
++  )
++}
+diff --git a/app/over/page.tsx b/app/over/page.tsx
+index d1b00d6..7871440 100644
+--- a/app/over/page.tsx
++++ b/app/over/page.tsx
+@@ -1,156 +1,11 @@
+ import type { Metadata } from 'next'
+-import Link from 'next/link'
++import { OverContent } from './over-content'
+ 
+ export const metadata: Metadata = {
+-  title: 'Over het project – Daremon',
+-  description: 'Daremon is een experimenteel AI-narratief project, geen bureau of bedrijf.',
++  title: 'Over ons – DAREMON Engineering',
++  description: 'DAREMON Engineering: engineering-achtergrond en videomontage onder één dak.',
+ }
+ 
+ export default function OverPage() {
+-  return (
+-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+-      <div className="max-w-4xl mx-auto px-4 py-12">
+-        <div className="text-center space-y-4 mb-16">
+-          <h1 className="text-4xl md:text-5xl font-bold text-slate-100">Over het project</h1>
+-          <p className="text-xl text-cyan-400 font-light">
+-            Daremon is geen bureau. Het is een experimenteel AI-narratief project.
+-          </p>
+-        </div>
+-
+-        {/* Wat is dit eigenlijk? */}
+-        <section className="mb-16">
+-          <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+-            <h2 className="text-3xl font-bold text-slate-100 mb-6 border-b border-cyan-500/30 pb-4">
+-              Wat is dit eigenlijk?
+-            </h2>
+-            <div className="space-y-4 text-slate-300 leading-relaxed">
+-              <p>
+-                Daremon is een <strong className="text-slate-100">experimenteel project</strong> waarin ik gebruik maak van
+-                kunstmatige intelligentie (AI) om:
+-              </p>
+-              <ul className="list-disc list-inside space-y-2 ml-4">
+-                <li>Mijn gedachten te ordenen na een periode van langdurige overbelasting</li>
+-                <li>Metaforische verhalen en "baśnie" (sprookjes/fabels) te creëren</li>
+-                <li>Fictieve technische scenario's te bouwen die lijken op echte situaties, maar dat niet zijn</li>
+-                <li>Narratieve analyses te genereren als literair-technisch experiment</li>
+-                <li>Te onderzoeken hoe AI-systemen verhalen en analyses kunnen structureren</li>
+-              </ul>
+-              <p className="pt-4">
+-                Het project ontstond niet uit een zakelijk plan, maar uit een persoonlijke behoefte om
+-                structuur en ordening aan te brengen in complexe gedachten en ervaringen.
+-              </p>
+-            </div>
+-          </div>
+-        </section>
+-
+-        {/* De rol van AI */}
+-        <section className="mb-16">
+-          <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+-            <h2 className="text-3xl font-bold text-slate-100 mb-6 border-b border-cyan-500/30 pb-4">
+-              De rol van AI in dit project
+-            </h2>
+-            <div className="space-y-6">
+-              <div>
+-                <h3 className="text-xl font-semibold text-slate-100 mb-3 flex items-start gap-3">
+-                  <span className="text-cyan-400 flex-shrink-0">▸</span>
+-                  Content generatie
+-                </h3>
+-                <p className="text-slate-300 leading-relaxed">
+-                  Het grootste deel van de teksten op deze website is gegenereerd door AI-systemen
+-                  (voornamelijk Claude), op basis van gesprekken, notities en ideeën. De AI werkt als
+-                  een "verhalen-generator" die structuur geeft aan chaotische input.
+-                </p>
+-              </div>
+-
+-              <div>
+-                <h3 className="text-xl font-semibold text-slate-100 mb-3 flex items-start gap-3">
+-                  <span className="text-cyan-400 flex-shrink-0">▸</span>
+-                  Metaforische vertaling
+-                </h3>
+-                <p className="text-slate-300 leading-relaxed">
+-                  De AI helpt om echte ervaringen en observaties om te zetten in metaforische verhalen.
+-                  Bijvoorbeeld: de "Baśń o Bobrze i tonącym statku" (Fabel van de Bever en het zinkende
+-                  schip) is een fictief verhaal dat algemene patronen van organisatiegedrag verkent,
+-                  zonder te verwijzen naar specifieke echte gebeurtenissen.
+-                </p>
+-              </div>
+-
+-              <div>
+-                <h3 className="text-xl font-semibold text-slate-100 mb-3 flex items-start gap-3">
+-                  <span className="text-cyan-400 flex-shrink-0">▸</span>
+-                  Gedachten ordenen
+-                </h3>
+-                <p className="text-slate-300 leading-relaxed">
+-                  Voor mij persoonlijk dient dit project als een manier om terug te komen van een periode
+-                  van sterke mentale overbelasting. De AI helpt om chaotische gedachten om te vormen tot
+-                  gestructureerde verhalen en analyses, zonder dat deze verhalen direct hoeven te
+-                  corresponderen met concrete plannen of acties.
+-                </p>
+-              </div>
+-            </div>
+-          </div>
+-        </section>
+-
+-        {/* Wat betekent dit voor de lezer? */}
+-        <section className="mb-16">
+-          <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+-            <h2 className="text-3xl font-bold text-slate-100 mb-6 border-b border-cyan-500/30 pb-4">
+-              Wat betekent dit voor jou als lezer?
+-            </h2>
+-            <div className="space-y-4 text-slate-300 leading-relaxed">
+-              <p>
+-                Als je deze website bezoekt, lees je <strong>fictie</strong>, <strong>experimenten</strong> en
+-                <strong> metaforische verhalen</strong>. Niet meer, niet minder.
+-              </p>
+-              <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4 my-4">
+-                <p className="text-slate-200 font-semibold mb-2">Interpreteer de inhoud als:</p>
+-                <ul className="list-disc list-inside space-y-1 text-slate-300">
+-                  <li>Literaire experimenten met AI-gegenereerde tekst</li>
+-                  <li>Metaforische verhalen over systemen en organisaties</li>
+-                  <li>Gedachte-oefeningen en hypothetische scenario's</li>
+-                  <li>Exploratieve analyses zonder praktische toepassing</li>
+-                </ul>
+-              </div>
+-            </div>
+-          </div>
+-        </section>
+-
+-        {/* Naam */}
+-        <section className="mb-16">
+-          <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+-            <h2 className="text-3xl font-bold text-slate-100 mb-6 border-b border-cyan-500/30 pb-4">
+-              Waarom "Daremon"?
+-            </h2>
+-            <div className="space-y-4 text-slate-300 leading-relaxed">
+-              <p>
+-                De naam is een samentrekking van <em className="text-cyan-400">daemon</em> – het Griekse woord voor een
+-                begeleidende geest, of in de informatica: een achtergrondproces dat systemen laat functioneren.
+-              </p>
+-              <p>
+-                Deze naam past bij de metaforische verhalen die hier worden gegenereerd – verhalen over
+-                onderliggende processen, verborgen structuren en systemen die op de achtergrond draaien.
+-              </p>
+-            </div>
+-          </div>
+-        </section>
+-
+-        {/* CTA */}
+-        <section className="text-center">
+-          <div className="border border-cyan-500/30 rounded-lg p-8 bg-slate-900/40 backdrop-blur-md">
+-            <h2 className="text-2xl font-bold text-slate-100 mb-4">Vragen over dit project?</h2>
+-            <p className="text-slate-300 mb-6">
+-              Als je nieuwsgierig bent naar dit experiment of gewoon wilt praten over ideeën,
+-              kun je contact opnemen.
+-            </p>
+-            <Link
+-              href="/contact"
+-              className="inline-block px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
+-            >
+-              Neem contact op
+-            </Link>
+-          </div>
+-        </section>
+-      </div>
+-    </div>
+-  )
++  return <OverContent />
+ }
+diff --git a/lib/i18n.ts b/lib/i18n.ts
+index 83eebd0..38d0bb2 100644
+--- a/lib/i18n.ts
++++ b/lib/i18n.ts
+@@ -61,13 +61,6 @@ export const translations = {
+         'Analiza procesów, kinematyka maszyn, autorskie audio wolne od praw autorskich i wizualizacje AI — zbudowane na tej samej technologii, którą widzisz na tej stronie.',
+       ctaQuote: 'Zapytaj o wycenę',
+       ctaPortfolio: 'Zobacz portfolio',
+-      competenciesHeading: 'Zaplecze techniczne',
+-      competencies: [
+-        { tytul: 'PLC Siemens', opis: 'Programowanie, diagnostyka i dokumentacja logiki sterowników linii produkcyjnych.' },
+-        { tytul: 'Arburg', opis: 'Analiza cykli wtryskarek — parametry procesowe, wady powierzchniowe, optymalizacja.' },
+-        { tytul: 'Yaskawa Motoman', opis: 'Trajektorie i strefy robocze robotów przemysłowych w komórkach zrobotyzowanych.' },
+-        { tytul: 'MIM', opis: 'Metal Injection Molding — kinematyka wypełniania formy i przepływu granulatu.' },
+-      ],
+       portfolioHeading: 'Portfolio & Case Studies',
+       portfolioLink: 'Pełne case studies →',
+       audioLabHeading: 'Audio Lab',
+@@ -88,6 +81,184 @@ export const translations = {
+       contactText: 'Opisz projekt, a przygotujemy wstępną wycenę montażu, analizy lub wizualizacji.',
+       contactCta: 'Przejdź do kontaktu',
+     },
++    diensten: {
++      heroTitle: 'Usługi',
++      heroLead: 'Specjalistyczny montaż wideo i analiza procesów, dopasowane do formatu i odbiorcy.',
++      items: [
++        {
++          tytul: 'Montaż analiz mechanicznych',
++          opis: 'Rozbiór procesu, maszyny lub incydentu na materiale źródłowym — czytelny montaż 16:9 do dokumentacji technicznej i szkoleń.',
++          bullets: [
++            'Synchronizacja z dokumentacją techniczną',
++            'Spowolnienia i adnotacje klatka po klatce',
++            'Wersje do archiwizacji i szkoleń wewnętrznych',
++          ],
++        },
++        {
++          tytul: 'Shorts i Reels',
++          opis: 'Skrócone, pionowe wersje materiałów technicznych — pod social media i szybką komunikację wewnętrzną.',
++          bullets: [
++            'Format 9:16',
++            'Napisy i oznaczenia kluczowych momentów',
++            'Wersje pod LinkedIn, Instagram i kanały wewnętrzne',
++          ],
++        },
++        {
++          tytul: 'Wizualizacje AI',
++          opis: 'Renderowane komputerowo wizualizacje procesów trudnych do sfilmowania — przepływy, strefy robocze, symulacje.',
++          bullets: [
++            'Wizualizacja stref bezpieczeństwa i zasięgu robotów',
++            'Symulacje przepływu materiału i granulatu',
++            'Materiały poglądowe dla klientów i audytorów',
++          ],
++        },
++        {
++          tytul: 'Audio Lab — autorska ścieżka dźwiękowa',
++          opis: 'Muzyka i udźwiękowienie tworzone od podstaw — zero ryzyka Content ID przy publikacji.',
++          bullets: [
++            'Ścieżki dopasowane do tempa montażu',
++            'Pełne prawa do wykorzystania komercyjnego',
++            'Wizualizacja 3D reagująca na dźwięk — zobacz w Audio Lab na stronie głównej',
++          ],
++        },
++      ],
++      ctaHeading: 'Masz projekt do wyceny?',
++      ctaText: 'Opisz proces, maszynę lub format, który Cię interesuje — odezwiemy się z konkretną propozycją.',
++      ctaButton: 'Przejdź do kontaktu',
++    },
++    casussen: {
++      heroTitle: 'Case Studies',
++      heroLead: 'Wybrane projekty montażowe i analityczne — sytuacja, ustalenia, rezultat.',
++      situationLabel: 'Sytuacja',
++      findingsLabel: 'Ustalenia',
++      resultLabel: 'Rezultat',
++      items: [
++        {
++          tytul: 'Diagnostyka przestojów linii MIM',
++          kategoria: 'MIM',
++          sytuacja:
++            'Producent elementów MIM zgłosił powtarzające się, trudne do zdiagnozowania przestoje na jednym z etapów formowania.',
++          ustalenia: [
++            'Nagrania klatka po klatce ujawniły moment powstawania mikropęknięć w formie',
++            'Zestawienie z parametrami procesu wskazało okno czasowe odpowiedzialne za większość usterek',
++            'Materiał posłużył zespołowi utrzymania ruchu jako punkt odniesienia do korekty parametrów',
++          ],
++          rezultat: 'Skrócenie czasu diagnozowania kolejnych przestojów i gotowy materiał szkoleniowy dla nowych operatorów.',
++        },
++        {
++          tytul: 'Dokumentacja wdrożenia komórki Yaskawa Motoman',
++          kategoria: 'Robotyka',
++          sytuacja:
++            'Integrator robotyki potrzebował materiału dokumentującego uruchomienie nowej komórki zrobotyzowanej — do odbioru technicznego i szkolenia operatorów.',
++          ustalenia: [
++            'Nagranie pełnego cyklu z ujęciami synchronicznymi z dwóch kamer',
++            'Nałożona telemetria osi ułatwiła odbiór techniczny',
++            'Materiał wykorzystano też jako element oferty integratora dla kolejnych klientów',
++          ],
++          rezultat: 'Skrócony czas odbioru technicznego i gotowy materiał marketingowo-szkoleniowy w jednym.',
++        },
++        {
++          tytul: 'Analiza cyklu wtrysku Arburg pod kątem wad powierzchniowych',
++          kategoria: 'Arburg',
++          sytuacja: 'Nawracające, mikroskopijne wady powierzchniowe na elementach wtryskiwanych, trudne do uchwycenia gołym okiem.',
++          ustalenia: [
++            'Makrorejestracja w zwolnionym tempie ujawniła moment powstawania defektu przy przełączeniu ciśnienia',
++            'Zestawienie z logiem parametrów maszyny zawęziło listę przyczyn do dwóch parametrów',
++            'Krótka wersja (short) posłużyła do szybkiego uzgodnienia zmian z zespołem zmianowym',
++          ],
++          rezultat: 'Ograniczenie liczby braków bez przestoju linii na dodatkowe testy.',
++        },
++        {
++          tytul: 'Wizualizacja pracy zespołu wysiewającego',
++          kategoria: 'Agro',
++          sytuacja:
++            'Producent maszyn rolniczych potrzebował poglądowego materiału tłumaczącego zasadę działania zespołu wysiewającego klientom i dystrybutorom.',
++          ustalenia: [
++            'Połączenie nagrania rzeczywistego z wizualizacją AI przekroju mechanizmu',
++            'Materiał przygotowany w dwóch formatach — pełna wersja 16:9 i skrócony reel',
++            'Dystrybutorzy wykorzystali materiał bez dodatkowego udziału producenta',
++          ],
++          rezultat: 'Jeden materiał wideo zastąpił wielostronicową instrukcję poglądową.',
++        },
++      ],
++      ctaHeading: 'Masz podobny projekt?',
++      ctaText: 'Opisz sytuację — powiemy, jak podeszlibyśmy do montażu lub analizy.',
++      ctaButton: 'Przejdź do kontaktu',
++    },
++    over: {
++      heroTitle: 'O nas',
++      heroLead: 'Inżynieria i montaż wideo pod jednym dachem.',
++      sections: [
++        {
++          tytul: 'Kim jesteśmy',
++          body:
++            'DAREMON Engineering łączy ponad 15 lat doświadczenia w elektryce i automatyce przemysłowej z montażem wideo i narzędziami AI. Powstaliśmy z przekonania, że najlepiej o procesie technicznym opowie ktoś, kto sam go rozumie od strony inżynierskiej — nie tylko montażowej.',
++        },
++        {
++          tytul: 'Skąd ta wiedza',
++          body:
++            'Programowanie sterowników PLC Siemens, diagnostyka wtryskarek Arburg, wdrożenia robotów Yaskawa Motoman i praca z technologią MIM — to zaplecze techniczne, które pozwala nam rozumieć materiał źródłowy zanim zaczniemy montaż, a nie tylko ładnie go poskładać.',
++        },
++        {
++          tytul: 'Dlaczego wideo i AI',
++          body:
++            'Część procesów przemysłowych trudno opisać słowami albo pokazać gołym okiem — kinematyka robota, mikropęknięcie w formie, przepływ granulatu. Montaż wideo i wizualizacje AI pozwalają pokazać to, co inaczej zostałoby tylko w dokumentacji tekstowej.',
++        },
++        {
++          tytul: 'Skąd nazwa DAREMON',
++          body:
++            'Nazwa nawiązuje do "daemon" — procesu działającego w tle, który utrzymuje system w ruchu. Dokładnie tak rozumiemy naszą rolę: dokumentujemy i analizujemy procesy, które napędzają produkcję, nawet jeśli zwykle pozostają niewidoczne.',
++        },
++      ],
++      ctaHeading: 'Chcesz porozmawiać o projekcie?',
++      ctaText: 'Napisz, czym się zajmujesz i co chcesz pokazać — odpowiemy z konkretami.',
++      ctaButton: 'Przejdź do kontaktu',
++    },
++    methodiek: {
++      heroTitle: 'Metodyka i AI',
++      heroLead: 'Jak łączymy analizę techniczną, montaż i narzędzia AI, żeby materiał był rzetelny i czytelny.',
++      tabProcess: 'Nasz proces',
++      tabAi: 'Rola AI',
++      processHeading: 'Jak pracujemy',
++      processSteps: [
++        {
++          tytul: 'Briefing i analiza źródeł',
++          opis: 'Przeglądamy materiał źródłowy i dokumentację techniczną, żeby zrozumieć proces zanim zaczniemy montaż.',
++        },
++        {
++          tytul: 'Montaż i synchronizacja',
++          opis: 'Montujemy materiał z uwzględnieniem parametrów procesowych i dokumentacji — tak, by obraz zgadzał się z danymi.',
++        },
++        {
++          tytul: 'Wizualizacja i udźwiękowienie',
++          opis: 'Tam, gdzie to zasadne, dodajemy wizualizacje AI i autorską ścieżkę dźwiękową wolną od Content ID.',
++        },
++        {
++          tytul: 'Dostawa i wsparcie',
++          opis: 'Materiał trafia w formacie dopasowanym do odbiorcy, z możliwością korekt po pierwszym przeglądzie.',
++        },
++      ],
++      aiHeading: 'Gdzie realnie pomaga nam AI',
++      aiIntro:
++        'AI jest narzędziem, nie autorem materiału. Korzystamy z niej w konkretnych, ograniczonych zadaniach — decyzje montażowe i interpretacja procesu zawsze pozostają po naszej stronie.',
++      aiPoints: [
++        {
++          tytul: 'Wizualizacje 3D',
++          opis: 'Silnik Three.js pomaga pokazać strefy robocze, trajektorie i przepływy, których nie da się łatwo sfilmować.',
++        },
++        {
++          tytul: 'Autorskie audio',
++          opis: 'Narzędzia generatywne wspierają komponowanie ścieżek dźwiękowych wolnych od roszczeń Content ID.',
++        },
++        {
++          tytul: 'Wstępna selekcja materiału',
++          opis: 'Przy długich nagraniach źródłowych AI pomaga wskazać momenty warte bliższej analizy — ostateczny wybór należy do montażysty.',
++        },
++      ],
++      ctaHeading: 'Masz pytania o naszą metodykę?',
++      ctaText: 'Chętnie opowiemy, jak podeszlibyśmy do Twojego materiału.',
++      ctaButton: 'Przejdź do kontaktu',
++    },
+   },
+   nl: {
+     nav: {
+@@ -147,13 +318,6 @@ export const translations = {
+         'Procesanalyse, kinematica van machines, auteursrechtvrije audio en AI-visualisaties — gebouwd op dezelfde technologie die je op deze pagina ziet.',
+       ctaQuote: 'Vraag een offerte aan',
+       ctaPortfolio: 'Bekijk portfolio',
+-      competenciesHeading: 'Technisch fundament',
+-      competencies: [
+-        { tytul: 'PLC Siemens', opis: 'Programmeren, diagnose en documentatie van besturingslogica voor productielijnen.' },
+-        { tytul: 'Arburg', opis: 'Analyse van spuitgietcycli — procesparameters, oppervlaktedefecten, optimalisatie.' },
+-        { tytul: 'Yaskawa Motoman', opis: 'Trajecten en werkzones van industriële robots in geautomatiseerde cellen.' },
+-        { tytul: 'MIM', opis: 'Metal Injection Molding — kinematica van matrijsvulling en granulaatstroom.' },
+-      ],
+       portfolioHeading: 'Portfolio & Case Studies',
+       portfolioLink: 'Alle case studies →',
+       audioLabHeading: 'Audio Lab',
+@@ -174,6 +338,184 @@ export const translations = {
+       contactText: 'Beschrijf je project en we stellen een eerste inschatting op voor montage, analyse of visualisatie.',
+       contactCta: 'Naar contact',
+     },
++    diensten: {
++      heroTitle: 'Diensten',
++      heroLead: 'Gespecialiseerde videomontage en procesanalyse, afgestemd op formaat en doelgroep.',
++      items: [
++        {
++          tytul: 'Montage van mechanische analyses',
++          opis: 'Ontleding van een proces, machine of incident op basis van bronmateriaal — heldere 16:9-montage voor technische documentatie en training.',
++          bullets: [
++            'Synchronisatie met technische documentatie',
++            'Vertragingen en annotaties per frame',
++            'Versies voor archivering en interne trainingen',
++          ],
++        },
++        {
++          tytul: 'Shorts en Reels',
++          opis: 'Verkorte, verticale versies van technisch materiaal — voor social media en snelle interne communicatie.',
++          bullets: [
++            'Formaat 9:16',
++            'Ondertitels en markeringen van kernmomenten',
++            'Versies voor LinkedIn, Instagram en interne kanalen',
++          ],
++        },
++        {
++          tytul: 'AI-visualisaties',
++          opis: 'Computergerenderde visualisaties van processen die moeilijk te filmen zijn — stromen, werkzones, simulaties.',
++          bullets: [
++            'Visualisatie van veiligheidszones en robotbereik',
++            'Simulaties van materiaal- en granulaatstroom',
++            'Toelichtend materiaal voor klanten en auditors',
++          ],
++        },
++        {
++          tytul: 'Audio Lab — eigen soundtrack',
++          opis: 'Muziek en geluid vanaf nul opgebouwd — geen Content ID-risico bij publicatie.',
++          bullets: [
++            'Soundtracks afgestemd op het montagetempo',
++            'Volledige rechten voor commercieel gebruik',
++            '3D-visualisatie die reageert op geluid — te zien in Audio Lab op de homepage',
++          ],
++        },
++      ],
++      ctaHeading: 'Heb je een project dat een offerte nodig heeft?',
++      ctaText: 'Beschrijf het proces, de machine of het formaat dat je voor ogen hebt — we komen met een concreet voorstel.',
++      ctaButton: 'Naar contact',
++    },
++    casussen: {
++      heroTitle: 'Case Studies',
++      heroLead: 'Een selectie van montage- en analyseprojecten — situatie, bevindingen, resultaat.',
++      situationLabel: 'Situatie',
++      findingsLabel: 'Bevindingen',
++      resultLabel: 'Resultaat',
++      items: [
++        {
++          tytul: 'Diagnose van stilstanden op een MIM-lijn',
++          kategoria: 'MIM',
++          sytuacja:
++            'Een producent van MIM-onderdelen meldde terugkerende, moeilijk te diagnosticeren stilstanden bij één van de vormstappen.',
++          ustalenia: [
++            'Frame-voor-frame opnames toonden het moment waarop microscheurtjes in de matrijs ontstonden',
++            'Vergelijking met procesparameters wees een tijdvenster aan dat verantwoordelijk was voor de meeste storingen',
++            'Het materiaal diende het onderhoudsteam als referentie voor het bijstellen van parameters',
++          ],
++          rezultat: 'Kortere diagnosetijd bij volgende stilstanden en direct bruikbaar trainingsmateriaal voor nieuwe operators.',
++        },
++        {
++          tytul: 'Documentatie van de inbedrijfstelling van een Yaskawa Motoman-cel',
++          kategoria: 'Robotica',
++          sytuacja:
++            'Een systeemintegrator had materiaal nodig om de inbedrijfstelling van een nieuwe robotcel te documenteren — voor technische oplevering en operatorstraining.',
++          ustalenia: [
++            'Opname van de volledige cyclus met gesynchroniseerde beelden vanuit twee camera\'s',
++            'Overgelegde astelemetrie vereenvoudigde de technische oplevering',
++            'Het materiaal werd ook gebruikt als onderdeel van het aanbod van de integrator naar andere klanten',
++          ],
++          rezultat: 'Kortere opleveringstijd en in één keer bruikbaar marketing- en trainingsmateriaal.',
++        },
++        {
++          tytul: 'Analyse van een Arburg-spuitgietcyclus op oppervlaktedefecten',
++          kategoria: 'Arburg',
++          sytuacja: 'Terugkerende, microscopisch kleine oppervlaktedefecten op spuitgegoten onderdelen, met het blote oog nauwelijks te zien.',
++          ustalenia: [
++            'Vertraagde macro-opnames toonden het moment waarop het defect ontstond bij de drukomschakeling',
++            'Vergelijking met het machineparameterlog beperkte de mogelijke oorzaken tot twee parameters',
++            'Een korte versie (short) werd gebruikt om wijzigingen snel af te stemmen met de ploeg',
++          ],
++          rezultat: 'Minder uitval zonder de lijn stil te leggen voor extra tests.',
++        },
++        {
++          tytul: 'Visualisatie van de werking van een zaai-unit',
++          kategoria: 'Agro',
++          sytuacja:
++            'Een fabrikant van landbouwmachines had toelichtend materiaal nodig om de werking van een zaai-unit uit te leggen aan klanten en distributeurs.',
++          ustalenia: [
++            'Combinatie van echte beelden met een AI-visualisatie van de doorsnede van het mechanisme',
++            'Materiaal geleverd in twee formaten — volledige 16:9-versie en verkorte reel',
++            'Distributeurs konden het materiaal zelfstandig gebruiken, zonder extra inzet van de fabrikant',
++          ],
++          rezultat: 'Eén video verving een meerpagina toelichtende handleiding.',
++        },
++      ],
++      ctaHeading: 'Heb je een vergelijkbaar project?',
++      ctaText: 'Beschrijf de situatie — we laten weten hoe we de montage of analyse zouden aanpakken.',
++      ctaButton: 'Naar contact',
++    },
++    over: {
++      heroTitle: 'Over ons',
++      heroLead: 'Engineering en videomontage onder één dak.',
++      sections: [
++        {
++          tytul: 'Wie we zijn',
++          body:
++            'DAREMON Engineering combineert meer dan 15 jaar ervaring in elektrotechniek en industriële automatisering met videomontage en AI-tools. We zijn ontstaan vanuit de overtuiging dat een technisch proces het best wordt verteld door iemand die het ook vanuit technisch oogpunt begrijpt — niet alleen als monteur van beeldmateriaal.',
++        },
++        {
++          tytul: 'Waar die kennis vandaan komt',
++          body:
++            'Programmeren van Siemens PLC-besturingen, diagnose van Arburg-spuitgietmachines, inbedrijfstelling van Yaskawa Motoman-robots en werken met MIM-technologie — dat technische fundament stelt ons in staat het bronmateriaal te begrijpen voordat we beginnen te monteren, niet alleen het mooi aan elkaar te knippen.',
++        },
++        {
++          tytul: 'Waarom video en AI',
++          body:
++            'Sommige industriële processen zijn moeilijk in woorden te vatten of met het blote oog te zien — de kinematica van een robot, een microscheurtje in een matrijs, de stroom van granulaat. Videomontage en AI-visualisaties tonen wat anders alleen in tekstuele documentatie zou blijven staan.',
++        },
++        {
++          tytul: 'Waar de naam DAREMON vandaan komt',
++          body:
++            'De naam verwijst naar "daemon" — een achtergrondproces dat een systeem draaiende houdt. Precies zo zien wij onze rol: we documenteren en analyseren de processen die de productie aandrijven, ook als die meestal onzichtbaar blijven.',
++        },
++      ],
++      ctaHeading: 'Wil je over een project praten?',
++      ctaText: 'Laat weten waar je mee bezig bent en wat je wilt laten zien — we reageren met concrete opties.',
++      ctaButton: 'Naar contact',
++    },
++    methodiek: {
++      heroTitle: 'Methodiek & AI',
++      heroLead: 'Hoe we technische analyse, montage en AI-tools combineren tot betrouwbaar en helder materiaal.',
++      tabProcess: 'Onze werkwijze',
++      tabAi: 'Rol van AI',
++      processHeading: 'Hoe we werken',
++      processSteps: [
++        {
++          tytul: 'Briefing en analyse van bronmateriaal',
++          opis: 'We bekijken het bronmateriaal en de technische documentatie om het proces te begrijpen voordat we gaan monteren.',
++        },
++        {
++          tytul: 'Montage en synchronisatie',
++          opis: 'We monteren met oog voor procesparameters en documentatie — zodat beeld en data kloppen.',
++        },
++        {
++          tytul: 'Visualisatie en geluid',
++          opis: 'Waar zinvol voegen we AI-visualisaties toe en een eigen soundtrack zonder Content ID-risico.',
++        },
++        {
++          tytul: 'Levering en nazorg',
++          opis: 'Het materiaal wordt geleverd in het gewenste formaat, met ruimte voor correcties na de eerste review.',
++        },
++      ],
++      aiHeading: 'Waar AI ons echt helpt',
++      aiIntro:
++        'AI is een hulpmiddel, geen auteur van het materiaal. We zetten het in voor specifieke, afgebakende taken — montagebeslissingen en interpretatie van het proces blijven altijd bij ons.',
++      aiPoints: [
++        {
++          tytul: '3D-visualisaties',
++          opis: 'De Three.js-engine helpt werkzones, trajecten en stromen te tonen die lastig te filmen zijn.',
++        },
++        {
++          tytul: 'Eigen audio',
++          opis: 'Generatieve tools ondersteunen het componeren van soundtracks zonder Content ID-claims.',
++        },
++        {
++          tytul: 'Eerste selectie van materiaal',
++          opis: 'Bij lange bronopnames helpt AI momenten aan te wijzen die nadere analyse verdienen — de uiteindelijke keuze blijft aan de monteur.',
++        },
++      ],
++      ctaHeading: 'Vragen over onze methodiek?',
++      ctaText: 'We lichten graag toe hoe we jouw materiaal zouden aanpakken.',
++      ctaButton: 'Naar contact',
++    },
+   },
+ } as const satisfies Record<Language, unknown>
+ 
