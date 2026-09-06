@@ -92,8 +92,8 @@ FileETag MTime Size
     ExpiresByType font/ttf "access plus 1 year"
     ExpiresByType font/otf "access plus 1 year"
 
-    # Manifest - 1 week
-    ExpiresByType application/manifest+json "access plus 1 week"
+    # Manifest - no caching (must always be fresh, same reasoning as sw.js)
+    ExpiresByType application/manifest+json "access plus 0 seconds"
 
     # JSON - 1 hour
     ExpiresByType application/json "access plus 1 hour"
@@ -128,14 +128,20 @@ FileETag MTime Size
         Header set Cache-Control "public, max-age=31536000, immutable"
     </FilesMatch>
 
-    # Service Worker - No caching (must always be fresh)
+    # Service Worker - No caching (must always be fresh). Bez tego przeglądarka
+    # może latami nie zauważyć, że na serwerze leży nowa wersja sw.js — a to
+    # jedyny sposób, żeby stary, aktywny Service Worker w ogóle się zaktualizował.
     <FilesMatch "sw\.js$">
         Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires 0
     </FilesMatch>
 
-    # Manifest - 1 week
+    # Manifest - No caching (must always be fresh, same reasoning as sw.js)
     <FilesMatch "manifest\.json$">
-        Header set Cache-Control "public, max-age=604800"
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires 0
     </FilesMatch>
 </IfModule>
 

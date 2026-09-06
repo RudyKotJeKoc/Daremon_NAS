@@ -1860,6 +1860,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const reg = await navigator.serviceWorker.register('./sw.js');
                 console.log('Service Worker geregistreerd:', reg.scope);
 
+                // Wymuś natychmiastowe sprawdzenie nowej wersji sw.js na serwerze.
+                // Sama rejestracja tego nie robi — przeglądarka odpytuje w tle
+                // z własnej inicjatywy raz na jakiś czas, co dla powracających
+                // użytkowników utknietych na starej wersji bywa zbyt rzadkie.
+                reg.update().catch(() => {});
+
                 // Listen for updates: if a new SW is waiting, ask it to skip waiting and reload once
                 let refreshing = false;
                 navigator.serviceWorker.addEventListener('controllerchange', () => {
@@ -1880,6 +1886,14 @@ document.addEventListener('DOMContentLoaded', () => {
                             newWorker.postMessage({ type: 'SKIP_WAITING' });
                         }
                     });
+                });
+
+                // Dodatkowe sprawdzenie przy powrocie do karty — łapie
+                // użytkowników, którzy trzymają kartę otwartą tygodniami.
+                document.addEventListener('visibilitychange', () => {
+                    if (document.visibilityState === 'visible') {
+                        reg.update().catch(() => {});
+                    }
                 });
             } catch (err) {
                 console.error('Service Worker registratie mislukt:', err);

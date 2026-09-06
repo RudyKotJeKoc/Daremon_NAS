@@ -1,0 +1,940 @@
+diff --git a/.htaccess b/.htaccess
+index f70a613..5588914 100644
+--- a/.htaccess
++++ b/.htaccess
+@@ -92,8 +92,8 @@ FileETag MTime Size
+     ExpiresByType font/ttf "access plus 1 year"
+     ExpiresByType font/otf "access plus 1 year"
+ 
+-    # Manifest - 1 week
+-    ExpiresByType application/manifest+json "access plus 1 week"
++    # Manifest - no caching (must always be fresh, same reasoning as sw.js)
++    ExpiresByType application/manifest+json "access plus 0 seconds"
+ 
+     # JSON - 1 hour
+     ExpiresByType application/json "access plus 1 hour"
+@@ -128,14 +128,20 @@ FileETag MTime Size
+         Header set Cache-Control "public, max-age=31536000, immutable"
+     </FilesMatch>
+ 
+-    # Service Worker - No caching (must always be fresh)
++    # Service Worker - No caching (must always be fresh). Bez tego przeglądarka
++    # może latami nie zauważyć, że na serwerze leży nowa wersja sw.js — a to
++    # jedyny sposób, żeby stary, aktywny Service Worker w ogóle się zaktualizował.
+     <FilesMatch "sw\.js$">
+         Header set Cache-Control "no-cache, no-store, must-revalidate"
++        Header set Pragma "no-cache"
++        Header set Expires 0
+     </FilesMatch>
+ 
+-    # Manifest - 1 week
++    # Manifest - No caching (must always be fresh, same reasoning as sw.js)
+     <FilesMatch "manifest\.json$">
+-        Header set Cache-Control "public, max-age=604800"
++        Header set Cache-Control "no-cache, no-store, must-revalidate"
++        Header set Pragma "no-cache"
++        Header set Expires 0
+     </FilesMatch>
+ </IfModule>
+ 
+diff --git a/app.js b/app.js
+index 198b1ff..cae4093 100644
+--- a/app.js
++++ b/app.js
+@@ -1860,6 +1860,12 @@ document.addEventListener('DOMContentLoaded', () => {
+                 const reg = await navigator.serviceWorker.register('./sw.js');
+                 console.log('Service Worker geregistreerd:', reg.scope);
+ 
++                // Wymuś natychmiastowe sprawdzenie nowej wersji sw.js na serwerze.
++                // Sama rejestracja tego nie robi — przeglądarka odpytuje w tle
++                // z własnej inicjatywy raz na jakiś czas, co dla powracających
++                // użytkowników utknietych na starej wersji bywa zbyt rzadkie.
++                reg.update().catch(() => {});
++
+                 // Listen for updates: if a new SW is waiting, ask it to skip waiting and reload once
+                 let refreshing = false;
+                 navigator.serviceWorker.addEventListener('controllerchange', () => {
+@@ -1881,6 +1887,14 @@ document.addEventListener('DOMContentLoaded', () => {
+                         }
+                     });
+                 });
++
++                // Dodatkowe sprawdzenie przy powrocie do karty — łapie
++                // użytkowników, którzy trzymają kartę otwartą tygodniami.
++                document.addEventListener('visibilitychange', () => {
++                    if (document.visibilityState === 'visible') {
++                        reg.update().catch(() => {});
++                    }
++                });
+             } catch (err) {
+                 console.error('Service Worker registratie mislukt:', err);
+             }
+diff --git a/legacy-factory-site/.htaccess b/legacy-factory-site/.htaccess
+index f70a613..5588914 100644
+--- a/legacy-factory-site/.htaccess
++++ b/legacy-factory-site/.htaccess
+@@ -92,8 +92,8 @@ FileETag MTime Size
+     ExpiresByType font/ttf "access plus 1 year"
+     ExpiresByType font/otf "access plus 1 year"
+ 
+-    # Manifest - 1 week
+-    ExpiresByType application/manifest+json "access plus 1 week"
++    # Manifest - no caching (must always be fresh, same reasoning as sw.js)
++    ExpiresByType application/manifest+json "access plus 0 seconds"
+ 
+     # JSON - 1 hour
+     ExpiresByType application/json "access plus 1 hour"
+@@ -128,14 +128,20 @@ FileETag MTime Size
+         Header set Cache-Control "public, max-age=31536000, immutable"
+     </FilesMatch>
+ 
+-    # Service Worker - No caching (must always be fresh)
++    # Service Worker - No caching (must always be fresh). Bez tego przeglądarka
++    # może latami nie zauważyć, że na serwerze leży nowa wersja sw.js — a to
++    # jedyny sposób, żeby stary, aktywny Service Worker w ogóle się zaktualizował.
+     <FilesMatch "sw\.js$">
+         Header set Cache-Control "no-cache, no-store, must-revalidate"
++        Header set Pragma "no-cache"
++        Header set Expires 0
+     </FilesMatch>
+ 
+-    # Manifest - 1 week
++    # Manifest - No caching (must always be fresh, same reasoning as sw.js)
+     <FilesMatch "manifest\.json$">
+-        Header set Cache-Control "public, max-age=604800"
++        Header set Cache-Control "no-cache, no-store, must-revalidate"
++        Header set Pragma "no-cache"
++        Header set Expires 0
+     </FilesMatch>
+ </IfModule>
+ 
+diff --git a/legacy-factory-site/app.js b/legacy-factory-site/app.js
+index 198b1ff..cae4093 100644
+--- a/legacy-factory-site/app.js
++++ b/legacy-factory-site/app.js
+@@ -1860,6 +1860,12 @@ document.addEventListener('DOMContentLoaded', () => {
+                 const reg = await navigator.serviceWorker.register('./sw.js');
+                 console.log('Service Worker geregistreerd:', reg.scope);
+ 
++                // Wymuś natychmiastowe sprawdzenie nowej wersji sw.js na serwerze.
++                // Sama rejestracja tego nie robi — przeglądarka odpytuje w tle
++                // z własnej inicjatywy raz na jakiś czas, co dla powracających
++                // użytkowników utknietych na starej wersji bywa zbyt rzadkie.
++                reg.update().catch(() => {});
++
+                 // Listen for updates: if a new SW is waiting, ask it to skip waiting and reload once
+                 let refreshing = false;
+                 navigator.serviceWorker.addEventListener('controllerchange', () => {
+@@ -1881,6 +1887,14 @@ document.addEventListener('DOMContentLoaded', () => {
+                         }
+                     });
+                 });
++
++                // Dodatkowe sprawdzenie przy powrocie do karty — łapie
++                // użytkowników, którzy trzymają kartę otwartą tygodniami.
++                document.addEventListener('visibilitychange', () => {
++                    if (document.visibilityState === 'visible') {
++                        reg.update().catch(() => {});
++                    }
++                });
+             } catch (err) {
+                 console.error('Service Worker registratie mislukt:', err);
+             }
+diff --git a/public/.htaccess b/public/.htaccess
+new file mode 100644
+index 0000000..5588914
+--- /dev/null
++++ b/public/.htaccess
+@@ -0,0 +1,308 @@
++# Apache Configuration for Radio ETS
++# Performance, Security, and Caching
++
++# =====================================================
++# SECURITY HEADERS
++# =====================================================
++
++<IfModule mod_headers.c>
++    # Force HTTPS with HSTS (HTTP Strict Transport Security)
++    # SECURITY: Enables HSTS to force HTTPS connections
++    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
++
++    # Prevent XSS attacks
++    Header set X-XSS-Protection "1; mode=block"
++
++    # Prevent MIME type sniffing
++    Header set X-Content-Type-Options "nosniff"
++
++    # Prevent clickjacking
++    Header set X-Frame-Options "SAMEORIGIN"
++
++    # Referrer Policy
++    Header set Referrer-Policy "strict-origin-when-cross-origin"
++
++    # Permissions Policy (formerly Feature Policy)
++    Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
++
++    # Content Security Policy
++    # SECURITY: Removed 'unsafe-inline' to prevent XSS attacks
++    # Added backend API endpoint to connect-src for backend integration
++    Header set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self'; connect-src 'self' http://localhost:3001 https://api.daremon.nl; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
++</IfModule>
++
++# =====================================================
++# FORCE HTTPS (SECURITY: Enabled)
++# =====================================================
++
++<IfModule mod_rewrite.c>
++    RewriteEngine On
++    RewriteCond %{HTTPS} off
++    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
++</IfModule>
++
++# =====================================================
++# CACHING & PERFORMANCE
++# =====================================================
++
++# Enable ETags
++FileETag MTime Size
++
++# Enable Expires Headers
++<IfModule mod_expires.c>
++    ExpiresActive On
++
++    # Default expiration: 1 hour
++    ExpiresDefault "access plus 1 hour"
++
++    # HTML - No caching (always fresh)
++    ExpiresByType text/html "access plus 0 seconds"
++
++    # CSS - 1 month
++    ExpiresByType text/css "access plus 1 month"
++
++    # JavaScript - 1 month
++    ExpiresByType application/javascript "access plus 1 month"
++    ExpiresByType text/javascript "access plus 1 month"
++
++    # Images - 1 year
++    ExpiresByType image/jpeg "access plus 1 year"
++    ExpiresByType image/jpg "access plus 1 year"
++    ExpiresByType image/png "access plus 1 year"
++    ExpiresByType image/gif "access plus 1 year"
++    ExpiresByType image/webp "access plus 1 year"
++    ExpiresByType image/svg+xml "access plus 1 year"
++    ExpiresByType image/x-icon "access plus 1 year"
++
++    # Audio - 1 year
++    ExpiresByType audio/mpeg "access plus 1 year"
++    ExpiresByType audio/mp3 "access plus 1 year"
++    ExpiresByType audio/ogg "access plus 1 year"
++    ExpiresByType audio/wav "access plus 1 year"
++
++    # Video - 1 year
++    ExpiresByType video/mp4 "access plus 1 year"
++    ExpiresByType video/webm "access plus 1 year"
++
++    # Fonts - 1 year
++    ExpiresByType font/woff "access plus 1 year"
++    ExpiresByType font/woff2 "access plus 1 year"
++    ExpiresByType application/font-woff "access plus 1 year"
++    ExpiresByType application/font-woff2 "access plus 1 year"
++    ExpiresByType font/ttf "access plus 1 year"
++    ExpiresByType font/otf "access plus 1 year"
++
++    # Manifest - no caching (must always be fresh, same reasoning as sw.js)
++    ExpiresByType application/manifest+json "access plus 0 seconds"
++
++    # JSON - 1 hour
++    ExpiresByType application/json "access plus 1 hour"
++</IfModule>
++
++# Cache-Control Headers
++<IfModule mod_headers.c>
++    # HTML - No caching
++    <FilesMatch "\.(html|htm)$">
++        Header set Cache-Control "no-cache, no-store, must-revalidate"
++        Header set Pragma "no-cache"
++        Header set Expires 0
++    </FilesMatch>
++
++    # CSS & JavaScript - 1 month, must revalidate
++    <FilesMatch "\.(css|js)$">
++        Header set Cache-Control "public, max-age=2592000, must-revalidate"
++    </FilesMatch>
++
++    # Images - 1 year
++    <FilesMatch "\.(jpg|jpeg|png|gif|svg|webp|ico)$">
++        Header set Cache-Control "public, max-age=31536000, immutable"
++    </FilesMatch>
++
++    # Audio/Video - 1 year
++    <FilesMatch "\.(mp3|mp4|webm|ogg|wav)$">
++        Header set Cache-Control "public, max-age=31536000"
++    </FilesMatch>
++
++    # Fonts - 1 year
++    <FilesMatch "\.(woff|woff2|ttf|otf|eot)$">
++        Header set Cache-Control "public, max-age=31536000, immutable"
++    </FilesMatch>
++
++    # Service Worker - No caching (must always be fresh). Bez tego przeglądarka
++    # może latami nie zauważyć, że na serwerze leży nowa wersja sw.js — a to
++    # jedyny sposób, żeby stary, aktywny Service Worker w ogóle się zaktualizował.
++    <FilesMatch "sw\.js$">
++        Header set Cache-Control "no-cache, no-store, must-revalidate"
++        Header set Pragma "no-cache"
++        Header set Expires 0
++    </FilesMatch>
++
++    # Manifest - No caching (must always be fresh, same reasoning as sw.js)
++    <FilesMatch "manifest\.json$">
++        Header set Cache-Control "no-cache, no-store, must-revalidate"
++        Header set Pragma "no-cache"
++        Header set Expires 0
++    </FilesMatch>
++</IfModule>
++
++# =====================================================
++# COMPRESSION
++# =====================================================
++
++# Gzip Compression
++<IfModule mod_deflate.c>
++    # Compress HTML, CSS, JavaScript, Text, XML, and other text formats
++    AddOutputFilterByType DEFLATE text/html
++    AddOutputFilterByType DEFLATE text/plain
++    AddOutputFilterByType DEFLATE text/xml
++    AddOutputFilterByType DEFLATE text/css
++    AddOutputFilterByType DEFLATE text/javascript
++    AddOutputFilterByType DEFLATE application/xml
++    AddOutputFilterByType DEFLATE application/xhtml+xml
++    AddOutputFilterByType DEFLATE application/rss+xml
++    AddOutputFilterByType DEFLATE application/javascript
++    AddOutputFilterByType DEFLATE application/x-javascript
++    AddOutputFilterByType DEFLATE application/json
++    AddOutputFilterByType DEFLATE image/svg+xml
++    AddOutputFilterByType DEFLATE application/font-woff
++    AddOutputFilterByType DEFLATE application/font-woff2
++
++    # Remove browser bugs (only needed for really old browsers)
++    BrowserMatch ^Mozilla/4 gzip-only-text/html
++    BrowserMatch ^Mozilla/4\.0[678] no-gzip
++    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
++    Header append Vary User-Agent
++</IfModule>
++
++# Brotli Compression (if available)
++<IfModule mod_brotli.c>
++    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css text/javascript
++    AddOutputFilterByType BROTLI_COMPRESS application/xml application/xhtml+xml application/rss+xml
++    AddOutputFilterByType BROTLI_COMPRESS application/javascript application/x-javascript application/json
++    AddOutputFilterByType BROTLI_COMPRESS image/svg+xml
++</IfModule>
++
++# =====================================================
++# MIME TYPES
++# =====================================================
++
++<IfModule mod_mime.c>
++    # Audio
++    AddType audio/mp3 .mp3
++    AddType audio/mpeg .mp3
++    AddType audio/ogg .ogg
++    AddType audio/wav .wav
++
++    # Video
++    AddType video/mp4 .mp4
++    AddType video/webm .webm
++
++    # Fonts
++    AddType font/woff .woff
++    AddType font/woff2 .woff2
++    AddType font/ttf .ttf
++    AddType font/otf .otf
++
++    # Images
++    AddType image/webp .webp
++    AddType image/svg+xml .svg
++
++    # JavaScript
++    AddType application/javascript .js
++    AddType text/javascript .js
++
++    # CSS
++    AddType text/css .css
++
++    # Manifest
++    AddType application/manifest+json .json
++
++    # Other
++    AddType application/json .json
++    AddType text/plain .txt
++</IfModule>
++
++# =====================================================
++# HOTLINK PROTECTION (Prevent bandwidth theft)
++# =====================================================
++
++<IfModule mod_rewrite.c>
++    RewriteEngine On
++
++    # Block hotlinking of audio files
++    RewriteCond %{HTTP_REFERER} !^$
++    RewriteCond %{HTTP_REFERER} !^https?://(.+\.)?daremon\.nl [NC]
++    RewriteCond %{REQUEST_URI} ^/music/.*$ [NC]
++    RewriteRule .* - [F,L]
++
++    # Block hotlinking of images
++    RewriteCond %{HTTP_REFERER} !^$
++    RewriteCond %{HTTP_REFERER} !^https?://(.+\.)?daremon\.nl [NC]
++    RewriteCond %{REQUEST_URI} \.(jpg|jpeg|png|gif|webp)$ [NC]
++    RewriteRule .* - [F,L]
++</IfModule>
++
++# =====================================================
++# ERROR PAGES
++# =====================================================
++
++# ErrorDocument 404 /404.html
++# ErrorDocument 500 /500.html
++
++# =====================================================
++# DIRECTORY BROWSING
++# =====================================================
++
++# Disable directory browsing
++Options -Indexes
++
++# Follow symbolic links (required for some configurations)
++Options +FollowSymLinks
++
++# =====================================================
++# FILE ACCESS PROTECTION
++# =====================================================
++
++# Block access to hidden files (.git, .env, etc.)
++<FilesMatch "^\.">
++    Require all denied
++</FilesMatch>
++
++# Protect sensitive files
++<FilesMatch "(^#.*#|\.(bak|conf|dist|fla|in[ci]|log|psd|sh|sql|sw[op])|~)$">
++    Require all denied
++</FilesMatch>
++
++# =====================================================
++# UTF-8 ENCODING
++# =====================================================
++
++AddDefaultCharset UTF-8
++<IfModule mod_mime.c>
++    AddCharset UTF-8 .html .css .js .xml .json .rss .atom
++</IfModule>
++
++# =====================================================
++# REWRITE RULES (SPA Support)
++# =====================================================
++
++<IfModule mod_rewrite.c>
++    RewriteEngine On
++
++    # If not a file or directory, serve index.html
++    # (For Single Page Application routing)
++    # Uncomment if using client-side routing
++    # RewriteCond %{REQUEST_FILENAME} !-f
++    # RewriteCond %{REQUEST_FILENAME} !-d
++    # RewriteRule ^ index.html [L]
++</IfModule>
++
++# =====================================================
++# CORS (if needed for API endpoints)
++# =====================================================
++
++# <IfModule mod_headers.c>
++#     <FilesMatch "\.(ttf|ttc|otf|eot|woff|woff2|font.css|css|js|json)$">
++#         Header set Access-Control-Allow-Origin "*"
++#     </FilesMatch>
++# </IfModule>
+diff --git a/public/legacy/.htaccess b/public/legacy/.htaccess
+new file mode 100644
+index 0000000..5588914
+--- /dev/null
++++ b/public/legacy/.htaccess
+@@ -0,0 +1,308 @@
++# Apache Configuration for Radio ETS
++# Performance, Security, and Caching
++
++# =====================================================
++# SECURITY HEADERS
++# =====================================================
++
++<IfModule mod_headers.c>
++    # Force HTTPS with HSTS (HTTP Strict Transport Security)
++    # SECURITY: Enables HSTS to force HTTPS connections
++    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
++
++    # Prevent XSS attacks
++    Header set X-XSS-Protection "1; mode=block"
++
++    # Prevent MIME type sniffing
++    Header set X-Content-Type-Options "nosniff"
++
++    # Prevent clickjacking
++    Header set X-Frame-Options "SAMEORIGIN"
++
++    # Referrer Policy
++    Header set Referrer-Policy "strict-origin-when-cross-origin"
++
++    # Permissions Policy (formerly Feature Policy)
++    Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
++
++    # Content Security Policy
++    # SECURITY: Removed 'unsafe-inline' to prevent XSS attacks
++    # Added backend API endpoint to connect-src for backend integration
++    Header set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self'; connect-src 'self' http://localhost:3001 https://api.daremon.nl; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
++</IfModule>
++
++# =====================================================
++# FORCE HTTPS (SECURITY: Enabled)
++# =====================================================
++
++<IfModule mod_rewrite.c>
++    RewriteEngine On
++    RewriteCond %{HTTPS} off
++    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
++</IfModule>
++
++# =====================================================
++# CACHING & PERFORMANCE
++# =====================================================
++
++# Enable ETags
++FileETag MTime Size
++
++# Enable Expires Headers
++<IfModule mod_expires.c>
++    ExpiresActive On
++
++    # Default expiration: 1 hour
++    ExpiresDefault "access plus 1 hour"
++
++    # HTML - No caching (always fresh)
++    ExpiresByType text/html "access plus 0 seconds"
++
++    # CSS - 1 month
++    ExpiresByType text/css "access plus 1 month"
++
++    # JavaScript - 1 month
++    ExpiresByType application/javascript "access plus 1 month"
++    ExpiresByType text/javascript "access plus 1 month"
++
++    # Images - 1 year
++    ExpiresByType image/jpeg "access plus 1 year"
++    ExpiresByType image/jpg "access plus 1 year"
++    ExpiresByType image/png "access plus 1 year"
++    ExpiresByType image/gif "access plus 1 year"
++    ExpiresByType image/webp "access plus 1 year"
++    ExpiresByType image/svg+xml "access plus 1 year"
++    ExpiresByType image/x-icon "access plus 1 year"
++
++    # Audio - 1 year
++    ExpiresByType audio/mpeg "access plus 1 year"
++    ExpiresByType audio/mp3 "access plus 1 year"
++    ExpiresByType audio/ogg "access plus 1 year"
++    ExpiresByType audio/wav "access plus 1 year"
++
++    # Video - 1 year
++    ExpiresByType video/mp4 "access plus 1 year"
++    ExpiresByType video/webm "access plus 1 year"
++
++    # Fonts - 1 year
++    ExpiresByType font/woff "access plus 1 year"
++    ExpiresByType font/woff2 "access plus 1 year"
++    ExpiresByType application/font-woff "access plus 1 year"
++    ExpiresByType application/font-woff2 "access plus 1 year"
++    ExpiresByType font/ttf "access plus 1 year"
++    ExpiresByType font/otf "access plus 1 year"
++
++    # Manifest - no caching (must always be fresh, same reasoning as sw.js)
++    ExpiresByType application/manifest+json "access plus 0 seconds"
++
++    # JSON - 1 hour
++    ExpiresByType application/json "access plus 1 hour"
++</IfModule>
++
++# Cache-Control Headers
++<IfModule mod_headers.c>
++    # HTML - No caching
++    <FilesMatch "\.(html|htm)$">
++        Header set Cache-Control "no-cache, no-store, must-revalidate"
++        Header set Pragma "no-cache"
++        Header set Expires 0
++    </FilesMatch>
++
++    # CSS & JavaScript - 1 month, must revalidate
++    <FilesMatch "\.(css|js)$">
++        Header set Cache-Control "public, max-age=2592000, must-revalidate"
++    </FilesMatch>
++
++    # Images - 1 year
++    <FilesMatch "\.(jpg|jpeg|png|gif|svg|webp|ico)$">
++        Header set Cache-Control "public, max-age=31536000, immutable"
++    </FilesMatch>
++
++    # Audio/Video - 1 year
++    <FilesMatch "\.(mp3|mp4|webm|ogg|wav)$">
++        Header set Cache-Control "public, max-age=31536000"
++    </FilesMatch>
++
++    # Fonts - 1 year
++    <FilesMatch "\.(woff|woff2|ttf|otf|eot)$">
++        Header set Cache-Control "public, max-age=31536000, immutable"
++    </FilesMatch>
++
++    # Service Worker - No caching (must always be fresh). Bez tego przeglądarka
++    # może latami nie zauważyć, że na serwerze leży nowa wersja sw.js — a to
++    # jedyny sposób, żeby stary, aktywny Service Worker w ogóle się zaktualizował.
++    <FilesMatch "sw\.js$">
++        Header set Cache-Control "no-cache, no-store, must-revalidate"
++        Header set Pragma "no-cache"
++        Header set Expires 0
++    </FilesMatch>
++
++    # Manifest - No caching (must always be fresh, same reasoning as sw.js)
++    <FilesMatch "manifest\.json$">
++        Header set Cache-Control "no-cache, no-store, must-revalidate"
++        Header set Pragma "no-cache"
++        Header set Expires 0
++    </FilesMatch>
++</IfModule>
++
++# =====================================================
++# COMPRESSION
++# =====================================================
++
++# Gzip Compression
++<IfModule mod_deflate.c>
++    # Compress HTML, CSS, JavaScript, Text, XML, and other text formats
++    AddOutputFilterByType DEFLATE text/html
++    AddOutputFilterByType DEFLATE text/plain
++    AddOutputFilterByType DEFLATE text/xml
++    AddOutputFilterByType DEFLATE text/css
++    AddOutputFilterByType DEFLATE text/javascript
++    AddOutputFilterByType DEFLATE application/xml
++    AddOutputFilterByType DEFLATE application/xhtml+xml
++    AddOutputFilterByType DEFLATE application/rss+xml
++    AddOutputFilterByType DEFLATE application/javascript
++    AddOutputFilterByType DEFLATE application/x-javascript
++    AddOutputFilterByType DEFLATE application/json
++    AddOutputFilterByType DEFLATE image/svg+xml
++    AddOutputFilterByType DEFLATE application/font-woff
++    AddOutputFilterByType DEFLATE application/font-woff2
++
++    # Remove browser bugs (only needed for really old browsers)
++    BrowserMatch ^Mozilla/4 gzip-only-text/html
++    BrowserMatch ^Mozilla/4\.0[678] no-gzip
++    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
++    Header append Vary User-Agent
++</IfModule>
++
++# Brotli Compression (if available)
++<IfModule mod_brotli.c>
++    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css text/javascript
++    AddOutputFilterByType BROTLI_COMPRESS application/xml application/xhtml+xml application/rss+xml
++    AddOutputFilterByType BROTLI_COMPRESS application/javascript application/x-javascript application/json
++    AddOutputFilterByType BROTLI_COMPRESS image/svg+xml
++</IfModule>
++
++# =====================================================
++# MIME TYPES
++# =====================================================
++
++<IfModule mod_mime.c>
++    # Audio
++    AddType audio/mp3 .mp3
++    AddType audio/mpeg .mp3
++    AddType audio/ogg .ogg
++    AddType audio/wav .wav
++
++    # Video
++    AddType video/mp4 .mp4
++    AddType video/webm .webm
++
++    # Fonts
++    AddType font/woff .woff
++    AddType font/woff2 .woff2
++    AddType font/ttf .ttf
++    AddType font/otf .otf
++
++    # Images
++    AddType image/webp .webp
++    AddType image/svg+xml .svg
++
++    # JavaScript
++    AddType application/javascript .js
++    AddType text/javascript .js
++
++    # CSS
++    AddType text/css .css
++
++    # Manifest
++    AddType application/manifest+json .json
++
++    # Other
++    AddType application/json .json
++    AddType text/plain .txt
++</IfModule>
++
++# =====================================================
++# HOTLINK PROTECTION (Prevent bandwidth theft)
++# =====================================================
++
++<IfModule mod_rewrite.c>
++    RewriteEngine On
++
++    # Block hotlinking of audio files
++    RewriteCond %{HTTP_REFERER} !^$
++    RewriteCond %{HTTP_REFERER} !^https?://(.+\.)?daremon\.nl [NC]
++    RewriteCond %{REQUEST_URI} ^/music/.*$ [NC]
++    RewriteRule .* - [F,L]
++
++    # Block hotlinking of images
++    RewriteCond %{HTTP_REFERER} !^$
++    RewriteCond %{HTTP_REFERER} !^https?://(.+\.)?daremon\.nl [NC]
++    RewriteCond %{REQUEST_URI} \.(jpg|jpeg|png|gif|webp)$ [NC]
++    RewriteRule .* - [F,L]
++</IfModule>
++
++# =====================================================
++# ERROR PAGES
++# =====================================================
++
++# ErrorDocument 404 /404.html
++# ErrorDocument 500 /500.html
++
++# =====================================================
++# DIRECTORY BROWSING
++# =====================================================
++
++# Disable directory browsing
++Options -Indexes
++
++# Follow symbolic links (required for some configurations)
++Options +FollowSymLinks
++
++# =====================================================
++# FILE ACCESS PROTECTION
++# =====================================================
++
++# Block access to hidden files (.git, .env, etc.)
++<FilesMatch "^\.">
++    Require all denied
++</FilesMatch>
++
++# Protect sensitive files
++<FilesMatch "(^#.*#|\.(bak|conf|dist|fla|in[ci]|log|psd|sh|sql|sw[op])|~)$">
++    Require all denied
++</FilesMatch>
++
++# =====================================================
++# UTF-8 ENCODING
++# =====================================================
++
++AddDefaultCharset UTF-8
++<IfModule mod_mime.c>
++    AddCharset UTF-8 .html .css .js .xml .json .rss .atom
++</IfModule>
++
++# =====================================================
++# REWRITE RULES (SPA Support)
++# =====================================================
++
++<IfModule mod_rewrite.c>
++    RewriteEngine On
++
++    # If not a file or directory, serve index.html
++    # (For Single Page Application routing)
++    # Uncomment if using client-side routing
++    # RewriteCond %{REQUEST_FILENAME} !-f
++    # RewriteCond %{REQUEST_FILENAME} !-d
++    # RewriteRule ^ index.html [L]
++</IfModule>
++
++# =====================================================
++# CORS (if needed for API endpoints)
++# =====================================================
++
++# <IfModule mod_headers.c>
++#     <FilesMatch "\.(ttf|ttc|otf|eot|woff|woff2|font.css|css|js|json)$">
++#         Header set Access-Control-Allow-Origin "*"
++#     </FilesMatch>
++# </IfModule>
+diff --git a/public/legacy/app.js b/public/legacy/app.js
+index 198b1ff..cae4093 100644
+--- a/public/legacy/app.js
++++ b/public/legacy/app.js
+@@ -1860,6 +1860,12 @@ document.addEventListener('DOMContentLoaded', () => {
+                 const reg = await navigator.serviceWorker.register('./sw.js');
+                 console.log('Service Worker geregistreerd:', reg.scope);
+ 
++                // Wymuś natychmiastowe sprawdzenie nowej wersji sw.js na serwerze.
++                // Sama rejestracja tego nie robi — przeglądarka odpytuje w tle
++                // z własnej inicjatywy raz na jakiś czas, co dla powracających
++                // użytkowników utknietych na starej wersji bywa zbyt rzadkie.
++                reg.update().catch(() => {});
++
+                 // Listen for updates: if a new SW is waiting, ask it to skip waiting and reload once
+                 let refreshing = false;
+                 navigator.serviceWorker.addEventListener('controllerchange', () => {
+@@ -1881,6 +1887,14 @@ document.addEventListener('DOMContentLoaded', () => {
+                         }
+                     });
+                 });
++
++                // Dodatkowe sprawdzenie przy powrocie do karty — łapie
++                // użytkowników, którzy trzymają kartę otwartą tygodniami.
++                document.addEventListener('visibilitychange', () => {
++                    if (document.visibilityState === 'visible') {
++                        reg.update().catch(() => {});
++                    }
++                });
+             } catch (err) {
+                 console.error('Service Worker registratie mislukt:', err);
+             }
+diff --git a/public/sw.js b/public/sw.js
+new file mode 100644
+index 0000000..44f7f9d
+--- /dev/null
++++ b/public/sw.js
+@@ -0,0 +1,132 @@
++// ===================================================================================
++// DAREMON Radio ETS - Service Worker v12
++//
++// Strategie:
++// - Zwiększono wersję cache do v12, aby wymusić aktualizację wszystkich zasobów
++//   u powracających użytkowników (cache busting).
++// - activate() bezwarunkowo kasuje KAŻDY magazyn cache inny niż aktualny
++//   CACHE_NAME — nie tylko znane, stare nazwy — więc nic z poprzednich wersji
++//   nie zostaje w przeglądarce po aktualizacji.
++// - Dodano lokalne ikony do pamięci podręcznej dla pełnej funkcjonalności offline.
++// ===================================================================================
++
++const CACHE_NAME = 'daremon-radio-v12'; // WAŻNE: Zmiana wersji cache
++
++// Basis app-resources (App Shell) z dodanymi ikonami
++const APP_SHELL_ASSETS = [
++    './',
++    './index.html',
++    './app.js',
++    './polls.html',
++    './polls-page.js',
++    './polls.css',
++    './poll-system.js',
++    './config.js',
++    './styles.css',
++    './manifest.json',
++    './playlist.json',
++    './locales/nl.json',
++    './locales/pl.json',
++    './icons/icon-192.svg',
++    './icons/icon-512.svg',
++    './icons/favicon.svg'
++];
++
++self.addEventListener('install', e => {
++    console.log('[Service Worker] Instalacja nowej wersji v12...');
++    e.waitUntil(
++        caches.open(CACHE_NAME).then(cache => {
++            console.log('[Service Worker] Caching van basis app-resources.');
++            return cache.addAll(APP_SHELL_ASSETS);
++        }).catch(err => {
++            console.error('[Service Worker] Fout tijdens instalacji:', err);
++        })
++    );
++    self.skipWaiting();
++});
++
++self.addEventListener('activate', e => {
++    console.log('[Service Worker] Aktywacja v12...');
++    e.waitUntil(
++        caches.keys().then(cacheNames => {
++            // Bezwzględnie kasujemy WSZYSTKIE magazyny cache inne niż bieżący
++            // CACHE_NAME — niezależnie od tego, z jak starej wersji pochodzą —
++            // żeby powracający użytkownik natychmiast dostał nową wersję strony.
++            return Promise.all(
++                cacheNames
++                    .filter(cacheName => cacheName !== CACHE_NAME)
++                    .map(cacheName => {
++                        console.log('[Service Worker] Usuwanie starego cache:', cacheName);
++                        return caches.delete(cacheName);
++                    })
++            );
++        }).then(() => self.clients.claim())
++    );
++});
++
++self.addEventListener('fetch', e => {
++    const url = new URL(e.request.url);
++
++    // Stale-while-revalidate dla playlisty i tłumaczeń
++    if (url.pathname.endsWith('playlist.json') || url.pathname.includes('/locales/')) {
++        e.respondWith(
++            caches.open(CACHE_NAME).then(cache => {
++                return cache.match(e.request).then(cachedResponse => {
++                    const fetchPromise = fetch(e.request).then(networkResponse => {
++                        cache.put(e.request, networkResponse.clone());
++                        return networkResponse;
++                    }).catch(err => {
++                        console.warn('[Service Worker] Błąd sieci, używam cache dla:', e.request.url, err);
++                        return cachedResponse; // Zwróć z cache jeśli sieć zawiedzie
++                    });
++                    return cachedResponse || fetchPromise;
++                });
++            })
++        );
++        return;
++    }
++
++    // Cache first, then network dla audio
++    if (url.pathname.startsWith('/music/')) {
++        e.respondWith(
++            caches.match(e.request).then(cachedResponse => {
++                if (cachedResponse) {
++                    return cachedResponse;
++                }
++                return fetch(e.request).then(networkResponse => {
++                    return caches.open(CACHE_NAME).then(cache => {
++                        cache.put(e.request, networkResponse.clone());
++                        return networkResponse;
++                    });
++                });
++            })
++        );
++        return;
++    }
++
++    // Cache first dla reszty zasobów (app shell)
++    e.respondWith(
++        caches.match(e.request).then(response => {
++            return response || fetch(e.request).catch(err => {
++                console.error('[Service Worker] Błąd fetch dla:', e.request.url, err);
++                // Opcjonalnie: Zwróć stronę błędu offline
++            });
++        })
++    );
++});
++
++// Error event handler
++self.addEventListener('error', (event) => {
++    console.error('[Service Worker] Error:', event.error);
++});
++
++self.addEventListener('unhandledrejection', (event) => {
++    console.error('[Service Worker] Unhandled Promise Rejection:', event.reason);
++});
++
++// Allow page to trigger immediate activation of a waiting SW
++self.addEventListener('message', (event) => {
++    if (event.data && event.data.type === 'SKIP_WAITING') {
++        self.skipWaiting();
++    }
++});
