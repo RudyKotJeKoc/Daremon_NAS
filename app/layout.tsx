@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Navigation } from "@/components/navigation";
-import { RadioDock } from "@/components/radio-dock";
 import { SiteFooter } from "@/components/site-footer";
 import { LanguageProvider } from "@/components/language-provider";
 import { PageTracker } from "@/components/page-tracker";
@@ -41,7 +40,6 @@ export default function RootLayout({
           <PageTracker />
           <Navigation />
           <main>{children}</main>
-          <RadioDock />
           <SiteFooter />
         </LanguageProvider>
       </body>

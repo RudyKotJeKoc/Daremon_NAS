@@ -47,12 +47,54 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // Email configuration
 const RECIPIENT_EMAIL = 'info@daremon.nl'; // Change to your email
-const FROM_EMAIL = 'noreply@daremon.nl';   // Change to your domain email
+const FROM_EMAIL = 'noreply@daremon.nl';   // Change to your domain email (fallback voor mail())
 const SUBJECT = 'Nieuw contactformulier bericht - Daremon';
 
 // Rate limiting (requests per minute)
 const RATE_LIMIT = 3;
 const RATE_LIMIT_WINDOW = 60; // seconds
+
+// ============================================
+// LOKALIZACJA KOMUNIKATÓW (PL/NL — zgodnie z globalnym przełącznikiem języka)
+// ============================================
+
+function resolveLanguage(array $data): string {
+    $lang = trim((string)($data['language'] ?? ''));
+    return in_array($lang, ['pl', 'nl'], true) ? $lang : 'nl';
+}
+
+function messagesFor(string $lang): array {
+    if ($lang === 'pl') {
+        return [
+            'invalid_json' => 'Nieprawidłowe dane JSON.',
+            'method_not_allowed' => 'Dozwolone są wyłącznie żądania POST.',
+            'rate_limited' => 'Zbyt wiele żądań. Spróbuj ponownie za minutę.',
+            'spam_detected' => 'Wykryto spam.',
+            'validation_failed' => 'Walidacja nie powiodła się.',
+            'field_required' => 'Pole „%s” jest wymagane.',
+            'invalid_email' => 'Nieprawidłowy adres e-mail.',
+            'field_too_long' => 'Pole „%s” jest za długie (maks. %d znaków).',
+            'message_too_short' => 'Wiadomość jest za krótka (min. 10 znaków).',
+            'send_failed' => 'Wysyłka nie powiodła się. Spróbuj ponownie później lub napisz bezpośrednio na info@daremon.nl.',
+            'success' => 'Dziękuję za wiadomość! Odezwę się najszybciej, jak to możliwe.',
+            'field_names' => ['naam' => 'Imię i nazwisko', 'email' => 'E-mail', 'onderwerp' => 'Temat', 'bericht' => 'Wiadomość', 'bedrijf' => 'Firma'],
+        ];
+    }
+    return [
+        'invalid_json' => 'Ongeldige JSON data.',
+        'method_not_allowed' => 'Alleen POST requests zijn toegestaan.',
+        'rate_limited' => 'Te veel verzoeken. Probeer het over een minuut opnieuw.',
+        'spam_detected' => 'Spam gedetecteerd.',
+        'validation_failed' => 'Validatie mislukt.',
+        'field_required' => 'Veld "%s" is verplicht.',
+        'invalid_email' => 'Ongeldig e-mailadres.',
+        'field_too_long' => 'Veld "%s" is te lang (max %d tekens).',
+        'message_too_short' => 'Bericht is te kort (min 10 tekens).',
+        'send_failed' => 'Het verzenden is mislukt. Probeer het later opnieuw of mail rechtstreeks naar info@daremon.nl.',
+        'success' => 'Bedankt voor uw bericht! Ik neem zo snel mogelijk contact met u op.',
+        'field_names' => ['naam' => 'Naam', 'email' => 'E-mail', 'onderwerp' => 'Onderwerp', 'bericht' => 'Bericht', 'bedrijf' => 'Bedrijf'],
+    ];
+}
 
 // ============================================
 // RATE LIMITING
@@ -93,39 +135,40 @@ function checkHoneypot(array $data): bool {
 // VALIDATION
 // ============================================
 
-function validateInput(array $data): array {
+function validateInput(array $data, array $messages): array {
     $errors = [];
+    $names = $messages['field_names'];
 
     // Required fields
     $required = ['naam', 'email', 'onderwerp', 'bericht'];
     foreach ($required as $field) {
         if (empty($data[$field] ?? '')) {
-            $errors[] = "Veld '{$field}' is verplicht.";
+            $errors[] = sprintf($messages['field_required'], $names[$field]);
         }
     }
 
     // Email validation
     if (!empty($data['email']) && !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-        $errors[] = 'Ongeldig e-mailadres.';
+        $errors[] = $messages['invalid_email'];
     }
 
     // Length validation
     if (strlen($data['naam'] ?? '') > 100) {
-        $errors[] = 'Naam is te lang (max 100 tekens).';
+        $errors[] = sprintf($messages['field_too_long'], $names['naam'], 100);
     }
     if (strlen($data['onderwerp'] ?? '') > 200) {
-        $errors[] = 'Onderwerp is te lang (max 200 tekens).';
+        $errors[] = sprintf($messages['field_too_long'], $names['onderwerp'], 200);
     }
     if (strlen($data['bedrijf'] ?? '') > 150) {
-        $errors[] = 'Bedrijfsnaam is te lang (max 150 tekens).';
+        $errors[] = sprintf($messages['field_too_long'], $names['bedrijf'], 150);
     }
     if (strlen($data['bericht'] ?? '') > 5000) {
-        $errors[] = 'Bericht is te lang (max 5000 tekens).';
+        $errors[] = sprintf($messages['field_too_long'], $names['bericht'], 5000);
     }
 
     // Minimum length
     if (strlen($data['bericht'] ?? '') < 10) {
-        $errors[] = 'Bericht is te kort (min 10 tekens).';
+        $errors[] = $messages['message_too_short'];
     }
 
     return $errors;
@@ -183,17 +226,13 @@ function saveLead(array $data): void {
 function sendEmail(array $data): bool {
     $naam = $data['naam'];
     $email = $data['email'];
+    $bedrijf = $data['bedrijf'] ?? '';
     $onderwerp = $data['onderwerp'];
     $bericht = $data['bericht'];
 
-    // Email headers
-    $headers = [
-        'From: ' . FROM_EMAIL,
-        'Reply-To: ' . $email,
-        'X-Mailer: PHP/' . phpversion(),
-        'MIME-Version: 1.0',
-        'Content-Type: text/html; charset=UTF-8'
-    ];
+    $bedrijfRow = $bedrijf !== ''
+        ? '<div class="field"><div class="label">Bedrijf:</div><div class="value">' . $bedrijf . '</div></div>'
+        : '';
 
     // Email body (HTML)
     $emailBody = <<<HTML
@@ -227,6 +266,7 @@ function sendEmail(array $data): bool {
                 <div class="label">E-mail:</div>
                 <div class="value"><a href="mailto:{$email}">{$email}</a></div>
             </div>
+            {$bedrijfRow}
             <div class="field">
                 <div class="label">Onderwerp:</div>
                 <div class="value">{$onderwerp}</div>
@@ -245,7 +285,29 @@ function sendEmail(array $data): bool {
 </html>
 HTML;
 
-    // Send email
+    // Voorkeur: echte SMTP-verzending (werkt ook op hosts zoals Synology
+    // Web Station, waar mail() meestal geen lokale MTA tot zijn beschikking
+    // heeft). Alleen als SMTP niet geconfigureerd is, of de verzending faalt,
+    // vallen we terug op de ingebouwde PHP mail().
+    require_once __DIR__ . '/mailer.php';
+
+    if (smtpConfigured()) {
+        try {
+            sendViaSmtp(RECIPIENT_EMAIL, 'DAREMON Engineering', SUBJECT, $emailBody, $email);
+            return true;
+        } catch (\Throwable $smtpError) {
+            error_log('[contact.php] SMTP-verzending mislukt, val terug op mail(): ' . $smtpError->getMessage());
+        }
+    }
+
+    $headers = [
+        'From: ' . FROM_EMAIL,
+        'Reply-To: ' . $email,
+        'X-Mailer: PHP/' . phpversion(),
+        'MIME-Version: 1.0',
+        'Content-Type: text/html; charset=UTF-8'
+    ];
+
     return mail(
         RECIPIENT_EMAIL,
         SUBJECT,
@@ -258,21 +320,30 @@ HTML;
 // MAIN LOGIC
 // ============================================
 
+// Domyślny język komunikatów, dopóki nie znamy treści żądania (np. błąd
+// parsowania JSON) — reszta obsługi przełącza się na język z payloadu.
+$messages = messagesFor('nl');
+
 try {
     // Get POST data
     $rawData = file_get_contents('php://input');
     $data = json_decode($rawData, true);
 
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        throw new Exception('Ongeldige JSON data.');
+    if (json_last_error() !== JSON_ERROR_NONE || !is_array($data)) {
+        throw new Exception($messages['invalid_json']);
     }
+
+    // Od tego miejsca znamy język wybrany w interfejsie (PL/NL) — wszystkie
+    // komunikaty zwracane do klienta mają się z nim zgadzać.
+    $lang = resolveLanguage($data);
+    $messages = messagesFor($lang);
 
     // Rate limiting check
     if (!checkRateLimit()) {
         http_response_code(429);
         echo json_encode([
             'success' => false,
-            'message' => 'Te veel verzoeken. Probeer het over een minuut opnieuw.'
+            'message' => $messages['rate_limited']
         ]);
         exit();
     }
@@ -282,18 +353,18 @@ try {
         http_response_code(400);
         echo json_encode([
             'success' => false,
-            'message' => 'Spam gedetecteerd.'
+            'message' => $messages['spam_detected']
         ]);
         exit();
     }
 
     // Validate input
-    $errors = validateInput($data);
+    $errors = validateInput($data, $messages);
     if (!empty($errors)) {
         http_response_code(400);
         echo json_encode([
             'success' => false,
-            'message' => 'Validatie mislukt.',
+            'message' => $messages['validation_failed'],
             'errors' => $errors
         ]);
         exit();
@@ -322,14 +393,14 @@ try {
     if (!$leadSaved && !$emailSent) {
         // Beide kanalen zijn mislukt — de aanvraag is nergens beland, dus
         // moeten we de gebruiker eerlijk vertellen dat het niet is gelukt.
-        throw new Exception('Het verzenden is mislukt. Probeer het later opnieuw of mail rechtstreeks naar info@daremon.nl.');
+        throw new Exception($messages['send_failed']);
     }
 
     // Success response
     http_response_code(200);
     echo json_encode([
         'success' => true,
-        'message' => 'Bedankt voor uw bericht! Ik neem zo snel mogelijk contact met u op.'
+        'message' => $messages['success']
     ]);
 
 } catch (Exception $e) {

@@ -1,0 +1,1560 @@
+diff --git a/app/contact/contact-content.tsx b/app/contact/contact-content.tsx
+new file mode 100644
+index 0000000..fcdeba7
+--- /dev/null
++++ b/app/contact/contact-content.tsx
+@@ -0,0 +1,98 @@
++'use client'
++
++import { ContactForm } from '@/components/contact-form'
++import { useT } from '@/lib/i18n'
++
++export function ContactContent() {
++  const t = useT()
++
++  return (
++    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
++      <div className="max-w-4xl mx-auto px-4 py-12">
++        <div className="text-center space-y-4 mb-16">
++          <h1 className="text-4xl md:text-5xl font-bold text-slate-100">{t.contact.heroTitle}</h1>
++          <p className="text-xl text-cyan-400 font-light">{t.contact.heroLead}</p>
++        </div>
++
++        <div className="grid md:grid-cols-2 gap-12">
++          {/* Contact informatie */}
++          <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
++            <h2 className="text-2xl font-bold text-slate-100 mb-6">{t.contact.aboutHeading}</h2>
++            <div className="space-y-6 text-slate-300">
++              <p className="leading-relaxed">{t.contact.aboutText}</p>
++
++              <div>
++                <h3 className="font-semibold text-slate-100 mb-3 flex items-start gap-3">
++                  <span className="text-cyan-400 flex-shrink-0">▸</span>
++                  {t.contact.expectHeading}
++                </h3>
++                <ul className="space-y-2 text-sm text-slate-300">
++                  {t.contact.expectItems.map((item) => (
++                    <li key={item} className="flex items-start gap-3">
++                      <span className="text-cyan-400 text-2xl flex-shrink-0">•</span>
++                      <span>{item}</span>
++                    </li>
++                  ))}
++                </ul>
++              </div>
++
++              <div className="border border-cyan-500/20 rounded-lg p-4 bg-slate-900/40">
++                <h3 className="font-semibold text-slate-100 mb-2">{t.contact.emailHeading}</h3>
++                <p className="text-sm mb-2 text-slate-300">{t.contact.emailIntro}</p>
++                <p className="text-sm text-slate-200">
++                  <strong className="text-cyan-400">{t.contact.emailLabel}</strong> info@daremon.nl
++                </p>
++              </div>
++            </div>
++          </div>
++
++          {/* Contact formulier */}
++          <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
++            <h2 className="text-2xl font-bold text-slate-100 mb-6">{t.contact.formHeading}</h2>
++            <ContactForm />
++          </div>
++        </div>
++
++        {/* Extra info */}
++        <section className="mt-16">
++          <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
++            <h2 className="text-2xl font-bold text-slate-100 mb-6 border-b border-cyan-500/30 pb-4">
++              {t.contact.faqHeading}
++            </h2>
++            <div className="space-y-6">
++              <div>
++                <h3 className="font-semibold text-slate-100 mb-2 flex items-start gap-3">
++                  <span className="text-cyan-400 flex-shrink-0">▸</span>
++                  {t.contact.faqWhatQ}
++                </h3>
++                <p className="text-slate-300 text-sm ml-6">{t.contact.faqWhatA}</p>
++              </div>
++
++              <div>
++                <h3 className="font-semibold text-slate-100 mb-2 flex items-start gap-3">
++                  <span className="text-cyan-400 flex-shrink-0">▸</span>
++                  {t.contact.faqProcessQ}
++                </h3>
++                <p className="text-slate-300 text-sm ml-6">
++                  {t.contact.faqProcessABefore}
++                  <a href="/methodiek" className="text-cyan-400 hover:underline">
++                    {t.contact.faqProcessLinkText}
++                  </a>
++                  {t.contact.faqProcessAAfter}
++                </p>
++              </div>
++
++              <div>
++                <h3 className="font-semibold text-slate-100 mb-2 flex items-start gap-3">
++                  <span className="text-cyan-400 flex-shrink-0">▸</span>
++                  {t.contact.faqWhyQ}
++                </h3>
++                <p className="text-slate-300 text-sm ml-6">{t.contact.faqWhyA}</p>
++              </div>
++            </div>
++          </div>
++        </section>
++      </div>
++    </div>
++  )
++}
+diff --git a/app/contact/page.tsx b/app/contact/page.tsx
+index da21429..2ca9936 100644
+--- a/app/contact/page.tsx
++++ b/app/contact/page.tsx
+@@ -1,5 +1,5 @@
+ import type { Metadata } from 'next'
+-import { ContactForm } from '@/components/contact-form'
++import { ContactContent } from './contact-content'
+ 
+ export const metadata: Metadata = {
+   title: 'Contact – DAREMON Engineering',
+@@ -7,110 +7,5 @@ export const metadata: Metadata = {
+ }
+ 
+ export default function ContactPage() {
+-  return (
+-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+-      <div className="max-w-4xl mx-auto px-4 py-12">
+-        <div className="text-center space-y-4 mb-16">
+-          <h1 className="text-4xl md:text-5xl font-bold text-slate-100">Contact</h1>
+-          <p className="text-xl text-cyan-400 font-light">
+-            Vraag een vrijblijvende offerte aan voor montage, analyse of visualisatie.
+-          </p>
+-        </div>
+-
+-        <div className="grid md:grid-cols-2 gap-12">
+-          {/* Contact informatie */}
+-          <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+-            <h2 className="text-2xl font-bold text-slate-100 mb-6">Over dit contact</h2>
+-            <div className="space-y-6 text-slate-300">
+-              <p className="leading-relaxed">
+-                Beschrijf je project — een machine, proces of incident dat gedocumenteerd of
+-                geanalyseerd moet worden — en ik neem contact op met een concreet voorstel.
+-              </p>
+-
+-              <div>
+-                <h3 className="font-semibold text-slate-100 mb-3 flex items-start gap-3">
+-                  <span className="text-cyan-400 flex-shrink-0">▸</span>
+-                  Wat kun je verwachten?
+-                </h3>
+-                <ul className="space-y-2 text-sm text-slate-300">
+-                  <li className="flex items-start gap-3">
+-                    <span className="text-cyan-400 text-2xl flex-shrink-0">•</span>
+-                    <span>Een reactie met een eerste inschatting van aanpak en levertijd</span>
+-                  </li>
+-                  <li className="flex items-start gap-3">
+-                    <span className="text-cyan-400 text-2xl flex-shrink-0">•</span>
+-                    <span>Een vrijblijvende offerte op maat van je sector (PLC, Arburg, robotica, MIM, agro)</span>
+-                  </li>
+-                  <li className="flex items-start gap-3">
+-                    <span className="text-cyan-400 text-2xl flex-shrink-0">•</span>
+-                    <span>Reactie binnen enkele werkdagen</span>
+-                  </li>
+-                </ul>
+-              </div>
+-
+-              <div className="border border-cyan-500/20 rounded-lg p-4 bg-slate-900/40">
+-                <h3 className="font-semibold text-slate-100 mb-2">E-mail</h3>
+-                <p className="text-sm mb-2 text-slate-300">
+-                  Voor offertes en zakelijke vragen:
+-                </p>
+-                <p className="text-sm text-slate-200">
+-                  <strong className="text-cyan-400">E-mail:</strong> info@daremon.nl
+-                </p>
+-              </div>
+-            </div>
+-          </div>
+-
+-          {/* Contact formulier */}
+-          <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+-            <h2 className="text-2xl font-bold text-slate-100 mb-6">Stuur een aanvraag</h2>
+-            <ContactForm />
+-          </div>
+-        </div>
+-
+-        {/* Extra info */}
+-        <section className="mt-16">
+-          <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+-            <h2 className="text-2xl font-bold text-slate-100 mb-6 border-b border-cyan-500/30 pb-4">
+-              Veelgestelde vragen
+-            </h2>
+-            <div className="space-y-6">
+-              <div>
+-                <h3 className="font-semibold text-slate-100 mb-2 flex items-start gap-3">
+-                  <span className="text-cyan-400 flex-shrink-0">▸</span>
+-                  Wat doet DAREMON Engineering?
+-                </h3>
+-                <p className="text-slate-300 text-sm ml-6">
+-                  Gespecialiseerde technische videomontage, procesanalyse en AI-visualisaties voor
+-                  de mechanische, industriële en agrarische sector.
+-                </p>
+-              </div>
+-
+-              <div>
+-                <h3 className="font-semibold text-slate-100 mb-2 flex items-start gap-3">
+-                  <span className="text-cyan-400 flex-shrink-0">▸</span>
+-                  Hoe ziet het proces eruit?
+-                </h3>
+-                <p className="text-slate-300 text-sm ml-6">
+-                  Analyse van het bronmateriaal, montage met eigen audio en eventuele AI-visualisatie,
+-                  en levering in het formaat dat past bij het gebruik — zie de sectie{' '}
+-                  <a href="/methodiek" className="text-cyan-400 hover:underline">Methodiek &amp; AI</a> op de homepage.
+-                </p>
+-              </div>
+-
+-              <div>
+-                <h3 className="font-semibold text-slate-100 mb-2 flex items-start gap-3">
+-                  <span className="text-cyan-400 flex-shrink-0">▸</span>
+-                  Waarvoor kan ik contact opnemen?
+-                </h3>
+-                <p className="text-slate-300 text-sm ml-6">
+-                  Voor offerteaanvragen, vragen over een lopend project, of een eerste kennismaking
+-                  voordat je een opdracht vastlegt.
+-                </p>
+-              </div>
+-            </div>
+-          </div>
+-        </section>
+-      </div>
+-    </div>
+-  )
++  return <ContactContent />
+ }
+diff --git a/app/home/page.tsx b/app/home/page.tsx
+index e3b90b0..a62d4bc 100644
+--- a/app/home/page.tsx
++++ b/app/home/page.tsx
+@@ -2,7 +2,6 @@
+ 
+ import Link from 'next/link'
+ import { PortfolioGrid } from '@/components/portfolio/portfolio-grid'
+-import { AudioLabVisualizer } from '@/components/audio-lab-visualizer'
+ import { useT } from '@/lib/i18n'
+ 
+ export default function HomePage() {
+@@ -60,18 +59,7 @@ export default function HomePage() {
+         </div>
+       </section>
+ 
+-      {/* Strefa 3 — Audio Lab / Visualizer */}
+-      <section className="max-w-5xl mx-auto px-4 py-16">
+-        <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-6 md:p-8 shadow-[0_0_15px_rgba(0,255,255,0.15)]">
+-          <h2 className="text-3xl font-semibold text-slate-100 mb-3 border-b border-cyan-500/30 pb-4">
+-            {t.home.audioLabHeading}
+-          </h2>
+-          <p className="text-slate-300 leading-relaxed mb-6 max-w-2xl">{t.home.audioLabText}</p>
+-          <AudioLabVisualizer />
+-        </div>
+-      </section>
+-
+-      {/* Strefa 4 — Proces / metodyka */}
++      {/* Strefa 3 — Proces / metodyka */}
+       <section className="max-w-5xl mx-auto px-4 py-16">
+         <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/20 rounded-lg p-6 md:p-8">
+           <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+@@ -96,23 +84,7 @@ export default function HomePage() {
+         </div>
+       </section>
+ 
+-      {/* Strefa 5 — Radio ETS jako strefa multimedialna */}
+-      <section className="max-w-4xl mx-auto px-4 pb-24">
+-        <div className="border border-cyan-500/30 rounded-xl p-8 bg-slate-900/40 backdrop-blur-md shadow-[0_0_20px_rgba(0,255,255,0.15)]">
+-          <h2 className="text-2xl font-semibold text-cyan-400 mb-3">{t.home.radioHeading}</h2>
+-          <p className="text-slate-300 max-w-2xl mb-6">{t.home.radioText}</p>
+-          <a
+-            href="/legacy/index.html"
+-            target="_blank"
+-            rel="noopener noreferrer"
+-            className="inline-block px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
+-          >
+-            {t.home.radioCta}
+-          </a>
+-        </div>
+-      </section>
+-
+-      {/* Strefa 6 — Kontakt / wycena */}
++      {/* Strefa 4 — Kontakt / wycena */}
+       <section className="max-w-4xl mx-auto px-4 pb-24">
+         <div className="text-center border-t border-cyan-500/20 pt-12">
+           <h2 className="text-2xl font-semibold text-slate-100 mb-3">{t.home.contactHeading}</h2>
+diff --git a/app/layout.tsx b/app/layout.tsx
+index ce0a827..46dfc66 100644
+--- a/app/layout.tsx
++++ b/app/layout.tsx
+@@ -1,7 +1,6 @@
+ import type { Metadata } from "next";
+ import "./globals.css";
+ import { Navigation } from "@/components/navigation";
+-import { RadioDock } from "@/components/radio-dock";
+ import { SiteFooter } from "@/components/site-footer";
+ import { LanguageProvider } from "@/components/language-provider";
+ import { PageTracker } from "@/components/page-tracker";
+@@ -41,7 +40,6 @@ export default function RootLayout({
+           <PageTracker />
+           <Navigation />
+           <main>{children}</main>
+-          <RadioDock />
+           <SiteFooter />
+         </LanguageProvider>
+       </body>
+diff --git a/components/audio-lab-visualizer.tsx b/components/audio-lab-visualizer.tsx
+deleted file mode 100644
+index 522d8ff..0000000
+--- a/components/audio-lab-visualizer.tsx
++++ /dev/null
+@@ -1,66 +0,0 @@
+-'use client'
+-
+-import { useEffect, useRef, useState } from 'react'
+-import { useT } from '@/lib/i18n'
+-
+-/**
+- * Ambient (bez-dźwiękowa) wersja wizualizatora 3D z visualizer/Visualizer3D.js.
+- *
+- * Reużywa istniejącą klasę Three.js bez modyfikacji logiki audio — analyser
+- * jest przekazywany jako null, więc kula i cząsteczki nie reagują na dźwięk,
+- * ale kamera wciąż wykonuje automatyczną rotację po bezczynności (zachowanie
+- * odziedziczone z oryginalnego modułu). To ta sama scena, która w Radiu ETS
+- * reaguje na muzykę — tutaj działa jako żywa wizytówka technologiczna.
+- */
+-export function AudioLabVisualizer() {
+-  const canvasRef = useRef<HTMLCanvasElement>(null)
+-  const [status, setStatus] = useState<'loading' | 'ready' | 'unavailable'>('loading')
+-  const t = useT()
+-
+-  useEffect(() => {
+-    if (typeof window === 'undefined') return
+-
+-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+-    if (prefersReducedMotion) {
+-      setStatus('unavailable')
+-      return
+-    }
+-
+-    let instance: { start: () => void; stop: () => void } | null = null
+-    let cancelled = false
+-
+-    import('@/visualizer/Visualizer3D.js')
+-      .then(({ Visualizer3D }) => {
+-        if (cancelled || !canvasRef.current) return
+-        if (!Visualizer3D.isWebGLAvailable()) {
+-          setStatus('unavailable')
+-          return
+-        }
+-        instance = new Visualizer3D(canvasRef.current, null)
+-        instance.start()
+-        setStatus('ready')
+-      })
+-      .catch(() => {
+-        if (!cancelled) setStatus('unavailable')
+-      })
+-
+-    return () => {
+-      cancelled = true
+-      instance?.stop()
+-    }
+-  }, [])
+-
+-  return (
+-    <div className="relative h-[420px] w-full overflow-hidden rounded-lg border border-cyan-500/20 bg-[#04132B]">
+-      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
+-
+-      {status !== 'ready' && (
+-        <div className="absolute inset-0 flex items-center justify-center bg-slate-950/80">
+-          <p className="text-sm text-slate-400 max-w-xs text-center px-4">
+-            {status === 'loading' ? t.audioLab.loading : t.audioLab.unavailable}
+-          </p>
+-        </div>
+-      )}
+-    </div>
+-  )
+-}
+diff --git a/components/contact-form.tsx b/components/contact-form.tsx
+index 7fc225f..6e310ec 100644
+--- a/components/contact-form.tsx
++++ b/components/contact-form.tsx
+@@ -2,9 +2,11 @@
+ 
+ import { useState } from 'react'
+ import { useLanguage } from '@/components/language-provider'
++import { useT } from '@/lib/i18n'
+ 
+ export function ContactForm() {
+   const { language } = useLanguage()
++  const t = useT().contact.form
+   const [formData, setFormData] = useState({
+     naam: '',
+     email: '',
+@@ -39,13 +41,13 @@ export function ContactForm() {
+       const data = await response.json()
+ 
+       if (!response.ok || !data.success) {
+-        throw new Error(data.message || 'Er is iets misgegaan bij het verzenden.')
++        throw new Error(data.message || t.genericError)
+       }
+ 
+       // Success
+       setSubmitStatus({
+         type: 'success',
+-        message: data.message || 'Bedankt voor uw bericht! Ik neem zo snel mogelijk contact met u op.'
++        message: data.message || t.defaultSuccess
+       })
+ 
+       // Reset form
+@@ -69,7 +71,7 @@ export function ContactForm() {
+         type: 'error',
+         message: error instanceof Error
+           ? error.message
+-          : 'Er is iets misgegaan. Probeer het opnieuw of neem direct contact op via info@daremon.nl'
++          : t.genericErrorRetry
+       })
+ 
+       // Auto-hide error message after 10 seconds
+@@ -131,7 +133,7 @@ export function ContactForm() {
+ 
+       <div>
+         <label htmlFor="naam" className="block text-sm font-medium text-slate-100 mb-2">
+-          Naam *
++          {t.labelName}
+         </label>
+         <input
+           type="text"
+@@ -143,13 +145,13 @@ export function ContactForm() {
+           onChange={handleChange}
+           disabled={isSubmitting}
+           className="w-full px-4 py-3 bg-slate-900/50 border border-cyan-500/30 rounded-md text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed transition"
+-          placeholder="Uw naam"
++          placeholder={t.placeholderName}
+         />
+       </div>
+ 
+       <div>
+         <label htmlFor="email" className="block text-sm font-medium text-slate-100 mb-2">
+-          E-mailadres *
++          {t.labelEmail}
+         </label>
+         <input
+           type="email"
+@@ -161,13 +163,13 @@ export function ContactForm() {
+           onChange={handleChange}
+           disabled={isSubmitting}
+           className="w-full px-4 py-3 bg-slate-900/50 border border-cyan-500/30 rounded-md text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed transition"
+-          placeholder="uw@email.nl"
++          placeholder={t.placeholderEmail}
+         />
+       </div>
+ 
+       <div>
+         <label htmlFor="bedrijf" className="block text-sm font-medium text-slate-100 mb-2">
+-          Bedrijf <span className="text-slate-500 font-normal">(optioneel)</span>
++          {t.labelCompany} <span className="text-slate-500 font-normal">{t.labelOptional}</span>
+         </label>
+         <input
+           type="text"
+@@ -178,13 +180,13 @@ export function ContactForm() {
+           onChange={handleChange}
+           disabled={isSubmitting}
+           className="w-full px-4 py-3 bg-slate-900/50 border border-cyan-500/30 rounded-md text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed transition"
+-          placeholder="Naam van uw bedrijf"
++          placeholder={t.placeholderCompany}
+         />
+       </div>
+ 
+       <div>
+         <label htmlFor="onderwerp" className="block text-sm font-medium text-slate-100 mb-2">
+-          Onderwerp *
++          {t.labelSubject}
+         </label>
+         <input
+           type="text"
+@@ -196,13 +198,13 @@ export function ContactForm() {
+           onChange={handleChange}
+           disabled={isSubmitting}
+           className="w-full px-4 py-3 bg-slate-900/50 border border-cyan-500/30 rounded-md text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed transition"
+-          placeholder="Waar gaat het over?"
++          placeholder={t.placeholderSubject}
+         />
+       </div>
+ 
+       <div>
+         <label htmlFor="bericht" className="block text-sm font-medium text-slate-100 mb-2">
+-          Uw vraag of situatie *
++          {t.labelMessage}
+         </label>
+         <textarea
+           id="bericht"
+@@ -215,10 +217,10 @@ export function ContactForm() {
+           disabled={isSubmitting}
+           rows={6}
+           className="w-full px-4 py-3 bg-slate-900/50 border border-cyan-500/30 rounded-md text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed resize-none transition"
+-          placeholder="Beschrijf kort uw situatie of vraag. Hoe meer context, hoe beter ik kan inschatten of en hoe ik kan helpen."
++          placeholder={t.placeholderMessage}
+         />
+         <div className="mt-1 text-xs text-slate-500">
+-          {formData.bericht.length} / 5000 tekens
++          {formData.bericht.length} / 5000 {t.charsCounter}
+         </div>
+       </div>
+ 
+@@ -233,15 +235,15 @@ export function ContactForm() {
+               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+             </svg>
+-            Bezig met verzenden...
++            {t.submitting}
+           </>
+         ) : (
+-          'Verstuur bericht'
++          t.submitButton
+         )}
+       </button>
+ 
+       <p className="text-xs text-slate-400">
+-        * Verplichte velden. Uw gegevens worden vertrouwelijk behandeld en niet gedeeld met derden.
++        {t.footerNote}
+       </p>
+     </form>
+   )
+diff --git a/components/navigation.tsx b/components/navigation.tsx
+index d4fbed8..ea3bdf3 100644
+--- a/components/navigation.tsx
++++ b/components/navigation.tsx
+@@ -75,16 +75,6 @@ export function Navigation() {
+                 </Link>
+               </li>
+             ))}
+-            <li>
+-              <a
+-                href="/legacy/index.html"
+-                target="_blank"
+-                rel="noopener noreferrer"
+-                className="px-4 py-2 text-sm font-semibold bg-cyan-600 hover:bg-cyan-500 text-black rounded-lg shadow-[0_0_15px_rgba(0,255,255,0.3)] transition"
+-              >
+-                {t.nav.etsRadio}
+-              </a>
+-            </li>
+           </ul>
+ 
+           {/* Right-hand cluster: language switcher (always visible) + mobile toggle */}
+@@ -165,19 +155,6 @@ export function Navigation() {
+             ))}
+           </ul>
+ 
+-          {/* ETS Radio Button */}
+-          <div className="p-4 border-t border-cyan-500/20">
+-            <a
+-              href="/legacy/index.html"
+-              target="_blank"
+-              rel="noopener noreferrer"
+-              className="block w-full px-4 py-3 text-center text-sm font-semibold bg-cyan-600 hover:bg-cyan-500 text-black rounded-lg shadow-[0_0_15px_rgba(0,255,255,0.3)] transition"
+-              onClick={() => setMobileMenuOpen(false)}
+-            >
+-              {t.nav.etsRadio}
+-            </a>
+-          </div>
+-
+           {/* Close hint */}
+           <div className="p-4 text-center text-xs text-slate-500">
+             {t.nav.escHint}
+diff --git a/components/radio-dock.tsx b/components/radio-dock.tsx
+deleted file mode 100644
+index c9d1211..0000000
+--- a/components/radio-dock.tsx
++++ /dev/null
+@@ -1,54 +0,0 @@
+-'use client'
+-
+-import { useState } from 'react'
+-import { useT } from '@/lib/i18n'
+-
+-/**
+- * Dokowalny panel Radia ETS.
+- *
+- * Osadza istniejącą, w pełni funkcjonalną aplikację (/legacy/index.html)
+- * w niewielkim, składanym panelu widocznym na każdej podstronie — bez
+- * modyfikowania jednej linijki logiki playlisty, crossfade czy PWA. Pełny
+- * interfejs (tryb pełnoekranowy) pozostaje pod tym samym adresem co dotychczas.
+- */
+-export function RadioDock() {
+-  const [open, setOpen] = useState(false)
+-  const t = useT()
+-
+-  return (
+-    <div className="fixed bottom-4 right-4 z-40 flex flex-col items-end gap-2">
+-      {open && (
+-        <div className="w-[320px] overflow-hidden rounded-xl border border-cyan-500/30 bg-slate-950 shadow-[0_0_30px_rgba(0,255,255,0.15)]">
+-          <div className="flex items-center justify-between border-b border-cyan-500/20 px-3 py-2">
+-            <span className="text-xs font-semibold text-cyan-300 tracking-wide">{t.radioDock.live}</span>
+-            <a
+-              href="/legacy/index.html"
+-              target="_blank"
+-              rel="noopener noreferrer"
+-              className="text-xs text-slate-400 hover:text-cyan-300 transition"
+-            >
+-              {t.radioDock.fullscreen}
+-            </a>
+-          </div>
+-          <iframe
+-            src="/legacy/index.html"
+-            title="Radio ETS"
+-            className="h-[420px] w-full border-0"
+-            loading="lazy"
+-          />
+-        </div>
+-      )}
+-
+-      <button
+-        type="button"
+-        onClick={() => setOpen((v) => !v)}
+-        aria-expanded={open}
+-        aria-label={open ? t.radioDock.closeLabel : t.radioDock.openLabel}
+-        className="flex items-center gap-2 rounded-full bg-cyan-600 hover:bg-cyan-500 text-black font-semibold px-4 py-2.5 text-sm shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
+-      >
+-        <span aria-hidden="true">{open ? '▾' : '▸'}</span>
+-        {t.radioDock.button}
+-      </button>
+-    </div>
+-  )
+-}
+diff --git a/lib/i18n.ts b/lib/i18n.ts
+index 2e26c84..25d2e2a 100644
+--- a/lib/i18n.ts
++++ b/lib/i18n.ts
+@@ -11,7 +11,6 @@ export const translations = {
+       methodiek: 'Metodyka i AI',
+       over: 'O mnie',
+       contact: 'Kontakt',
+-      etsRadio: 'Radio ETS',
+       escHint: 'Naciśnij ESC, aby zamknąć',
+     },
+     footer: {
+@@ -19,18 +18,6 @@ export const translations = {
+       tagline: 'Specjalistyczny montaż wideo, analiza procesów i wizualizacje AI.',
+       legal: 'Informacje prawne',
+     },
+-    radioDock: {
+-      live: 'RADIO ETS · NA ŻYWO',
+-      fullscreen: 'Pełny ekran ↗',
+-      openLabel: 'Otwórz panel Radia ETS',
+-      closeLabel: 'Zwiń panel Radia ETS',
+-      button: 'Radio ETS',
+-    },
+-    audioLab: {
+-      loading: 'Ładowanie wizualizacji 3D…',
+-      unavailable:
+-        'Wizualizacja 3D jest wyłączona w tej przeglądarce (brak WebGL lub włączone ograniczenie animacji).',
+-    },
+     portfolio: {
+       filters: {
+         wszystkie: 'Wszystkie',
+@@ -53,19 +40,16 @@ export const translations = {
+       },
+     },
+     home: {
+-      statusBadge: 'SYSTEM AKTYWNY · RADIO ETS 24/7',
++      statusBadge: 'SYSTEM AKTYWNY · DOSTĘPNY 24/7',
+       title: 'DAREMON',
+       subtitle: 'Engineering — Montaż Techniczny & Analiza Procesów',
+       lead1: 'Specjalistyczny montaż wideo dla sektora mechanicznego, przemysłowego i agro.',
+       lead2:
+-        'Analiza procesów, kinematyka maszyn, autorskie audio wolne od praw autorskich i wizualizacje AI — zbudowane na tej samej technologii, którą widzisz na tej stronie.',
++        'Analiza procesów, kinematyka maszyn, autorskie audio wolne od praw autorskich i wizualizacje AI — pełen zakres materiałów technicznych, jakie mogę dla Ciebie przygotować.',
+       ctaQuote: 'Zapytaj o wycenę',
+       ctaPortfolio: 'Zobacz portfolio',
+       portfolioHeading: 'Portfolio & Case Studies',
+       portfolioLink: 'Pełne case studies →',
+-      audioLabHeading: 'Audio Lab',
+-      audioLabText:
+-        'Ta sama wizualizacja 3D, która w Radiu ETS reaguje na muzykę na żywo, napędzana silnikiem Three.js — dowód, że materiały wideo, które montuję, mogą wyglądać równie precyzyjnie jak proces, który dokumentują. Autorskie ścieżki dźwiękowe do wideo powstają bez ryzyka Content ID.',
+       processHeading: 'Jak pracuję',
+       processLink: 'Metodyka i rola AI →',
+       process: [
+@@ -73,10 +57,6 @@ export const translations = {
+         { krok: 'Montaż', opis: 'Precyzyjny montaż wideo z autorską ścieżką dźwiękową wolną od Content ID i wizualizacjami AI.' },
+         { krok: 'Dostawa', opis: 'Materiał w formacie dopasowanym do odbiorcy — 16:9 do dokumentacji, 9:16 do social media.' },
+       ],
+-      radioHeading: 'Radio ETS',
+-      radioText:
+-        'Moje autorskie radio internetowe działa 24/7 w tle tej platformy — dokowalny panel w prawym dolnym rogu ekranu daje do niego dostęp z każdej podstrony. Pełny interfejs, wizualizacje i ankiety społecznościowe dostępne są też w trybie pełnoekranowym.',
+-      radioCta: 'Otwórz pełny ekran',
+       contactHeading: 'Masz proces, maszynę lub incydent do udokumentowania?',
+       contactText: 'Opisz projekt, a przygotuję wstępną wycenę montażu, analizy lub wizualizacji.',
+       contactCta: 'Przejdź do kontaktu',
+@@ -259,6 +239,56 @@ export const translations = {
+       ctaText: 'Chętnie opowiem, jak podszedłbym do Twojego materiału.',
+       ctaButton: 'Przejdź do kontaktu',
+     },
++    contact: {
++      heroTitle: 'Kontakt',
++      heroLead: 'Poproś o bezpłatną wycenę montażu, analizy lub wizualizacji.',
++      aboutHeading: 'O tym kontakcie',
++      aboutText:
++        'Opisz swój projekt — maszynę, proces lub incydent, który wymaga udokumentowania lub przeanalizowania — a ja odezwę się z konkretną propozycją.',
++      expectHeading: 'Czego możesz się spodziewać?',
++      expectItems: [
++        'Odpowiedź z pierwszą oceną podejścia i czasu realizacji',
++        'Niezobowiązującą wycenę dopasowaną do Twojej branży (PLC, Arburg, robotyka, MIM, agro)',
++        'Odpowiedź w ciągu kilku dni roboczych',
++      ],
++      emailHeading: 'E-mail',
++      emailIntro: 'Do wycen i zapytań biznesowych:',
++      emailLabel: 'E-mail:',
++      formHeading: 'Wyślij zapytanie',
++      faqHeading: 'Najczęściej zadawane pytania',
++      faqWhatQ: 'Czym zajmuje się DAREMON Engineering?',
++      faqWhatA:
++        'Specjalistycznym montażem wideo technicznego, analizą procesów i wizualizacjami AI dla sektora mechanicznego, przemysłowego i agro.',
++      faqProcessQ: 'Jak wygląda proces?',
++      faqProcessABefore:
++        'Analiza materiału źródłowego, montaż z autorską ścieżką dźwiękową i ewentualną wizualizacją AI oraz dostawa w formacie dopasowanym do zastosowania — zobacz sekcję ',
++      faqProcessLinkText: 'Metodyka i AI',
++      faqProcessAAfter: ' na stronie głównej.',
++      faqWhyQ: 'W jakiej sprawie mogę się skontaktować?',
++      faqWhyA:
++        'W sprawie zapytań ofertowych, pytań o trwający projekt lub wstępnego rozeznania przed zleceniem.',
++      form: {
++        labelName: 'Imię i nazwisko *',
++        placeholderName: 'Twoje imię i nazwisko',
++        labelEmail: 'Adres e-mail *',
++        placeholderEmail: 'twoj@email.pl',
++        labelCompany: 'Firma',
++        labelOptional: '(opcjonalnie)',
++        placeholderCompany: 'Nazwa Twojej firmy',
++        labelSubject: 'Temat *',
++        placeholderSubject: 'Czego dotyczy zapytanie?',
++        labelMessage: 'Twoje pytanie lub sytuacja *',
++        placeholderMessage:
++          'Opisz krótko sytuację lub pytanie. Im więcej kontekstu, tym lepiej mogę ocenić, czy i jak mogę pomóc.',
++        charsCounter: 'znaków',
++        submitButton: 'Wyślij wiadomość',
++        submitting: 'Wysyłanie…',
++        footerNote: '* Pola wymagane. Twoje dane są traktowane poufnie i nie są udostępniane osobom trzecim.',
++        genericError: 'Coś poszło nie tak podczas wysyłania.',
++        genericErrorRetry: 'Coś poszło nie tak. Spróbuj ponownie lub napisz bezpośrednio na info@daremon.nl',
++        defaultSuccess: 'Dziękuję za wiadomość! Odezwę się najszybciej, jak to możliwe.',
++      },
++    },
+   },
+   nl: {
+     nav: {
+@@ -268,7 +298,6 @@ export const translations = {
+       methodiek: 'Methodiek & AI',
+       over: 'Over mij',
+       contact: 'Contact',
+-      etsRadio: 'Radio ETS',
+       escHint: 'Druk op ESC om te sluiten',
+     },
+     footer: {
+@@ -276,18 +305,6 @@ export const translations = {
+       tagline: 'Gespecialiseerde videomontage, procesanalyse en AI-visualisaties.',
+       legal: 'Juridische informatie',
+     },
+-    radioDock: {
+-      live: 'RADIO ETS · LIVE',
+-      fullscreen: 'Volledig scherm ↗',
+-      openLabel: 'Open het Radio ETS-paneel',
+-      closeLabel: 'Sluit het Radio ETS-paneel',
+-      button: 'Radio ETS',
+-    },
+-    audioLab: {
+-      loading: '3D-visualisatie wordt geladen…',
+-      unavailable:
+-        '3D-visualisatie is niet beschikbaar in deze browser (geen WebGL, of animaties zijn beperkt).',
+-    },
+     portfolio: {
+       filters: {
+         wszystkie: 'Alles',
+@@ -310,19 +327,16 @@ export const translations = {
+       },
+     },
+     home: {
+-      statusBadge: 'SYSTEEM ACTIEF · RADIO ETS 24/7',
++      statusBadge: 'SYSTEEM ACTIEF · BESCHIKBAAR 24/7',
+       title: 'DAREMON',
+       subtitle: 'Engineering — Technische Montage & Procesanalyse',
+       lead1: 'Gespecialiseerde videomontage voor de mechanische, industriële en agrarische sector.',
+       lead2:
+-        'Procesanalyse, kinematica van machines, auteursrechtvrije audio en AI-visualisaties — gebouwd op dezelfde technologie die je op deze pagina ziet.',
++        'Procesanalyse, kinematica van machines, auteursrechtvrije audio en AI-visualisaties — het volledige scala aan technisch materiaal dat ik voor je kan voorbereiden.',
+       ctaQuote: 'Vraag een offerte aan',
+       ctaPortfolio: 'Bekijk portfolio',
+       portfolioHeading: 'Portfolio & Case Studies',
+       portfolioLink: 'Alle case studies →',
+-      audioLabHeading: 'Audio Lab',
+-      audioLabText:
+-        'Dezelfde 3D-visualisatie die bij Radio ETS live reageert op muziek, aangedreven door Three.js — het bewijs dat het videomateriaal dat ik monteer er net zo precies uit kan zien als het proces dat het documenteert. Eigen soundtracks voor video, zonder Content ID-risico.',
+       processHeading: 'Mijn werkwijze',
+       processLink: 'Methodiek en de rol van AI →',
+       process: [
+@@ -330,10 +344,6 @@ export const translations = {
+         { krok: 'Montage', opis: 'Precieze videomontage met eigen soundtrack zonder Content ID-risico en AI-visualisaties.' },
+         { krok: 'Levering', opis: 'Materiaal in het formaat dat past bij het gebruik — 16:9 voor documentatie, 9:16 voor social media.' },
+       ],
+-      radioHeading: 'Radio ETS',
+-      radioText:
+-        'Mijn eigen internetradiostation draait 24/7 op de achtergrond van dit platform — het dokbare paneel rechtsonder geeft er op elke pagina toegang toe. De volledige interface, visualisaties en community-polls zijn ook in volledig scherm beschikbaar.',
+-      radioCta: 'Open volledig scherm',
+       contactHeading: 'Heb je een proces, machine of incident dat gedocumenteerd moet worden?',
+       contactText: 'Beschrijf je project en ik stel een eerste inschatting op voor montage, analyse of visualisatie.',
+       contactCta: 'Naar contact',
+@@ -516,6 +526,56 @@ export const translations = {
+       ctaText: 'Ik licht graag toe hoe ik jouw materiaal zou aanpakken.',
+       ctaButton: 'Naar contact',
+     },
++    contact: {
++      heroTitle: 'Contact',
++      heroLead: 'Vraag een vrijblijvende offerte aan voor montage, analyse of visualisatie.',
++      aboutHeading: 'Over dit contact',
++      aboutText:
++        'Beschrijf je project — een machine, proces of incident dat gedocumenteerd of geanalyseerd moet worden — en ik neem contact op met een concreet voorstel.',
++      expectHeading: 'Wat kun je verwachten?',
++      expectItems: [
++        'Een reactie met een eerste inschatting van aanpak en levertijd',
++        'Een vrijblijvende offerte op maat van je sector (PLC, Arburg, robotica, MIM, agro)',
++        'Reactie binnen enkele werkdagen',
++      ],
++      emailHeading: 'E-mail',
++      emailIntro: 'Voor offertes en zakelijke vragen:',
++      emailLabel: 'E-mail:',
++      formHeading: 'Stuur een aanvraag',
++      faqHeading: 'Veelgestelde vragen',
++      faqWhatQ: 'Wat doet DAREMON Engineering?',
++      faqWhatA:
++        'Gespecialiseerde technische videomontage, procesanalyse en AI-visualisaties voor de mechanische, industriële en agrarische sector.',
++      faqProcessQ: 'Hoe ziet het proces eruit?',
++      faqProcessABefore:
++        'Analyse van het bronmateriaal, montage met eigen audio en eventuele AI-visualisatie, en levering in het formaat dat past bij het gebruik — zie de sectie ',
++      faqProcessLinkText: 'Methodiek & AI',
++      faqProcessAAfter: ' op de homepage.',
++      faqWhyQ: 'Waarvoor kan ik contact opnemen?',
++      faqWhyA:
++        'Voor offerteaanvragen, vragen over een lopend project, of een eerste kennismaking voordat je een opdracht vastlegt.',
++      form: {
++        labelName: 'Naam *',
++        placeholderName: 'Uw naam',
++        labelEmail: 'E-mailadres *',
++        placeholderEmail: 'uw@email.nl',
++        labelCompany: 'Bedrijf',
++        labelOptional: '(optioneel)',
++        placeholderCompany: 'Naam van uw bedrijf',
++        labelSubject: 'Onderwerp *',
++        placeholderSubject: 'Waar gaat het over?',
++        labelMessage: 'Uw vraag of situatie *',
++        placeholderMessage:
++          'Beschrijf kort uw situatie of vraag. Hoe meer context, hoe beter ik kan inschatten of en hoe ik kan helpen.',
++        charsCounter: 'tekens',
++        submitButton: 'Verstuur bericht',
++        submitting: 'Bezig met verzenden…',
++        footerNote: '* Verplichte velden. Uw gegevens worden vertrouwelijk behandeld en niet gedeeld met derden.',
++        genericError: 'Er is iets misgegaan bij het verzenden.',
++        genericErrorRetry: 'Er is iets misgegaan. Probeer het opnieuw of neem direct contact op via info@daremon.nl',
++        defaultSuccess: 'Bedankt voor uw bericht! Ik neem zo snel mogelijk contact met u op.',
++      },
++    },
+   },
+ } as const satisfies Record<Language, unknown>
+ 
+diff --git a/package.json b/package.json
+index a8b6c37..40969a4 100644
+--- a/package.json
++++ b/package.json
+@@ -16,14 +16,12 @@
+   "dependencies": {
+     "next": "^14.2.0",
+     "react": "^18.3.0",
+-    "react-dom": "^18.3.0",
+-    "three": "^0.170.0"
++    "react-dom": "^18.3.0"
+   },
+   "devDependencies": {
+     "@types/node": "^20.0.0",
+     "@types/react": "^18.3.0",
+     "@types/react-dom": "^18.3.0",
+-    "@types/three": "^0.170.0",
+     "typescript": "^5.5.0",
+     "tailwindcss": "^3.4.0",
+     "postcss": "^8.4.0",
+diff --git a/pnpm-lock.yaml b/pnpm-lock.yaml
+index 84a2147..225ae82 100644
+--- a/pnpm-lock.yaml
++++ b/pnpm-lock.yaml
+@@ -17,9 +17,6 @@ importers:
+       react-dom:
+         specifier: ^18.3.0
+         version: 18.3.1(react@18.3.1)
+-      three:
+-        specifier: ^0.170.0
+-        version: 0.170.0
+     devDependencies:
+       '@types/node':
+         specifier: ^20.0.0
+@@ -30,9 +27,6 @@ importers:
+       '@types/react-dom':
+         specifier: ^18.3.0
+         version: 18.3.7(@types/react@18.3.27)
+-      '@types/three':
+-        specifier: ^0.170.0
+-        version: 0.170.0
+       autoprefixer:
+         specifier: ^10.4.0
+         version: 10.4.22(postcss@8.5.6)
+@@ -210,9 +204,6 @@ packages:
+   '@swc/helpers@0.5.5':
+     resolution: {integrity: sha512-KGYxvIOXcceOAbEk4bi/dVLEK9z8sZ0uBB3Il5b1rhfClSpcX0yfRO0KmTkqR2cnQDymwLB+25ZyMzICg/cm/A==}
+ 
+-  '@tweenjs/tween.js@23.1.3':
+-    resolution: {integrity: sha512-vJmvvwFxYuGnF2axRtPYocag6Clbb5YS7kLL+SO/TeVFzHqDIWrNKYtcsPMibjDx9O+bu+psAy9NKfWklassUA==}
+-
+   '@tybys/wasm-util@0.10.1':
+     resolution: {integrity: sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg==}
+ 
+@@ -233,15 +224,6 @@ packages:
+   '@types/react@18.3.27':
+     resolution: {integrity: sha512-cisd7gxkzjBKU2GgdYrTdtQx1SORymWyaAFhaxQPK9bYO9ot3Y5OikQRvY0VYQtvwjeQnizCINJAenh/V7MK2w==}
+ 
+-  '@types/stats.js@0.17.4':
+-    resolution: {integrity: sha512-jIBvWWShCvlBqBNIZt0KAshWpvSjhkwkEu4ZUcASoAvhmrgAUI2t1dXrjSL4xXVLB4FznPrIsX3nKXFl/Dt4vA==}
+-
+-  '@types/three@0.170.0':
+-    resolution: {integrity: sha512-CUm2uckq+zkCY7ZbFpviRttY+6f9fvwm6YqSqPfA5K22s9w7R4VnA3rzJse8kHVvuzLcTx+CjNCs2NYe0QFAyg==}
+-
+-  '@types/webxr@0.5.24':
+-    resolution: {integrity: sha512-h8fgEd/DpoS9CBrjEQXR+dIDraopAEfu4wYVNY2tEPwk60stPWhvZMf4Foo5FakuQ7HFZoa8WceaWFervK2Ovg==}
+-
+   '@typescript-eslint/eslint-plugin@8.48.0':
+     resolution: {integrity: sha512-XxXP5tL1txl13YFtrECECQYeZjBZad4fyd3cFV4a19LkAY/bIp9fev3US4S5fDVV2JaYFiKAZ/GRTOLer+mbyQ==}
+     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+@@ -399,9 +381,6 @@ packages:
+     cpu: [x64]
+     os: [win32]
+ 
+-  '@webgpu/types@0.1.66':
+-    resolution: {integrity: sha512-YA2hLrwLpDsRueNDXIMqN9NTzD6bCDkuXbOSe0heS+f8YE8usA6Gbv1prj81pzVHrbaAma7zObnIC+I6/sXJgA==}
+-
+   acorn-jsx@5.3.2:
+     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
+     peerDependencies:
+@@ -846,9 +825,6 @@ packages:
+       picomatch:
+         optional: true
+ 
+-  fflate@0.8.2:
+-    resolution: {integrity: sha512-cPJU47OaAoCbg0pBvzsgpTPhmhqI5eJjh/JIu8tPj5q+T7iLvW/JAYUqmE7KOB4R1ZyEhzBaIQpQpardBF5z8A==}
+-
+   file-entry-cache@6.0.1:
+     resolution: {integrity: sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg==}
+     engines: {node: ^10.12.0 || >=12.0.0}
+@@ -1205,9 +1181,6 @@ packages:
+     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
+     engines: {node: '>= 8'}
+ 
+-  meshoptimizer@0.18.1:
+-    resolution: {integrity: sha512-ZhoIoL7TNV4s5B6+rx5mC//fw8/POGyNxS/DZyCJeiZ12ScLfVwRE/GfsxwiTkMYYD5DmK2/JXnEVXqL4rF+Sw==}
+-
+   micromatch@4.0.8:
+     resolution: {integrity: sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA==}
+     engines: {node: '>=8.6'}
+@@ -1662,9 +1635,6 @@ packages:
+   thenify@3.3.1:
+     resolution: {integrity: sha512-RVZSIV5IG10Hk3enotrhvz0T9em6cyHBLkH/YAZuKqd8hRkKhSfCGIcP2KUY0EPxndzANBmNllzWPwak+bheSw==}
+ 
+-  three@0.170.0:
+-    resolution: {integrity: sha512-FQK+LEpYc0fBD+J8g6oSEyyNzjp+Q7Ks1C568WWaoMRLW+TkNNWmenWeGgJjV105Gd+p/2ql1ZcjYvNiPZBhuQ==}
+-
+   tinyglobby@0.2.15:
+     resolution: {integrity: sha512-j2Zq4NyQYG5XMST4cbs02Ak8iJUdxRM0XI5QyxXuZOzKOINmWurp3smXu3y5wDcJrptwpSjgXHzIQxR0omXljQ==}
+     engines: {node: '>=12.0.0'}
+@@ -1925,8 +1895,6 @@ snapshots:
+       '@swc/counter': 0.1.3
+       tslib: 2.8.1
+ 
+-  '@tweenjs/tween.js@23.1.3': {}
+-
+   '@tybys/wasm-util@0.10.1':
+     dependencies:
+       tslib: 2.8.1
+@@ -1949,19 +1917,6 @@ snapshots:
+       '@types/prop-types': 15.7.15
+       csstype: 3.2.3
+ 
+-  '@types/stats.js@0.17.4': {}
+-
+-  '@types/three@0.170.0':
+-    dependencies:
+-      '@tweenjs/tween.js': 23.1.3
+-      '@types/stats.js': 0.17.4
+-      '@types/webxr': 0.5.24
+-      '@webgpu/types': 0.1.66
+-      fflate: 0.8.2
+-      meshoptimizer: 0.18.1
+-
+-  '@types/webxr@0.5.24': {}
+-
+   '@typescript-eslint/eslint-plugin@8.48.0(@typescript-eslint/parser@8.48.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3)':
+     dependencies:
+       '@eslint-community/regexpp': 4.12.2
+@@ -2115,8 +2070,6 @@ snapshots:
+   '@unrs/resolver-binding-win32-x64-msvc@1.11.1':
+     optional: true
+ 
+-  '@webgpu/types@0.1.66': {}
+-
+   acorn-jsx@5.3.2(acorn@8.15.0):
+     dependencies:
+       acorn: 8.15.0
+@@ -2516,8 +2469,8 @@ snapshots:
+       '@typescript-eslint/parser': 8.48.0(eslint@8.57.1)(typescript@5.9.3)
+       eslint: 8.57.1
+       eslint-import-resolver-node: 0.3.9
+-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@8.57.1)
+-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.48.0(eslint@8.57.1)(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@8.57.1)
++      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.48.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1))(eslint@8.57.1)
++      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.48.0(eslint@8.57.1)(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.48.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
+       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.57.1)
+       eslint-plugin-react: 7.37.5(eslint@8.57.1)
+       eslint-plugin-react-hooks: 5.0.0-canary-7118f5dd7-20230705(eslint@8.57.1)
+@@ -2536,7 +2489,7 @@ snapshots:
+     transitivePeerDependencies:
+       - supports-color
+ 
+-  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@8.57.1):
++  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.48.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1))(eslint@8.57.1):
+     dependencies:
+       '@nolyfill/is-core-module': 1.0.39
+       debug: 4.4.3
+@@ -2547,22 +2500,22 @@ snapshots:
+       tinyglobby: 0.2.15
+       unrs-resolver: 1.11.1
+     optionalDependencies:
+-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.48.0(eslint@8.57.1)(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@8.57.1)
++      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.48.0(eslint@8.57.1)(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.48.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
+     transitivePeerDependencies:
+       - supports-color
+ 
+-  eslint-module-utils@2.12.1(@typescript-eslint/parser@8.48.0(eslint@8.57.1)(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@8.57.1):
++  eslint-module-utils@2.12.1(@typescript-eslint/parser@8.48.0(eslint@8.57.1)(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.48.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
+     dependencies:
+       debug: 3.2.7
+     optionalDependencies:
+       '@typescript-eslint/parser': 8.48.0(eslint@8.57.1)(typescript@5.9.3)
+       eslint: 8.57.1
+       eslint-import-resolver-node: 0.3.9
+-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@8.57.1)
++      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.48.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1))(eslint@8.57.1)
+     transitivePeerDependencies:
+       - supports-color
+ 
+-  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.48.0(eslint@8.57.1)(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@8.57.1):
++  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.48.0(eslint@8.57.1)(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.48.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
+     dependencies:
+       '@rtsao/scc': 1.1.0
+       array-includes: 3.1.9
+@@ -2573,7 +2526,7 @@ snapshots:
+       doctrine: 2.1.0
+       eslint: 8.57.1
+       eslint-import-resolver-node: 0.3.9
+-      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.48.0(eslint@8.57.1)(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@8.57.1)
++      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.48.0(eslint@8.57.1)(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.48.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
+       hasown: 2.0.2
+       is-core-module: 2.16.1
+       is-glob: 4.0.3
+@@ -2728,8 +2681,6 @@ snapshots:
+     optionalDependencies:
+       picomatch: 4.0.3
+ 
+-  fflate@0.8.2: {}
+-
+   file-entry-cache@6.0.1:
+     dependencies:
+       flat-cache: 3.2.0
+@@ -3095,8 +3046,6 @@ snapshots:
+ 
+   merge2@1.4.1: {}
+ 
+-  meshoptimizer@0.18.1: {}
+-
+   micromatch@4.0.8:
+     dependencies:
+       braces: 3.0.3
+@@ -3609,8 +3558,6 @@ snapshots:
+     dependencies:
+       any-promise: 1.3.0
+ 
+-  three@0.170.0: {}
+-
+   tinyglobby@0.2.15:
+     dependencies:
+       fdir: 6.5.0(picomatch@4.0.3)
+diff --git a/public/api/config.php b/public/api/config.php
+index f6dad16..a7a9447 100644
+--- a/public/api/config.php
++++ b/public/api/config.php
+@@ -1,12 +1,15 @@
+ <?php
+ /**
+- * Daremon B2B — konfiguracja backendu PHP (baza danych, zmienne środowiskowe).
++ * Daremon B2B — konfiguracja backendu PHP (baza danych, SMTP, zmienne
++ * środowiskowe).
+  *
+- * Konwencja zmiennych: DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME.
++ * Konwencja zmiennych bazy danych: DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME.
++ * Konwencja zmiennych SMTP (patrz mailer.php): SMTP_HOST, SMTP_PORT,
++ * SMTP_SECURE, SMTP_USER, SMTP_PASSWORD, SMTP_FROM_EMAIL, SMTP_FROM_NAME.
+  *
+- * Na produkcji ustaw je przez panel hostingu (np. sekcja "Environment
+- * Variables") albo w .htaccess przez `SetEnv DB_HOST ...` — nigdy nie
+- * commituj rzeczywistych danych dostępowych do repozytorium.
++ * Na produkcji (Synology Web Station) ustaw je przez panel hostingu (sekcja
++ * zmiennych środowiskowych PHP) albo w .htaccess przez `SetEnv DB_HOST ...`
++ * — nigdy nie commituj rzeczywistych danych dostępowych do repozytorium.
+  *
+  * Lokalnie (dev) możesz utworzyć plik public/api/.env.local.php (jest w
+  * .gitignore) z zawartością np.:
+@@ -17,6 +20,12 @@
+  *   putenv('DB_USER=daremon');
+  *   putenv('DB_PASSWORD=...');
+  *   putenv('DB_NAME=daremon_b2b');
++ *
++ *   putenv('SMTP_HOST=smtp.transip.email');
++ *   putenv('SMTP_PORT=587');
++ *   putenv('SMTP_SECURE=tls'); // 'ssl' dla portu 465, 'tls' dla STARTTLS na 587
++ *   putenv('SMTP_USER=info@daremon.nl');
++ *   putenv('SMTP_PASSWORD=...');
+  */
+ 
+ $localEnvFile = __DIR__ . '/.env.local.php';
+diff --git a/public/api/contact.php b/public/api/contact.php
+index 41b34fe..6cf2d43 100644
+--- a/public/api/contact.php
++++ b/public/api/contact.php
+@@ -47,13 +47,55 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+ 
+ // Email configuration
+ const RECIPIENT_EMAIL = 'info@daremon.nl'; // Change to your email
+-const FROM_EMAIL = 'noreply@daremon.nl';   // Change to your domain email
++const FROM_EMAIL = 'noreply@daremon.nl';   // Change to your domain email (fallback voor mail())
+ const SUBJECT = 'Nieuw contactformulier bericht - Daremon';
+ 
+ // Rate limiting (requests per minute)
+ const RATE_LIMIT = 3;
+ const RATE_LIMIT_WINDOW = 60; // seconds
+ 
++// ============================================
++// LOKALIZACJA KOMUNIKATÓW (PL/NL — zgodnie z globalnym przełącznikiem języka)
++// ============================================
++
++function resolveLanguage(array $data): string {
++    $lang = trim((string)($data['language'] ?? ''));
++    return in_array($lang, ['pl', 'nl'], true) ? $lang : 'nl';
++}
++
++function messagesFor(string $lang): array {
++    if ($lang === 'pl') {
++        return [
++            'invalid_json' => 'Nieprawidłowe dane JSON.',
++            'method_not_allowed' => 'Dozwolone są wyłącznie żądania POST.',
++            'rate_limited' => 'Zbyt wiele żądań. Spróbuj ponownie za minutę.',
++            'spam_detected' => 'Wykryto spam.',
++            'validation_failed' => 'Walidacja nie powiodła się.',
++            'field_required' => 'Pole „%s” jest wymagane.',
++            'invalid_email' => 'Nieprawidłowy adres e-mail.',
++            'field_too_long' => 'Pole „%s” jest za długie (maks. %d znaków).',
++            'message_too_short' => 'Wiadomość jest za krótka (min. 10 znaków).',
++            'send_failed' => 'Wysyłka nie powiodła się. Spróbuj ponownie później lub napisz bezpośrednio na info@daremon.nl.',
++            'success' => 'Dziękuję za wiadomość! Odezwę się najszybciej, jak to możliwe.',
++            'field_names' => ['naam' => 'Imię i nazwisko', 'email' => 'E-mail', 'onderwerp' => 'Temat', 'bericht' => 'Wiadomość', 'bedrijf' => 'Firma'],
++        ];
++    }
++    return [
++        'invalid_json' => 'Ongeldige JSON data.',
++        'method_not_allowed' => 'Alleen POST requests zijn toegestaan.',
++        'rate_limited' => 'Te veel verzoeken. Probeer het over een minuut opnieuw.',
++        'spam_detected' => 'Spam gedetecteerd.',
++        'validation_failed' => 'Validatie mislukt.',
++        'field_required' => 'Veld "%s" is verplicht.',
++        'invalid_email' => 'Ongeldig e-mailadres.',
++        'field_too_long' => 'Veld "%s" is te lang (max %d tekens).',
++        'message_too_short' => 'Bericht is te kort (min 10 tekens).',
++        'send_failed' => 'Het verzenden is mislukt. Probeer het later opnieuw of mail rechtstreeks naar info@daremon.nl.',
++        'success' => 'Bedankt voor uw bericht! Ik neem zo snel mogelijk contact met u op.',
++        'field_names' => ['naam' => 'Naam', 'email' => 'E-mail', 'onderwerp' => 'Onderwerp', 'bericht' => 'Bericht', 'bedrijf' => 'Bedrijf'],
++    ];
++}
++
+ // ============================================
+ // RATE LIMITING
+ // ============================================
+@@ -93,39 +135,40 @@ function checkHoneypot(array $data): bool {
+ // VALIDATION
+ // ============================================
+ 
+-function validateInput(array $data): array {
++function validateInput(array $data, array $messages): array {
+     $errors = [];
++    $names = $messages['field_names'];
+ 
+     // Required fields
+     $required = ['naam', 'email', 'onderwerp', 'bericht'];
+     foreach ($required as $field) {
+         if (empty($data[$field] ?? '')) {
+-            $errors[] = "Veld '{$field}' is verplicht.";
++            $errors[] = sprintf($messages['field_required'], $names[$field]);
+         }
+     }
+ 
+     // Email validation
+     if (!empty($data['email']) && !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+-        $errors[] = 'Ongeldig e-mailadres.';
++        $errors[] = $messages['invalid_email'];
+     }
+ 
+     // Length validation
+     if (strlen($data['naam'] ?? '') > 100) {
+-        $errors[] = 'Naam is te lang (max 100 tekens).';
++        $errors[] = sprintf($messages['field_too_long'], $names['naam'], 100);
+     }
+     if (strlen($data['onderwerp'] ?? '') > 200) {
+-        $errors[] = 'Onderwerp is te lang (max 200 tekens).';
++        $errors[] = sprintf($messages['field_too_long'], $names['onderwerp'], 200);
+     }
+     if (strlen($data['bedrijf'] ?? '') > 150) {
+-        $errors[] = 'Bedrijfsnaam is te lang (max 150 tekens).';
++        $errors[] = sprintf($messages['field_too_long'], $names['bedrijf'], 150);
+     }
+     if (strlen($data['bericht'] ?? '') > 5000) {
+-        $errors[] = 'Bericht is te lang (max 5000 tekens).';
++        $errors[] = sprintf($messages['field_too_long'], $names['bericht'], 5000);
+     }
+ 
+     // Minimum length
+     if (strlen($data['bericht'] ?? '') < 10) {
+-        $errors[] = 'Bericht is te kort (min 10 tekens).';
++        $errors[] = $messages['message_too_short'];
+     }
+ 
+     return $errors;
+@@ -183,17 +226,13 @@ function saveLead(array $data): void {
+ function sendEmail(array $data): bool {
+     $naam = $data['naam'];
+     $email = $data['email'];
++    $bedrijf = $data['bedrijf'] ?? '';
+     $onderwerp = $data['onderwerp'];
+     $bericht = $data['bericht'];
+ 
+-    // Email headers
+-    $headers = [
+-        'From: ' . FROM_EMAIL,
+-        'Reply-To: ' . $email,
+-        'X-Mailer: PHP/' . phpversion(),
+-        'MIME-Version: 1.0',
+-        'Content-Type: text/html; charset=UTF-8'
+-    ];
++    $bedrijfRow = $bedrijf !== ''
++        ? '<div class="field"><div class="label">Bedrijf:</div><div class="value">' . $bedrijf . '</div></div>'
++        : '';
+ 
+     // Email body (HTML)
+     $emailBody = <<<HTML
+@@ -227,6 +266,7 @@ function sendEmail(array $data): bool {
+                 <div class="label">E-mail:</div>
+                 <div class="value"><a href="mailto:{$email}">{$email}</a></div>
+             </div>
++            {$bedrijfRow}
+             <div class="field">
+                 <div class="label">Onderwerp:</div>
+                 <div class="value">{$onderwerp}</div>
+@@ -245,7 +285,29 @@ function sendEmail(array $data): bool {
+ </html>
+ HTML;
+ 
+-    // Send email
++    // Voorkeur: echte SMTP-verzending (werkt ook op hosts zoals Synology
++    // Web Station, waar mail() meestal geen lokale MTA tot zijn beschikking
++    // heeft). Alleen als SMTP niet geconfigureerd is, of de verzending faalt,
++    // vallen we terug op de ingebouwde PHP mail().
++    require_once __DIR__ . '/mailer.php';
++
++    if (smtpConfigured()) {
++        try {
++            sendViaSmtp(RECIPIENT_EMAIL, 'DAREMON Engineering', SUBJECT, $emailBody, $email);
++            return true;
++        } catch (\Throwable $smtpError) {
++            error_log('[contact.php] SMTP-verzending mislukt, val terug op mail(): ' . $smtpError->getMessage());
++        }
++    }
++
++    $headers = [
++        'From: ' . FROM_EMAIL,
++        'Reply-To: ' . $email,
++        'X-Mailer: PHP/' . phpversion(),
++        'MIME-Version: 1.0',
++        'Content-Type: text/html; charset=UTF-8'
++    ];
++
+     return mail(
+         RECIPIENT_EMAIL,
+         SUBJECT,
+@@ -258,21 +320,30 @@ HTML;
+ // MAIN LOGIC
+ // ============================================
+ 
++// Domyślny język komunikatów, dopóki nie znamy treści żądania (np. błąd
++// parsowania JSON) — reszta obsługi przełącza się na język z payloadu.
++$messages = messagesFor('nl');
++
+ try {
+     // Get POST data
+     $rawData = file_get_contents('php://input');
+     $data = json_decode($rawData, true);
+ 
+-    if (json_last_error() !== JSON_ERROR_NONE) {
+-        throw new Exception('Ongeldige JSON data.');
++    if (json_last_error() !== JSON_ERROR_NONE || !is_array($data)) {
++        throw new Exception($messages['invalid_json']);
+     }
+ 
++    // Od tego miejsca znamy język wybrany w interfejsie (PL/NL) — wszystkie
++    // komunikaty zwracane do klienta mają się z nim zgadzać.
++    $lang = resolveLanguage($data);
++    $messages = messagesFor($lang);
++
+     // Rate limiting check
+     if (!checkRateLimit()) {
+         http_response_code(429);
+         echo json_encode([
+             'success' => false,
+-            'message' => 'Te veel verzoeken. Probeer het over een minuut opnieuw.'
++            'message' => $messages['rate_limited']
+         ]);
+         exit();
+     }
+@@ -282,18 +353,18 @@ try {
+         http_response_code(400);
+         echo json_encode([
+             'success' => false,
+-            'message' => 'Spam gedetecteerd.'
++            'message' => $messages['spam_detected']
+         ]);
+         exit();
+     }
+ 
+     // Validate input
+-    $errors = validateInput($data);
++    $errors = validateInput($data, $messages);
+     if (!empty($errors)) {
+         http_response_code(400);
+         echo json_encode([
+             'success' => false,
+-            'message' => 'Validatie mislukt.',
++            'message' => $messages['validation_failed'],
+             'errors' => $errors
+         ]);
+         exit();
+@@ -322,14 +393,14 @@ try {
+     if (!$leadSaved && !$emailSent) {
+         // Beide kanalen zijn mislukt — de aanvraag is nergens beland, dus
+         // moeten we de gebruiker eerlijk vertellen dat het niet is gelukt.
+-        throw new Exception('Het verzenden is mislukt. Probeer het later opnieuw of mail rechtstreeks naar info@daremon.nl.');
++        throw new Exception($messages['send_failed']);
+     }
+ 
+     // Success response
+     http_response_code(200);
+     echo json_encode([
+         'success' => true,
+-        'message' => 'Bedankt voor uw bericht! Ik neem zo snel mogelijk contact met u op.'
++        'message' => $messages['success']
+     ]);
+ 
+ } catch (Exception $e) {
+diff --git a/public/api/mailer.php b/public/api/mailer.php
+new file mode 100644
+index 0000000..3fb7f76
+--- /dev/null
++++ b/public/api/mailer.php
+@@ -0,0 +1,180 @@
++<?php
++/**
++ * Minimalny, bezzależnościowy klient SMTP (bez Composera / PHPMailer) do
++ * wysyłki powiadomień e-mail przez prawdziwy serwer SMTP.
++ *
++ * DLACZEGO TO ISTNIEJE:
++ * Na Synology (Web Station + PHP-FPM) wbudowana funkcja PHP `mail()` z
++ * reguły nie działa w ogóle — w systemie nie ma skonfigurowanego lokalnego
++ * MTA/sendmail, więc próba wysyłki kończy się cichym `false` albo błędem
++ * w logu typu "sh: sendmail: not found". Prawdziwy serwer SMTP (np. skrzynka
++ * pocztowa TransIP) omija ten problem całkowicie, bo łączy się bezpośrednio
++ * po sieci, a nie przez lokalny binarny sendmail.
++ *
++ * KONFIGURACJA (zmienne środowiskowe — patrz config.php):
++ *   SMTP_HOST        np. smtp.transip.email
++ *   SMTP_PORT        465 (SSL) lub 587 (STARTTLS) — domyślnie 587
++ *   SMTP_SECURE      'ssl' | 'tls' | 'none'        — domyślnie 'tls'
++ *   SMTP_USER        pełny adres skrzynki, np. info@daremon.nl
++ *   SMTP_PASSWORD    hasło do tej skrzynki
++ *   SMTP_FROM_EMAIL  domyślnie = SMTP_USER
++ *   SMTP_FROM_NAME   domyślnie "DAREMON Engineering"
++ *   SMTP_EHLO_HOST   domyślnie "daremon.nl"
++ *
++ * TransIP (typowe ustawienia dla skrzynek pocztowych TransIP Mail):
++ *   Host: smtp.transip.email
++ *   Port: 465 z SMTP_SECURE=ssl, ALBO port 587 z SMTP_SECURE=tls (STARTTLS)
++ *   Użytkownik: pełny adres e-mail (np. info@daremon.nl)
++ *   Hasło: hasło do tej skrzynki pocztowej
++ * (Zweryfikuj dokładną nazwę hosta w panelu TransIP — bywa też
++ * dostarczana jako mail.<twoja-domena>, zależnie od konfiguracji strefy DNS).
++ *
++ * Jeśli SMTP_HOST nie jest ustawiony, smtpConfigured() zwraca false —
++ * wywołujący (contact.php) spada wtedy z powrotem na mail().
++ */
++
++require_once __DIR__ . '/config.php';
++
++class SmtpException extends \RuntimeException
++{
++}
++
++function smtpConfigured(): bool
++{
++    return daremon_env('SMTP_HOST', '') !== '';
++}
++
++function smtpEncodeHeaderWord(string $value): string
++{
++    if ($value === '' || preg_match('/^[\x20-\x7E]*$/', $value)) {
++        return $value;
++    }
++    return '=?UTF-8?B?' . base64_encode($value) . '?=';
++}
++
++/**
++ * Wysyła jeden e-mail HTML przez SMTP (AUTH LOGIN, opcjonalny STARTTLS/SSL).
++ *
++ * @throws SmtpException gdy którykolwiek krok dialogu SMTP się nie powiedzie
++ */
++function sendViaSmtp(string $toEmail, string $toName, string $subject, string $htmlBody, string $replyTo = ''): void
++{
++    $host = daremon_env('SMTP_HOST', '');
++    $port = (int)daremon_env('SMTP_PORT', '587');
++    $secure = strtolower(daremon_env('SMTP_SECURE', 'tls')); // ssl | tls | none
++    $user = daremon_env('SMTP_USER', '');
++    $password = daremon_env('SMTP_PASSWORD', '');
++    $fromEmail = daremon_env('SMTP_FROM_EMAIL', $user);
++    $fromName = daremon_env('SMTP_FROM_NAME', 'DAREMON Engineering');
++    $ehloHost = daremon_env('SMTP_EHLO_HOST', 'daremon.nl');
++
++    if ($host === '' || $user === '' || $password === '') {
++        throw new SmtpException('SMTP is niet volledig geconfigureerd (SMTP_HOST/SMTP_USER/SMTP_PASSWORD).');
++    }
++
++    $transport = $secure === 'ssl' ? 'ssl://' : 'tcp://';
++    $errno = 0;
++    $errstr = '';
++    $timeout = 15;
++
++    $socket = @stream_socket_client(
++        "{$transport}{$host}:{$port}",
++        $errno,
++        $errstr,
++        $timeout,
++        STREAM_CLIENT_CONNECT,
++        stream_context_create(['ssl' => ['verify_peer' => true, 'verify_peer_name' => true]])
++    );
++
++    if (!$socket) {
++        throw new SmtpException("Kan geen verbinding maken met SMTP-server {$host}:{$port} — {$errstr} ({$errno})");
++    }
++
++    stream_set_timeout($socket, $timeout);
++
++    $readResponse = static function () use ($socket): string {
++        $data = '';
++        while (($line = fgets($socket, 515)) !== false) {
++            $data .= $line;
++            // Wieloliniowa odpowiedź SMTP: "250-..." to nie koniec, "250 ..." (spacja) jest ostatnią linią.
++            if (strlen($line) < 4 || $line[3] === ' ') {
++                break;
++            }
++        }
++        if ($data === '') {
++            throw new SmtpException('Brak odpowiedzi z serwera SMTP (timeout lub zerwane połączenie).');
++        }
++        return $data;
++    };
++
++    $sendCommand = static function (string $command) use ($socket): void {
++        fwrite($socket, $command . "\r\n");
++    };
++
++    $expectCode = static function (string $response, int $expectedCode) {
++        $code = (int)substr($response, 0, 3);
++        if ($code !== $expectedCode) {
++            throw new SmtpException("Onverwacht SMTP-antwoord (verwacht {$expectedCode}): " . trim($response));
++        }
++    };
++
++    try {
++        $expectCode($readResponse(), 220);
++
++        $sendCommand("EHLO {$ehloHost}");
++        $expectCode($readResponse(), 250);
++
++        if ($secure === 'tls') {
++            $sendCommand('STARTTLS');
++            $expectCode($readResponse(), 220);
++            if (!stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
++                throw new SmtpException('STARTTLS-onderhandeling is mislukt.');
++            }
++            // Po STARTTLS trzeba powtórzyć EHLO w ramach już zaszyfrowanej sesji.
++            $sendCommand("EHLO {$ehloHost}");
++            $expectCode($readResponse(), 250);
++        }
++
++        $sendCommand('AUTH LOGIN');
++        $expectCode($readResponse(), 334);
++        $sendCommand(base64_encode($user));
++        $expectCode($readResponse(), 334);
++        $sendCommand(base64_encode($password));
++        $expectCode($readResponse(), 235);
++
++        $sendCommand("MAIL FROM:<{$fromEmail}>");
++        $expectCode($readResponse(), 250);
++        $sendCommand("RCPT TO:<{$toEmail}>");
++        $expectCode($readResponse(), 250);
++
++        $sendCommand('DATA');
++        $expectCode($readResponse(), 354);
++
++        $encodedSubject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
++        $headerLines = [
++            'MIME-Version: 1.0',
++            'Content-Type: text/html; charset=UTF-8',
++            'Content-Transfer-Encoding: 8bit',
++            sprintf('From: %s <%s>', smtpEncodeHeaderWord($fromName), $fromEmail),
++            sprintf('To: %s <%s>', smtpEncodeHeaderWord($toName), $toEmail),
++            "Subject: {$encodedSubject}",
++            'Date: ' . date('r'),
++            'Message-ID: <' . bin2hex(random_bytes(16)) . '@' . $ehloHost . '>',
++        ];
++        if ($replyTo !== '') {
++            $headerLines[] = "Reply-To: {$replyTo}";
++        }
++
++        // Dot-stuffing: samodzielna "." na początku linii kończy DATA w SMTP,
++        // więc każdą linię treści zaczynającą się od kropki trzeba podwoić.
++        $stuffedBody = preg_replace('/^\./m', '..', $htmlBody);
++
++        $message = implode("\r\n", $headerLines) . "\r\n\r\n" . $stuffedBody . "\r\n.";
++        $sendCommand($message);
++        $expectCode($readResponse(), 250);
++
++        $sendCommand('QUIT');
++    } finally {
++        fclose($socket);
++    }
++}

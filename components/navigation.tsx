@@ -75,16 +75,6 @@ export function Navigation() {
                 </Link>
               </li>
             ))}
-            <li>
-              <a
-                href="/legacy/index.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 text-sm font-semibold bg-cyan-600 hover:bg-cyan-500 text-black rounded-lg shadow-[0_0_15px_rgba(0,255,255,0.3)] transition"
-              >
-                {t.nav.etsRadio}
-              </a>
-            </li>
           </ul>
 
           {/* Right-hand cluster: language switcher (always visible) + mobile toggle */}
@@ -164,19 +154,6 @@ export function Navigation() {
               </li>
             ))}
           </ul>
-
-          {/* ETS Radio Button */}
-          <div className="p-4 border-t border-cyan-500/20">
-            <a
-              href="/legacy/index.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block w-full px-4 py-3 text-center text-sm font-semibold bg-cyan-600 hover:bg-cyan-500 text-black rounded-lg shadow-[0_0_15px_rgba(0,255,255,0.3)] transition"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {t.nav.etsRadio}
-            </a>
-          </div>
 
           {/* Close hint */}
           <div className="p-4 text-center text-xs text-slate-500">

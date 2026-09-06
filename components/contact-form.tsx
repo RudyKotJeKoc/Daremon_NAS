@@ -2,9 +2,11 @@
 
 import { useState } from 'react'
 import { useLanguage } from '@/components/language-provider'
+import { useT } from '@/lib/i18n'
 
 export function ContactForm() {
   const { language } = useLanguage()
+  const t = useT().contact.form
   const [formData, setFormData] = useState({
     naam: '',
     email: '',
@@ -39,13 +41,13 @@ export function ContactForm() {
       const data = await response.json()
 
       if (!response.ok || !data.success) {
-        throw new Error(data.message || 'Er is iets misgegaan bij het verzenden.')
+        throw new Error(data.message || t.genericError)
       }
 
       // Success
       setSubmitStatus({
         type: 'success',
-        message: data.message || 'Bedankt voor uw bericht! Ik neem zo snel mogelijk contact met u op.'
+        message: data.message || t.defaultSuccess
       })
 
       // Reset form
@@ -69,7 +71,7 @@ export function ContactForm() {
         type: 'error',
         message: error instanceof Error
           ? error.message
-          : 'Er is iets misgegaan. Probeer het opnieuw of neem direct contact op via info@daremon.nl'
+          : t.genericErrorRetry
       })
 
       // Auto-hide error message after 10 seconds
@@ -131,7 +133,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="naam" className="block text-sm font-medium text-slate-100 mb-2">
-          Naam *
+          {t.labelName}
         </label>
         <input
           type="text"
@@ -143,13 +145,13 @@ export function ContactForm() {
           onChange={handleChange}
           disabled={isSubmitting}
           className="w-full px-4 py-3 bg-slate-900/50 border border-cyan-500/30 rounded-md text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed transition"
-          placeholder="Uw naam"
+          placeholder={t.placeholderName}
         />
       </div>
 
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-slate-100 mb-2">
-          E-mailadres *
+          {t.labelEmail}
         </label>
         <input
           type="email"
@@ -161,13 +163,13 @@ export function ContactForm() {
           onChange={handleChange}
           disabled={isSubmitting}
           className="w-full px-4 py-3 bg-slate-900/50 border border-cyan-500/30 rounded-md text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed transition"
-          placeholder="uw@email.nl"
+          placeholder={t.placeholderEmail}
         />
       </div>
 
       <div>
         <label htmlFor="bedrijf" className="block text-sm font-medium text-slate-100 mb-2">
-          Bedrijf <span className="text-slate-500 font-normal">(optioneel)</span>
+          {t.labelCompany} <span className="text-slate-500 font-normal">{t.labelOptional}</span>
         </label>
         <input
           type="text"
@@ -178,13 +180,13 @@ export function ContactForm() {
           onChange={handleChange}
           disabled={isSubmitting}
           className="w-full px-4 py-3 bg-slate-900/50 border border-cyan-500/30 rounded-md text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed transition"
-          placeholder="Naam van uw bedrijf"
+          placeholder={t.placeholderCompany}
         />
       </div>
 
       <div>
         <label htmlFor="onderwerp" className="block text-sm font-medium text-slate-100 mb-2">
-          Onderwerp *
+          {t.labelSubject}
         </label>
         <input
           type="text"
@@ -196,13 +198,13 @@ export function ContactForm() {
           onChange={handleChange}
           disabled={isSubmitting}
           className="w-full px-4 py-3 bg-slate-900/50 border border-cyan-500/30 rounded-md text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed transition"
-          placeholder="Waar gaat het over?"
+          placeholder={t.placeholderSubject}
         />
       </div>
 
       <div>
         <label htmlFor="bericht" className="block text-sm font-medium text-slate-100 mb-2">
-          Uw vraag of situatie *
+          {t.labelMessage}
         </label>
         <textarea
           id="bericht"
@@ -215,10 +217,10 @@ export function ContactForm() {
           disabled={isSubmitting}
           rows={6}
           className="w-full px-4 py-3 bg-slate-900/50 border border-cyan-500/30 rounded-md text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed resize-none transition"
-          placeholder="Beschrijf kort uw situatie of vraag. Hoe meer context, hoe beter ik kan inschatten of en hoe ik kan helpen."
+          placeholder={t.placeholderMessage}
         />
         <div className="mt-1 text-xs text-slate-500">
-          {formData.bericht.length} / 5000 tekens
+          {formData.bericht.length} / 5000 {t.charsCounter}
         </div>
       </div>
 
@@ -233,15 +235,15 @@ export function ContactForm() {
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            Bezig met verzenden...
+            {t.submitting}
           </>
         ) : (
-          'Verstuur bericht'
+          t.submitButton
         )}
       </button>
 
       <p className="text-xs text-slate-400">
-        * Verplichte velden. Uw gegevens worden vertrouwelijk behandeld en niet gedeeld met derden.
+        {t.footerNote}
       </p>
     </form>
   )

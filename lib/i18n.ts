@@ -11,25 +11,12 @@ export const translations = {
       methodiek: 'Metodyka i AI',
       over: 'O mnie',
       contact: 'Kontakt',
-      etsRadio: 'Radio ETS',
       escHint: 'Naciśnij ESC, aby zamknąć',
     },
     footer: {
       rights: 'DAREMON Engineering',
       tagline: 'Specjalistyczny montaż wideo, analiza procesów i wizualizacje AI.',
       legal: 'Informacje prawne',
-    },
-    radioDock: {
-      live: 'RADIO ETS · NA ŻYWO',
-      fullscreen: 'Pełny ekran ↗',
-      openLabel: 'Otwórz panel Radia ETS',
-      closeLabel: 'Zwiń panel Radia ETS',
-      button: 'Radio ETS',
-    },
-    audioLab: {
-      loading: 'Ładowanie wizualizacji 3D…',
-      unavailable:
-        'Wizualizacja 3D jest wyłączona w tej przeglądarce (brak WebGL lub włączone ograniczenie animacji).',
     },
     portfolio: {
       filters: {
@@ -53,19 +40,16 @@ export const translations = {
       },
     },
     home: {
-      statusBadge: 'SYSTEM AKTYWNY · RADIO ETS 24/7',
+      statusBadge: 'SYSTEM AKTYWNY · DOSTĘPNY 24/7',
       title: 'DAREMON',
       subtitle: 'Engineering — Montaż Techniczny & Analiza Procesów',
       lead1: 'Specjalistyczny montaż wideo dla sektora mechanicznego, przemysłowego i agro.',
       lead2:
-        'Analiza procesów, kinematyka maszyn, autorskie audio wolne od praw autorskich i wizualizacje AI — zbudowane na tej samej technologii, którą widzisz na tej stronie.',
+        'Analiza procesów, kinematyka maszyn, autorskie audio wolne od praw autorskich i wizualizacje AI — pełen zakres materiałów technicznych, jakie mogę dla Ciebie przygotować.',
       ctaQuote: 'Zapytaj o wycenę',
       ctaPortfolio: 'Zobacz portfolio',
       portfolioHeading: 'Portfolio & Case Studies',
       portfolioLink: 'Pełne case studies →',
-      audioLabHeading: 'Audio Lab',
-      audioLabText:
-        'Ta sama wizualizacja 3D, która w Radiu ETS reaguje na muzykę na żywo, napędzana silnikiem Three.js — dowód, że materiały wideo, które montuję, mogą wyglądać równie precyzyjnie jak proces, który dokumentują. Autorskie ścieżki dźwiękowe do wideo powstają bez ryzyka Content ID.',
       processHeading: 'Jak pracuję',
       processLink: 'Metodyka i rola AI →',
       process: [
@@ -73,10 +57,6 @@ export const translations = {
         { krok: 'Montaż', opis: 'Precyzyjny montaż wideo z autorską ścieżką dźwiękową wolną od Content ID i wizualizacjami AI.' },
         { krok: 'Dostawa', opis: 'Materiał w formacie dopasowanym do odbiorcy — 16:9 do dokumentacji, 9:16 do social media.' },
       ],
-      radioHeading: 'Radio ETS',
-      radioText:
-        'Moje autorskie radio internetowe działa 24/7 w tle tej platformy — dokowalny panel w prawym dolnym rogu ekranu daje do niego dostęp z każdej podstrony. Pełny interfejs, wizualizacje i ankiety społecznościowe dostępne są też w trybie pełnoekranowym.',
-      radioCta: 'Otwórz pełny ekran',
       contactHeading: 'Masz proces, maszynę lub incydent do udokumentowania?',
       contactText: 'Opisz projekt, a przygotuję wstępną wycenę montażu, analizy lub wizualizacji.',
       contactCta: 'Przejdź do kontaktu',
@@ -259,6 +239,56 @@ export const translations = {
       ctaText: 'Chętnie opowiem, jak podszedłbym do Twojego materiału.',
       ctaButton: 'Przejdź do kontaktu',
     },
+    contact: {
+      heroTitle: 'Kontakt',
+      heroLead: 'Poproś o bezpłatną wycenę montażu, analizy lub wizualizacji.',
+      aboutHeading: 'O tym kontakcie',
+      aboutText:
+        'Opisz swój projekt — maszynę, proces lub incydent, który wymaga udokumentowania lub przeanalizowania — a ja odezwę się z konkretną propozycją.',
+      expectHeading: 'Czego możesz się spodziewać?',
+      expectItems: [
+        'Odpowiedź z pierwszą oceną podejścia i czasu realizacji',
+        'Niezobowiązującą wycenę dopasowaną do Twojej branży (PLC, Arburg, robotyka, MIM, agro)',
+        'Odpowiedź w ciągu kilku dni roboczych',
+      ],
+      emailHeading: 'E-mail',
+      emailIntro: 'Do wycen i zapytań biznesowych:',
+      emailLabel: 'E-mail:',
+      formHeading: 'Wyślij zapytanie',
+      faqHeading: 'Najczęściej zadawane pytania',
+      faqWhatQ: 'Czym zajmuje się DAREMON Engineering?',
+      faqWhatA:
+        'Specjalistycznym montażem wideo technicznego, analizą procesów i wizualizacjami AI dla sektora mechanicznego, przemysłowego i agro.',
+      faqProcessQ: 'Jak wygląda proces?',
+      faqProcessABefore:
+        'Analiza materiału źródłowego, montaż z autorską ścieżką dźwiękową i ewentualną wizualizacją AI oraz dostawa w formacie dopasowanym do zastosowania — zobacz sekcję ',
+      faqProcessLinkText: 'Metodyka i AI',
+      faqProcessAAfter: ' na stronie głównej.',
+      faqWhyQ: 'W jakiej sprawie mogę się skontaktować?',
+      faqWhyA:
+        'W sprawie zapytań ofertowych, pytań o trwający projekt lub wstępnego rozeznania przed zleceniem.',
+      form: {
+        labelName: 'Imię i nazwisko *',
+        placeholderName: 'Twoje imię i nazwisko',
+        labelEmail: 'Adres e-mail *',
+        placeholderEmail: 'twoj@email.pl',
+        labelCompany: 'Firma',
+        labelOptional: '(opcjonalnie)',
+        placeholderCompany: 'Nazwa Twojej firmy',
+        labelSubject: 'Temat *',
+        placeholderSubject: 'Czego dotyczy zapytanie?',
+        labelMessage: 'Twoje pytanie lub sytuacja *',
+        placeholderMessage:
+          'Opisz krótko sytuację lub pytanie. Im więcej kontekstu, tym lepiej mogę ocenić, czy i jak mogę pomóc.',
+        charsCounter: 'znaków',
+        submitButton: 'Wyślij wiadomość',
+        submitting: 'Wysyłanie…',
+        footerNote: '* Pola wymagane. Twoje dane są traktowane poufnie i nie są udostępniane osobom trzecim.',
+        genericError: 'Coś poszło nie tak podczas wysyłania.',
+        genericErrorRetry: 'Coś poszło nie tak. Spróbuj ponownie lub napisz bezpośrednio na info@daremon.nl',
+        defaultSuccess: 'Dziękuję za wiadomość! Odezwę się najszybciej, jak to możliwe.',
+      },
+    },
   },
   nl: {
     nav: {
@@ -268,25 +298,12 @@ export const translations = {
       methodiek: 'Methodiek & AI',
       over: 'Over mij',
       contact: 'Contact',
-      etsRadio: 'Radio ETS',
       escHint: 'Druk op ESC om te sluiten',
     },
     footer: {
       rights: 'DAREMON Engineering',
       tagline: 'Gespecialiseerde videomontage, procesanalyse en AI-visualisaties.',
       legal: 'Juridische informatie',
-    },
-    radioDock: {
-      live: 'RADIO ETS · LIVE',
-      fullscreen: 'Volledig scherm ↗',
-      openLabel: 'Open het Radio ETS-paneel',
-      closeLabel: 'Sluit het Radio ETS-paneel',
-      button: 'Radio ETS',
-    },
-    audioLab: {
-      loading: '3D-visualisatie wordt geladen…',
-      unavailable:
-        '3D-visualisatie is niet beschikbaar in deze browser (geen WebGL, of animaties zijn beperkt).',
     },
     portfolio: {
       filters: {
@@ -310,19 +327,16 @@ export const translations = {
       },
     },
     home: {
-      statusBadge: 'SYSTEEM ACTIEF · RADIO ETS 24/7',
+      statusBadge: 'SYSTEEM ACTIEF · BESCHIKBAAR 24/7',
       title: 'DAREMON',
       subtitle: 'Engineering — Technische Montage & Procesanalyse',
       lead1: 'Gespecialiseerde videomontage voor de mechanische, industriële en agrarische sector.',
       lead2:
-        'Procesanalyse, kinematica van machines, auteursrechtvrije audio en AI-visualisaties — gebouwd op dezelfde technologie die je op deze pagina ziet.',
+        'Procesanalyse, kinematica van machines, auteursrechtvrije audio en AI-visualisaties — het volledige scala aan technisch materiaal dat ik voor je kan voorbereiden.',
       ctaQuote: 'Vraag een offerte aan',
       ctaPortfolio: 'Bekijk portfolio',
       portfolioHeading: 'Portfolio & Case Studies',
       portfolioLink: 'Alle case studies →',
-      audioLabHeading: 'Audio Lab',
-      audioLabText:
-        'Dezelfde 3D-visualisatie die bij Radio ETS live reageert op muziek, aangedreven door Three.js — het bewijs dat het videomateriaal dat ik monteer er net zo precies uit kan zien als het proces dat het documenteert. Eigen soundtracks voor video, zonder Content ID-risico.',
       processHeading: 'Mijn werkwijze',
       processLink: 'Methodiek en de rol van AI →',
       process: [
@@ -330,10 +344,6 @@ export const translations = {
         { krok: 'Montage', opis: 'Precieze videomontage met eigen soundtrack zonder Content ID-risico en AI-visualisaties.' },
         { krok: 'Levering', opis: 'Materiaal in het formaat dat past bij het gebruik — 16:9 voor documentatie, 9:16 voor social media.' },
       ],
-      radioHeading: 'Radio ETS',
-      radioText:
-        'Mijn eigen internetradiostation draait 24/7 op de achtergrond van dit platform — het dokbare paneel rechtsonder geeft er op elke pagina toegang toe. De volledige interface, visualisaties en community-polls zijn ook in volledig scherm beschikbaar.',
-      radioCta: 'Open volledig scherm',
       contactHeading: 'Heb je een proces, machine of incident dat gedocumenteerd moet worden?',
       contactText: 'Beschrijf je project en ik stel een eerste inschatting op voor montage, analyse of visualisatie.',
       contactCta: 'Naar contact',
@@ -515,6 +525,56 @@ export const translations = {
       ctaHeading: 'Vragen over mijn methodiek?',
       ctaText: 'Ik licht graag toe hoe ik jouw materiaal zou aanpakken.',
       ctaButton: 'Naar contact',
+    },
+    contact: {
+      heroTitle: 'Contact',
+      heroLead: 'Vraag een vrijblijvende offerte aan voor montage, analyse of visualisatie.',
+      aboutHeading: 'Over dit contact',
+      aboutText:
+        'Beschrijf je project — een machine, proces of incident dat gedocumenteerd of geanalyseerd moet worden — en ik neem contact op met een concreet voorstel.',
+      expectHeading: 'Wat kun je verwachten?',
+      expectItems: [
+        'Een reactie met een eerste inschatting van aanpak en levertijd',
+        'Een vrijblijvende offerte op maat van je sector (PLC, Arburg, robotica, MIM, agro)',
+        'Reactie binnen enkele werkdagen',
+      ],
+      emailHeading: 'E-mail',
+      emailIntro: 'Voor offertes en zakelijke vragen:',
+      emailLabel: 'E-mail:',
+      formHeading: 'Stuur een aanvraag',
+      faqHeading: 'Veelgestelde vragen',
+      faqWhatQ: 'Wat doet DAREMON Engineering?',
+      faqWhatA:
+        'Gespecialiseerde technische videomontage, procesanalyse en AI-visualisaties voor de mechanische, industriële en agrarische sector.',
+      faqProcessQ: 'Hoe ziet het proces eruit?',
+      faqProcessABefore:
+        'Analyse van het bronmateriaal, montage met eigen audio en eventuele AI-visualisatie, en levering in het formaat dat past bij het gebruik — zie de sectie ',
+      faqProcessLinkText: 'Methodiek & AI',
+      faqProcessAAfter: ' op de homepage.',
+      faqWhyQ: 'Waarvoor kan ik contact opnemen?',
+      faqWhyA:
+        'Voor offerteaanvragen, vragen over een lopend project, of een eerste kennismaking voordat je een opdracht vastlegt.',
+      form: {
+        labelName: 'Naam *',
+        placeholderName: 'Uw naam',
+        labelEmail: 'E-mailadres *',
+        placeholderEmail: 'uw@email.nl',
+        labelCompany: 'Bedrijf',
+        labelOptional: '(optioneel)',
+        placeholderCompany: 'Naam van uw bedrijf',
+        labelSubject: 'Onderwerp *',
+        placeholderSubject: 'Waar gaat het over?',
+        labelMessage: 'Uw vraag of situatie *',
+        placeholderMessage:
+          'Beschrijf kort uw situatie of vraag. Hoe meer context, hoe beter ik kan inschatten of en hoe ik kan helpen.',
+        charsCounter: 'tekens',
+        submitButton: 'Verstuur bericht',
+        submitting: 'Bezig met verzenden…',
+        footerNote: '* Verplichte velden. Uw gegevens worden vertrouwelijk behandeld en niet gedeeld met derden.',
+        genericError: 'Er is iets misgegaan bij het verzenden.',
+        genericErrorRetry: 'Er is iets misgegaan. Probeer het opnieuw of neem direct contact op via info@daremon.nl',
+        defaultSuccess: 'Bedankt voor uw bericht! Ik neem zo snel mogelijk contact met u op.',
+      },
     },
   },
 } as const satisfies Record<Language, unknown>
