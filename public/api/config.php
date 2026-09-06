@@ -6,6 +6,10 @@
  * Konwencja zmiennych bazy danych: DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME.
  * Konwencja zmiennych SMTP (patrz mailer.php): SMTP_HOST, SMTP_PORT,
  * SMTP_SECURE, SMTP_USER, SMTP_PASSWORD, SMTP_FROM_EMAIL, SMTP_FROM_NAME.
+ * Domyślnie (bez ustawiania SMTP_HOST/PORT/SECURE) klient łączy się z
+ * smtp.transip.email:465 przez SSL — trzeba ustawić tylko SMTP_USER i
+ * SMTP_PASSWORD. Wysyłka jest WYŁĄCZNIE przez ten socket SMTP — brak
+ * jakiegokolwiek fallbacku na PHP mail().
  * CONTACT_TO_EMAIL (patrz contact.php): adres, na który trafiają powiadomienia
  * o nowych zapytaniach z formularza — niezależny od konta SMTP_USER, którym
  * wiadomość jest faktycznie wysyłana (uwierzytelnione jako info@daremon.nl).
@@ -25,9 +29,9 @@
  *   putenv('DB_PASSWORD=...');
  *   putenv('DB_NAME=daremon_b2b');
  *
- *   putenv('SMTP_HOST=smtp.transip.email');
- *   putenv('SMTP_PORT=587');
- *   putenv('SMTP_SECURE=tls'); // 'ssl' dla portu 465, 'tls' dla STARTTLS na 587
+ *   putenv('SMTP_HOST=smtp.transip.email'); // to i 2 linie niżej to i tak wartości domyślne
+ *   putenv('SMTP_PORT=465');
+ *   putenv('SMTP_SECURE=ssl'); // 'ssl' dla portu 465 (domyślne), 'tls' dla STARTTLS na 587
  *   putenv('SMTP_USER=info@daremon.nl');
  *   putenv('SMTP_PASSWORD=...');
  *   putenv('CONTACT_TO_EMAIL=dariusz@daremon.nl');

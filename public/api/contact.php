@@ -56,7 +56,6 @@ function recipientEmail(): string {
     return daremon_env('CONTACT_TO_EMAIL', 'dariusz@daremon.nl');
 }
 
-const FROM_EMAIL = 'noreply@daremon.nl'; // Change to your domain email (fallback voor mail())
 const SUBJECT = 'Nieuw contactformulier bericht - Daremon';
 
 // Rate limiting (requests per minute)
@@ -302,50 +301,51 @@ function sendEmail(array $data): array {
 </html>
 HTML;
 
-    // Voorkeur: echte SMTP-verzending (werkt ook op hosts zoals Synology
-    // Web Station, waar mail() meestal geen lokale MTA tot zijn beschikking
-    // heeft). Alleen als SMTP niet geconfigureerd is, of de verzending faalt,
-    // vallen we terug op de ingebouwde PHP mail().
+    // Wyłącznie prawdziwa wysyłka SMTP (czysty socket do skrzynki TransIP) —
+    // ŻADNEGO fallbacku na mail(). Na Synology mail() nie tylko zwykle nie
+    // działa (brak lokalnego MTA), ale bywała myląca nawet gdy formalnie
+    // "się udawała": oddanie wiadomości lokalnemu sendmailowi nie oznacza
+    // jej faktycznego dostarczenia. Cały dialog SMTP trafia do $transcript,
+    // który wraca w odpowiedzi jako "smtp_debug" — łącznie z dokładną
+    // odpowiedzią serwera TransIP przy błędzie (kod 5xx, powód odrzucenia).
     require_once __DIR__ . '/mailer.php';
 
     $recipient = recipientEmail();
-    $smtpErrorMessage = null;
+    $transcript = [];
+    $debugConfig = smtpDebugConfig();
 
-    if (smtpConfigured()) {
-        try {
-            sendViaSmtp($recipient, 'DAREMON Engineering', SUBJECT, $emailBody, $email);
-            return ['sent' => true, 'via' => 'smtp', 'smtp_error' => null];
-        } catch (\Throwable $smtpError) {
-            // Dokładny powód (błąd socketu/SSL/AUTH/dialogu SMTP) trafia zarówno
-            // do logu serwera, jak i do odpowiedzi JSON — bez tego formularz
-            // "po cichu" udawał sukces, mimo że wiadomość nigdy nie dotarła.
-            $smtpErrorMessage = sprintf(
-                '[%s] %s',
-                (new \ReflectionClass($smtpError))->getShortName(),
-                $smtpError->getMessage()
-            );
-            error_log('[contact.php] SMTP-verzending mislukt, val terug op mail(): ' . $smtpErrorMessage);
-        }
-    } else {
-        $smtpErrorMessage = 'SMTP is niet geconfigureerd (SMTP_HOST ontbreekt) — alleen mail() fallback geprobeerd.';
+    try {
+        sendViaSmtp($recipient, 'DAREMON Engineering', SUBJECT, $emailBody, $email, $transcript);
+        return [
+            'sent' => true,
+            'smtp_error' => null,
+            'smtp_debug' => [
+                'recipient_rcpt_to' => $recipient,
+                'config' => $debugConfig,
+                'dialog' => $transcript,
+            ],
+        ];
+    } catch (\Throwable $smtpError) {
+        // Dokładny powód (błąd socketu/SSL/AUTH/dialogu SMTP) trafia zarówno
+        // do logu serwera, jak i do odpowiedzi JSON — bez tego formularz
+        // "po cichu" udawał sukces, mimo że wiadomość nigdy nie dotarła.
+        $smtpErrorMessage = sprintf(
+            '[%s] %s',
+            (new \ReflectionClass($smtpError))->getShortName(),
+            $smtpError->getMessage()
+        );
+        error_log('[contact.php] SMTP-verzending mislukt: ' . $smtpErrorMessage);
+
+        return [
+            'sent' => false,
+            'smtp_error' => $smtpErrorMessage,
+            'smtp_debug' => [
+                'recipient_rcpt_to' => $recipient,
+                'config' => $debugConfig,
+                'dialog' => $transcript,
+            ],
+        ];
     }
-
-    $headers = [
-        'From: ' . FROM_EMAIL,
-        'Reply-To: ' . $email,
-        'X-Mailer: PHP/' . phpversion(),
-        'MIME-Version: 1.0',
-        'Content-Type: text/html; charset=UTF-8'
-    ];
-
-    $mailSent = mail(
-        $recipient,
-        SUBJECT,
-        $emailBody,
-        implode("\r\n", $headers)
-    );
-
-    return ['sent' => $mailSent, 'via' => $mailSent ? 'mail' : null, 'smtp_error' => $smtpErrorMessage];
 }
 
 // ============================================
@@ -437,8 +437,11 @@ try {
     // Diagnostyka dołączana do odpowiedzi zawsze, gdy dany kanał zawiódł —
     // niezależnie od ogólnego wyniku — żeby częściowa awaria (np. e-mail
     // wysłany, ale zapis w bazie nieudany) też była widoczna, a nie ukryta
-    // za ogólnym "success: true".
-    $diagnostics = [];
+    // za ogólnym "success: true". "smtp_debug" (pełny dialog SMTP + użyta
+    // konfiguracja, bez hasła) wraca zawsze — także przy udanej wysyłce —
+    // żeby dało się jednoznacznie potwierdzić host/port/RCPT TO bez
+    // czekania na kolejną awarię.
+    $diagnostics = ['smtp_debug' => $emailResult['smtp_debug']];
     if ($dbErrorMessage !== null) {
         $diagnostics['db_error'] = $dbErrorMessage;
     }
