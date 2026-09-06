@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useT } from '@/lib/i18n'
 
 export function SiteFooter() {
@@ -12,9 +13,9 @@ export function SiteFooter() {
           <p className="text-slate-400 text-sm">© {new Date().getFullYear()} {t.footer.rights}</p>
           <p className="text-slate-500 text-xs">
             {t.footer.tagline}{' '}
-            <a href="/legal" className="underline hover:text-slate-400 transition">
+            <Link href="/legal" className="underline hover:text-slate-400 transition">
               {t.footer.legal}
-            </a>
+            </Link>
           </p>
         </div>
       </div>
