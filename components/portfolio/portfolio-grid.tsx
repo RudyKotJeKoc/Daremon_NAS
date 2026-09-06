@@ -2,20 +2,22 @@
 
 import { useMemo, useState } from 'react'
 import portfolioData from '@/data/portfolio.json'
+import { useT } from '@/lib/i18n'
 import { PortfolioCard } from './portfolio-card'
 import type { PortfolioItem } from './types'
 
 const items = portfolioData as PortfolioItem[]
 
-const FILTERS: { id: 'wszystkie' | PortfolioItem['kategoria']; label: string }[] = [
-  { id: 'wszystkie', label: 'Wszystkie' },
-  { id: 'analiza-mechaniczna', label: 'Analizy mechaniczne' },
-  { id: 'short', label: 'Shorts / Reels' },
-  { id: 'ai-wizualizacja', label: 'Wizualizacje AI' },
+const FILTER_IDS: ('wszystkie' | PortfolioItem['kategoria'])[] = [
+  'wszystkie',
+  'analiza-mechaniczna',
+  'short',
+  'ai-wizualizacja',
 ]
 
 export function PortfolioGrid() {
-  const [filter, setFilter] = useState<(typeof FILTERS)[number]['id']>('wszystkie')
+  const t = useT()
+  const [filter, setFilter] = useState<(typeof FILTER_IDS)[number]>('wszystkie')
 
   const filtered = useMemo(
     () => (filter === 'wszystkie' ? items : items.filter((item) => item.kategoria === filter)),
@@ -26,29 +28,29 @@ export function PortfolioGrid() {
     <div>
       <div
         role="tablist"
-        aria-label="Filtruj portfolio wg kategorii"
+        aria-label="Filtruj portfolio wg kategorii / Filter portfolio op categorie"
         className="flex flex-wrap gap-2 mb-8"
       >
-        {FILTERS.map((f) => (
+        {FILTER_IDS.map((id) => (
           <button
-            key={f.id}
+            key={id}
             type="button"
             role="tab"
-            aria-selected={filter === f.id}
-            onClick={() => setFilter(f.id)}
+            aria-selected={filter === id}
+            onClick={() => setFilter(id)}
             className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
-              filter === f.id
+              filter === id
                 ? 'bg-cyan-500/15 border-cyan-400/50 text-cyan-300 shadow-[0_0_12px_rgba(0,255,255,0.2)]'
                 : 'border-slate-700 text-slate-400 hover:text-slate-200 hover:border-slate-500'
             }`}
           >
-            {f.label}
+            {t.portfolio.filters[id]}
           </button>
         ))}
       </div>
 
       {filtered.length === 0 ? (
-        <p className="text-slate-400">Brak pozycji w tej kategorii.</p>
+        <p className="text-slate-400">{t.portfolio.empty}</p>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((item) => (

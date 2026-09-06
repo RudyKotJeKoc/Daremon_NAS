@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useT } from '@/lib/i18n'
 
 /**
  * Ambient (bez-dźwiękowa) wersja wizualizatora 3D z visualizer/Visualizer3D.js.
@@ -14,6 +15,7 @@ import { useEffect, useRef, useState } from 'react'
 export function AudioLabVisualizer() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [status, setStatus] = useState<'loading' | 'ready' | 'unavailable'>('loading')
+  const t = useT()
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -55,9 +57,7 @@ export function AudioLabVisualizer() {
       {status !== 'ready' && (
         <div className="absolute inset-0 flex items-center justify-center bg-slate-950/80">
           <p className="text-sm text-slate-400 max-w-xs text-center px-4">
-            {status === 'loading'
-              ? 'Ładowanie wizualizacji 3D…'
-              : 'Wizualizacja 3D jest wyłączona w tej przeglądarce (brak WebGL lub włączone ograniczenie animacji).'}
+            {status === 'loading' ? t.audioLab.loading : t.audioLab.unavailable}
           </p>
         </div>
       )}

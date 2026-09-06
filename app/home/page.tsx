@@ -1,42 +1,13 @@
+'use client'
+
 import Link from 'next/link'
 import { PortfolioGrid } from '@/components/portfolio/portfolio-grid'
 import { AudioLabVisualizer } from '@/components/audio-lab-visualizer'
-
-const KOMPETENCJE = [
-  {
-    tytul: 'PLC Siemens',
-    opis: 'Programowanie, diagnostyka i dokumentacja logiki sterowników linii produkcyjnych.',
-  },
-  {
-    tytul: 'Arburg',
-    opis: 'Analiza cykli wtryskarek — parametry procesowe, wady powierzchniowe, optymalizacja.',
-  },
-  {
-    tytul: 'Yaskawa Motoman',
-    opis: 'Trajektorie i strefy robocze robotów przemysłowych w komórkach zrobotyzowanych.',
-  },
-  {
-    tytul: 'MIM',
-    opis: 'Metal Injection Molding — kinematyka wypełniania formy i przepływu granulatu.',
-  },
-]
-
-const PROCES = [
-  {
-    krok: 'Analiza',
-    opis: 'Rozbiór procesu, maszyny lub incydentu na podstawie materiału źródłowego i dokumentacji technicznej.',
-  },
-  {
-    krok: 'Montaż',
-    opis: 'Precyzyjny montaż wideo z autorską ścieżką dźwiękową wolną od Content ID i wizualizacjami AI.',
-  },
-  {
-    krok: 'Dostawa',
-    opis: 'Materiał w formacie dopasowanym do odbiorcy — 16:9 do dokumentacji, 9:16 do social media.',
-  },
-]
+import { useT } from '@/lib/i18n'
 
 export default function HomePage() {
+  const t = useT()
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
       {/* Strefa 1 — Hero z aktywnym systemem */}
@@ -44,36 +15,33 @@ export default function HomePage() {
         <div className="text-center space-y-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-slate-900/60 px-4 py-1.5 text-xs font-mono text-cyan-300">
             <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)] animate-pulse" />
-            SYSTEM AKTYWNY · RADIO ETS 24/7
+            {t.home.statusBadge}
           </div>
 
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
-            <span className="text-slate-100">DAREMON</span>
+            <span className="text-slate-100">{t.home.title}</span>
             <span className="block mt-2 text-3xl md:text-4xl font-normal text-slate-300">
-              Engineering — Montaż Techniczny &amp; Analiza Procesów
+              {t.home.subtitle}
             </span>
           </h1>
 
           <p className="text-xl md:text-2xl text-cyan-400 font-light tracking-wide mt-8">
-            Specjalistyczny montaż wideo dla sektora mechanicznego, przemysłowego i agro.
+            {t.home.lead1}
           </p>
-          <p className="text-lg text-slate-400 font-light max-w-2xl mx-auto">
-            Analiza procesów, kinematyka maszyn, autorskie audio wolne od praw autorskich
-            i wizualizacje AI — zbudowane na tej samej technologii, którą widzisz na tej stronie.
-          </p>
+          <p className="text-lg text-slate-400 font-light max-w-2xl mx-auto">{t.home.lead2}</p>
 
           <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
             <Link
               href="/contact"
               className="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
             >
-              Zapytaj o wycenę
+              {t.home.ctaQuote}
             </Link>
             <a
               href="#portfolio"
               className="px-6 py-3 border border-slate-700 hover:border-cyan-500/50 text-slate-200 rounded-lg transition"
             >
-              Zobacz portfolio
+              {t.home.ctaPortfolio}
             </a>
           </div>
         </div>
@@ -82,10 +50,10 @@ export default function HomePage() {
       {/* Strefa 2 — Pasek kompetencji */}
       <section className="max-w-5xl mx-auto px-4 py-16">
         <h2 className="text-2xl font-semibold text-slate-100 mb-8 text-center">
-          Zaplecze techniczne
+          {t.home.competenciesHeading}
         </h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {KOMPETENCJE.map((k) => (
+          {t.home.competencies.map((k) => (
             <div
               key={k.tytul}
               className="backdrop-blur-sm bg-slate-900/50 border border-amber-500/20 rounded-lg p-5 hover:border-amber-500/40 transition-colors"
@@ -102,9 +70,9 @@ export default function HomePage() {
       <section id="portfolio" className="max-w-6xl mx-auto px-4 py-16 scroll-mt-20">
         <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-6 md:p-8 shadow-[0_0_15px_rgba(0,255,255,0.15)]">
           <div className="flex flex-wrap items-end justify-between gap-4 mb-8 border-b border-cyan-500/30 pb-4">
-            <h2 className="text-3xl font-semibold text-slate-100">Portfolio &amp; Case Studies</h2>
+            <h2 className="text-3xl font-semibold text-slate-100">{t.home.portfolioHeading}</h2>
             <Link href="/casussen" className="text-sm text-cyan-400 hover:text-cyan-300 transition">
-              Pełne case studies →
+              {t.home.portfolioLink}
             </Link>
           </div>
           <PortfolioGrid />
@@ -115,14 +83,9 @@ export default function HomePage() {
       <section className="max-w-5xl mx-auto px-4 py-16">
         <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-6 md:p-8 shadow-[0_0_15px_rgba(0,255,255,0.15)]">
           <h2 className="text-3xl font-semibold text-slate-100 mb-3 border-b border-cyan-500/30 pb-4">
-            Audio Lab
+            {t.home.audioLabHeading}
           </h2>
-          <p className="text-slate-300 leading-relaxed mb-6 max-w-2xl">
-            Ta sama wizualizacja 3D, która w Radiu ETS reaguje na muzykę na żywo, napędzana
-            silnikiem Three.js — dowód, że materiały wideo, które montujemy, mogą wyglądać
-            równie precyzyjnie jak proces, który dokumentują. Autorskie ścieżki dźwiękowe do
-            wideo powstają bez ryzyka Content ID.
-          </p>
+          <p className="text-slate-300 leading-relaxed mb-6 max-w-2xl">{t.home.audioLabText}</p>
           <AudioLabVisualizer />
         </div>
       </section>
@@ -131,13 +94,13 @@ export default function HomePage() {
       <section className="max-w-5xl mx-auto px-4 py-16">
         <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/20 rounded-lg p-6 md:p-8">
           <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
-            <h2 className="text-2xl font-semibold text-slate-100">Jak pracujemy</h2>
+            <h2 className="text-2xl font-semibold text-slate-100">{t.home.processHeading}</h2>
             <Link href="/methodiek" className="text-sm text-cyan-400 hover:text-cyan-300 transition">
-              Metodyka i rola AI →
+              {t.home.processLink}
             </Link>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
-            {PROCES.map((p, i) => (
+            {t.home.process.map((p, i) => (
               <div key={p.krok} className="flex items-start gap-3">
                 <span className="flex-none h-8 w-8 rounded-full border border-cyan-500/40 text-cyan-300 font-mono text-sm flex items-center justify-center">
                   {i + 1}
@@ -155,19 +118,15 @@ export default function HomePage() {
       {/* Strefa 6 — Radio ETS jako strefa multimedialna */}
       <section className="max-w-4xl mx-auto px-4 pb-24">
         <div className="border border-cyan-500/30 rounded-xl p-8 bg-slate-900/40 backdrop-blur-md shadow-[0_0_20px_rgba(0,255,255,0.15)]">
-          <h2 className="text-2xl font-semibold text-cyan-400 mb-3">Radio ETS</h2>
-          <p className="text-slate-300 max-w-2xl mb-6">
-            Nasze firmowe radio internetowe działa 24/7 w tle tej platformy — dokowalny panel
-            w prawym dolnym rogu ekranu daje do niego dostęp z każdej podstrony. Pełny interfejs,
-            wizualizacje i ankiety społecznościowe dostępne są też w trybie pełnoekranowym.
-          </p>
+          <h2 className="text-2xl font-semibold text-cyan-400 mb-3">{t.home.radioHeading}</h2>
+          <p className="text-slate-300 max-w-2xl mb-6">{t.home.radioText}</p>
           <a
             href="/legacy/index.html"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
           >
-            Otwórz pełny ekran
+            {t.home.radioCta}
           </a>
         </div>
       </section>
@@ -175,17 +134,13 @@ export default function HomePage() {
       {/* Strefa 7 — Kontakt / wycena */}
       <section className="max-w-4xl mx-auto px-4 pb-24">
         <div className="text-center border-t border-cyan-500/20 pt-12">
-          <h2 className="text-2xl font-semibold text-slate-100 mb-3">
-            Masz proces, maszynę lub incydent do udokumentowania?
-          </h2>
-          <p className="text-slate-400 mb-6 max-w-xl mx-auto">
-            Opisz projekt, a przygotujemy wstępną wycenę montażu, analizy lub wizualizacji.
-          </p>
+          <h2 className="text-2xl font-semibold text-slate-100 mb-3">{t.home.contactHeading}</h2>
+          <p className="text-slate-400 mb-6 max-w-xl mx-auto">{t.home.contactText}</p>
           <Link
             href="/contact"
             className="inline-block px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
           >
-            Przejdź do kontaktu
+            {t.home.contactCta}
           </Link>
         </div>
       </section>

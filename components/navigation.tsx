@@ -3,19 +3,22 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
-
-const navItems = [
-  { href: '/', label: 'Start' },
-  { href: '/diensten', label: 'Diensten' },
-  { href: '/casussen', label: 'Case Studies' },
-  { href: '/methodiek', label: 'Methodiek & AI' },
-  { href: '/over', label: 'Over ons' },
-  { href: '/contact', label: 'Contact' },
-]
+import { useT } from '@/lib/i18n'
+import { LanguageSwitcher } from './language-switcher'
 
 export function Navigation() {
   const pathname = usePathname()
+  const t = useT()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  const navItems = [
+    { href: '/', label: t.nav.start },
+    { href: '/diensten', label: t.nav.diensten },
+    { href: '/casussen', label: t.nav.casussen },
+    { href: '/methodiek', label: t.nav.methodiek },
+    { href: '/over', label: t.nav.over },
+    { href: '/contact', label: t.nav.contact },
+  ]
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -47,7 +50,7 @@ export function Navigation() {
   return (
     <nav className="border-b border-cyan-500/20 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 gap-4">
           {/* Logo */}
           <Link
             href="/"
@@ -79,46 +82,51 @@ export function Navigation() {
                 rel="noopener noreferrer"
                 className="px-4 py-2 text-sm font-semibold bg-cyan-600 hover:bg-cyan-500 text-black rounded-lg shadow-[0_0_15px_rgba(0,255,255,0.3)] transition"
               >
-                ETS Radio
+                {t.nav.etsRadio}
               </a>
             </li>
           </ul>
 
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-slate-300 hover:text-cyan-400 transition p-2 focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded"
-            aria-expanded={mobileMenuOpen}
-            aria-label="Toggle navigation menu"
-          >
-            {mobileMenuOpen ? (
-              // Close icon
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
-            ) : (
-              // Hamburger icon
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path d="M4 6h16M4 12h16M4 18h16"></path>
-              </svg>
-            )}
-          </button>
+          {/* Right-hand cluster: language switcher (always visible) + mobile toggle */}
+          <div className="flex items-center gap-3">
+            <LanguageSwitcher />
+
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden text-slate-300 hover:text-cyan-400 transition p-2 focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded"
+              aria-expanded={mobileMenuOpen}
+              aria-label="Toggle navigation menu"
+            >
+              {mobileMenuOpen ? (
+                // Close icon
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              ) : (
+                // Hamburger icon
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -166,13 +174,13 @@ export function Navigation() {
               className="block w-full px-4 py-3 text-center text-sm font-semibold bg-cyan-600 hover:bg-cyan-500 text-black rounded-lg shadow-[0_0_15px_rgba(0,255,255,0.3)] transition"
               onClick={() => setMobileMenuOpen(false)}
             >
-              ETS Radio
+              {t.nav.etsRadio}
             </a>
           </div>
 
           {/* Close hint */}
           <div className="p-4 text-center text-xs text-slate-500">
-            Druk op ESC om te sluiten
+            {t.nav.escHint}
           </div>
         </nav>
       </div>

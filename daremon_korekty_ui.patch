@@ -1,0 +1,1047 @@
+diff --git a/app/contact/page.tsx b/app/contact/page.tsx
+index 1eeb6fd..4a45448 100644
+--- a/app/contact/page.tsx
++++ b/app/contact/page.tsx
+@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
+ import { ContactForm } from '@/components/contact-form'
+ 
+ export const metadata: Metadata = {
+-  title: 'Contact – Daremon',
+-  description: 'Neem contact op als je nieuwsgierig bent naar dit AI-experiment.',
++  title: 'Contact – DAREMON Engineering',
++  description: 'Vraag een offerte aan voor technische videomontage, procesanalyse of AI-visualisaties.',
+ }
+ 
+ export default function ContactPage() {
+@@ -13,18 +13,18 @@ export default function ContactPage() {
+         <div className="text-center space-y-4 mb-16">
+           <h1 className="text-4xl md:text-5xl font-bold text-slate-100">Contact</h1>
+           <p className="text-xl text-cyan-400 font-light">
+-            Nieuwsgierig naar dit AI-experiment? Je kunt contact opnemen om te praten over ideeën.
++            Vraag een vrijblijvende offerte aan voor montage, analyse of visualisatie.
+           </p>
+         </div>
+ 
+         <div className="grid md:grid-cols-2 gap-12">
+           {/* Contact informatie */}
+           <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+-            <h2 className="text-2xl font-bold text-slate-100 mb-6">Over contact</h2>
++            <h2 className="text-2xl font-bold text-slate-100 mb-6">Over dit contact</h2>
+             <div className="space-y-6 text-slate-300">
+               <p className="leading-relaxed">
+-                Als je vragen hebt over dit AI-experiment, de achterliggende ideeën of gewoon
+-                nieuwsgierig bent naar het project, kun je een bericht sturen.
++                Beschrijf je project — een machine, proces of incident dat gedocumenteerd of
++                geanalyseerd moet worden — en we nemen contact op met een concreet voorstel.
+               </p>
+ 
+               <div>
+@@ -35,15 +35,15 @@ export default function ContactPage() {
+                 <ul className="space-y-2 text-sm text-slate-300">
+                   <li className="flex items-start gap-3">
+                     <span className="text-cyan-400 text-2xl flex-shrink-0">•</span>
+-                    <span>Een persoonlijke reactie over het AI-experiment</span>
++                    <span>Een reactie met een eerste inschatting van aanpak en levertijd</span>
+                   </li>
+                   <li className="flex items-start gap-3">
+                     <span className="text-cyan-400 text-2xl flex-shrink-0">•</span>
+-                    <span>Mogelijk een interessant gesprek over ideeën en technologie</span>
++                    <span>Een vrijblijvende offerte op maat van je sector (PLC, Arburg, robotica, MIM, agro)</span>
+                   </li>
+                   <li className="flex items-start gap-3">
+                     <span className="text-cyan-400 text-2xl flex-shrink-0">•</span>
+-                    <span>Reactietijd kan variëren</span>
++                    <span>Reactie binnen enkele werkdagen</span>
+                   </li>
+                 </ul>
+               </div>
+@@ -51,7 +51,7 @@ export default function ContactPage() {
+               <div className="border border-cyan-500/20 rounded-lg p-4 bg-slate-900/40">
+                 <h3 className="font-semibold text-slate-100 mb-2">E-mail</h3>
+                 <p className="text-sm mb-2 text-slate-300">
+-                  Voor vragen over dit project:
++                  Voor offertes en zakelijke vragen:
+                 </p>
+                 <p className="text-sm text-slate-200">
+                   <strong className="text-cyan-400">E-mail:</strong> info@daremon.nl
+@@ -62,7 +62,7 @@ export default function ContactPage() {
+ 
+           {/* Contact formulier */}
+           <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-8 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
+-            <h2 className="text-2xl font-bold text-slate-100 mb-6">Stuur een bericht</h2>
++            <h2 className="text-2xl font-bold text-slate-100 mb-6">Stuur een aanvraag</h2>
+             <ContactForm />
+           </div>
+         </div>
+@@ -77,21 +77,23 @@ export default function ContactPage() {
+               <div>
+                 <h3 className="font-semibold text-slate-100 mb-2 flex items-start gap-3">
+                   <span className="text-cyan-400 flex-shrink-0">▸</span>
+-                  Wat is dit project?
++                  Wat doet DAREMON Engineering?
+                 </h3>
+                 <p className="text-slate-300 text-sm ml-6">
+-                  Een persoonlijk AI-experiment voor het ordenen van gedachten en genereren van
+-                  metaforische verhalen. Geen commerciële activiteit.
++                  Gespecialiseerde technische videomontage, procesanalyse en AI-visualisaties voor
++                  de mechanische, industriële en agrarische sector.
+                 </p>
+               </div>
+ 
+               <div>
+                 <h3 className="font-semibold text-slate-100 mb-2 flex items-start gap-3">
+                   <span className="text-cyan-400 flex-shrink-0">▸</span>
+-                  Wie beheert dit project?
++                  Hoe ziet het proces eruit?
+                 </h3>
+                 <p className="text-slate-300 text-sm ml-6">
+-                  Dit is een persoonlijk experiment. Er is geen bedrijfsstructuur, team of organisatie.
++                  Analyse van het bronmateriaal, montage met eigen audio en eventuele AI-visualisatie,
++                  en levering in het formaat dat past bij het gebruik — zie de sectie{' '}
++                  <a href="/methodiek" className="text-cyan-400 hover:underline">Methodiek &amp; AI</a> op de homepage.
+                 </p>
+               </div>
+ 
+@@ -101,8 +103,8 @@ export default function ContactPage() {
+                   Waarvoor kan ik contact opnemen?
+                 </h3>
+                 <p className="text-slate-300 text-sm ml-6">
+-                  Voor vragen over het AI-experiment, de achterliggende ideeën, of uit nieuwsgierigheid
+-                  naar het project. Contact voor informele gesprekken over technologie en verhalen is welkom.
++                  Voor offerteaanvragen, vragen over een lopend project, of een eerste kennismaking
++                  voordat je een opdracht vastlegt.
+                 </p>
+               </div>
+             </div>
+diff --git a/app/home/page.tsx b/app/home/page.tsx
+index de37b72..805703b 100644
+--- a/app/home/page.tsx
++++ b/app/home/page.tsx
+@@ -1,42 +1,13 @@
++'use client'
++
+ import Link from 'next/link'
+ import { PortfolioGrid } from '@/components/portfolio/portfolio-grid'
+ import { AudioLabVisualizer } from '@/components/audio-lab-visualizer'
+-
+-const KOMPETENCJE = [
+-  {
+-    tytul: 'PLC Siemens',
+-    opis: 'Programowanie, diagnostyka i dokumentacja logiki sterowników linii produkcyjnych.',
+-  },
+-  {
+-    tytul: 'Arburg',
+-    opis: 'Analiza cykli wtryskarek — parametry procesowe, wady powierzchniowe, optymalizacja.',
+-  },
+-  {
+-    tytul: 'Yaskawa Motoman',
+-    opis: 'Trajektorie i strefy robocze robotów przemysłowych w komórkach zrobotyzowanych.',
+-  },
+-  {
+-    tytul: 'MIM',
+-    opis: 'Metal Injection Molding — kinematyka wypełniania formy i przepływu granulatu.',
+-  },
+-]
+-
+-const PROCES = [
+-  {
+-    krok: 'Analiza',
+-    opis: 'Rozbiór procesu, maszyny lub incydentu na podstawie materiału źródłowego i dokumentacji technicznej.',
+-  },
+-  {
+-    krok: 'Montaż',
+-    opis: 'Precyzyjny montaż wideo z autorską ścieżką dźwiękową wolną od Content ID i wizualizacjami AI.',
+-  },
+-  {
+-    krok: 'Dostawa',
+-    opis: 'Materiał w formacie dopasowanym do odbiorcy — 16:9 do dokumentacji, 9:16 do social media.',
+-  },
+-]
++import { useT } from '@/lib/i18n'
+ 
+ export default function HomePage() {
++  const t = useT()
++
+   return (
+     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+       {/* Strefa 1 — Hero z aktywnym systemem */}
+@@ -44,36 +15,33 @@ export default function HomePage() {
+         <div className="text-center space-y-6">
+           <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-slate-900/60 px-4 py-1.5 text-xs font-mono text-cyan-300">
+             <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)] animate-pulse" />
+-            SYSTEM AKTYWNY · RADIO ETS 24/7
++            {t.home.statusBadge}
+           </div>
+ 
+           <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
+-            <span className="text-slate-100">DAREMON</span>
++            <span className="text-slate-100">{t.home.title}</span>
+             <span className="block mt-2 text-3xl md:text-4xl font-normal text-slate-300">
+-              Engineering — Montaż Techniczny &amp; Analiza Procesów
++              {t.home.subtitle}
+             </span>
+           </h1>
+ 
+           <p className="text-xl md:text-2xl text-cyan-400 font-light tracking-wide mt-8">
+-            Specjalistyczny montaż wideo dla sektora mechanicznego, przemysłowego i agro.
+-          </p>
+-          <p className="text-lg text-slate-400 font-light max-w-2xl mx-auto">
+-            Analiza procesów, kinematyka maszyn, autorskie audio wolne od praw autorskich
+-            i wizualizacje AI — zbudowane na tej samej technologii, którą widzisz na tej stronie.
++            {t.home.lead1}
+           </p>
++          <p className="text-lg text-slate-400 font-light max-w-2xl mx-auto">{t.home.lead2}</p>
+ 
+           <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+             <Link
+               href="/contact"
+               className="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
+             >
+-              Zapytaj o wycenę
++              {t.home.ctaQuote}
+             </Link>
+             <a
+               href="#portfolio"
+               className="px-6 py-3 border border-slate-700 hover:border-cyan-500/50 text-slate-200 rounded-lg transition"
+             >
+-              Zobacz portfolio
++              {t.home.ctaPortfolio}
+             </a>
+           </div>
+         </div>
+@@ -82,10 +50,10 @@ export default function HomePage() {
+       {/* Strefa 2 — Pasek kompetencji */}
+       <section className="max-w-5xl mx-auto px-4 py-16">
+         <h2 className="text-2xl font-semibold text-slate-100 mb-8 text-center">
+-          Zaplecze techniczne
++          {t.home.competenciesHeading}
+         </h2>
+         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+-          {KOMPETENCJE.map((k) => (
++          {t.home.competencies.map((k) => (
+             <div
+               key={k.tytul}
+               className="backdrop-blur-sm bg-slate-900/50 border border-amber-500/20 rounded-lg p-5 hover:border-amber-500/40 transition-colors"
+@@ -102,9 +70,9 @@ export default function HomePage() {
+       <section id="portfolio" className="max-w-6xl mx-auto px-4 py-16 scroll-mt-20">
+         <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-6 md:p-8 shadow-[0_0_15px_rgba(0,255,255,0.15)]">
+           <div className="flex flex-wrap items-end justify-between gap-4 mb-8 border-b border-cyan-500/30 pb-4">
+-            <h2 className="text-3xl font-semibold text-slate-100">Portfolio &amp; Case Studies</h2>
++            <h2 className="text-3xl font-semibold text-slate-100">{t.home.portfolioHeading}</h2>
+             <Link href="/casussen" className="text-sm text-cyan-400 hover:text-cyan-300 transition">
+-              Pełne case studies →
++              {t.home.portfolioLink}
+             </Link>
+           </div>
+           <PortfolioGrid />
+@@ -115,14 +83,9 @@ export default function HomePage() {
+       <section className="max-w-5xl mx-auto px-4 py-16">
+         <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/30 rounded-lg p-6 md:p-8 shadow-[0_0_15px_rgba(0,255,255,0.15)]">
+           <h2 className="text-3xl font-semibold text-slate-100 mb-3 border-b border-cyan-500/30 pb-4">
+-            Audio Lab
++            {t.home.audioLabHeading}
+           </h2>
+-          <p className="text-slate-300 leading-relaxed mb-6 max-w-2xl">
+-            Ta sama wizualizacja 3D, która w Radiu ETS reaguje na muzykę na żywo, napędzana
+-            silnikiem Three.js — dowód, że materiały wideo, które montujemy, mogą wyglądać
+-            równie precyzyjnie jak proces, który dokumentują. Autorskie ścieżki dźwiękowe do
+-            wideo powstają bez ryzyka Content ID.
+-          </p>
++          <p className="text-slate-300 leading-relaxed mb-6 max-w-2xl">{t.home.audioLabText}</p>
+           <AudioLabVisualizer />
+         </div>
+       </section>
+@@ -131,13 +94,13 @@ export default function HomePage() {
+       <section className="max-w-5xl mx-auto px-4 py-16">
+         <div className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/20 rounded-lg p-6 md:p-8">
+           <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+-            <h2 className="text-2xl font-semibold text-slate-100">Jak pracujemy</h2>
++            <h2 className="text-2xl font-semibold text-slate-100">{t.home.processHeading}</h2>
+             <Link href="/methodiek" className="text-sm text-cyan-400 hover:text-cyan-300 transition">
+-              Metodyka i rola AI →
++              {t.home.processLink}
+             </Link>
+           </div>
+           <div className="grid md:grid-cols-3 gap-6">
+-            {PROCES.map((p, i) => (
++            {t.home.process.map((p, i) => (
+               <div key={p.krok} className="flex items-start gap-3">
+                 <span className="flex-none h-8 w-8 rounded-full border border-cyan-500/40 text-cyan-300 font-mono text-sm flex items-center justify-center">
+                   {i + 1}
+@@ -155,19 +118,15 @@ export default function HomePage() {
+       {/* Strefa 6 — Radio ETS jako strefa multimedialna */}
+       <section className="max-w-4xl mx-auto px-4 pb-24">
+         <div className="border border-cyan-500/30 rounded-xl p-8 bg-slate-900/40 backdrop-blur-md shadow-[0_0_20px_rgba(0,255,255,0.15)]">
+-          <h2 className="text-2xl font-semibold text-cyan-400 mb-3">Radio ETS</h2>
+-          <p className="text-slate-300 max-w-2xl mb-6">
+-            Nasze firmowe radio internetowe działa 24/7 w tle tej platformy — dokowalny panel
+-            w prawym dolnym rogu ekranu daje do niego dostęp z każdej podstrony. Pełny interfejs,
+-            wizualizacje i ankiety społecznościowe dostępne są też w trybie pełnoekranowym.
+-          </p>
++          <h2 className="text-2xl font-semibold text-cyan-400 mb-3">{t.home.radioHeading}</h2>
++          <p className="text-slate-300 max-w-2xl mb-6">{t.home.radioText}</p>
+           <a
+             href="/legacy/index.html"
+             target="_blank"
+             rel="noopener noreferrer"
+             className="inline-block px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
+           >
+-            Otwórz pełny ekran
++            {t.home.radioCta}
+           </a>
+         </div>
+       </section>
+@@ -175,17 +134,13 @@ export default function HomePage() {
+       {/* Strefa 7 — Kontakt / wycena */}
+       <section className="max-w-4xl mx-auto px-4 pb-24">
+         <div className="text-center border-t border-cyan-500/20 pt-12">
+-          <h2 className="text-2xl font-semibold text-slate-100 mb-3">
+-            Masz proces, maszynę lub incydent do udokumentowania?
+-          </h2>
+-          <p className="text-slate-400 mb-6 max-w-xl mx-auto">
+-            Opisz projekt, a przygotujemy wstępną wycenę montażu, analizy lub wizualizacji.
+-          </p>
++          <h2 className="text-2xl font-semibold text-slate-100 mb-3">{t.home.contactHeading}</h2>
++          <p className="text-slate-400 mb-6 max-w-xl mx-auto">{t.home.contactText}</p>
+           <Link
+             href="/contact"
+             className="inline-block px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
+           >
+-            Przejdź do kontaktu
++            {t.home.contactCta}
+           </Link>
+         </div>
+       </section>
+diff --git a/app/layout.tsx b/app/layout.tsx
+index 4b12393..c010917 100644
+--- a/app/layout.tsx
++++ b/app/layout.tsx
+@@ -2,6 +2,8 @@ import type { Metadata } from "next";
+ import "./globals.css";
+ import { Navigation } from "@/components/navigation";
+ import { RadioDock } from "@/components/radio-dock";
++import { SiteFooter } from "@/components/site-footer";
++import { LanguageProvider } from "@/components/language-provider";
+ 
+ export const metadata: Metadata = {
+   title: "DAREMON Engineering – Technische Montage & Procesanalyse",
+@@ -34,23 +36,12 @@ export default function RootLayout({
+   return (
+     <html lang="nl-NL">
+       <body className="font-sans antialiased">
+-        <Navigation />
+-        <main>{children}</main>
+-        <RadioDock />
+-
+-        <footer className="border-t border-slate-800 bg-slate-950">
+-          <div className="container mx-auto px-4 py-8">
+-            <div className="max-w-4xl mx-auto text-center space-y-3">
+-              <p className="text-slate-400 text-sm">
+-                © {new Date().getFullYear()} DAREMON Engineering
+-              </p>
+-              <p className="text-slate-500 text-xs">
+-                Specialistische technische videomontage, procesanalyse en AI-visualisaties.{" "}
+-                <a href="/legal" className="underline hover:text-slate-400 transition">Juridische informatie</a>
+-              </p>
+-            </div>
+-          </div>
+-        </footer>
++        <LanguageProvider>
++          <Navigation />
++          <main>{children}</main>
++          <RadioDock />
++          <SiteFooter />
++        </LanguageProvider>
+       </body>
+     </html>
+   );
+diff --git a/components/audio-lab-visualizer.tsx b/components/audio-lab-visualizer.tsx
+index b361d07..522d8ff 100644
+--- a/components/audio-lab-visualizer.tsx
++++ b/components/audio-lab-visualizer.tsx
+@@ -1,6 +1,7 @@
+ 'use client'
+ 
+ import { useEffect, useRef, useState } from 'react'
++import { useT } from '@/lib/i18n'
+ 
+ /**
+  * Ambient (bez-dźwiękowa) wersja wizualizatora 3D z visualizer/Visualizer3D.js.
+@@ -14,6 +15,7 @@ import { useEffect, useRef, useState } from 'react'
+ export function AudioLabVisualizer() {
+   const canvasRef = useRef<HTMLCanvasElement>(null)
+   const [status, setStatus] = useState<'loading' | 'ready' | 'unavailable'>('loading')
++  const t = useT()
+ 
+   useEffect(() => {
+     if (typeof window === 'undefined') return
+@@ -55,9 +57,7 @@ export function AudioLabVisualizer() {
+       {status !== 'ready' && (
+         <div className="absolute inset-0 flex items-center justify-center bg-slate-950/80">
+           <p className="text-sm text-slate-400 max-w-xs text-center px-4">
+-            {status === 'loading'
+-              ? 'Ładowanie wizualizacji 3D…'
+-              : 'Wizualizacja 3D jest wyłączona w tej przeglądarce (brak WebGL lub włączone ograniczenie animacji).'}
++            {status === 'loading' ? t.audioLab.loading : t.audioLab.unavailable}
+           </p>
+         </div>
+       )}
+diff --git a/components/language-provider.tsx b/components/language-provider.tsx
+new file mode 100644
+index 0000000..bd41d9e
+--- /dev/null
++++ b/components/language-provider.tsx
+@@ -0,0 +1,63 @@
++'use client'
++
++import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
++
++export type Language = 'pl' | 'nl'
++
++const STORAGE_KEY = 'daremon_ui_lang'
++
++interface LanguageContextValue {
++  language: Language
++  setLanguage: (lang: Language) => void
++}
++
++// Domyślny język renderowany na serwerze (i przy pierwszym renderze klienta,
++// zanim React zdąży zahydratować drzewo). Musi być identyczny po obu stronach,
++// inaczej Next.js zgłosi błąd hydratacji — dlatego odczyt localStorage
++// wykonujemy dopiero w useEffect, już po zamontowaniu komponentu.
++const DEFAULT_LANGUAGE: Language = 'pl'
++
++const LanguageContext = createContext<LanguageContextValue>({
++  language: DEFAULT_LANGUAGE,
++  setLanguage: () => {},
++})
++
++export function LanguageProvider({ children }: { children: ReactNode }) {
++  const [language, setLanguageState] = useState<Language>(DEFAULT_LANGUAGE)
++
++  // Po zamontowaniu (czyli już po hydratacji) synchronizujemy z zapisaną
++  // preferencją — ta zmiana stanu nie wpływa na zgodność drzewa SSR/CSR.
++  useEffect(() => {
++    try {
++      const saved = window.localStorage.getItem(STORAGE_KEY)
++      if (saved === 'pl' || saved === 'nl') {
++        setLanguageState(saved)
++      }
++    } catch {
++      // localStorage niedostępny (np. tryb prywatny) — zostajemy przy domyślnym.
++    }
++  }, [])
++
++  useEffect(() => {
++    document.documentElement.lang = language === 'pl' ? 'pl-PL' : 'nl-NL'
++  }, [language])
++
++  const setLanguage = (lang: Language) => {
++    setLanguageState(lang)
++    try {
++      window.localStorage.setItem(STORAGE_KEY, lang)
++    } catch {
++      // ignorujemy — preferencja po prostu nie przetrwa odświeżenia strony
++    }
++  }
++
++  return (
++    <LanguageContext.Provider value={{ language, setLanguage }}>
++      {children}
++    </LanguageContext.Provider>
++  )
++}
++
++export function useLanguage() {
++  return useContext(LanguageContext)
++}
+diff --git a/components/language-switcher.tsx b/components/language-switcher.tsx
+new file mode 100644
+index 0000000..c74e317
+--- /dev/null
++++ b/components/language-switcher.tsx
+@@ -0,0 +1,49 @@
++'use client'
++
++import { useLanguage, type Language } from './language-provider'
++
++const OPTIONS: { id: Language; label: string }[] = [
++  { id: 'pl', label: 'PL' },
++  { id: 'nl', label: 'NL' },
++]
++
++/**
++ * Wyrazisty, segmentowy przełącznik języka (PL | NL).
++ *
++ * Stan pochodzi z LanguageProvider (React context), więc zmiana jest
++ * natychmiastowa i nie wymaga przeładowania strony ani requestu sieciowego —
++ * a ponieważ provider inicjalizuje się identycznie po stronie serwera i klienta,
++ * przełącznik nie powoduje błędów hydratacji w Next.js (patrz komentarz w
++ * language-provider.tsx).
++ */
++export function LanguageSwitcher() {
++  const { language, setLanguage } = useLanguage()
++
++  return (
++    <div
++      role="group"
++      aria-label="Wybierz język / Kies taal"
++      className="flex items-center rounded-full border border-slate-700 bg-slate-900/80 p-0.5 font-mono text-xs font-bold tracking-wide"
++    >
++      {OPTIONS.map((opt) => {
++        const active = language === opt.id
++        return (
++          <button
++            key={opt.id}
++            type="button"
++            onClick={() => setLanguage(opt.id)}
++            aria-pressed={active}
++            aria-label={opt.id === 'pl' ? 'Polski' : 'Nederlands'}
++            className={`rounded-full px-3 py-1.5 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
++              active
++                ? 'bg-cyan-500/20 text-cyan-300 shadow-[0_0_10px_rgba(34,211,238,0.55)] ring-1 ring-cyan-400/60'
++                : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800'
++            }`}
++          >
++            {opt.label}
++          </button>
++        )
++      })}
++    </div>
++  )
++}
+diff --git a/components/navigation.tsx b/components/navigation.tsx
+index 7a483c1..d4fbed8 100644
+--- a/components/navigation.tsx
++++ b/components/navigation.tsx
+@@ -3,20 +3,23 @@
+ import Link from 'next/link'
+ import { usePathname } from 'next/navigation'
+ import { useState, useEffect } from 'react'
+-
+-const navItems = [
+-  { href: '/', label: 'Start' },
+-  { href: '/diensten', label: 'Diensten' },
+-  { href: '/casussen', label: 'Case Studies' },
+-  { href: '/methodiek', label: 'Methodiek & AI' },
+-  { href: '/over', label: 'Over ons' },
+-  { href: '/contact', label: 'Contact' },
+-]
++import { useT } from '@/lib/i18n'
++import { LanguageSwitcher } from './language-switcher'
+ 
+ export function Navigation() {
+   const pathname = usePathname()
++  const t = useT()
+   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+ 
++  const navItems = [
++    { href: '/', label: t.nav.start },
++    { href: '/diensten', label: t.nav.diensten },
++    { href: '/casussen', label: t.nav.casussen },
++    { href: '/methodiek', label: t.nav.methodiek },
++    { href: '/over', label: t.nav.over },
++    { href: '/contact', label: t.nav.contact },
++  ]
++
+   // Close mobile menu when route changes
+   useEffect(() => {
+     setMobileMenuOpen(false)
+@@ -47,7 +50,7 @@ export function Navigation() {
+   return (
+     <nav className="border-b border-cyan-500/20 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
+       <div className="container mx-auto px-4">
+-        <div className="flex items-center justify-between h-16">
++        <div className="flex items-center justify-between h-16 gap-4">
+           {/* Logo */}
+           <Link
+             href="/"
+@@ -79,46 +82,51 @@ export function Navigation() {
+                 rel="noopener noreferrer"
+                 className="px-4 py-2 text-sm font-semibold bg-cyan-600 hover:bg-cyan-500 text-black rounded-lg shadow-[0_0_15px_rgba(0,255,255,0.3)] transition"
+               >
+-                ETS Radio
++                {t.nav.etsRadio}
+               </a>
+             </li>
+           </ul>
+ 
+-          {/* Mobile menu button */}
+-          <button
+-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+-            className="md:hidden text-slate-300 hover:text-cyan-400 transition p-2 focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded"
+-            aria-expanded={mobileMenuOpen}
+-            aria-label="Toggle navigation menu"
+-          >
+-            {mobileMenuOpen ? (
+-              // Close icon
+-              <svg
+-                className="w-6 h-6"
+-                fill="none"
+-                strokeLinecap="round"
+-                strokeLinejoin="round"
+-                strokeWidth="2"
+-                viewBox="0 0 24 24"
+-                stroke="currentColor"
+-              >
+-                <path d="M6 18L18 6M6 6l12 12"></path>
+-              </svg>
+-            ) : (
+-              // Hamburger icon
+-              <svg
+-                className="w-6 h-6"
+-                fill="none"
+-                strokeLinecap="round"
+-                strokeLinejoin="round"
+-                strokeWidth="2"
+-                viewBox="0 0 24 24"
+-                stroke="currentColor"
+-              >
+-                <path d="M4 6h16M4 12h16M4 18h16"></path>
+-              </svg>
+-            )}
+-          </button>
++          {/* Right-hand cluster: language switcher (always visible) + mobile toggle */}
++          <div className="flex items-center gap-3">
++            <LanguageSwitcher />
++
++            {/* Mobile menu button */}
++            <button
++              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
++              className="md:hidden text-slate-300 hover:text-cyan-400 transition p-2 focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded"
++              aria-expanded={mobileMenuOpen}
++              aria-label="Toggle navigation menu"
++            >
++              {mobileMenuOpen ? (
++                // Close icon
++                <svg
++                  className="w-6 h-6"
++                  fill="none"
++                  strokeLinecap="round"
++                  strokeLinejoin="round"
++                  strokeWidth="2"
++                  viewBox="0 0 24 24"
++                  stroke="currentColor"
++                >
++                  <path d="M6 18L18 6M6 6l12 12"></path>
++                </svg>
++              ) : (
++                // Hamburger icon
++                <svg
++                  className="w-6 h-6"
++                  fill="none"
++                  strokeLinecap="round"
++                  strokeLinejoin="round"
++                  strokeWidth="2"
++                  viewBox="0 0 24 24"
++                  stroke="currentColor"
++                >
++                  <path d="M4 6h16M4 12h16M4 18h16"></path>
++                </svg>
++              )}
++            </button>
++          </div>
+         </div>
+       </div>
+ 
+@@ -166,13 +174,13 @@ export function Navigation() {
+               className="block w-full px-4 py-3 text-center text-sm font-semibold bg-cyan-600 hover:bg-cyan-500 text-black rounded-lg shadow-[0_0_15px_rgba(0,255,255,0.3)] transition"
+               onClick={() => setMobileMenuOpen(false)}
+             >
+-              ETS Radio
++              {t.nav.etsRadio}
+             </a>
+           </div>
+ 
+           {/* Close hint */}
+           <div className="p-4 text-center text-xs text-slate-500">
+-            Druk op ESC om te sluiten
++            {t.nav.escHint}
+           </div>
+         </nav>
+       </div>
+diff --git a/components/portfolio/portfolio-card.tsx b/components/portfolio/portfolio-card.tsx
+index f6d40d5..dcf1ab1 100644
+--- a/components/portfolio/portfolio-card.tsx
++++ b/components/portfolio/portfolio-card.tsx
+@@ -1,21 +1,12 @@
++'use client'
++
++import { useT } from '@/lib/i18n'
+ import { YouTubeFacade } from './youtube-facade'
+ import type { PortfolioItem } from './types'
+ 
+-const KATEGORIA_LABEL: Record<PortfolioItem['kategoria'], string> = {
+-  'analiza-mechaniczna': 'Analiza mechaniczna',
+-  short: 'Short / Reel',
+-  'ai-wizualizacja': 'Wizualizacja AI',
+-}
+-
+-const BRANZA_LABEL: Record<PortfolioItem['branza'], string> = {
+-  plc: 'PLC',
+-  arburg: 'Arburg',
+-  robotyka: 'Robotyka',
+-  mim: 'MIM',
+-  agro: 'Agro',
+-}
+-
+ export function PortfolioCard({ item }: { item: PortfolioItem }) {
++  const t = useT()
++
+   return (
+     <article className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/20 rounded-lg overflow-hidden transition-colors hover:border-cyan-500/40">
+       <YouTubeFacade youtubeId={item.youtubeId} title={item.tytul} format={item.format} />
+@@ -23,10 +14,10 @@ export function PortfolioCard({ item }: { item: PortfolioItem }) {
+       <div className="p-5 space-y-3">
+         <div className="flex flex-wrap items-center gap-2">
+           <span className="inline-flex items-center rounded-full bg-cyan-500/10 px-2.5 py-0.5 text-xs font-medium text-cyan-300 border border-cyan-500/20">
+-            {KATEGORIA_LABEL[item.kategoria]}
++            {t.portfolio.kategoria[item.kategoria]}
+           </span>
+           <span className="inline-flex items-center rounded-full bg-amber-500/10 px-2.5 py-0.5 text-xs font-medium text-amber-300 border border-amber-500/20">
+-            {BRANZA_LABEL[item.branza]}
++            {t.portfolio.branza[item.branza]}
+           </span>
+           <span className="ml-auto text-xs font-mono text-slate-500">{item.format}</span>
+         </div>
+diff --git a/components/portfolio/portfolio-grid.tsx b/components/portfolio/portfolio-grid.tsx
+index 3ea3d09..a8e8e16 100644
+--- a/components/portfolio/portfolio-grid.tsx
++++ b/components/portfolio/portfolio-grid.tsx
+@@ -2,20 +2,22 @@
+ 
+ import { useMemo, useState } from 'react'
+ import portfolioData from '@/data/portfolio.json'
++import { useT } from '@/lib/i18n'
+ import { PortfolioCard } from './portfolio-card'
+ import type { PortfolioItem } from './types'
+ 
+ const items = portfolioData as PortfolioItem[]
+ 
+-const FILTERS: { id: 'wszystkie' | PortfolioItem['kategoria']; label: string }[] = [
+-  { id: 'wszystkie', label: 'Wszystkie' },
+-  { id: 'analiza-mechaniczna', label: 'Analizy mechaniczne' },
+-  { id: 'short', label: 'Shorts / Reels' },
+-  { id: 'ai-wizualizacja', label: 'Wizualizacje AI' },
++const FILTER_IDS: ('wszystkie' | PortfolioItem['kategoria'])[] = [
++  'wszystkie',
++  'analiza-mechaniczna',
++  'short',
++  'ai-wizualizacja',
+ ]
+ 
+ export function PortfolioGrid() {
+-  const [filter, setFilter] = useState<(typeof FILTERS)[number]['id']>('wszystkie')
++  const t = useT()
++  const [filter, setFilter] = useState<(typeof FILTER_IDS)[number]>('wszystkie')
+ 
+   const filtered = useMemo(
+     () => (filter === 'wszystkie' ? items : items.filter((item) => item.kategoria === filter)),
+@@ -26,29 +28,29 @@ export function PortfolioGrid() {
+     <div>
+       <div
+         role="tablist"
+-        aria-label="Filtruj portfolio wg kategorii"
++        aria-label="Filtruj portfolio wg kategorii / Filter portfolio op categorie"
+         className="flex flex-wrap gap-2 mb-8"
+       >
+-        {FILTERS.map((f) => (
++        {FILTER_IDS.map((id) => (
+           <button
+-            key={f.id}
++            key={id}
+             type="button"
+             role="tab"
+-            aria-selected={filter === f.id}
+-            onClick={() => setFilter(f.id)}
++            aria-selected={filter === id}
++            onClick={() => setFilter(id)}
+             className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
+-              filter === f.id
++              filter === id
+                 ? 'bg-cyan-500/15 border-cyan-400/50 text-cyan-300 shadow-[0_0_12px_rgba(0,255,255,0.2)]'
+                 : 'border-slate-700 text-slate-400 hover:text-slate-200 hover:border-slate-500'
+             }`}
+           >
+-            {f.label}
++            {t.portfolio.filters[id]}
+           </button>
+         ))}
+       </div>
+ 
+       {filtered.length === 0 ? (
+-        <p className="text-slate-400">Brak pozycji w tej kategorii.</p>
++        <p className="text-slate-400">{t.portfolio.empty}</p>
+       ) : (
+         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+           {filtered.map((item) => (
+diff --git a/components/radio-dock.tsx b/components/radio-dock.tsx
+index 1522c49..c9d1211 100644
+--- a/components/radio-dock.tsx
++++ b/components/radio-dock.tsx
+@@ -1,6 +1,7 @@
+ 'use client'
+ 
+ import { useState } from 'react'
++import { useT } from '@/lib/i18n'
+ 
+ /**
+  * Dokowalny panel Radia ETS.
+@@ -12,20 +13,21 @@ import { useState } from 'react'
+  */
+ export function RadioDock() {
+   const [open, setOpen] = useState(false)
++  const t = useT()
+ 
+   return (
+     <div className="fixed bottom-4 right-4 z-40 flex flex-col items-end gap-2">
+       {open && (
+         <div className="w-[320px] overflow-hidden rounded-xl border border-cyan-500/30 bg-slate-950 shadow-[0_0_30px_rgba(0,255,255,0.15)]">
+           <div className="flex items-center justify-between border-b border-cyan-500/20 px-3 py-2">
+-            <span className="text-xs font-semibold text-cyan-300 tracking-wide">RADIO ETS · NA ŻYWO</span>
++            <span className="text-xs font-semibold text-cyan-300 tracking-wide">{t.radioDock.live}</span>
+             <a
+               href="/legacy/index.html"
+               target="_blank"
+               rel="noopener noreferrer"
+               className="text-xs text-slate-400 hover:text-cyan-300 transition"
+             >
+-              Pełny ekran ↗
++              {t.radioDock.fullscreen}
+             </a>
+           </div>
+           <iframe
+@@ -41,11 +43,11 @@ export function RadioDock() {
+         type="button"
+         onClick={() => setOpen((v) => !v)}
+         aria-expanded={open}
+-        aria-label={open ? 'Zwiń panel Radia ETS' : 'Otwórz panel Radia ETS'}
++        aria-label={open ? t.radioDock.closeLabel : t.radioDock.openLabel}
+         className="flex items-center gap-2 rounded-full bg-cyan-600 hover:bg-cyan-500 text-black font-semibold px-4 py-2.5 text-sm shadow-[0_0_20px_rgba(0,255,255,0.4)] transition"
+       >
+         <span aria-hidden="true">{open ? '▾' : '▸'}</span>
+-        Radio ETS
++        {t.radioDock.button}
+       </button>
+     </div>
+   )
+diff --git a/components/site-footer.tsx b/components/site-footer.tsx
+new file mode 100644
+index 0000000..db608eb
+--- /dev/null
++++ b/components/site-footer.tsx
+@@ -0,0 +1,23 @@
++'use client'
++
++import { useT } from '@/lib/i18n'
++
++export function SiteFooter() {
++  const t = useT()
++
++  return (
++    <footer className="border-t border-slate-800 bg-slate-950">
++      <div className="container mx-auto px-4 py-8">
++        <div className="max-w-4xl mx-auto text-center space-y-3">
++          <p className="text-slate-400 text-sm">© {new Date().getFullYear()} {t.footer.rights}</p>
++          <p className="text-slate-500 text-xs">
++            {t.footer.tagline}{' '}
++            <a href="/legal" className="underline hover:text-slate-400 transition">
++              {t.footer.legal}
++            </a>
++          </p>
++        </div>
++      </div>
++    </footer>
++  )
++}
+diff --git a/lib/i18n.ts b/lib/i18n.ts
+new file mode 100644
+index 0000000..83eebd0
+--- /dev/null
++++ b/lib/i18n.ts
+@@ -0,0 +1,185 @@
++'use client'
++
++import { useLanguage, type Language } from '@/components/language-provider'
++
++export const translations = {
++  pl: {
++    nav: {
++      start: 'Start',
++      diensten: 'Usługi',
++      casussen: 'Case Studies',
++      methodiek: 'Metodyka i AI',
++      over: 'O nas',
++      contact: 'Kontakt',
++      etsRadio: 'Radio ETS',
++      escHint: 'Naciśnij ESC, aby zamknąć',
++    },
++    footer: {
++      rights: 'DAREMON Engineering',
++      tagline: 'Specjalistyczny montaż wideo, analiza procesów i wizualizacje AI.',
++      legal: 'Informacje prawne',
++    },
++    radioDock: {
++      live: 'RADIO ETS · NA ŻYWO',
++      fullscreen: 'Pełny ekran ↗',
++      openLabel: 'Otwórz panel Radia ETS',
++      closeLabel: 'Zwiń panel Radia ETS',
++      button: 'Radio ETS',
++    },
++    audioLab: {
++      loading: 'Ładowanie wizualizacji 3D…',
++      unavailable:
++        'Wizualizacja 3D jest wyłączona w tej przeglądarce (brak WebGL lub włączone ograniczenie animacji).',
++    },
++    portfolio: {
++      filters: {
++        wszystkie: 'Wszystkie',
++        'analiza-mechaniczna': 'Analizy mechaniczne',
++        short: 'Shorts / Reels',
++        'ai-wizualizacja': 'Wizualizacje AI',
++      },
++      empty: 'Brak pozycji w tej kategorii.',
++      kategoria: {
++        'analiza-mechaniczna': 'Analiza mechaniczna',
++        short: 'Short / Reel',
++        'ai-wizualizacja': 'Wizualizacja AI',
++      },
++      branza: {
++        plc: 'PLC',
++        arburg: 'Arburg',
++        robotyka: 'Robotyka',
++        mim: 'MIM',
++        agro: 'Agro',
++      },
++    },
++    home: {
++      statusBadge: 'SYSTEM AKTYWNY · RADIO ETS 24/7',
++      title: 'DAREMON',
++      subtitle: 'Engineering — Montaż Techniczny & Analiza Procesów',
++      lead1: 'Specjalistyczny montaż wideo dla sektora mechanicznego, przemysłowego i agro.',
++      lead2:
++        'Analiza procesów, kinematyka maszyn, autorskie audio wolne od praw autorskich i wizualizacje AI — zbudowane na tej samej technologii, którą widzisz na tej stronie.',
++      ctaQuote: 'Zapytaj o wycenę',
++      ctaPortfolio: 'Zobacz portfolio',
++      competenciesHeading: 'Zaplecze techniczne',
++      competencies: [
++        { tytul: 'PLC Siemens', opis: 'Programowanie, diagnostyka i dokumentacja logiki sterowników linii produkcyjnych.' },
++        { tytul: 'Arburg', opis: 'Analiza cykli wtryskarek — parametry procesowe, wady powierzchniowe, optymalizacja.' },
++        { tytul: 'Yaskawa Motoman', opis: 'Trajektorie i strefy robocze robotów przemysłowych w komórkach zrobotyzowanych.' },
++        { tytul: 'MIM', opis: 'Metal Injection Molding — kinematyka wypełniania formy i przepływu granulatu.' },
++      ],
++      portfolioHeading: 'Portfolio & Case Studies',
++      portfolioLink: 'Pełne case studies →',
++      audioLabHeading: 'Audio Lab',
++      audioLabText:
++        'Ta sama wizualizacja 3D, która w Radiu ETS reaguje na muzykę na żywo, napędzana silnikiem Three.js — dowód, że materiały wideo, które montujemy, mogą wyglądać równie precyzyjnie jak proces, który dokumentują. Autorskie ścieżki dźwiękowe do wideo powstają bez ryzyka Content ID.',
++      processHeading: 'Jak pracujemy',
++      processLink: 'Metodyka i rola AI →',
++      process: [
++        { krok: 'Analiza', opis: 'Rozbiór procesu, maszyny lub incydentu na podstawie materiału źródłowego i dokumentacji technicznej.' },
++        { krok: 'Montaż', opis: 'Precyzyjny montaż wideo z autorską ścieżką dźwiękową wolną od Content ID i wizualizacjami AI.' },
++        { krok: 'Dostawa', opis: 'Materiał w formacie dopasowanym do odbiorcy — 16:9 do dokumentacji, 9:16 do social media.' },
++      ],
++      radioHeading: 'Radio ETS',
++      radioText:
++        'Nasze firmowe radio internetowe działa 24/7 w tle tej platformy — dokowalny panel w prawym dolnym rogu ekranu daje do niego dostęp z każdej podstrony. Pełny interfejs, wizualizacje i ankiety społecznościowe dostępne są też w trybie pełnoekranowym.',
++      radioCta: 'Otwórz pełny ekran',
++      contactHeading: 'Masz proces, maszynę lub incydent do udokumentowania?',
++      contactText: 'Opisz projekt, a przygotujemy wstępną wycenę montażu, analizy lub wizualizacji.',
++      contactCta: 'Przejdź do kontaktu',
++    },
++  },
++  nl: {
++    nav: {
++      start: 'Start',
++      diensten: 'Diensten',
++      casussen: 'Case Studies',
++      methodiek: 'Methodiek & AI',
++      over: 'Over ons',
++      contact: 'Contact',
++      etsRadio: 'Radio ETS',
++      escHint: 'Druk op ESC om te sluiten',
++    },
++    footer: {
++      rights: 'DAREMON Engineering',
++      tagline: 'Gespecialiseerde videomontage, procesanalyse en AI-visualisaties.',
++      legal: 'Juridische informatie',
++    },
++    radioDock: {
++      live: 'RADIO ETS · LIVE',
++      fullscreen: 'Volledig scherm ↗',
++      openLabel: 'Open het Radio ETS-paneel',
++      closeLabel: 'Sluit het Radio ETS-paneel',
++      button: 'Radio ETS',
++    },
++    audioLab: {
++      loading: '3D-visualisatie wordt geladen…',
++      unavailable:
++        '3D-visualisatie is niet beschikbaar in deze browser (geen WebGL, of animaties zijn beperkt).',
++    },
++    portfolio: {
++      filters: {
++        wszystkie: 'Alles',
++        'analiza-mechaniczna': 'Mechanische analyses',
++        short: 'Shorts / Reels',
++        'ai-wizualizacja': 'AI-visualisaties',
++      },
++      empty: 'Geen items in deze categorie.',
++      kategoria: {
++        'analiza-mechaniczna': 'Mechanische analyse',
++        short: 'Short / Reel',
++        'ai-wizualizacja': 'AI-visualisatie',
++      },
++      branza: {
++        plc: 'PLC',
++        arburg: 'Arburg',
++        robotyka: 'Robotica',
++        mim: 'MIM',
++        agro: 'Agro',
++      },
++    },
++    home: {
++      statusBadge: 'SYSTEEM ACTIEF · RADIO ETS 24/7',
++      title: 'DAREMON',
++      subtitle: 'Engineering — Technische Montage & Procesanalyse',
++      lead1: 'Gespecialiseerde videomontage voor de mechanische, industriële en agrarische sector.',
++      lead2:
++        'Procesanalyse, kinematica van machines, auteursrechtvrije audio en AI-visualisaties — gebouwd op dezelfde technologie die je op deze pagina ziet.',
++      ctaQuote: 'Vraag een offerte aan',
++      ctaPortfolio: 'Bekijk portfolio',
++      competenciesHeading: 'Technisch fundament',
++      competencies: [
++        { tytul: 'PLC Siemens', opis: 'Programmeren, diagnose en documentatie van besturingslogica voor productielijnen.' },
++        { tytul: 'Arburg', opis: 'Analyse van spuitgietcycli — procesparameters, oppervlaktedefecten, optimalisatie.' },
++        { tytul: 'Yaskawa Motoman', opis: 'Trajecten en werkzones van industriële robots in geautomatiseerde cellen.' },
++        { tytul: 'MIM', opis: 'Metal Injection Molding — kinematica van matrijsvulling en granulaatstroom.' },
++      ],
++      portfolioHeading: 'Portfolio & Case Studies',
++      portfolioLink: 'Alle case studies →',
++      audioLabHeading: 'Audio Lab',
++      audioLabText:
++        'Dezelfde 3D-visualisatie die bij Radio ETS live reageert op muziek, aangedreven door Three.js — het bewijs dat het videomateriaal dat wij monteren er net zo precies uit kan zien als het proces dat het documenteert. Eigen soundtracks voor video, zonder Content ID-risico.',
++      processHeading: 'Onze werkwijze',
++      processLink: 'Methodiek en de rol van AI →',
++      process: [
++        { krok: 'Analyse', opis: 'Ontleding van proces, machine of incident op basis van bronmateriaal en technische documentatie.' },
++        { krok: 'Montage', opis: 'Precieze videomontage met eigen soundtrack zonder Content ID-risico en AI-visualisaties.' },
++        { krok: 'Levering', opis: 'Materiaal in het formaat dat past bij het gebruik — 16:9 voor documentatie, 9:16 voor social media.' },
++      ],
++      radioHeading: 'Radio ETS',
++      radioText:
++        'Ons bedrijfsradiostation draait 24/7 op de achtergrond van dit platform — het dokbare paneel rechtsonder geeft er op elke pagina toegang toe. De volledige interface, visualisaties en community-polls zijn ook in volledig scherm beschikbaar.',
++      radioCta: 'Open volledig scherm',
++      contactHeading: 'Heb je een proces, machine of incident dat gedocumenteerd moet worden?',
++      contactText: 'Beschrijf je project en we stellen een eerste inschatting op voor montage, analyse of visualisatie.',
++      contactCta: 'Naar contact',
++    },
++  },
++} as const satisfies Record<Language, unknown>
++
++export type Translations = (typeof translations)[Language]
++
++export function useT(): Translations {
++  const { language } = useLanguage()
++  return translations[language]
++}
