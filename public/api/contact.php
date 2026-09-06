@@ -45,9 +45,18 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // CONFIGURATION
 // ============================================
 
-// Email configuration
-const RECIPIENT_EMAIL = 'info@daremon.nl'; // Change to your email
-const FROM_EMAIL = 'noreply@daremon.nl';   // Change to your domain email (fallback voor mail())
+require_once __DIR__ . '/config.php';
+
+// E-mailadres waar nieuwe aanvragen naartoe worden gestuurd — instelbaar via
+// CONTACT_TO_EMAIL (zelfde env-conventie als DB_*/SMTP_*), met een vaste
+// fallback. Dit is een ander adres dan het SMTP-account waarmee de mail
+// wordt verzonden (zie SMTP_USER in mailer.php, geauthenticeerd als
+// info@daremon.nl) — RECIPIENT_EMAIL is puur "aan wie", niet "van welk account".
+function recipientEmail(): string {
+    return daremon_env('CONTACT_TO_EMAIL', 'dariusz@daremon.nl');
+}
+
+const FROM_EMAIL = 'noreply@daremon.nl'; // Change to your domain email (fallback voor mail())
 const SUBJECT = 'Nieuw contactformulier bericht - Daremon';
 
 // Rate limiting (requests per minute)
@@ -291,9 +300,11 @@ HTML;
     // vallen we terug op de ingebouwde PHP mail().
     require_once __DIR__ . '/mailer.php';
 
+    $recipient = recipientEmail();
+
     if (smtpConfigured()) {
         try {
-            sendViaSmtp(RECIPIENT_EMAIL, 'DAREMON Engineering', SUBJECT, $emailBody, $email);
+            sendViaSmtp($recipient, 'DAREMON Engineering', SUBJECT, $emailBody, $email);
             return true;
         } catch (\Throwable $smtpError) {
             error_log('[contact.php] SMTP-verzending mislukt, val terug op mail(): ' . $smtpError->getMessage());
@@ -309,7 +320,7 @@ HTML;
     ];
 
     return mail(
-        RECIPIENT_EMAIL,
+        $recipient,
         SUBJECT,
         $emailBody,
         implode("\r\n", $headers)

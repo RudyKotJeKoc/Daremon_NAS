@@ -6,6 +6,10 @@
  * Konwencja zmiennych bazy danych: DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME.
  * Konwencja zmiennych SMTP (patrz mailer.php): SMTP_HOST, SMTP_PORT,
  * SMTP_SECURE, SMTP_USER, SMTP_PASSWORD, SMTP_FROM_EMAIL, SMTP_FROM_NAME.
+ * CONTACT_TO_EMAIL (patrz contact.php): adres, na który trafiają powiadomienia
+ * o nowych zapytaniach z formularza — niezależny od konta SMTP_USER, którym
+ * wiadomość jest faktycznie wysyłana (uwierzytelnione jako info@daremon.nl).
+ * Domyślnie (bez ustawionej zmiennej) trafiają na dariusz@daremon.nl.
  *
  * Na produkcji (Synology Web Station) ustaw je przez panel hostingu (sekcja
  * zmiennych środowiskowych PHP) albo w .htaccess przez `SetEnv DB_HOST ...`
@@ -26,6 +30,7 @@
  *   putenv('SMTP_SECURE=tls'); // 'ssl' dla portu 465, 'tls' dla STARTTLS na 587
  *   putenv('SMTP_USER=info@daremon.nl');
  *   putenv('SMTP_PASSWORD=...');
+ *   putenv('CONTACT_TO_EMAIL=dariusz@daremon.nl');
  */
 
 $localEnvFile = __DIR__ . '/.env.local.php';

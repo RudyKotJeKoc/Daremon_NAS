@@ -1,0 +1,71 @@
+diff --git a/public/api/config.php b/public/api/config.php
+index a7a9447..a6188af 100644
+--- a/public/api/config.php
++++ b/public/api/config.php
+@@ -6,6 +6,10 @@
+  * Konwencja zmiennych bazy danych: DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME.
+  * Konwencja zmiennych SMTP (patrz mailer.php): SMTP_HOST, SMTP_PORT,
+  * SMTP_SECURE, SMTP_USER, SMTP_PASSWORD, SMTP_FROM_EMAIL, SMTP_FROM_NAME.
++ * CONTACT_TO_EMAIL (patrz contact.php): adres, na który trafiają powiadomienia
++ * o nowych zapytaniach z formularza — niezależny od konta SMTP_USER, którym
++ * wiadomość jest faktycznie wysyłana (uwierzytelnione jako info@daremon.nl).
++ * Domyślnie (bez ustawionej zmiennej) trafiają na dariusz@daremon.nl.
+  *
+  * Na produkcji (Synology Web Station) ustaw je przez panel hostingu (sekcja
+  * zmiennych środowiskowych PHP) albo w .htaccess przez `SetEnv DB_HOST ...`
+@@ -26,6 +30,7 @@
+  *   putenv('SMTP_SECURE=tls'); // 'ssl' dla portu 465, 'tls' dla STARTTLS na 587
+  *   putenv('SMTP_USER=info@daremon.nl');
+  *   putenv('SMTP_PASSWORD=...');
++ *   putenv('CONTACT_TO_EMAIL=dariusz@daremon.nl');
+  */
+ 
+ $localEnvFile = __DIR__ . '/.env.local.php';
+diff --git a/public/api/contact.php b/public/api/contact.php
+index 6cf2d43..576273d 100644
+--- a/public/api/contact.php
++++ b/public/api/contact.php
+@@ -45,9 +45,18 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+ // CONFIGURATION
+ // ============================================
+ 
+-// Email configuration
+-const RECIPIENT_EMAIL = 'info@daremon.nl'; // Change to your email
+-const FROM_EMAIL = 'noreply@daremon.nl';   // Change to your domain email (fallback voor mail())
++require_once __DIR__ . '/config.php';
++
++// E-mailadres waar nieuwe aanvragen naartoe worden gestuurd — instelbaar via
++// CONTACT_TO_EMAIL (zelfde env-conventie als DB_*/SMTP_*), met een vaste
++// fallback. Dit is een ander adres dan het SMTP-account waarmee de mail
++// wordt verzonden (zie SMTP_USER in mailer.php, geauthenticeerd als
++// info@daremon.nl) — RECIPIENT_EMAIL is puur "aan wie", niet "van welk account".
++function recipientEmail(): string {
++    return daremon_env('CONTACT_TO_EMAIL', 'dariusz@daremon.nl');
++}
++
++const FROM_EMAIL = 'noreply@daremon.nl'; // Change to your domain email (fallback voor mail())
+ const SUBJECT = 'Nieuw contactformulier bericht - Daremon';
+ 
+ // Rate limiting (requests per minute)
+@@ -291,9 +300,11 @@ HTML;
+     // vallen we terug op de ingebouwde PHP mail().
+     require_once __DIR__ . '/mailer.php';
+ 
++    $recipient = recipientEmail();
++
+     if (smtpConfigured()) {
+         try {
+-            sendViaSmtp(RECIPIENT_EMAIL, 'DAREMON Engineering', SUBJECT, $emailBody, $email);
++            sendViaSmtp($recipient, 'DAREMON Engineering', SUBJECT, $emailBody, $email);
+             return true;
+         } catch (\Throwable $smtpError) {
+             error_log('[contact.php] SMTP-verzending mislukt, val terug op mail(): ' . $smtpError->getMessage());
+@@ -309,7 +320,7 @@ HTML;
+     ];
+ 
+     return mail(
+-        RECIPIENT_EMAIL,
++        $recipient,
+         SUBJECT,
+         $emailBody,
+         implode("\r\n", $headers)
