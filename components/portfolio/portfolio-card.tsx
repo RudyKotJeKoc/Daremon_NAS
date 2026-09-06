@@ -4,12 +4,25 @@ import { useT } from '@/lib/i18n'
 import { YouTubeFacade } from './youtube-facade'
 import type { PortfolioItem } from './types'
 
-export function PortfolioCard({ item }: { item: PortfolioItem }) {
+interface PortfolioCardProps {
+  item: PortfolioItem
+  isActive: boolean
+  onPlay: () => void
+}
+
+export function PortfolioCard({ item, isActive, onPlay }: PortfolioCardProps) {
   const t = useT()
 
   return (
     <article className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/20 rounded-lg overflow-hidden transition-colors hover:border-cyan-500/40">
-      <YouTubeFacade itemId={item.id} youtubeId={item.youtubeId} title={item.tytul} format={item.format} />
+      <YouTubeFacade
+        itemId={item.id}
+        youtubeId={item.youtubeId}
+        title={item.tytul}
+        format={item.format}
+        isActive={isActive}
+        onPlay={onPlay}
+      />
 
       <div className="p-5 space-y-3">
         <div className="flex flex-wrap items-center gap-2">

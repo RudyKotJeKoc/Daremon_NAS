@@ -18,6 +18,10 @@ const FILTER_IDS: ('wszystkie' | PortfolioItem['kategoria'])[] = [
 export function PortfolioGrid() {
   const t = useT()
   const [filter, setFilter] = useState<(typeof FILTER_IDS)[number]>('wszystkie')
+  // Id kafelka aktualnie odtwarzanego w siatce — tylko jeden film może grać
+  // naraz, więc ustawienie nowego id automatycznie „gasi" (wraca do fasady)
+  // wszystkie pozostałe kafelki.
+  const [activeVideoId, setActiveVideoId] = useState<string | null>(null)
 
   const filtered = useMemo(
     () => (filter === 'wszystkie' ? items : items.filter((item) => item.kategoria === filter)),
@@ -54,7 +58,12 @@ export function PortfolioGrid() {
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((item) => (
-            <PortfolioCard key={item.id} item={item} />
+            <PortfolioCard
+              key={item.id}
+              item={item}
+              isActive={activeVideoId === item.id}
+              onPlay={() => setActiveVideoId(item.id)}
+            />
           ))}
         </div>
       )}

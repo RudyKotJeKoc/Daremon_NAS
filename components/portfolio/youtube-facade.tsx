@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import { trackInteraction } from '@/lib/track'
 
 interface YouTubeFacadeProps {
@@ -8,6 +7,12 @@ interface YouTubeFacadeProps {
   youtubeId: string
   title: string
   format: '16:9' | '9:16'
+  /** Czy to ten kafelek jest aktualnie odtwarzany — stan trzyma rodzic (PortfolioGrid),
+   *  żeby w danej chwili mógł grać tylko jeden film w całej siatce. */
+  isActive: boolean
+  /** Wywoływane po kliknięciu miniaturki — rodzic ustawia ten kafelek jako aktywny
+   *  (co automatycznie resetuje pozostałe z powrotem do fasady). */
+  onPlay: () => void
 }
 
 /**
@@ -18,17 +23,20 @@ interface YouTubeFacadeProps {
  * To zgodne z reżimem opisanym w MEDIA-AVAILABILITY-OPTIMIZATION.md: siatka
  * portfolio może pokazywać dziesiątki pozycji bez obciążania strony przy
  * starcie.
+ *
+ * Komponent jest "kontrolowany" (isActive/onPlay) zamiast trzymać własny stan
+ * `activated` — dzięki temu PortfolioGrid może pilnować, żeby zawsze grał
+ * najwyżej jeden film naraz (patrz activeVideoId w portfolio-grid.tsx).
  */
-export function YouTubeFacade({ itemId, youtubeId, title, format }: YouTubeFacadeProps) {
-  const [activated, setActivated] = useState(false)
+export function YouTubeFacade({ itemId, youtubeId, title, format, isActive, onPlay }: YouTubeFacadeProps) {
   const aspectClass = format === '9:16' ? 'aspect-[9/16]' : 'aspect-video'
 
   const handleActivate = () => {
-    setActivated(true)
+    onPlay()
     trackInteraction(itemId, 'play')
   }
 
-  if (activated) {
+  if (isActive) {
     return (
       <div className={`relative w-full ${aspectClass} rounded-lg overflow-hidden bg-black`}>
         <iframe
