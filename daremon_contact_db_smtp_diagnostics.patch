@@ -1,0 +1,160 @@
+diff --git a/public/api/config.php b/public/api/config.php
+index a6188af..44e2256 100644
+--- a/public/api/config.php
++++ b/public/api/config.php
+@@ -20,7 +20,7 @@
+  *
+  *   <?php
+  *   putenv('DB_HOST=127.0.0.1');
+- *   putenv('DB_PORT=3306');
++ *   putenv('DB_PORT=3307'); // Synology MariaDB 10 domyślnie nasłuchuje na 3307
+  *   putenv('DB_USER=daremon');
+  *   putenv('DB_PASSWORD=...');
+  *   putenv('DB_NAME=daremon_b2b');
+@@ -49,5 +49,8 @@ if (!function_exists('daremon_env')) {
+     }
+ }
+ 
+-const DB_DEFAULT_PORT = '3306';
++// Synology DSM: wbudowany pakiet MariaDB 10 nasłuchuje domyślnie na porcie
++// 3307 (port 3306 bywa zajęty przez inną instancję/pakiet w DSM) — jeśli Twoja
++// instalacja jest inna, nadpisz to zmienną środowiskową DB_PORT.
++const DB_DEFAULT_PORT = '3307';
+ const DB_DEFAULT_NAME = 'daremon_b2b';
+diff --git a/public/api/contact.php b/public/api/contact.php
+index 576273d..6db795d 100644
+--- a/public/api/contact.php
++++ b/public/api/contact.php
+@@ -232,7 +232,15 @@ function saveLead(array $data): void {
+ // EMAIL SENDING
+ // ============================================
+ 
+-function sendEmail(array $data): bool {
++/**
++ * Wysyła powiadomienie e-mail. Zwraca tablicę diagnostyczną zamiast samego
++ * boola, żeby wywołujący (główna logika niżej) mógł w razie awarii zwrócić
++ * do klienta dokładny powód (błąd połączenia/SSL/uwierzytelnienia SMTP), a
++ * nie po cichu udawać sukces.
++ *
++ * @return array{sent: bool, via: string|null, smtp_error: string|null}
++ */
++function sendEmail(array $data): array {
+     $naam = $data['naam'];
+     $email = $data['email'];
+     $bedrijf = $data['bedrijf'] ?? '';
+@@ -301,14 +309,25 @@ HTML;
+     require_once __DIR__ . '/mailer.php';
+ 
+     $recipient = recipientEmail();
++    $smtpErrorMessage = null;
+ 
+     if (smtpConfigured()) {
+         try {
+             sendViaSmtp($recipient, 'DAREMON Engineering', SUBJECT, $emailBody, $email);
+-            return true;
++            return ['sent' => true, 'via' => 'smtp', 'smtp_error' => null];
+         } catch (\Throwable $smtpError) {
+-            error_log('[contact.php] SMTP-verzending mislukt, val terug op mail(): ' . $smtpError->getMessage());
++            // Dokładny powód (błąd socketu/SSL/AUTH/dialogu SMTP) trafia zarówno
++            // do logu serwera, jak i do odpowiedzi JSON — bez tego formularz
++            // "po cichu" udawał sukces, mimo że wiadomość nigdy nie dotarła.
++            $smtpErrorMessage = sprintf(
++                '[%s] %s',
++                (new \ReflectionClass($smtpError))->getShortName(),
++                $smtpError->getMessage()
++            );
++            error_log('[contact.php] SMTP-verzending mislukt, val terug op mail(): ' . $smtpErrorMessage);
+         }
++    } else {
++        $smtpErrorMessage = 'SMTP is niet geconfigureerd (SMTP_HOST ontbreekt) — alleen mail() fallback geprobeerd.';
+     }
+ 
+     $headers = [
+@@ -319,12 +338,14 @@ HTML;
+         'Content-Type: text/html; charset=UTF-8'
+     ];
+ 
+-    return mail(
++    $mailSent = mail(
+         $recipient,
+         SUBJECT,
+         $emailBody,
+         implode("\r\n", $headers)
+     );
++
++    return ['sent' => $mailSent, 'via' => $mailSent ? 'mail' : null, 'smtp_error' => $smtpErrorMessage];
+ }
+ 
+ // ============================================
+@@ -389,30 +410,62 @@ try {
+     // awaria (częsta na hostingu współdzielonym) nie może spowodować
+     // utraty zapytania klienta.
+     $leadSaved = false;
++    $dbErrorMessage = null;
+     try {
+         saveLead($cleanData);
+         $leadSaved = true;
+     } catch (\Throwable $dbError) {
+-        error_log('[contact.php] Opslaan van lead in database mislukt: ' . $dbError->getMessage());
++        // Faktyczna treść błędu PDO (np. "SQLSTATE[HY000] [2002] Connection
++        // refused" przy złym porcie, albo błąd uwierzytelnienia/brakującej
++        // tabeli) — logowana i zwracana w odpowiedzi, żeby diagnoza awarii
++        // zapisu nie wymagała ręcznego grzebania w logach serwera.
++        $dbErrorMessage = sprintf(
++            '[%s] %s',
++            (new \ReflectionClass($dbError))->getShortName(),
++            $dbError->getMessage()
++        );
++        error_log('[contact.php] Opslaan van lead in database mislukt: ' . $dbErrorMessage);
+     }
+ 
+-    $emailSent = sendEmail($cleanData);
++    $emailResult = sendEmail($cleanData);
++    $emailSent = $emailResult['sent'];
++    $smtpErrorMessage = $emailResult['smtp_error'];
+     if (!$emailSent) {
+         error_log('[contact.php] Verzenden van notificatie-e-mail mislukt.');
+     }
+ 
++    // Diagnostyka dołączana do odpowiedzi zawsze, gdy dany kanał zawiódł —
++    // niezależnie od ogólnego wyniku — żeby częściowa awaria (np. e-mail
++    // wysłany, ale zapis w bazie nieudany) też była widoczna, a nie ukryta
++    // za ogólnym "success: true".
++    $diagnostics = [];
++    if ($dbErrorMessage !== null) {
++        $diagnostics['db_error'] = $dbErrorMessage;
++    }
++    if ($smtpErrorMessage !== null) {
++        $diagnostics['smtp_error'] = $smtpErrorMessage;
++    }
++
+     if (!$leadSaved && !$emailSent) {
+-        // Beide kanalen zijn mislukt — de aanvraag is nergens beland, dus
+-        // moeten we de gebruiker eerlijk vertellen dat het niet is gelukt.
+-        throw new Exception($messages['send_failed']);
++        // Beide kanalen zijn mislukt — de aanvraag is nergens beland. Geen
++        // stille "success", maar een eerlijke 500 met de exacte technische
++        // reden van beide kanalen erbij.
++        http_response_code(500);
++        echo json_encode(array_merge([
++            'success' => false,
++            'message' => $messages['send_failed'],
++        ], $diagnostics));
++        exit();
+     }
+ 
+-    // Success response
++    // Success response — ook bij gedeeltelijk succes (bv. e-mail wel, DB niet)
++    // blijft dit "success: true" voor de gebruiker, met de falende kant erbij
++    // voor wie de JSON-respons/logs inspecteert.
+     http_response_code(200);
+-    echo json_encode([
++    echo json_encode(array_merge([
+         'success' => true,
+-        'message' => $messages['success']
+-    ]);
++        'message' => $messages['success'],
++    ], $diagnostics));
+ 
+ } catch (Exception $e) {
+     // Error response

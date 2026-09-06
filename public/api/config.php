@@ -20,7 +20,7 @@
  *
  *   <?php
  *   putenv('DB_HOST=127.0.0.1');
- *   putenv('DB_PORT=3306');
+ *   putenv('DB_PORT=3307'); // Synology MariaDB 10 domyślnie nasłuchuje na 3307
  *   putenv('DB_USER=daremon');
  *   putenv('DB_PASSWORD=...');
  *   putenv('DB_NAME=daremon_b2b');
@@ -49,5 +49,8 @@ if (!function_exists('daremon_env')) {
     }
 }
 
-const DB_DEFAULT_PORT = '3306';
+// Synology DSM: wbudowany pakiet MariaDB 10 nasłuchuje domyślnie na porcie
+// 3307 (port 3306 bywa zajęty przez inną instancję/pakiet w DSM) — jeśli Twoja
+// instalacja jest inna, nadpisz to zmienną środowiskową DB_PORT.
+const DB_DEFAULT_PORT = '3307';
 const DB_DEFAULT_NAME = 'daremon_b2b';
