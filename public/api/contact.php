@@ -232,14 +232,12 @@ function saveLead(array $data): void {
 // ============================================
 
 /**
- * Wysyła powiadomienie e-mail. Zwraca tablicę diagnostyczną zamiast samego
- * boola, żeby wywołujący (główna logika niżej) mógł w razie awarii zwrócić
- * do klienta dokładny powód (błąd połączenia/SSL/uwierzytelnienia SMTP), a
- * nie po cichu udawać sukces.
- *
- * @return array{sent: bool, via: string|null, smtp_error: string|null}
+ * Wysyła powiadomienie e-mail przez SMTP. Zwraca prosty bool; wszelkie
+ * szczegóły awarii (log dialogu SMTP, kod błędu serwera itp.) trafiają
+ * wyłącznie do systemowego error_log PHP — nigdy do odpowiedzi JSON
+ * zwracanej klientowi formularza.
  */
-function sendEmail(array $data): array {
+function sendEmail(array $data): bool {
     $naam = $data['naam'];
     $email = $data['email'];
     $bedrijf = $data['bedrijf'] ?? '';
@@ -302,49 +300,33 @@ function sendEmail(array $data): array {
 HTML;
 
     // Wyłącznie prawdziwa wysyłka SMTP (czysty socket do skrzynki TransIP) —
-    // ŻADNEGO fallbacku na mail(). Na Synology mail() nie tylko zwykle nie
-    // działa (brak lokalnego MTA), ale bywała myląca nawet gdy formalnie
-    // "się udawała": oddanie wiadomości lokalnemu sendmailowi nie oznacza
-    // jej faktycznego dostarczenia. Cały dialog SMTP trafia do $transcript,
-    // który wraca w odpowiedzi jako "smtp_debug" — łącznie z dokładną
-    // odpowiedzią serwera TransIP przy błędzie (kod 5xx, powód odrzucenia).
+    // ŻADNEGO fallbacku na mail(). Dialog SMTP jest rejestrowany w
+    // $transcript wyłącznie na potrzeby error_log w razie awarii — nigdy nie
+    // trafia do odpowiedzi JSON.
     require_once __DIR__ . '/mailer.php';
 
     $recipient = recipientEmail();
     $transcript = [];
-    $debugConfig = smtpDebugConfig();
 
     try {
         sendViaSmtp($recipient, 'DAREMON Engineering', SUBJECT, $emailBody, $email, $transcript);
-        return [
-            'sent' => true,
-            'smtp_error' => null,
-            'smtp_debug' => [
-                'recipient_rcpt_to' => $recipient,
-                'config' => $debugConfig,
-                'dialog' => $transcript,
-            ],
-        ];
+        return true;
     } catch (\Throwable $smtpError) {
-        // Dokładny powód (błąd socketu/SSL/AUTH/dialogu SMTP) trafia zarówno
-        // do logu serwera, jak i do odpowiedzi JSON — bez tego formularz
-        // "po cichu" udawał sukces, mimo że wiadomość nigdy nie dotarła.
         $smtpErrorMessage = sprintf(
             '[%s] %s',
             (new \ReflectionClass($smtpError))->getShortName(),
             $smtpError->getMessage()
         );
-        error_log('[contact.php] SMTP-verzending mislukt: ' . $smtpErrorMessage);
-
-        return [
-            'sent' => false,
-            'smtp_error' => $smtpErrorMessage,
-            'smtp_debug' => [
-                'recipient_rcpt_to' => $recipient,
-                'config' => $debugConfig,
-                'dialog' => $transcript,
-            ],
-        ];
+        // Volledige technische diagnose (config + dialoog + fout) gaat
+        // uitsluitend naar de systeem-error_log — nooit naar de client.
+        error_log(sprintf(
+            "[contact.php] SMTP-verzending mislukt naar %s: %s\nConfig: %s\nDialoog:\n%s",
+            $recipient,
+            $smtpErrorMessage,
+            json_encode(smtpDebugConfig()),
+            implode("\n", $transcript)
+        ));
+        return false;
     }
 }
 
@@ -410,65 +392,37 @@ try {
     // awaria (częsta na hostingu współdzielonym) nie może spowodować
     // utraty zapytania klienta.
     $leadSaved = false;
-    $dbErrorMessage = null;
     try {
         saveLead($cleanData);
         $leadSaved = true;
     } catch (\Throwable $dbError) {
-        // Faktyczna treść błędu PDO (np. "SQLSTATE[HY000] [2002] Connection
-        // refused" przy złym porcie, albo błąd uwierzytelnienia/brakującej
-        // tabeli) — logowana i zwracana w odpowiedzi, żeby diagnoza awarii
-        // zapisu nie wymagała ręcznego grzebania w logach serwera.
-        $dbErrorMessage = sprintf(
-            '[%s] %s',
+        // Volledige technische reden (SQLSTATE, connectiefout, enz.) gaat
+        // uitsluitend naar de systeem-error_log — nooit naar de client.
+        error_log(sprintf(
+            '[contact.php] Opslaan van lead in database mislukt: [%s] %s',
             (new \ReflectionClass($dbError))->getShortName(),
             $dbError->getMessage()
-        );
-        error_log('[contact.php] Opslaan van lead in database mislukt: ' . $dbErrorMessage);
+        ));
     }
 
-    $emailResult = sendEmail($cleanData);
-    $emailSent = $emailResult['sent'];
-    $smtpErrorMessage = $emailResult['smtp_error'];
+    $emailSent = sendEmail($cleanData);
     if (!$emailSent) {
         error_log('[contact.php] Verzenden van notificatie-e-mail mislukt.');
     }
 
-    // Diagnostyka dołączana do odpowiedzi zawsze, gdy dany kanał zawiódł —
-    // niezależnie od ogólnego wyniku — żeby częściowa awaria (np. e-mail
-    // wysłany, ale zapis w bazie nieudany) też była widoczna, a nie ukryta
-    // za ogólnym "success: true". "smtp_debug" (pełny dialog SMTP + użyta
-    // konfiguracja, bez hasła) wraca zawsze — także przy udanej wysyłce —
-    // żeby dało się jednoznacznie potwierdzić host/port/RCPT TO bez
-    // czekania na kolejną awarię.
-    $diagnostics = ['smtp_debug' => $emailResult['smtp_debug']];
-    if ($dbErrorMessage !== null) {
-        $diagnostics['db_error'] = $dbErrorMessage;
-    }
-    if ($smtpErrorMessage !== null) {
-        $diagnostics['smtp_error'] = $smtpErrorMessage;
-    }
-
     if (!$leadSaved && !$emailSent) {
-        // Beide kanalen zijn mislukt — de aanvraag is nergens beland. Geen
-        // stille "success", maar een eerlijke 500 met de exacte technische
-        // reden van beide kanalen erbij.
-        http_response_code(500);
-        echo json_encode(array_merge([
-            'success' => false,
-            'message' => $messages['send_failed'],
-        ], $diagnostics));
-        exit();
+        // Beide kanalen zijn mislukt — de aanvraag is nergens beland, dus
+        // moeten we de gebruiker eerlijk vertellen dat het niet is gelukt.
+        // De technische reden staat al in de error_log hierboven.
+        throw new Exception($messages['send_failed']);
     }
 
-    // Success response — ook bij gedeeltelijk succes (bv. e-mail wel, DB niet)
-    // blijft dit "success: true" voor de gebruiker, met de falende kant erbij
-    // voor wie de JSON-respons/logs inspecteert.
+    // Success response
     http_response_code(200);
-    echo json_encode(array_merge([
+    echo json_encode([
         'success' => true,
-        'message' => $messages['success'],
-    ], $diagnostics));
+        'message' => $messages['success']
+    ]);
 
 } catch (Exception $e) {
     // Error response
