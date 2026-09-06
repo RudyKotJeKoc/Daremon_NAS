@@ -1,0 +1,92 @@
+[
+  {
+    "id": "cs-mim-linia-01",
+    "youtubeId": "PLACEHOLDER_01",
+    "tytul": "Analiza kinematyki linii MIM",
+    "kategoria": "analiza-mechaniczna",
+    "format": "16:9",
+    "branza": "mim",
+    "opis": "Rozbiór cyklu wtrysku i wypełniania formy w procesie Metal Injection Molding — analiza klatka po klatce z autorską ścieżką dźwiękową.",
+    "data": "2026-08"
+  },
+  {
+    "id": "cs-arburg-cykl-02",
+    "youtubeId": "PLACEHOLDER_02",
+    "tytul": "Cykl pracy wtryskarki Arburg",
+    "kategoria": "analiza-mechaniczna",
+    "format": "16:9",
+    "branza": "arburg",
+    "opis": "Dokumentacja techniczna pełnego cyklu wtrysku wraz z omówieniem parametrów procesowych.",
+    "data": "2026-07"
+  },
+  {
+    "id": "cs-motoman-traj-03",
+    "youtubeId": "PLACEHOLDER_03",
+    "tytul": "Trajektoria ramienia Yaskawa Motoman",
+    "kategoria": "analiza-mechaniczna",
+    "format": "16:9",
+    "branza": "robotyka",
+    "opis": "Wizualizacja ścieżki ruchu robota przemysłowego podczas cyklu montażowego, z nałożoną telemetrią osi.",
+    "data": "2026-07"
+  },
+  {
+    "id": "cs-plc-diag-04",
+    "youtubeId": "PLACEHOLDER_04",
+    "tytul": "Diagnostyka sterownika Siemens PLC",
+    "kategoria": "analiza-mechaniczna",
+    "format": "16:9",
+    "branza": "plc",
+    "opis": "Krok po kroku: lokalizacja usterki w programie sterownika linii produkcyjnej.",
+    "data": "2026-06"
+  },
+  {
+    "id": "cs-agro-siew-05",
+    "youtubeId": "PLACEHOLDER_05",
+    "tytul": "Kinematyka zespołu wysiewającego",
+    "kategoria": "analiza-mechaniczna",
+    "format": "16:9",
+    "branza": "agro",
+    "opis": "Analiza pracy zespołu wysiewającego w maszynie rolniczej pod kątem równomierności dawkowania.",
+    "data": "2026-05"
+  },
+  {
+    "id": "cs-short-plc-06",
+    "youtubeId": "PLACEHOLDER_06",
+    "tytul": "60 sekund: zwarcie w szafie sterowniczej",
+    "kategoria": "short",
+    "format": "9:16",
+    "branza": "plc",
+    "opis": "Skrócona wersja analizy usterki elektrycznej — format pod social media.",
+    "data": "2026-06"
+  },
+  {
+    "id": "cs-short-arburg-07",
+    "youtubeId": "PLACEHOLDER_07",
+    "tytul": "Reel: mikroskopijne wady wtrysku",
+    "kategoria": "short",
+    "format": "9:16",
+    "branza": "arburg",
+    "opis": "Pionowy format prezentujący typowe wady powierzchniowe elementów wtryskiwanych.",
+    "data": "2026-04"
+  },
+  {
+    "id": "cs-ai-mim-08",
+    "youtubeId": "PLACEHOLDER_08",
+    "tytul": "Wizualizacja AI: przepływ granulatu MIM",
+    "kategoria": "ai-wizualizacja",
+    "format": "16:9",
+    "branza": "mim",
+    "opis": "Renderowana komputerowo symulacja przepływu granulatu metalowo-polimerowego w formie wtryskowej.",
+    "data": "2026-08"
+  },
+  {
+    "id": "cs-ai-robotyka-09",
+    "youtubeId": "PLACEHOLDER_09",
+    "tytul": "Wizualizacja AI: pole robocze komórki robotycznej",
+    "kategoria": "ai-wizualizacja",
+    "format": "16:9",
+    "branza": "robotyka",
+    "opis": "Wygenerowana wizualizacja stref bezpieczeństwa i zasięgu ramion w komórce zrobotyzowanej.",
+    "data": "2026-03"
+  }
+]

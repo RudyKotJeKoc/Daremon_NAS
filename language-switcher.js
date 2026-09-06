@@ -18,9 +18,7 @@ export function initializeLanguageSwitcher() {
     const updateCurrentLanguage = (lang) => {
         const langMap = {
             'nl': 'NL',
-            'pl': 'PL',
-            'en': 'EN',
-            'cs': 'CS'
+            'pl': 'PL'
         };
         if (currentLangDisplay) {
             currentLangDisplay.textContent = langMap[lang] || 'NL';
@@ -95,7 +93,7 @@ function updateHreflangTags(currentLang) {
     const baseUrl = window.location.origin + window.location.pathname;
 
     // Update or create hreflang tags
-    const langs = ['nl', 'pl', 'en', 'cs'];
+    const langs = ['nl', 'pl'];
     langs.forEach(lang => {
         let hreflangLink = document.querySelector(`link[hreflang="${lang}"]`);
 

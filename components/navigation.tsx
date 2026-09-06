@@ -6,10 +6,10 @@ import { useState, useEffect } from 'react'
 
 const navItems = [
   { href: '/', label: 'Start' },
-  { href: '/diensten', label: "Scenario's" },
-  { href: '/casussen', label: 'Verhalen' },
+  { href: '/diensten', label: 'Diensten' },
+  { href: '/casussen', label: 'Case Studies' },
   { href: '/methodiek', label: 'Methodiek & AI' },
-  { href: '/over', label: 'Over het project' },
+  { href: '/over', label: 'Over ons' },
   { href: '/contact', label: 'Contact' },
 ]
 

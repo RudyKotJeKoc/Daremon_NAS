@@ -83,20 +83,37 @@ export class Visualizer3D {
         this.scene.background = new THREE.Color(0x04132B);
     }
     
+    /**
+     * Returns the render size. Uses the canvas's own CSS box when it has one
+     * (e.g. embedded in a bounded container like the Audio Lab preview),
+     * otherwise falls back to the full viewport — identical to the original
+     * behaviour for the full-page legacy visualizer.
+     */
+    getSize() {
+        const w = this.canvas.clientWidth;
+        const h = this.canvas.clientHeight;
+        if (w > 0 && h > 0) {
+            return { width: w, height: h };
+        }
+        return { width: window.innerWidth, height: window.innerHeight };
+    }
+
     setupCamera() {
-        const aspect = window.innerWidth / window.innerHeight;
+        const { width, height } = this.getSize();
+        const aspect = width / height;
         this.camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
         this.camera.position.set(0, 5, 15);
         this.camera.lookAt(0, 0, 0);
     }
-    
+
     setupRenderer() {
         this.renderer = new THREE.WebGLRenderer({
             canvas: this.canvas,
             antialias: true,
             alpha: false
         });
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        const { width, height } = this.getSize();
+        this.renderer.setSize(width, height);
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     }
     
@@ -213,10 +230,11 @@ export class Visualizer3D {
     
     onWindowResize() {
         if (!this.camera || !this.renderer) return;
-        
-        this.camera.aspect = window.innerWidth / window.innerHeight;
+
+        const { width, height } = this.getSize();
+        this.camera.aspect = width / height;
         this.camera.updateProjectionMatrix();
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.setSize(width, height);
     }
     
     start() {

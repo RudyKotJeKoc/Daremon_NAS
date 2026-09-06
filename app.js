@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function i18n_init() {
         try {
             console.log('🌍 Taaldetectie...');
-            const supportedLangs = ['nl', 'pl', 'en', 'cs'];
+            const supportedLangs = ['nl', 'pl'];
             const savedLang = (() => { try { return (window.localStorage && localStorage.getItem('daremon_language')) || null; } catch { return null; } })();
             console.log('📍 Opgeslagen taal:', savedLang);
             // Default to Dutch (nl) as main language, use saved preference if exists
