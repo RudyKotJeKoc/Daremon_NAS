@@ -24,7 +24,7 @@ export default function ContactPage() {
             <div className="space-y-6 text-slate-300">
               <p className="leading-relaxed">
                 Beschrijf je project — een machine, proces of incident dat gedocumenteerd of
-                geanalyseerd moet worden — en we nemen contact op met een concreet voorstel.
+                geanalyseerd moet worden — en ik neem contact op met een concreet voorstel.
               </p>
 
               <div>

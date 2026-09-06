@@ -3,7 +3,7 @@ import { MethodiekContent } from './methodiek-content'
 
 export const metadata: Metadata = {
   title: 'Methodiek & AI – DAREMON Engineering',
-  description: 'Hoe we technische analyse, montage en AI-tools combineren tot betrouwbaar videomateriaal.',
+  description: 'Hoe ik technische analyse, montage en AI-tools combineer tot betrouwbaar videomateriaal.',
 }
 
 export default function MethodiekPage() {

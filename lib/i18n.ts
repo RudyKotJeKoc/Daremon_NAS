@@ -9,7 +9,7 @@ export const translations = {
       diensten: 'Usługi',
       casussen: 'Case Studies',
       methodiek: 'Metodyka i AI',
-      over: 'O nas',
+      over: 'O mnie',
       contact: 'Kontakt',
       etsRadio: 'Radio ETS',
       escHint: 'Naciśnij ESC, aby zamknąć',
@@ -65,8 +65,8 @@ export const translations = {
       portfolioLink: 'Pełne case studies →',
       audioLabHeading: 'Audio Lab',
       audioLabText:
-        'Ta sama wizualizacja 3D, która w Radiu ETS reaguje na muzykę na żywo, napędzana silnikiem Three.js — dowód, że materiały wideo, które montujemy, mogą wyglądać równie precyzyjnie jak proces, który dokumentują. Autorskie ścieżki dźwiękowe do wideo powstają bez ryzyka Content ID.',
-      processHeading: 'Jak pracujemy',
+        'Ta sama wizualizacja 3D, która w Radiu ETS reaguje na muzykę na żywo, napędzana silnikiem Three.js — dowód, że materiały wideo, które montuję, mogą wyglądać równie precyzyjnie jak proces, który dokumentują. Autorskie ścieżki dźwiękowe do wideo powstają bez ryzyka Content ID.',
+      processHeading: 'Jak pracuję',
       processLink: 'Metodyka i rola AI →',
       process: [
         { krok: 'Analiza', opis: 'Rozbiór procesu, maszyny lub incydentu na podstawie materiału źródłowego i dokumentacji technicznej.' },
@@ -75,10 +75,10 @@ export const translations = {
       ],
       radioHeading: 'Radio ETS',
       radioText:
-        'Nasze firmowe radio internetowe działa 24/7 w tle tej platformy — dokowalny panel w prawym dolnym rogu ekranu daje do niego dostęp z każdej podstrony. Pełny interfejs, wizualizacje i ankiety społecznościowe dostępne są też w trybie pełnoekranowym.',
+        'Moje autorskie radio internetowe działa 24/7 w tle tej platformy — dokowalny panel w prawym dolnym rogu ekranu daje do niego dostęp z każdej podstrony. Pełny interfejs, wizualizacje i ankiety społecznościowe dostępne są też w trybie pełnoekranowym.',
       radioCta: 'Otwórz pełny ekran',
       contactHeading: 'Masz proces, maszynę lub incydent do udokumentowania?',
-      contactText: 'Opisz projekt, a przygotujemy wstępną wycenę montażu, analizy lub wizualizacji.',
+      contactText: 'Opisz projekt, a przygotuję wstępną wycenę montażu, analizy lub wizualizacji.',
       contactCta: 'Przejdź do kontaktu',
     },
     diensten: {
@@ -123,7 +123,7 @@ export const translations = {
         },
       ],
       ctaHeading: 'Masz projekt do wyceny?',
-      ctaText: 'Opisz proces, maszynę lub format, który Cię interesuje — odezwiemy się z konkretną propozycją.',
+      ctaText: 'Opisz proces, maszynę lub format, który Cię interesuje — odezwę się z konkretną propozycją.',
       ctaButton: 'Przejdź do kontaktu',
     },
     casussen: {
@@ -182,22 +182,22 @@ export const translations = {
         },
       ],
       ctaHeading: 'Masz podobny projekt?',
-      ctaText: 'Opisz sytuację — powiemy, jak podeszlibyśmy do montażu lub analizy.',
+      ctaText: 'Opisz sytuację — powiem, jak podszedłbym do montażu lub analizy.',
       ctaButton: 'Przejdź do kontaktu',
     },
     over: {
-      heroTitle: 'O nas',
+      heroTitle: 'O mnie',
       heroLead: 'Inżynieria i montaż wideo pod jednym dachem.',
       sections: [
         {
-          tytul: 'Kim jesteśmy',
+          tytul: 'Kim jestem',
           body:
-            'DAREMON Engineering łączy ponad 15 lat doświadczenia w elektryce i automatyce przemysłowej z montażem wideo i narzędziami AI. Powstaliśmy z przekonania, że najlepiej o procesie technicznym opowie ktoś, kto sam go rozumie od strony inżynierskiej — nie tylko montażowej.',
+            'DAREMON Engineering łączy ponad 15 lat doświadczenia w elektryce i automatyce przemysłowej z montażem wideo i narzędziami AI. Powstałem z przekonania, że najlepiej o procesie technicznym opowie ktoś, kto sam go rozumie od strony inżynierskiej — nie tylko montażowej.',
         },
         {
           tytul: 'Skąd ta wiedza',
           body:
-            'Programowanie sterowników PLC Siemens, diagnostyka wtryskarek Arburg, wdrożenia robotów Yaskawa Motoman i praca z technologią MIM — to zaplecze techniczne, które pozwala nam rozumieć materiał źródłowy zanim zaczniemy montaż, a nie tylko ładnie go poskładać.',
+            'Programowanie sterowników PLC Siemens, diagnostyka wtryskarek Arburg, wdrożenia robotów Yaskawa Motoman i praca z technologią MIM — to moje zaplecze techniczne, które pozwala mi rozumieć materiał źródłowy zanim zacznę montaż, a nie tylko ładnie go poskładać.',
         },
         {
           tytul: 'Dlaczego wideo i AI',
@@ -207,40 +207,40 @@ export const translations = {
         {
           tytul: 'Skąd nazwa DAREMON',
           body:
-            'Nazwa nawiązuje do "daemon" — procesu działającego w tle, który utrzymuje system w ruchu. Dokładnie tak rozumiemy naszą rolę: dokumentujemy i analizujemy procesy, które napędzają produkcję, nawet jeśli zwykle pozostają niewidoczne.',
+            'Nazwa nawiązuje do "daemon" — procesu działającego w tle, który utrzymuje system w ruchu. Dokładnie tak rozumiem swoją rolę: dokumentuję i analizuję procesy, które napędzają produkcję, nawet jeśli zwykle pozostają niewidoczne.',
         },
       ],
       ctaHeading: 'Chcesz porozmawiać o projekcie?',
-      ctaText: 'Napisz, czym się zajmujesz i co chcesz pokazać — odpowiemy z konkretami.',
+      ctaText: 'Napisz, czym się zajmujesz i co chcesz pokazać — odpowiem z konkretami.',
       ctaButton: 'Przejdź do kontaktu',
     },
     methodiek: {
       heroTitle: 'Metodyka i AI',
-      heroLead: 'Jak łączymy analizę techniczną, montaż i narzędzia AI, żeby materiał był rzetelny i czytelny.',
-      tabProcess: 'Nasz proces',
+      heroLead: 'Jak łączę analizę techniczną, montaż i narzędzia AI, żeby materiał był rzetelny i czytelny.',
+      tabProcess: 'Mój proces',
       tabAi: 'Rola AI',
-      processHeading: 'Jak pracujemy',
+      processHeading: 'Jak pracuję',
       processSteps: [
         {
           tytul: 'Briefing i analiza źródeł',
-          opis: 'Przeglądamy materiał źródłowy i dokumentację techniczną, żeby zrozumieć proces zanim zaczniemy montaż.',
+          opis: 'Przeglądam materiał źródłowy i dokumentację techniczną, żeby zrozumieć proces zanim zacznę montaż.',
         },
         {
           tytul: 'Montaż i synchronizacja',
-          opis: 'Montujemy materiał z uwzględnieniem parametrów procesowych i dokumentacji — tak, by obraz zgadzał się z danymi.',
+          opis: 'Montuję materiał z uwzględnieniem parametrów procesowych i dokumentacji — tak, by obraz zgadzał się z danymi.',
         },
         {
           tytul: 'Wizualizacja i udźwiękowienie',
-          opis: 'Tam, gdzie to zasadne, dodajemy wizualizacje AI i autorską ścieżkę dźwiękową wolną od Content ID.',
+          opis: 'Tam, gdzie to zasadne, dodaję wizualizacje AI i autorską ścieżkę dźwiękową wolną od Content ID.',
         },
         {
           tytul: 'Dostawa i wsparcie',
           opis: 'Materiał trafia w formacie dopasowanym do odbiorcy, z możliwością korekt po pierwszym przeglądzie.',
         },
       ],
-      aiHeading: 'Gdzie realnie pomaga nam AI',
+      aiHeading: 'Gdzie realnie pomaga mi AI',
       aiIntro:
-        'AI jest narzędziem, nie autorem materiału. Korzystamy z niej w konkretnych, ograniczonych zadaniach — decyzje montażowe i interpretacja procesu zawsze pozostają po naszej stronie.',
+        'AI jest narzędziem, nie autorem materiału. Korzystam z niej w konkretnych, ograniczonych zadaniach — decyzje montażowe i interpretacja procesu zawsze pozostają po mojej stronie.',
       aiPoints: [
         {
           tytul: 'Wizualizacje 3D',
@@ -255,8 +255,8 @@ export const translations = {
           opis: 'Przy długich nagraniach źródłowych AI pomaga wskazać momenty warte bliższej analizy — ostateczny wybór należy do montażysty.',
         },
       ],
-      ctaHeading: 'Masz pytania o naszą metodykę?',
-      ctaText: 'Chętnie opowiemy, jak podeszlibyśmy do Twojego materiału.',
+      ctaHeading: 'Masz pytania o moją metodykę?',
+      ctaText: 'Chętnie opowiem, jak podszedłbym do Twojego materiału.',
       ctaButton: 'Przejdź do kontaktu',
     },
   },
@@ -266,7 +266,7 @@ export const translations = {
       diensten: 'Diensten',
       casussen: 'Case Studies',
       methodiek: 'Methodiek & AI',
-      over: 'Over ons',
+      over: 'Over mij',
       contact: 'Contact',
       etsRadio: 'Radio ETS',
       escHint: 'Druk op ESC om te sluiten',
@@ -322,8 +322,8 @@ export const translations = {
       portfolioLink: 'Alle case studies →',
       audioLabHeading: 'Audio Lab',
       audioLabText:
-        'Dezelfde 3D-visualisatie die bij Radio ETS live reageert op muziek, aangedreven door Three.js — het bewijs dat het videomateriaal dat wij monteren er net zo precies uit kan zien als het proces dat het documenteert. Eigen soundtracks voor video, zonder Content ID-risico.',
-      processHeading: 'Onze werkwijze',
+        'Dezelfde 3D-visualisatie die bij Radio ETS live reageert op muziek, aangedreven door Three.js — het bewijs dat het videomateriaal dat ik monteer er net zo precies uit kan zien als het proces dat het documenteert. Eigen soundtracks voor video, zonder Content ID-risico.',
+      processHeading: 'Mijn werkwijze',
       processLink: 'Methodiek en de rol van AI →',
       process: [
         { krok: 'Analyse', opis: 'Ontleding van proces, machine of incident op basis van bronmateriaal en technische documentatie.' },
@@ -332,10 +332,10 @@ export const translations = {
       ],
       radioHeading: 'Radio ETS',
       radioText:
-        'Ons bedrijfsradiostation draait 24/7 op de achtergrond van dit platform — het dokbare paneel rechtsonder geeft er op elke pagina toegang toe. De volledige interface, visualisaties en community-polls zijn ook in volledig scherm beschikbaar.',
+        'Mijn eigen internetradiostation draait 24/7 op de achtergrond van dit platform — het dokbare paneel rechtsonder geeft er op elke pagina toegang toe. De volledige interface, visualisaties en community-polls zijn ook in volledig scherm beschikbaar.',
       radioCta: 'Open volledig scherm',
       contactHeading: 'Heb je een proces, machine of incident dat gedocumenteerd moet worden?',
-      contactText: 'Beschrijf je project en we stellen een eerste inschatting op voor montage, analyse of visualisatie.',
+      contactText: 'Beschrijf je project en ik stel een eerste inschatting op voor montage, analyse of visualisatie.',
       contactCta: 'Naar contact',
     },
     diensten: {
@@ -380,7 +380,7 @@ export const translations = {
         },
       ],
       ctaHeading: 'Heb je een project dat een offerte nodig heeft?',
-      ctaText: 'Beschrijf het proces, de machine of het formaat dat je voor ogen hebt — we komen met een concreet voorstel.',
+      ctaText: 'Beschrijf het proces, de machine of het formaat dat je voor ogen hebt — ik kom met een concreet voorstel.',
       ctaButton: 'Naar contact',
     },
     casussen: {
@@ -439,22 +439,22 @@ export const translations = {
         },
       ],
       ctaHeading: 'Heb je een vergelijkbaar project?',
-      ctaText: 'Beschrijf de situatie — we laten weten hoe we de montage of analyse zouden aanpakken.',
+      ctaText: 'Beschrijf de situatie — ik laat weten hoe ik de montage of analyse zou aanpakken.',
       ctaButton: 'Naar contact',
     },
     over: {
-      heroTitle: 'Over ons',
+      heroTitle: 'Over mij',
       heroLead: 'Engineering en videomontage onder één dak.',
       sections: [
         {
-          tytul: 'Wie we zijn',
+          tytul: 'Wie ik ben',
           body:
-            'DAREMON Engineering combineert meer dan 15 jaar ervaring in elektrotechniek en industriële automatisering met videomontage en AI-tools. We zijn ontstaan vanuit de overtuiging dat een technisch proces het best wordt verteld door iemand die het ook vanuit technisch oogpunt begrijpt — niet alleen als monteur van beeldmateriaal.',
+            'DAREMON Engineering combineert meer dan 15 jaar ervaring in elektrotechniek en industriële automatisering met videomontage en AI-tools. Ik ben begonnen vanuit de overtuiging dat een technisch proces het best wordt verteld door iemand die het ook vanuit technisch oogpunt begrijpt — niet alleen als monteur van beeldmateriaal.',
         },
         {
           tytul: 'Waar die kennis vandaan komt',
           body:
-            'Programmeren van Siemens PLC-besturingen, diagnose van Arburg-spuitgietmachines, inbedrijfstelling van Yaskawa Motoman-robots en werken met MIM-technologie — dat technische fundament stelt ons in staat het bronmateriaal te begrijpen voordat we beginnen te monteren, niet alleen het mooi aan elkaar te knippen.',
+            'Programmeren van Siemens PLC-besturingen, diagnose van Arburg-spuitgietmachines, inbedrijfstelling van Yaskawa Motoman-robots en werken met MIM-technologie — dat technische fundament stelt mij in staat het bronmateriaal te begrijpen voordat ik begin te monteren, niet alleen het mooi aan elkaar te knippen.',
         },
         {
           tytul: 'Waarom video en AI',
@@ -464,40 +464,40 @@ export const translations = {
         {
           tytul: 'Waar de naam DAREMON vandaan komt',
           body:
-            'De naam verwijst naar "daemon" — een achtergrondproces dat een systeem draaiende houdt. Precies zo zien wij onze rol: we documenteren en analyseren de processen die de productie aandrijven, ook als die meestal onzichtbaar blijven.',
+            'De naam verwijst naar "daemon" — een achtergrondproces dat een systeem draaiende houdt. Precies zo zie ik mijn rol: ik documenteer en analyseer de processen die de productie aandrijven, ook als die meestal onzichtbaar blijven.',
         },
       ],
       ctaHeading: 'Wil je over een project praten?',
-      ctaText: 'Laat weten waar je mee bezig bent en wat je wilt laten zien — we reageren met concrete opties.',
+      ctaText: 'Laat weten waar je mee bezig bent en wat je wilt laten zien — ik reageer met concrete opties.',
       ctaButton: 'Naar contact',
     },
     methodiek: {
       heroTitle: 'Methodiek & AI',
-      heroLead: 'Hoe we technische analyse, montage en AI-tools combineren tot betrouwbaar en helder materiaal.',
-      tabProcess: 'Onze werkwijze',
+      heroLead: 'Hoe ik technische analyse, montage en AI-tools combineer tot betrouwbaar en helder materiaal.',
+      tabProcess: 'Mijn werkwijze',
       tabAi: 'Rol van AI',
-      processHeading: 'Hoe we werken',
+      processHeading: 'Hoe ik werk',
       processSteps: [
         {
           tytul: 'Briefing en analyse van bronmateriaal',
-          opis: 'We bekijken het bronmateriaal en de technische documentatie om het proces te begrijpen voordat we gaan monteren.',
+          opis: 'Ik bekijk het bronmateriaal en de technische documentatie om het proces te begrijpen voordat ik ga monteren.',
         },
         {
           tytul: 'Montage en synchronisatie',
-          opis: 'We monteren met oog voor procesparameters en documentatie — zodat beeld en data kloppen.',
+          opis: 'Ik monteer met oog voor procesparameters en documentatie — zodat beeld en data kloppen.',
         },
         {
           tytul: 'Visualisatie en geluid',
-          opis: 'Waar zinvol voegen we AI-visualisaties toe en een eigen soundtrack zonder Content ID-risico.',
+          opis: 'Waar zinvol voeg ik AI-visualisaties toe en een eigen soundtrack zonder Content ID-risico.',
         },
         {
           tytul: 'Levering en nazorg',
           opis: 'Het materiaal wordt geleverd in het gewenste formaat, met ruimte voor correcties na de eerste review.',
         },
       ],
-      aiHeading: 'Waar AI ons echt helpt',
+      aiHeading: 'Waar AI mij echt helpt',
       aiIntro:
-        'AI is een hulpmiddel, geen auteur van het materiaal. We zetten het in voor specifieke, afgebakende taken — montagebeslissingen en interpretatie van het proces blijven altijd bij ons.',
+        'AI is een hulpmiddel, geen auteur van het materiaal. Ik zet het in voor specifieke, afgebakende taken — montagebeslissingen en interpretatie van het proces blijven altijd bij mij.',
       aiPoints: [
         {
           tytul: '3D-visualisaties',
@@ -512,8 +512,8 @@ export const translations = {
           opis: 'Bij lange bronopnames helpt AI momenten aan te wijzen die nadere analyse verdienen — de uiteindelijke keuze blijft aan de monteur.',
         },
       ],
-      ctaHeading: 'Vragen over onze methodiek?',
-      ctaText: 'We lichten graag toe hoe we jouw materiaal zouden aanpakken.',
+      ctaHeading: 'Vragen over mijn methodiek?',
+      ctaText: 'Ik licht graag toe hoe ik jouw materiaal zou aanpakken.',
       ctaButton: 'Naar contact',
     },
   },

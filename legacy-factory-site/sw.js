@@ -1,13 +1,16 @@
 // ===================================================================================
-// DAREMON Radio ETS - Service Worker v11
+// DAREMON Radio ETS - Service Worker v12
 //
 // Strategie:
-// - Zwiększono wersję cache do v9, aby wymusić aktualizację wszystkich zasobów,
-//   w tym nowego pliku styles.css.
+// - Zwiększono wersję cache do v12, aby wymusić aktualizację wszystkich zasobów
+//   u powracających użytkowników (cache busting).
+// - activate() bezwarunkowo kasuje KAŻDY magazyn cache inny niż aktualny
+//   CACHE_NAME — nie tylko znane, stare nazwy — więc nic z poprzednich wersji
+//   nie zostaje w przeglądarce po aktualizacji.
 // - Dodano lokalne ikony do pamięci podręcznej dla pełnej funkcjonalności offline.
 // ===================================================================================
 
-const CACHE_NAME = 'daremon-radio-v11'; // WAŻNE: Zmiana wersji cache
+const CACHE_NAME = 'daremon-radio-v12'; // WAŻNE: Zmiana wersji cache
 
 // Basis app-resources (App Shell) z dodanymi ikonami
 const APP_SHELL_ASSETS = [
@@ -30,7 +33,7 @@ const APP_SHELL_ASSETS = [
 ];
 
 self.addEventListener('install', e => {
-    console.log('[Service Worker] Instalacja nowej wersji v10...');
+    console.log('[Service Worker] Instalacja nowej wersji v12...');
     e.waitUntil(
         caches.open(CACHE_NAME).then(cache => {
             console.log('[Service Worker] Caching van basis app-resources.');
@@ -43,20 +46,22 @@ self.addEventListener('install', e => {
 });
 
 self.addEventListener('activate', e => {
-    console.log('[Service Worker] Aktywacja v10...');
+    console.log('[Service Worker] Aktywacja v12...');
     e.waitUntil(
         caches.keys().then(cacheNames => {
+            // Bezwzględnie kasujemy WSZYSTKIE magazyny cache inne niż bieżący
+            // CACHE_NAME — niezależnie od tego, z jak starej wersji pochodzą —
+            // żeby powracający użytkownik natychmiast dostał nową wersję strony.
             return Promise.all(
-                cacheNames.map(cacheName => {
-                    if (cacheName !== CACHE_NAME) {
+                cacheNames
+                    .filter(cacheName => cacheName !== CACHE_NAME)
+                    .map(cacheName => {
                         console.log('[Service Worker] Usuwanie starego cache:', cacheName);
                         return caches.delete(cacheName);
-                    }
-                })
+                    })
             );
-        })
+        }).then(() => self.clients.claim())
     );
-    return self.clients.claim();
 });
 
 self.addEventListener('fetch', e => {

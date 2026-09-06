@@ -42,7 +42,7 @@ export function ContactForm() {
       // Success
       setSubmitStatus({
         type: 'success',
-        message: data.message || 'Bedankt voor uw bericht! We nemen zo snel mogelijk contact met u op.'
+        message: data.message || 'Bedankt voor uw bericht! Ik neem zo snel mogelijk contact met u op.'
       })
 
       // Reset form
@@ -194,7 +194,7 @@ export function ContactForm() {
           disabled={isSubmitting}
           rows={6}
           className="w-full px-4 py-3 bg-slate-900/50 border border-cyan-500/30 rounded-md text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed resize-none transition"
-          placeholder="Beschrijf kort uw situatie of vraag. Hoe meer context, hoe beter we kunnen inschatten of en hoe we kunnen helpen."
+          placeholder="Beschrijf kort uw situatie of vraag. Hoe meer context, hoe beter ik kan inschatten of en hoe ik kan helpen."
         />
         <div className="mt-1 text-xs text-slate-500">
           {formData.bericht.length} / 5000 tekens
