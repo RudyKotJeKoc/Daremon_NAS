@@ -9,7 +9,7 @@ export function PortfolioCard({ item }: { item: PortfolioItem }) {
 
   return (
     <article className="backdrop-blur-sm bg-slate-900/50 border border-cyan-500/20 rounded-lg overflow-hidden transition-colors hover:border-cyan-500/40">
-      <YouTubeFacade youtubeId={item.youtubeId} title={item.tytul} format={item.format} />
+      <YouTubeFacade itemId={item.id} youtubeId={item.youtubeId} title={item.tytul} format={item.format} />
 
       <div className="p-5 space-y-3">
         <div className="flex flex-wrap items-center gap-2">

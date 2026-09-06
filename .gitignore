@@ -28,6 +28,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# local PHP backend secrets (DB credentials) — never commit real credentials.
+# Production sets DB_HOST / DB_PORT / DB_USER / DB_PASSWORD / DB_NAME via the
+# hosting panel or Apache SetEnv instead of this file.
+public/api/.env.local.php
+legacy-factory-site/api/.env.local.php
+
 # local env files
 .env*.local
 .env

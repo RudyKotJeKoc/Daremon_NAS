@@ -4,6 +4,7 @@ import { Navigation } from "@/components/navigation";
 import { RadioDock } from "@/components/radio-dock";
 import { SiteFooter } from "@/components/site-footer";
 import { LanguageProvider } from "@/components/language-provider";
+import { PageTracker } from "@/components/page-tracker";
 
 export const metadata: Metadata = {
   title: "DAREMON Engineering – Technische Montage & Procesanalyse",
@@ -37,6 +38,7 @@ export default function RootLayout({
     <html lang="nl-NL">
       <body className="font-sans antialiased">
         <LanguageProvider>
+          <PageTracker />
           <Navigation />
           <main>{children}</main>
           <RadioDock />

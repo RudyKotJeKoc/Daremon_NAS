@@ -1,11 +1,14 @@
 'use client'
 
 import { useState } from 'react'
+import { useLanguage } from '@/components/language-provider'
 
 export function ContactForm() {
+  const { language } = useLanguage()
   const [formData, setFormData] = useState({
     naam: '',
     email: '',
+    bedrijf: '',
     onderwerp: '',
     bericht: '',
     website: '', // Honeypot field (hidden)
@@ -30,7 +33,7 @@ export function ContactForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, language }),
       })
 
       const data = await response.json()
@@ -49,6 +52,7 @@ export function ContactForm() {
       setFormData({
         naam: '',
         email: '',
+        bedrijf: '',
         onderwerp: '',
         bericht: '',
         website: '',
@@ -158,6 +162,23 @@ export function ContactForm() {
           disabled={isSubmitting}
           className="w-full px-4 py-3 bg-slate-900/50 border border-cyan-500/30 rounded-md text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed transition"
           placeholder="uw@email.nl"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="bedrijf" className="block text-sm font-medium text-slate-100 mb-2">
+          Bedrijf <span className="text-slate-500 font-normal">(optioneel)</span>
+        </label>
+        <input
+          type="text"
+          id="bedrijf"
+          name="bedrijf"
+          maxLength={150}
+          value={formData.bedrijf}
+          onChange={handleChange}
+          disabled={isSubmitting}
+          className="w-full px-4 py-3 bg-slate-900/50 border border-cyan-500/30 rounded-md text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed transition"
+          placeholder="Naam van uw bedrijf"
         />
       </div>
 

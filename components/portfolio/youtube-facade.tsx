@@ -1,8 +1,10 @@
 'use client'
 
 import { useState } from 'react'
+import { trackInteraction } from '@/lib/track'
 
 interface YouTubeFacadeProps {
+  itemId: string
   youtubeId: string
   title: string
   format: '16:9' | '9:16'
@@ -17,9 +19,14 @@ interface YouTubeFacadeProps {
  * portfolio może pokazywać dziesiątki pozycji bez obciążania strony przy
  * starcie.
  */
-export function YouTubeFacade({ youtubeId, title, format }: YouTubeFacadeProps) {
+export function YouTubeFacade({ itemId, youtubeId, title, format }: YouTubeFacadeProps) {
   const [activated, setActivated] = useState(false)
   const aspectClass = format === '9:16' ? 'aspect-[9/16]' : 'aspect-video'
+
+  const handleActivate = () => {
+    setActivated(true)
+    trackInteraction(itemId, 'play')
+  }
 
   if (activated) {
     return (
@@ -39,7 +46,7 @@ export function YouTubeFacade({ youtubeId, title, format }: YouTubeFacadeProps) 
   return (
     <button
       type="button"
-      onClick={() => setActivated(true)}
+      onClick={handleActivate}
       aria-label={`Odtwórz: ${title}`}
       className={`group relative block w-full ${aspectClass} rounded-lg overflow-hidden bg-slate-900 border border-cyan-500/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400`}
     >

@@ -116,6 +116,9 @@ function validateInput(array $data): array {
     if (strlen($data['onderwerp'] ?? '') > 200) {
         $errors[] = 'Onderwerp is te lang (max 200 tekens).';
     }
+    if (strlen($data['bedrijf'] ?? '') > 150) {
+        $errors[] = 'Bedrijfsnaam is te lang (max 150 tekens).';
+    }
     if (strlen($data['bericht'] ?? '') > 5000) {
         $errors[] = 'Bericht is te lang (max 5000 tekens).';
     }
@@ -133,12 +136,44 @@ function validateInput(array $data): array {
 // ============================================
 
 function sanitizeInput(array $data): array {
+    $language = trim($data['language'] ?? '');
     return [
         'naam' => htmlspecialchars(trim($data['naam'] ?? ''), ENT_QUOTES, 'UTF-8'),
         'email' => filter_var(trim($data['email'] ?? ''), FILTER_SANITIZE_EMAIL),
+        'bedrijf' => htmlspecialchars(trim($data['bedrijf'] ?? ''), ENT_QUOTES, 'UTF-8'),
         'onderwerp' => htmlspecialchars(trim($data['onderwerp'] ?? ''), ENT_QUOTES, 'UTF-8'),
         'bericht' => htmlspecialchars(trim($data['bericht'] ?? ''), ENT_QUOTES, 'UTF-8'),
+        'language' => in_array($language, ['pl', 'nl'], true) ? $language : 'nl',
     ];
+}
+
+// ============================================
+// OPSLAG IN DATABASE (contact_leads)
+// ============================================
+
+/**
+ * Zapisuje zapytanie ofertowe w tabeli contact_leads. To jest źródło prawdy
+ * dla leadów — działa niezależnie od tego, czy powiadomienie e-mail się uda.
+ *
+ * @throws \Throwable gdy zapis się nie powiedzie (np. brak połączenia z bazą)
+ */
+function saveLead(array $data): void {
+    require_once __DIR__ . '/db.php';
+
+    $pdo = getDbConnection();
+    $stmt = $pdo->prepare(
+        'INSERT INTO contact_leads (name, email, company, message, language, status, created_at)
+         VALUES (:name, :email, :company, :message, :language, :status, NOW())'
+    );
+    $stmt->execute([
+        ':name' => $data['naam'],
+        ':email' => $data['email'],
+        ':company' => $data['bedrijf'] !== '' ? $data['bedrijf'] : null,
+        // Onderwerp is geen apart kolom in het schema — bewaard als onderdeel van het bericht.
+        ':message' => $data['onderwerp'] !== '' ? "[{$data['onderwerp']}] {$data['bericht']}" : $data['bericht'],
+        ':language' => $data['language'],
+        ':status' => 'new',
+    ]);
 }
 
 // ============================================
@@ -267,18 +302,34 @@ try {
     // Sanitize input
     $cleanData = sanitizeInput($data);
 
-    // Send email
-    $emailSent = sendEmail($cleanData);
+    // Zapis leada w bazie danych — to jest podstawowy, trwały zapis.
+    // E-mail jest jedynie powiadomieniem "best effort": jego ewentualna
+    // awaria (częsta na hostingu współdzielonym) nie może spowodować
+    // utraty zapytania klienta.
+    $leadSaved = false;
+    try {
+        saveLead($cleanData);
+        $leadSaved = true;
+    } catch (\Throwable $dbError) {
+        error_log('[contact.php] Opslaan van lead in database mislukt: ' . $dbError->getMessage());
+    }
 
+    $emailSent = sendEmail($cleanData);
     if (!$emailSent) {
-        throw new Exception('Het verzenden van de e-mail is mislukt. Probeer het later opnieuw.');
+        error_log('[contact.php] Verzenden van notificatie-e-mail mislukt.');
+    }
+
+    if (!$leadSaved && !$emailSent) {
+        // Beide kanalen zijn mislukt — de aanvraag is nergens beland, dus
+        // moeten we de gebruiker eerlijk vertellen dat het niet is gelukt.
+        throw new Exception('Het verzenden is mislukt. Probeer het later opnieuw of mail rechtstreeks naar info@daremon.nl.');
     }
 
     // Success response
     http_response_code(200);
     echo json_encode([
         'success' => true,
-        'message' => 'Bedankt voor uw bericht! We nemen zo snel mogelijk contact met u op.'
+        'message' => 'Bedankt voor uw bericht! Ik neem zo snel mogelijk contact met u op.'
     ]);
 
 } catch (Exception $e) {
